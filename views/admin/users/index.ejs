@@ -1,0 +1,27 @@
+<% include ../../partials/header %>
+
+     <header class="jumbotron">
+         <div class="container">
+             <h1><span class="glyphicon glyphicon-tent"></span>Users</h1>
+             <p>
+                <a class="btn btn-primary btn-lg" href="/admin/users/new">Add New User</a>
+             </p>
+         </div>
+     </header>
+     
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% users.forEach(function(user){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                   <div class="caption">
+                       <h4><%= user.username %></h4>
+                   </div>
+                   <p>
+                       <a href="/admin/users/<%= user._id %>" class="btn btn-primary">More Info</a>
+                   </p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+<% include ../../partials/footer %>

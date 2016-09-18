@@ -1,0 +1,26 @@
+<% include ../partials/header %>
+<div class="row">
+    <div class="col-md-3">
+        <p class="lead">Survey</p>
+        <div class="list-group">
+            Members
+            <%group.members.forEach(function (member) {%>
+            <li class="list-group-item "><a link="white" href="/admin/users/<%=member._id%>"><%=member.username%></a></li>
+            <%});%>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="thumbnail">
+            <img class="img-responsive" src="<%= group.image %>">
+            <div class="caption-full">
+                <h4>Group Name:<%=group.name%></h4>
+                <p>Score: <%= group.score%></p>
+            </div>
+        </div>
+    </div>
+    <form style="display: inline" class="pull-right" action="/admin/groups/<%=group._id%>?_method=DELETE" method="POST">
+        <button class="btn btn-xs btn-danger">DELETE</button>
+    </form>
+</div>
+
+<% include ../partials/footer %>

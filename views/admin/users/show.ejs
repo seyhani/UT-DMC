@@ -1,0 +1,22 @@
+<% include ../../partials/header %>
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Survey</p>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= user.image %>">
+                <div class="caption-full">
+                    <h4>Username:<%=user.username%></h4>
+                    <%if(user.group){%>
+                        <p>Group:<a href="/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></p>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <form style="display: inline" class="pull-right" action="/admin/users/<%=user._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-xs btn-danger">DELETE</button>
+        </form>
+    </div>
+
+<% include ../../partials/footer %>

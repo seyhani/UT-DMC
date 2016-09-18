@@ -1,0 +1,27 @@
+<% include ../../partials/header %>
+
+     <header class="jumbotron">
+         <div class="container">
+             <h1><span class="glyphicon glyphicon-tent"></span>Groups</h1>
+             <p>
+                <a class="btn btn-primary btn-lg" href="/admin/groups/new">Add New Group</a>
+             </p>
+         </div>
+     </header>
+     
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% groups.forEach(function(group){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                   <div class="caption">
+                       <h4><%= group.name %></h4>
+                   </div>
+                   <p>
+                       <a href="/admin/groups/<%= group._id %>" class="btn btn-primary">More Info</a>
+                   </p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+<% include ../../partials/footer %>

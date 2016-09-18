@@ -1,0 +1,27 @@
+<% include ../partials/header %> 
+
+     <header class="jumbotron">
+         <div class="container">
+             <h1><span class="glyphicon glyphicon-tent"></span>Puzzles!</h1>
+             <p>
+                <a class="btn btn-primary btn-lg" href="/problems/new">Add New Puzzle</a>
+             </p>
+         </div>
+     </header>
+     
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% problems.forEach(function(problem){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                   <div class="caption">
+                       <h4><%= problem.name %></h4>
+                   </div>
+                   <p>
+                       <a href="/problems/<%= problem._id %>" class="btn btn-primary">More Info</a>
+                   </p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+<% include ../partials/footer %>
