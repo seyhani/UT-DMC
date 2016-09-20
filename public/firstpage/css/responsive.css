@@ -1,0 +1,163 @@
+/*write some responsive code here */
+/* Large desktops and laptops */
+@media (min-width: 1200px) {
+  #boss-cta .boss-button {
+    float: right;
+  }
+}
+/* Portrait tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+  #boss-cta .boss-button {
+    margin-top: 25px;
+  }
+
+  .boss-single-service-2:hover .boss-service-2-image {
+    top: 10%;
+    left: 8%;
+    margin-top: -90px;
+    margin-left: -90px;
+  }
+
+  .boss-single-service-2:hover .boss-single-service-2-content {
+    top: 5%;
+  }
+}
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+  .boss-single-service-2 {
+    height: 450px;
+  }
+
+  .boss-single-service-2-content .text-left {
+    padding: 0 10px;
+  }
+
+  .boss-single-service-2:hover .boss-service-2-image {
+    top: 10%;
+    left: 0%;
+    margin-top: -90px;
+    margin-left: -90px;
+  }
+
+  .boss-single-service-2:hover .boss-single-service-2-content {
+    top: 5%;
+  }
+
+  #boss-cta .boss-header {
+    text-align: center;
+  }
+
+  .boss-about-area .boss-big-logo {
+    margin-top: 50px;
+  }
+
+  .boss-company-history {
+    text-align: center;
+  }
+
+  .boss-caption h3 {
+    font-size: 20px;
+  }
+
+  .boss-form {
+    margin-top: 40px;
+  }
+}
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+  .boss-home-area, .boss-home-area > .container {
+    height: auto;
+  }
+
+  .boss-wrapper {
+    width: 100%;
+    position: static;
+    top: 0;
+    margin-top: 50px !important;
+    margin-bottom: 50px;
+  }
+}
+/* Landscape phones and smaller */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 35px;
+  }
+
+  .boss-section-heading h2 {
+    font-size: 30px;
+  }
+
+  .boss-single-service-2 h3 {
+    font-size: 16px;
+  }
+
+  .boss-single-service-2 .sub-title {
+    font-size: 14px;
+  }
+
+  .boss-single-service-2-content .text-left {
+    font-size: 12px;
+    padding: 0;
+  }
+
+  .boss-single-service-2:hover .boss-service-2-image {
+    top: 15%;
+    left: 0%;
+    margin-top: -90px;
+    margin-left: -90px;
+  }
+
+  .boss-single-service-2:hover .boss-single-service-2-content {
+    top: 15%;
+  }
+
+  #boss-cta .boss-header {
+    text-align: center;
+  }
+
+  .boss-about-area .boss-big-logo {
+    margin-top: 20px;
+  }
+
+  .boss-caption h3 {
+    font-size: 16px;
+    padding: 0 20px;
+    line-height: 20px;
+  }
+}
+/* portrait phones */
+@media (min-width: 320px) and (max-height: 420px) {
+  .boss-single-service-2 {
+    height: 300px;
+  }
+
+  .boss-single-service-2 h3 {
+    font-size: 20px;
+  }
+
+  .boss-single-service-2 .sub-title {
+    font-size: 16px;
+  }
+
+  .boss-single-service-2-content .text-left {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .boss-single-service-2:hover .boss-service-2-image {
+    top: 5%;
+    left: 7%;
+    margin-top: -90px;
+    margin-left: -90px;
+  }
+
+  .boss-single-service-2:hover .boss-single-service-2-content {
+    top: 0%;
+  }
+
+  .boss-caption h3 {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 0;
+  }
+}

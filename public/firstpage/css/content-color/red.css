@@ -1,0 +1,29 @@
+.boss-scroll-down a:hover,
+.boss-scroll-down a:focus {
+  background: #f25454;
+  border-color: #f25454;
+}
+
+.boss-cta-area .boss-button a:hover,
+.boss-cta-area .boss-button a:focus {
+  color: #f25454;
+  border-color: #f25454;
+}
+
+.boss-subscribe-area .boss-form input:focus {
+  border-color: #f25454;
+}
+
+.boss-subscribe-area .boss-form input[type="submit"]:hover,
+.boss-subscribe-area .boss-form input[type="submit"]:focus {
+  border-color: #f25454;
+  background: #f25454;
+}
+
+.boss-footer-area p a:hover,
+.boss-footer-area p a:focus,
+.boss-section-heading h2,
+.boss-home-area .boss-header h1,
+.boss-single-service-2 h3 {
+  color: #f25454;
+}

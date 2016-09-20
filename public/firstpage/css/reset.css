@@ -1,0 +1,39 @@
+/* =============== Reset css  ================= */
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  padding: 10px 0;
+  font-weight: 700;
+  font-size: 50px;
+}
+
+p {
+  line-height: 25px;
+  padding: 5px 0;
+  font-size: 16px;
+}
+
+a {
+  -webkit-transition: all 0.3s ease-in-out 0.25s;
+  -o-transition: all 0.3s ease-in-out 0.25s;
+  transition: all 0.3s ease-in-out 0.25s;
+}
+
+a, a:hover, a:focus, a:active {
+  outline: 0;
+  text-decoration: none;
+}
+
+input,
+input:focus {
+  outline: 0;
+}

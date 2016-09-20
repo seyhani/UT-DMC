@@ -1,0 +1,71 @@
+.boss-single-service-2 {
+  background: #1B1B1B;
+}
+.boss-single-service-2:hover {
+  border-color: #f6f6f6;
+}
+
+@font-face {
+  font-family: IRANSansWeb;
+  src: url(../../font/IRANSansWeb.ttf);
+}
+@font-face {
+  font-family: 'BRoya';
+  src: url('../../font/BRoya/BRoya.ttf') format('truetype');
+}
+.count{
+  font-family: BRoya,'BRoya',tahoma;
+}
+body{
+  font-family: IRANSansWeb;
+}
+body,
+.boss-footer-area p a,
+.boss-home-area,
+.boss-scroll-down a {
+  color: #fff;
+}
+
+.boss-cta-area,
+.boss-button a,
+.boss-button p,
+.boss-subscribe-area,
+.boss-item .boss-caption h3 {
+  color: #fff;
+}
+
+.boss-button a,
+.boss-scroll-down a {
+  border-color: #fff;
+}
+
+.boss-countdown div span:last-child {
+  border-color: #fff;
+}
+
+.boss-item:hover .boss-caption {
+  background: rgba(34, 34, 34, 0.64);
+}
+
+.boss-form input {
+  border-color: #fff;
+}
+.boss-form input::-webkit-input-placeholder {
+  color: #fff;
+}
+.boss-form input::-moz-input-placeholder {
+  color: #fff;
+}
+.boss-form input:-ms-input-placeholder {
+  color: #fff;
+}
+
+.boss-service-area,
+.boss-about-area,
+.boss-footer-area {
+  background: #222;
+}
+
+.boss-work-area {
+  background: #191919;
+}
