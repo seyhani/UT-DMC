@@ -19,7 +19,10 @@ router.get("/register", function(req, res){
 router.post("/register", function(req, res){
     var username = sanitize(req.body.username);
     var password = sanitize(req.body.password);
-    var newUser = new User({username: username});
+    var firstname = sanitize(req.body.firstname);
+    var lastname = sanitize(req.body.lastname);
+    var email = sanitize(req.body.email);
+    var newUser = new User({username: username,firstname:firstname,lastname:lastname,email:email});
     User.register(newUser, password, function(err, user){
         if(err){
             console.log(err);
@@ -28,7 +31,7 @@ router.post("/register", function(req, res){
         }
         passport.authenticate("local")(req, res, function(){
            req.flash("success", "Successfully Signed Up! Nice to meet you " + req.body.username);
-           res.redirect("/problems"); 
+           res.redirect("/dashboard/problems");
         });
     });
 });
