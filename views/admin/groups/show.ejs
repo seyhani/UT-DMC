@@ -8,7 +8,11 @@
                 <li class="list-group-item "><a link="white" href="/admin/users/<%=member._id%>"><%=member.username%></a></li>
                 <%});%>
                 <form style="display: inline" class="pull-right" action="/admin/groups/<%=group._id%>/addUser" method="POST">
-                    <input type="text" name="username" placeholder="Username">
+                    <select class="form-control" type="text" name="username" placeholder="User">
+                        <%users.forEach(function (user) {%>
+                            <option value="<%=user.username%>"><%=user.username%></option>
+                        <%});%>
+                    </select>
                     <button class="btn btn-xs btn-default" type="submit">Add Member</button>
                 </form>
             </div>
@@ -19,6 +23,11 @@
                 <div class="caption-full">
                     <h4>Group Name:<%=group.name%></h4>
                     <p>Score: <%= group.score%></p>
+                    <p>Stage: <%= group.competition.stage%></p>
+                    Solved Problems:
+                    <%group.competition.solvedProblems.forEach(function(problem){%>
+                    <p><%= problem.name%></p>
+                    <%});%>
                 </div>
             </div>
         </div>

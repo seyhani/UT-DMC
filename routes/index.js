@@ -2,6 +2,7 @@ var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var sanitize = require('mongo-sanitize');
 
 //root route
 router.get("/", function(req, res){
@@ -14,10 +15,12 @@ router.get("/register", function(req, res){
    res.render("register"); 
 });
 
-//handle sign up logic
+//handle {tags:'a'}sign up logic
 router.post("/register", function(req, res){
-    var newUser = new User({username: req.body.username});
-    User.register(newUser, req.body.password, function(err, user){
+    var username = sanitize(req.body.username);
+    var password = sanitize(req.body.password);
+    var newUser = new User({username: username});
+    User.register(newUser, password, function(err, user){
         if(err){
             console.log(err);
             req.flash("error", err.message);
@@ -38,7 +41,7 @@ router.get("/login", function(req, res){
 //handling login logic
 router.post("/login", passport.authenticate("local", 
     {
-        successRedirect: "/problems",
+        successRedirect: "/dashboard",
         failureRedirect: "/login"
     }), function(req, res){
 } );

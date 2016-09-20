@@ -66,7 +66,7 @@ router.put("/:commentId", function(req, res){
    }); 
 });
 
-router.delete("/:commentId",middleware.checkUserComment, function(req, res){
+router.delete("/:commentId", function(req, res){
     Comment.findByIdAndRemove(req.params.commentId, function(err){
         if(err){
             console.log("PROBLEM!");

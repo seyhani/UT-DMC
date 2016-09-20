@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Responsive Coming soon Template">
+    <meta name="keywords" content="Coming soon template, Bootstrap template, Coming soon, Responsive coming soon Template, Under Construction, countdown , Mailchimp, Youtube Video">
+    <meta name="author" content="traivan98">
+
+    <title>شکار معما</title>
+
+    <!-- favicon linke -->
+    <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
+    <!-- ===============    Bootstrap core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
+</head>
+<body>
+
+<% include ../partials/header %>
+
+<header class="jumbotron">
+    <div class="container">
+        <h1><span class="glyphicon glyphicon-tent"></span>Puzzles!</h1>
+        <p>
+            <a class="btn btn-primary btn-lg" href="/problems/new">Add New Puzzle</a>
+        </p>
+    </div>
+</header>
+
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+            <div class="caption">
+                Metapuzzle :
+                <h4><%= metaPuzzle.name %></h4>
+            </div>
+            <p>
+                <a href="/dashboard/problems/<%= metaPuzzle._id %>" class="btn btn-warning">More Info</a>
+            </p>
+        </div>
+    </div>
+    <% unsolvedProblems.forEach(function(problem){ %>
+    <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+            <div class="caption">
+                <h4><%= problem.name %></h4>
+            </div>
+            <p>
+                <a href="/dashboard/problems/<%= problem._id %>" class="btn btn-warning">More Info</a>
+            </p>
+        </div>
+    </div>
+    <% }); %>
+    <% solvedProblems.forEach(function(problem){ %>
+    <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+            <div class="caption">
+                <h4><%= problem.name %></h4>
+            </div>
+            <p>
+                <a href="/dashboard/problems/<%= problem._id %>" class="btn btn-success">More Info</a>
+            </p>
+        </div>
+    </div>
+    <% }); %>
+</div>
+<%if(canGoToNextStage ){%>
+<a href="/dashboard/nextstage" class="btn btn-success" >Next Stage :) </a>
+<%}%>
+<% include ../partials/footer %>
+</body>

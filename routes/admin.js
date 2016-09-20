@@ -4,6 +4,10 @@ var passport = require("passport");
 var User = require("../models/user");
 var Group = require("../models/group");
 
+router.get("/", function(req, res){
+    res.render('admin/index');
+});
+
 router.get("/groups", function(req, res){
     Group.find({}).exec(function (err,groups) {
         res.render("admin/groups/index",{groups:groups});
@@ -35,8 +39,10 @@ router.post("/groups/:groupId/addUser", function(req, res){
 });
 
 router.get("/groups/:groupId", function(req, res){
-    Group.findById(req.params.groupId).populate('members').exec(function (err,group) {
-        res.render("admin/groups/show",{group:group});
+    Group.findById(req.params.groupId).populate(['members','competition.solvedProblems']).exec(function (err,group) {
+        User.find({_id:{$nin:group.members}}).exec(function (err,users) {
+            res.render("admin/groups/show",{group:group,users:users});
+        });
     });
 });
 

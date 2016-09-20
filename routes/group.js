@@ -9,11 +9,6 @@ router.get("/join",middleware.isLoggedIn, function(req, res){
     res.render("groups/new");
 });
 
-router.get("/groups/:groupId", function(req, res){
-    Group.findById(req.params.groupId).populate('members').exec(function (err,group) {
-        res.render("admin/groups/show",{group:group});
-    });
-});
 
 router.post("/groups/new",middleware.isLoggedIn, function(req, res){
     var newGroup = new Group({name:req.body.groupName});

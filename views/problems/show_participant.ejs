@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Responsive Coming soon Template">
+    <meta name="keywords" content="Coming soon template, Bootstrap template, Coming soon, Responsive coming soon Template, Under Construction, countdown , Mailchimp, Youtube Video">
+    <meta name="author" content="traivan98">
+
+    <title>شکار معما</title>
+
+    <!-- favicon linke -->
+    <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
+    <!-- ===============    Bootstrap core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
+</head>
+<body>
+<% include ../partials/header %>
+<div class="row">
+    <div class="col-md-3">
+        <p class="lead">Survey</p>
+    </div>
+    <div class="col-md-9">
+        <div class="thumbnail">
+            <div class="caption-full">
+                <h4><%=problem.name%></h4>
+                <h4>Score :<%=problem.score%></h4>
+                <p><%= problem.description %></p>
+            </div>
+        </div>
+    </div>
+</div>
+<%if(!solved){%>
+<form style="display: inline" class="pull-right" action="/dashboard/problems/<%=problem._id%>/answer" method="POST">
+    <input type="text" name="answer" placeholder="Answer">
+    <button class="btn btn-xs btn-default" type="submit">Submit</button>
+</form>
+<%}%>
+<% include ../partials/footer %>
+</body>

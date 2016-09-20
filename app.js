@@ -17,6 +17,7 @@ var express     = require("express"),
 //requiring routes
 var commentRoutes    = require("./routes/comments"),
     groupRoutes    = require("./routes/group"),
+    dashboardRoutes    = require("./routes/dashboard"),
     adminRoutes    = require("./routes/admin"),
     problemRoutes = require("./routes/problems"),
     indexRoutes      = require("./routes/index");
@@ -53,9 +54,10 @@ app.use(function(req, res, next){
 
 
 app.use("/", indexRoutes);
-app.use("/", groupRoutes);
+app.use("/admin/", groupRoutes);
+app.use("/dashboard", dashboardRoutes);
 app.use("/admin", adminRoutes);
-app.use("/problems", problemRoutes);
+app.use("/admin/problems", problemRoutes);
 app.use("/problems/:id/comments", commentRoutes);
 
 
