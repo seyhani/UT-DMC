@@ -3,10 +3,16 @@ var router  = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
 var sanitize = require('mongo-sanitize');
+var nodemailer = require('nodemailer');
+var request = require('request');
+var crypto = require("crypto");
+var async = require("async");
+var SMTPServer = require('smtp-server').SMTPServer;
 
+var smtpTransport = require('nodemailer-smtp-transport');
+var directTransport = require('nodemailer-direct-transport');
 //root route
 router.get("/", function(req, res){
-    // console.log(req.user);
     res.render("landing");
 });
 
@@ -15,46 +21,166 @@ router.get("/register", function(req, res){
    res.render("register"); 
 });
 
-//handle {tags:'a'}sign up logic
-router.post("/register", function(req, res){
-    var username = sanitize(req.body.username);
-    var password = sanitize(req.body.password);
-    var firstname = sanitize(req.body.firstname);
-    var lastname = sanitize(req.body.lastname);
-    var email = sanitize(req.body.email);
-    var newUser = new User({username: username,firstname:firstname,lastname:lastname,email:email});
-    User.register(newUser, password, function(err, user){
-        if(err){
-            console.log(err);
-            req.flash("error", err.message);
-            return res.render("register");
+router.post('/register',function(req, res,next) {
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret="+ '6LdbUwcUAAAAAMquB_XKPwD5XtUPwhY19iIU8umM' +"&response=" +req.body['g-recaptcha-response'];
+    request(verificationUrl,function(error,response,body) {
+        body = JSON.parse(body);
+        if (body.success) {
+            if (!req.body.username) {
+                res.redirect('/register');
+            }
+            else {
+                var username = sanitize(req.body.username);
+                var password = sanitize(req.body.password);
+                var firstname = sanitize(req.body.firstname);
+                var lastname = sanitize(req.body.lastname);
+                var studentId = sanitize(req.body.studentId);
+                var email = sanitize(req.body.email);
+                var user = new User({
+                    firstname: firstname,
+                    lastname: lastname,
+                    username: username,
+                    studentId: studentId,
+                    email: email,
+                    password: password,
+                });
+                User.findOne({username: user.username}).exec(function (err, existUser) {
+                    if (err) return next(err);
+                    if (existUser) {
+                        req.flash('error', 'Username already exist');
+                        res.redirect('/register');
+                    } else {
+                        user.save(function (err) {
+                            req.logIn(user, function (err) {
+                                res.redirect('/dashboard');
+                            });
+                        });
+                    }
+                });
+            }
+        } else {
+         res.redirect('/register')
         }
-        passport.authenticate("local")(req, res, function(){
-           req.flash("success", "Successfully Signed Up! Nice to meet you " + req.body.username);
-           res.redirect("/dashboard/problems");
-        });
     });
 });
-
 //show login form
 router.get("/login", function(req, res){
    res.render("login"); 
 });
 
-//handling login logic
-router.post("/login", passport.authenticate("local", 
-    {
-        successRedirect: "/dashboard",
-        failureRedirect: "/login"
-    }), function(req, res){
-} );
+router.post('/login', function(req, res, next) {
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret="+ '6LdbUwcUAAAAAMquB_XKPwD5XtUPwhY19iIU8umM' +"&response=" +req.body['g-recaptcha-response'];
+    request(verificationUrl,function(error,response,body) {
+        body = JSON.parse(body);
+        // if(body.success)
+        if(true)
+        {
+            passport.authenticate('local', function(err, user, info) {
+                if (err) return next(err);
+                if (!user) {
+                    return res.redirect('/login')
+                }
+                req.logIn(user, function(err) {
+                    if (err) return next(err);
+                    return res.redirect('/dashboard');
+                });
+            })(req, res, next);
+        }else{
+            res.redirect('/login');
+        }
+
+    });
+});
 
 // logout route
 router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "LOGGED YOU OUT!");
-   res.redirect("/problems");
+   res.redirect("/");
 });
 
+router.get('/forgot', function(req, res,next) {
+    res.render('forgot_password', {user: req.user});
+});
+
+router.post('/forgot', function(req, res, next) {
+    var usr;
+    async.waterfall([
+        function(done) {
+            crypto.randomBytes(24, function(err, buf) {
+                var token = buf.toString('hex');
+                done(err, token);
+            });
+        },
+        function(token, done) {
+            User.findOne({ username: req.body.username}, function(err, user) {
+                if(err) return next(err);
+                if (!user) {
+                    req.flash('error', 'No account with that email address exists.');
+                    return res.redirect('/forgot');
+                }
+                usr = user;
+                user.resetPasswordToken = token;
+                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+                // var server  = emailjs.server.connect(require('../config/mailserver'));
+                // server.send({
+                //     text: 'http://' + req.headers.host + '/reset/' + token   ,
+                //     from:    "you <ahsprim@gmail.com>",
+                //     to:      "you <ahsprim@gmail.com>",
+                //     subject: "Proff Reset Password"
+                // }, function(err, message) { console.log(err || message); });
+                user.save(function(err) {
+                    console.log('http://' + req.headers.host + '/reset/' + token);
+                    done(err, token, user);
+                });
+            });
+        },
+    ], function(err) {
+        if (err) return next(err);
+        res.redirect('/');
+    });
+});
+
+router.get('/reset/:token', function(req, res,next) {
+    User.findOne({ resetPasswordToken: req.params.token,
+        resetPasswordExpires: { $gt: Date.now() }
+    }
+        , function(err, user) {
+        if(err) return next(err);
+        if (!user) {
+            // req.flash('error', 'Password reset token is invalid or has expired.');
+            return res.redirect('/forgot');
+        } else{
+            res.render('reset_password', {user:user});
+        }
+    });
+});
+
+router.post('/reset/:token', function(req, res,next) {
+    async.waterfall([
+        function(done) {
+            User.findOne({$and:[{resetPasswordToken: req.params.token},{resetPasswordExpires: { $gt: Date.now() }} ]},
+                function(err, user) {
+                    if (!user) {
+                        req.flash('error', 'Password reset token is invalid or has expired.');
+                        return res.redirect('back');
+                    }
+    
+                    user.password = req.body.password;
+                    user.resetPasswordToken = undefined;
+                    user.resetPasswordExpires = undefined;
+    
+                    user.save(function(err) {
+                    req.logIn(user, function(err) {
+                        req.flash('success', 'Success! Your password has been changed.');
+                        done(err, user);
+                    });
+                });
+            });
+        },
+    ], function(err) {
+        res.redirect('/login');
+    });
+});
 
 module.exports = router;

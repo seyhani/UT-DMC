@@ -1,24 +1,31 @@
 var mongoose = require("mongoose");
-
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var GroupSchema = new mongoose.Schema({
     name:String,
     members:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
-    membershipToken:{secret:String,expireTime:Date},
     competition:{
         stage:{type:Number,default:0},
         score:{type:Number,default:0},
-        solvedProblems:[{
+        puzzles:[{
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Problem"
+            ref: "Puzzle"
         }],
     }
 });
 
-GroupSchema.methods.solved  = function (problem) {
-   return this.competition.solvedProblems.indexOf(problem) != -1;
+GroupSchema.methods.findCurrentStagePuzzles = function (callback) {
+    var group = this;
+    mongoose.model("Puzzle").find({$and:[{tags:group.competition.stage},{_id:{$in:group.competition.puzzles}}]})
+        .populate("problem").exec(callback);
+};
+
+GroupSchema.methods.findCurrentStageMetaPuzzle = function (callback) {
+    var group = this;
+    mongoose.model("Puzzle").findOne({$and:[{tags:"meta"+group.competition.stage},{_id:{$in:group.competition.puzzles}}]})
+        .populate("problem").exec(callback);
 };
 
 GroupSchema.methods.addMember = function (user) {
@@ -29,4 +36,12 @@ GroupSchema.methods.addMember = function (user) {
     user.save();
     this.save();
 };
+
+GroupSchema.methods.addPuzzle = function (puzzle) {
+    this.competition.puzzles.push(puzzle);
+    this.competition.save();
+};
+
+GroupSchema.plugin(deepPopulate);
+
 module.exports = mongoose.model("Group", GroupSchema);

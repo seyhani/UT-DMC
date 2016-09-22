@@ -22,13 +22,11 @@
 <header class="jumbotron">
     <div class="container">
         <h1><span class="glyphicon glyphicon-tent"></span>Puzzles!</h1>
-        <p>
-            <a class="btn btn-primary btn-lg" href="/problems/new">Add New Puzzle</a>
-        </p>
     </div>
 </header>
 
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <%if(metaPuzzle){%>
     <div class="col-md-3 col-sm-6">
         <div class="thumbnail">
             <div class="caption">
@@ -36,37 +34,34 @@
                 <h4><%= metaPuzzle.name %></h4>
             </div>
             <p>
-                <a href="/dashboard/problems/<%= metaPuzzle._id %>" class="btn btn-warning">More Info</a>
+                <%if(metaPuzzle.solved){%>
+                <a href="/dashboard/puzzles/<%= metaPuzzle._id %>" class="btn btn-success">More Info</a>
+                <%}else{%>
+                <a href="/dashboard/puzzles/<%= metaPuzzle._id %>" class="btn btn-warning">More Info</a>
+                <%}%>
             </p>
         </div>
     </div>
-    <% unsolvedProblems.forEach(function(problem){ %>
+    <%}%>
+    <% puzzles.forEach(function(puzzle){ %>
     <div class="col-md-3 col-sm-6">
         <div class="thumbnail">
             <div class="caption">
-                <h4><%= problem.name %></h4>
+                <h4><%= puzzle.name %></h4>
             </div>
             <p>
-                <a href="/dashboard/problems/<%= problem._id %>" class="btn btn-warning">More Info</a>
-            </p>
-        </div>
-    </div>
-    <% }); %>
-    <% solvedProblems.forEach(function(problem){ %>
-    <div class="col-md-3 col-sm-6">
-        <div class="thumbnail">
-            <div class="caption">
-                <h4><%= problem.name %></h4>
-            </div>
-            <p>
-                <a href="/dashboard/problems/<%= problem._id %>" class="btn btn-success">More Info</a>
+                <%if(puzzle.solved){%>
+                    <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success">More Info</a>
+                <%}else{%>
+                    <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">More Info</a>
+                <%}%>
             </p>
         </div>
     </div>
     <% }); %>
 </div>
-<%if(canGoToNextStage ){%>
-<a href="/dashboard/nextstage" class="btn btn-success" >Next Stage :) </a>
+<%if(canGoToNextStage){%>
+    <a href="/dashboard/nextstage" class="btn btn-success" >Next Stage :) </a>
 <%}%>
 <% include ../partials/footer %>
 </body>

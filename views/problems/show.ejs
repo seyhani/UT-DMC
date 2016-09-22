@@ -32,6 +32,10 @@
                     <h4><%=problem.name%></h4>
                     <h4>Answer :<%=problem.answer%></h4>
                     <h4>Score :<%=problem.score%></h4>
+                    <%if(problem.submits){%>
+                    <h4>Wrong Submits :<%=problem.submits.wrong%></h4>
+                    <h4>Correct Submits :<%=problem.submits.correct%></h4>
+                    <%}%>
                     <p><%= problem.description %></p>
                     <%if(problem.tags){%>
                     <h4> TAGS:
@@ -44,14 +48,17 @@
             </div>
         </div>
     </div>
-    <form style="display: inline" class="pull-right" action="/problems/<%=problem._id%>/tag" method="POST">
+    <form style="display: inline" class="pull-right" action="/admin/problems/<%=problem._id%>/tag" method="POST">
         <input type="text" name="tag">
         <button class="btn btn-xs btn-default" type="submit">TAG</button>
     </form>
-    <form style="display: inline" class="pull-right" action="/problems/<%=problem._id%>?_method=DELETE" method="POST">
+    <form style="display: inline" class="pull-right" action="/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
         <button class="btn btn-xs btn-danger">DELETE</button>
     </form>
-    <a href="/problems/<%=problem._id%>/edit" >
+    <a href="/admin/problems/<%=problem._id%>/reset" >
+        <button class="btn btn-xs btn-danger">RESET</button>
+    </a>
+    <a href="/admin/problems/<%=problem._id%>/edit" >
         <button class="btn btn-xs btn-danger">EDIT</button>
     </a>
 <% include ../partials/footer %>

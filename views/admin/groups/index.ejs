@@ -16,9 +16,16 @@
                    <div class="caption">
                        <h4><%= group.name %></h4>
                    </div>
-                   <p>
-                       <a href="/admin/groups/<%= group._id %>" class="btn btn-primary">More Info</a>
-                   </p>
+                    <%group.competition.puzzles.forEach(function (puzzle) {%>
+                        <%if(puzzle.requestedForHint){%>
+                            <p>
+                                <a href="/admin/groups/<%= group._id %>/hint/<%=puzzle._id%>" class="btn btn-warning"><%=puzzle.name%></a>
+                            </p>
+                        <%}%>
+                    <%});%>
+                    <p>
+                        <a href="/admin/groups/<%= group._id %>" class="btn btn-primary">More Info</a>
+                    </p>
                 </div>
             </div>
         <% }); %>

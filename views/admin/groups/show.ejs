@@ -19,14 +19,15 @@
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
-                <img class="img-responsive" src="<%= group.image %>">
                 <div class="caption-full">
                     <h4>Group Name:<%=group.name%></h4>
                     <p>Score: <%= group.score%></p>
                     <p>Stage: <%= group.competition.stage%></p>
                     Solved Problems:
-                    <%group.competition.solvedProblems.forEach(function(problem){%>
-                    <p><%= problem.name%></p>
+                    <%group.competition.puzzles.forEach(function(puzzle){%>
+                        <%if(puzzle.solved){%>
+                            <p><%= puzzle.name%></p>
+                        <%}%>
                     <%});%>
                 </div>
             </div>

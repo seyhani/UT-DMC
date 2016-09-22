@@ -29,12 +29,11 @@ router.get("/", function(req, res){
 //CREATE - add new problem to DB
 router.post("/",upload.any() ,function(req, res){
     // get data from form and add to problems array
-    console.log(req.files);
     var name = req.body.name;
     var desc = req.body.description;
     var answer = req.body.answer;
     var score= req.body.score;
-    var newProblem = {name: name, description: desc,answer:answer,score:score};
+    var newProblem = {name: name, description: desc,answer:answer,score:score ,submits:{correct:0,wrong:0}};
     // Create a new problem and save to DB
     Problem.create(newProblem, function(err, problem){
         if(!fs.existsSync("./public/Uploads/Files/"+problem.id))
@@ -52,7 +51,7 @@ router.post("/",upload.any() ,function(req, res){
         } else {
             //redirect back to problems page
             // console.log(newlyCreated);
-            res.redirect("/problems");
+            res.redirect("/admin/problems");
         }
     });
 });
@@ -69,7 +68,6 @@ router.get("/:id", function(req, res){
         if(err){
             console.log(err);
         } else {
-            console.log(foundProblem)
             //render show template with that problem
             res.render("problems/show", {problem: foundProblem});
         }
@@ -88,6 +86,18 @@ router.get("/:id/edit", function(req, res){
     });
 });
 
+router.get("/:id/reset", function(req, res){
+    //find the problem with provided ID
+    Problem.findById(req.params.id, function(err, foundProblem){
+        if(err){
+            console.log(err);
+        } else {
+            foundProblem.reset();
+            res.redirect("/admin/problems/"+foundProblem._id);
+        }
+    });
+});
+
 router.put("/:id", function(req, res){
     var newData = {name: req.body.name, answer: req.body.answer, description: req.body.description,score:req.body.score};
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
@@ -96,7 +106,7 @@ router.put("/:id", function(req, res){
             res.redirect("back");
         } else {
             req.flash("success","Successfully Updated!");
-            res.redirect("/problems/" + problem._id);
+            res.redirect("/admin/problems/"+problem._id);
         }
     });
 });
@@ -105,7 +115,7 @@ router.post('/:problem_id/tag', function(req, res,next) {
     Problem.findById(req.params.problem_id,function (err,problem) {
         if(err) return next(err);
         problem.tag = req.body.tag;
-        res.redirect("/problems/"+req.params.problem_id);
+        res.redirect("/admin/problems/"+problem._id);
     });
 });
 
@@ -115,7 +125,7 @@ router.delete("/:problem_id",function(req, res,next){
         if(err) return next(err);
         problem.remove();
         req.flash("success"," Successfully deleted!");
-        res.redirect("/problems" );
+        res.redirect("/admin/problems");
     });
 });
 

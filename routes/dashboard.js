@@ -1,6 +1,8 @@
 var express = require("express");
 var router  = express.Router();
 var Problem = require("../models/problem");
+var Group = require("../models/group");
+var Puzzle = require("../models/puzzle");
 var User = require("../models/user");
 var middleware = require("../middleware");
 var request = require("request");
@@ -18,63 +20,80 @@ var sanitize = require('mongo-sanitize');
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
 router.all("/*",middleware.isLoggedIn);
+
 router.get("/", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        Problem.find({$and:[{tags:user.group.competition.stage},{_id:{$in:user.group.competition.solvedProblems}}]},
-            function(err, solvedProblems) {
-                Problem.find({$and:[{tags:user.group.competition.stage},{_id:{$nin:user.group.competition.solvedProblems}}]},
-                    function(err, unsolvedProblems) {
-                        Problem.findOne({tags:"meta"+user.group.competition.stage},
-                            function(err, metaPuzzle) {
-                                var canGoToNextStage = user.group.solved(metaPuzzle._id);
-                                console.log(user.group.competition.solvedProblems.indexOf(metaPuzzle._id));
-                                if (err) {
-                                    console.log(err);
-                                } else {
-                                    res.render("dashboard/index", {
-                                        unsolvedProblems: unsolvedProblems,
-                                        solvedProblems: solvedProblems,
-                                        metaPuzzle:metaPuzzle,
-                                        canGoToNextStage:canGoToNextStage
-                                    });
+        user.group.findCurrentStagePuzzles(function (err,puzzles) {
+            user.group.findCurrentStageMetaPuzzle(function (err,metaPuzzle) {
+                        var canGoToNextStage = metaPuzzle.solved;
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.render("dashboard/index",
+                                {
+                                    puzzles: puzzles,
+                                    metaPuzzle:metaPuzzle,
+                                    canGoToNextStage:canGoToNextStage
                                 }
-                });
+                            );
+                        }
              });
         });
     });
 });
 
-router.get("/problems/:problem_id", function(req, res){
+router.get("/ranking", function(req, res){
+    Group.find({}).sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
+       res.render("dashboard/ranking",{groups:groups});
+    });
+});
+
+router.get("/puzzles/:puzzle_id", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        Problem.findById(req.params.problem_id, function (err, problem) {
+        Puzzle.findById(req.params.puzzle_id).populate("problem").exec( function (err, puzzle) {
             if (err) {
                 console.log(err);
             } else {
-                var solved = (user.group.competition.solvedProblems.indexOf(problem._id) != -1);
-                    res.render("problems/show_participant", {problem: problem, solved:solved});
+                res.render("problems/show_participant",{puzzle: puzzle});
             }
         });
     });
 });
 
-router.post("/problems/:problem_id/answer", function(req, res){
-    var answer = sanitize(req.body.answer);
-    console.log(answer);
+router.get("/puzzles/:puzzle_id/hint", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        Problem.findById(req.params.problem_id, function (err, problem) {
+        Puzzle.findById(req.params.puzzle_id, function (err, puzzle) {
             if (err) {
                 console.log(err);
             } else {
-                if(problem.submitAnswer(answer))
-                {
-                    user.group.competition.solvedProblems.push(problem);
-                    user.group.competition.score +=  problem.score;
-                    user.group.save();
-                    req.flash("success", "Your answer was correct :)" );
-                }
-                else
-                {
-                    req.flash("success", "Your answer was not correct :(" );
+                puzzle.status = "requestedForHint";
+                puzzle.save();
+                res.redirect("/dashboard/puzzles/"+puzzle._id);
+            }
+        });
+    });
+});
+
+router.post("/puzzles/:puzzle_id/answer", function(req, res){
+    var answer = sanitize(req.body.answer);
+    User.findById(req.user._id).populate("group").exec(function (err,user) {
+        Puzzle.findById(req.params.puzzle_id).populate("problem").exec(function (err, puzzle) {
+            console.log(puzzle.problem);
+            if (err) {
+                console.log(err);
+            } else {
+                if(Date.now() - 1*1000 > puzzle.lastSubmit ) {
+                    if (puzzle.submitAnswer(answer)) {
+                        console.log("Your answer was correct :)");
+                        req.flash("success", "Your answer was correct :)");
+                    }
+                    else {
+                        console.log("Your answer was not correct :(");
+                        req.flash("error", "Your answer was not correct :(");
+                    }
+                }else{
+                    console.log( "Wait a little before next submit!");
+                    req.flash("error", "Wait a little before next submit!");
                 }
                 res.redirect("/dashboard");
             }
@@ -84,15 +103,13 @@ router.post("/problems/:problem_id/answer", function(req, res){
 
 router.get("/nextstage", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        Problem.findOne({tags:"meta"+user.group.competition.stage},
-            function(err, metaPuzzle) {
-                var canGoToNextStage = user.group.solved(metaPuzzle._id);
+        user.group.findCurrentStageMetaPuzzle(function (err,metaPuzzle){
                 if (err) {
                     console.log(err);
                 } else {
-                    if(!canGoToNextStage)
+                    if(!metaPuzzle.solved)
                     {
-                    req.flash("success", "Your answer was correct :)" );
+                        req.flash("success", "Your have not solved the meta puzzle yet :(" );
                         res.redirect("/dashboard");
                     }
                     else {

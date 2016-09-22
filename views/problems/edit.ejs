@@ -18,7 +18,7 @@
     <div class="row">
         <h1 style="text-align: center">Edit <%= problem.name %></h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/problems/<%=problem._id%>?_method=PUT" method="POST">
+            <form action="/admin/problems/<%=problem._id%>?_method=PUT" method="POST">
                 <div class="form-group">
                     Name: <input class="form-control" type="text" name="name" value="<%= problem.name %>">
                 </div>
@@ -35,7 +35,7 @@
                     <button class="btn btn-lg btn-primary btn-block">Update!</button>
                 </div>
             </form>
-            <a href="/problems">Go Back</a>
+            <a href="/admin/problems">Go Back</a>
         </div>
     </div>
 <% include ../partials/footer %>

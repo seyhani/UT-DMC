@@ -1,5 +1,4 @@
-var Comment = require("../models/comment");
-var Campground = require("../models/campground");
+
 var fs = require('fs');
 module.exports = {
     isLoggedIn: function(req, res, next){

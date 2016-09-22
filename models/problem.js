@@ -7,11 +7,21 @@ var ProblemSchema = new mongoose.Schema({
     answer:String,
     tags:[String],
     score:Number,
+    submits:{
+        wrong:{type:Number,default:0},
+        correct:{type:Number,default:0}
+    },
 });
 
 ProblemSchema.methods.hasTag = function (tag) {
     return (this.tags.indexOf(tag) != -1);
 };
+
+ProblemSchema.methods.reset = function () {
+    this.submits.correct = 0;
+    this.submits.wrong = 0;
+    this.save();
+}
 
 ProblemSchema.methods.submitAnswer = function (answer) {
     return (answer == this.answer);
