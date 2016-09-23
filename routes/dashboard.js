@@ -25,7 +25,9 @@ router.get("/", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
         user.group.findCurrentStagePuzzles(function (err,puzzles) {
             user.group.findCurrentStageMetaPuzzle(function (err,metaPuzzle) {
-                        var canGoToNextStage = metaPuzzle.solved;
+                        var canGoToNextStage  = false;
+                        if(metaPuzzle)
+                            canGoToNextStage  = metaPuzzle.solved;
                         if (err) {
                             console.log(err);
                         } else {
