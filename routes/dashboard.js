@@ -23,24 +23,28 @@ router.all("/*",middleware.isLoggedIn);
 
 router.get("/", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        user.group.findCurrentStagePuzzles(function (err,puzzles) {
-            user.group.findCurrentStageMetaPuzzle(function (err,metaPuzzle) {
-                        var canGoToNextStage  = false;
-                        if(metaPuzzle)
-                            canGoToNextStage  = metaPuzzle.solved;
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.render("dashboard/index",
-                                {
-                                    puzzles: puzzles,
-                                    metaPuzzle:metaPuzzle,
-                                    canGoToNextStage:canGoToNextStage
-                                }
-                            );
-                        }
-             });
-        });
+        if(!user.group) {
+            res.render("dashboard/index", {puzzles: null, metaPuzzle: null, canGoToNextStage: null});
+        }else {
+            user.group.findCurrentStagePuzzles(function (err, puzzles) {
+                user.group.findCurrentStageMetaPuzzle(function (err, metaPuzzle) {
+                    var canGoToNextStage = false;
+                    if (metaPuzzle)
+                        canGoToNextStage = metaPuzzle.solved;
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.render("dashboard/index",
+                            {
+                                puzzles: puzzles,
+                                metaPuzzle: metaPuzzle,
+                                canGoToNextStage: canGoToNextStage
+                            }
+                        );
+                    }
+                });
+            });
+        }
     });
 });
 
@@ -52,7 +56,7 @@ router.get("/ranking", function(req, res){
 
 router.get("/puzzles/:puzzle_id", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        Puzzle.findById(req.params.puzzle_id).populate("problem").exec( function (err, puzzle) {
+        Puzzle.findById(req.params.puzzle_id).populate(["problem","group"]).exec( function (err, puzzle) {
             if (err) {
                 console.log(err);
             } else {
@@ -64,12 +68,12 @@ router.get("/puzzles/:puzzle_id", function(req, res){
 
 router.get("/puzzles/:puzzle_id/hint", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        Puzzle.findById(req.params.puzzle_id, function (err, puzzle) {
+        Puzzle.findById(req.params.puzzle_id).populate(["group","problem"]).exec(function (err, puzzle) {
             if (err) {
                 console.log(err);
             } else {
-                puzzle.status = "requestedForHint";
-                puzzle.save();
+                if(!puzzle.requsetForHint())
+                    console.log("You do not have enough hints :(")
                 res.redirect("/dashboard/puzzles/"+puzzle._id);
             }
         });
@@ -79,8 +83,7 @@ router.get("/puzzles/:puzzle_id/hint", function(req, res){
 router.post("/puzzles/:puzzle_id/answer", function(req, res){
     var answer = sanitize(req.body.answer);
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        Puzzle.findById(req.params.puzzle_id).populate("problem").exec(function (err, puzzle) {
-            console.log(puzzle.problem);
+        Puzzle.findById(req.params.puzzle_id).populate(["problem","group"]).exec(function (err, puzzle) {
             if (err) {
                 console.log(err);
             } else {

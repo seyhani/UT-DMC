@@ -19,11 +19,13 @@ router.get("/groups/new", function(req, res){
 router.post("/groups", function(req, res){
     Problem.find({}).exec(function (err,problems) {
         var newGroup = new Group({name:req.body.groupName,competition:{stage:0,puzzles:[]}});
+        newGroup.index = Math.floor(Math.random() * 1000);
         Group.create(newGroup,function (err,group) {
             if(err)
                 console.log(err);
             problems.forEach(function (problem) {
-                Puzzle.create({problem:problem,status:"unsolved",tags:problem.tags},function (err,puzzle) {
+                Puzzle.create({problem:problem,group:group,status:"unsolved",tags:problem.tags},
+                    function (err,puzzle) {
                     group.competition.puzzles.push(puzzle);
                     group.save();
                 });
@@ -55,12 +57,18 @@ router.get("/groups/:groupId", function(req, res){
         });
 });
 
+router.get("/groups/:groupId/puzzles/:puzzle_id", function(req, res){
+    Puzzle.findById(req.params.puzzle_id).exec(function (err,puzzle) {
+        res.render("admin/puzzle/show",{puzzle:puzzle});
+    });
+});
+
 router.get("/groups/:groupId/hint/:problem_id", function(req, res){
     Group.findById(req.params.groupId).populate(['members','competition.puzzles']).exec(function (err,group) {
         Puzzle.findById(req.params.problem_id).populate("problem").exec(function (err,puzzle) {
             puzzle.status = "reviewd";
             puzzle.save();
-            res.redirect("/admin/groups/"+group._id);
+            res.redirect("/admin/groups/");
         });
     });
 });

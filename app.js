@@ -15,7 +15,7 @@ var express     = require("express"),
     var smtpTransport = require('nodemailer-smtp-transport');
     var directTransport = require('nodemailer-direct-transport');
     var nodemailer = require('nodemailer');
-
+mongoose.Promise = global.Promise;
 var server = new SMTPServer({allowInsecureAuth:true, onAuth: function(auth, session, callback){
     // if(auth.username !== 'abc' || auth.password !== 'def'){
     //     return callback(new Error('Invalid username or password' + auth.user));
@@ -102,5 +102,5 @@ app.use(function(req, res, next) {
 var server = app.listen(3002, function () {
   var host = server.address().address;
   var port = server.address().port;
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('Survey listening at http://%s:%s', host, port);
 });

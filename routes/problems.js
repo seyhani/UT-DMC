@@ -33,7 +33,8 @@ router.post("/",upload.any() ,function(req, res){
     var desc = req.body.description;
     var answer = req.body.answer;
     var score= req.body.score;
-    var newProblem = {name: name, description: desc,answer:answer,score:score ,submits:{correct:0,wrong:0}};
+    var feedback= req.body.feedback;
+    var newProblem = {name: name, description: desc,answer:answer,feedback:feedback,score:score ,submits:{correct:0,wrong:0}};
     // Create a new problem and save to DB
     Problem.create(newProblem, function(err, problem){
         if(!fs.existsSync("./public/Uploads/Files/"+problem.id))
@@ -99,7 +100,9 @@ router.get("/:id/reset", function(req, res){
 });
 
 router.put("/:id", function(req, res){
-    var newData = {name: req.body.name, answer: req.body.answer, description: req.body.description,score:req.body.score};
+    var newData = {name: req.body.name, answer: req.body.answer, 
+        description: req.body.description,score:req.body.score,feedback:req.body.feedback
+    };
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
         if(err){
             req.flash("error", err.message);

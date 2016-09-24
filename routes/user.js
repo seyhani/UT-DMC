@@ -38,6 +38,7 @@ router.post("/:userId/addUser", function(req, res){
 
 router.get("/:userId", function(req, res){
     User.findById(req.params.userId).populate('group').exec(function (err,user) {
+        console.log(user.id);
         res.render("admin/users/show",{user:user});
     });
 });

@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var fs = require("fs");
+var rimraf = require('rimraf');
 var Comment   = require("./models/comment");
 
 var data = [
@@ -21,6 +23,10 @@ var data = [
 
 function seedDB(){
    //Remove all problems
+    if(!fs.existsSync('./public/Uploads'))
+        fs.mkdirSync('./public/Uploads');
+    if(!fs.existsSync('./public/Uploads/Files'))
+        fs.mkdirSync('./public/Uploads/Files');
    Campground.remove({}, function(err){
         if(err){
             console.log(err);

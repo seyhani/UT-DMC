@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var GroupSchema = new mongoose.Schema({
     name:String,
+    index:Number,
     members:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
@@ -9,6 +10,7 @@ var GroupSchema = new mongoose.Schema({
     competition:{
         stage:{type:Number,default:0},
         score:{type:Number,default:0},
+        hints:{type:Number,default:5},
         puzzles:[{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Puzzle"

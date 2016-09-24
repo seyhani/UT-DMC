@@ -43,7 +43,7 @@
         </div>
     </div>
     <%}%>
-    <% puzzles.forEach(function(puzzle){ %>
+    <% if(puzzles){puzzles.forEach(function(puzzle){ %>
     <div class="col-md-3 col-sm-6">
         <div class="thumbnail">
             <div class="caption">
@@ -58,7 +58,7 @@
             </p>
         </div>
     </div>
-    <% }); %>
+    <% });} %>
 </div>
 <%if(canGoToNextStage){%>
     <a href="/dashboard/nextstage" class="btn btn-success" >Next Stage :) </a>

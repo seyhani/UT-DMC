@@ -22,11 +22,12 @@
                 <div class="caption-full">
                     <h4>Group Name:<%=group.name%></h4>
                     <p>Score: <%= group.score%></p>
+                    <p>Index: <%= group.index%></p>
                     <p>Stage: <%= group.competition.stage%></p>
                     Solved Problems:
                     <%group.competition.puzzles.forEach(function(puzzle){%>
                         <%if(puzzle.solved){%>
-                            <p><%= puzzle.name%></p>
+                            <a href="/admin/groups/<%=group._id%>/puzzles/<%=puzzle._id%>"><p><%= puzzle.name%></p> </a>
                         <%}%>
                     <%});%>
                 </div>

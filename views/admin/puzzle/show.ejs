@@ -16,31 +16,26 @@
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
 </head>
 <body>
-<% include ../partials/header %>
+<% include ../../partials/header %>
     <div class="row">
         <div class="col-md-3">
             <p class="lead">Survey</p>
-            <div class="list-group">
-                <%problem.files.forEach(function (file) {%>
-                <li class="list-group-item"><%=file%></li>
-                <%});%>
-            </div>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
                 <div class="caption-full">
-                    <h4><%=problem.name%></h4>
-                    <h4>Answer :<%=problem.answer%></h4>
-                    <h4>Score :<%=problem.score%></h4>
-                    <h4>Feedback :<%=problem.feedback%></h4>
-                    <%if(problem.submits){%>
-                    <h4>Wrong Submits :<%=problem.submits.wrong%></h4>
-                    <h4>Correct Submits :<%=problem.submits.correct%></h4>
+                    <h4><%=puzzle.problem.name%></h4>
+                    <h4>Last Submit :<%=puzzle.lastSubmit%></h4>
+                    <h4>Status :<%=puzzle.status%></h4>
+
+                    <%if(puzzle.submits){%>
+                    <h4>Wrong Submits :<%=puzzle.submits.wrong%></h4>
+                    <h4>Correct Submits :<%=puzzle.submits.correct%></h4>
                     <%}%>
-                    <p><%= problem.description %></p>
-                    <%if(problem.tags){%>
+                    <p><%= puzzle.description %></p>
+                    <%if(puzzle.tags){%>
                     <h4> TAGS:
-                    <%problem.tags.forEach(function (tag) {%>
+                    <%puzzle.tags.forEach(function (tag) {%>
                         <%=tag%> ,
                     <%});%>
                     </h4>
@@ -49,18 +44,18 @@
             </div>
         </div>
     </div>
-    <form style="display: inline" class="pull-right" action="/admin/problems/<%=problem._id%>/tag" method="POST">
+    <form style="display: inline" class="pull-right" action="/admin/puzzles/<%=puzzle._id%>/tag" method="POST">
         <input type="text" name="tag">
         <button class="btn btn-xs btn-default" type="submit">TAG</button>
     </form>
-    <form style="display: inline" class="pull-right" action="/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
+    <form style="display: inline" class="pull-right" action="/admin/puzzles/<%=puzzle._id%>?_method=DELETE" method="POST">
         <button class="btn btn-xs btn-danger">DELETE</button>
     </form>
-    <a href="/admin/problems/<%=problem._id%>/reset" >
+    <a href="/admin/puzzles/<%=puzzle._id%>/reset" >
         <button class="btn btn-xs btn-danger">RESET</button>
     </a>
-    <a href="/admin/problems/<%=problem._id%>/edit" >
+    <a href="/admin/puzzles/<%=puzzle._id%>/edit" >
         <button class="btn btn-xs btn-danger">EDIT</button>
     </a>
-<% include ../partials/footer %>
+<% include ../../partials/footer %>
 </body>

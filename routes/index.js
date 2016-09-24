@@ -5,14 +5,19 @@ var User = require("../models/user");
 var sanitize = require('mongo-sanitize');
 var nodemailer = require('nodemailer');
 var request = require('request');
+var middleware = require('../middleware/index');
 var crypto = require("crypto");
 var async = require("async");
 var SMTPServer = require('smtp-server').SMTPServer;
 
 var smtpTransport = require('nodemailer-smtp-transport');
 var directTransport = require('nodemailer-direct-transport');
-//root route
+
 router.get("/", function(req, res){
+    var s = "asdasdasd asd asd asd asd asd ad";
+    User.find({}).exec(function (err,users) {
+        console.log(users[i]._id.toString());
+    });
     res.render("landing");
 });
 

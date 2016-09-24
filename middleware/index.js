@@ -15,6 +15,16 @@ module.exports = {
         req.flash("error", "you have not permission!");
         res.redirect("/");
     },
+    hashAnswer: function(answer,hashIndex)
+    {
+        var text = "";
+        var possible = "CMuUfNXYko7fIzHLOwQQWOcoifsBFkSlS4L6sEDxRIVMt9aptrnHEtIuK8drVnGOJUpiZeBTJCvX42m29WTg4PJForglANgiVD72";
+
+        for( var i=0; i < lenght; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    },
     makeSecret: function(lenght)
     {
         var text = "";
