@@ -14,10 +14,6 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var directTransport = require('nodemailer-direct-transport');
 
 router.get("/", function(req, res){
-    var s = "asdasdasd asd asd asd asd asd ad";
-    User.find({}).exec(function (err,users) {
-        console.log(users[i]._id.toString());
-    });
     res.render("landing");
 });
 
