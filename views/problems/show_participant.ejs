@@ -70,7 +70,7 @@
             <%if(!(puzzle.requestedForHint||puzzle.solved||puzzle.reviewd)){%>
             <a style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-success" style="margin-bottom:25px; ">درخواست کمک</button></a>
             <%}%>
-            <button class="btn btn-default btn-lg btn-block btn-warning" >بازگشت</button>
+            <a href="/dashboard/" style="text-decoration: none;"><button class="btn btn-default btn-lg btn-block btn-warning" >بازگشت</button></a>
         </div>
         <div class="col-md-9 prbody">
             <%if(puzzle.solved){%>

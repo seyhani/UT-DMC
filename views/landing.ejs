@@ -71,9 +71,31 @@
         </div>
     </div>
 </div>
+<nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/firstpage/img/logo.png" width="30px"height="30px">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <% if(!currentUser){ %>
+                <li><a class="btn-group-sm btn-default navbar-btn" href="/login">ورود</a></li>
+                <li><a class="btn-group-sm btn-default navbar-btn" href="/register">ثبت نام</a></li>
+                <% } else { %>
+                <%if(currentUser.group){%>
+                <li><a href="#"><%= currentUser.group.name%></a></li>
+                <%}%>
+                <li><a href="#"><%= currentUser.username %> حساب کاربری  </a></li>
+                <li><a href="/logout">خروج</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <!--/ preloader -->
-<% include ./partials/header %>
 <!--<nav class="navbar navbar-inverse  navbar-fixed-top" style="margin-bottom: 0;">-->
     <!--<div class="container-fluid">-->
         <!--<div class="navbar-header">-->
@@ -103,7 +125,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-8 text-center">
-                    <div class="boss-header wow fadeInDown" data-wow-delay="2s">
+                    <div class="boss-header wow fadeInDown" style="font-family: IRANSansWeb;">
                         <h1>!اتفاقی بزرگ در راه است</h1>
                         <!--<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy .</p>-->
                     </div>
@@ -130,13 +152,13 @@
 
 
 <!-- START service area -->
-<section class="boss-service-area" id="service">
+<section class="boss-service-area" id="service" style="font-family: IRANSansWeb;">
     <!-- container -->
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="boss-section-heading wow zoomIn" data-wow-delay="0.5">
-                    <h2>مراحل مسابقه</h2>
+                    <h2 >مراحل مسابقه</h2>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem <br/> Ipsum has been the industry's s</p>
                     <div class="boss-header-border"></div>
                 </div>
