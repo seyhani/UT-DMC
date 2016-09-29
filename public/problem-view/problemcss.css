@@ -1,0 +1,50 @@
+@font-face {
+    font-family: IRANSansWeb;
+    src: url(../../font/IRANSansWeb.ttf);
+}
+@font-face {
+    font-family: 'BRoya';
+    src: url('../../font/BRoya/BRoya.ttf') format('truetype');
+}
+.count{
+    font-family: BRoya,'BRoya',tahoma;
+}
+body{
+    font-family: IRANSansWeb;
+}
+.container{
+    margin: 0;
+    width: 100%;
+}
+.navbar{
+    border-radius: 0;
+}
+.problemname{
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.pname{
+    background-color: #eeeeee;
+}
+.problembody{
+    min-height: 400px;
+    margin: 20px;
+    background-color: #eeeeee;
+}
+.prbody{
+    margin-top: 20px;
+    background-color: #F8F8F8;
+    min-height: 360px;
+    border-radius: 10px;
+}
+.submitpart{
+    background-color: #F8F8F8;
+    margin-top: 20px;
+    margin-right: 20px;
+    padding-top: 45px;
+    min-height: 360px;
+    border-radius: 20px;
+    width: 23%;
+}

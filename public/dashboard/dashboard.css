@@ -1,0 +1,94 @@
+@font-face {
+    font-family: IRANSansWeb;
+    src: url(../../font/IRANSansWeb.ttf);
+}
+@font-face {
+    font-family: 'BRoya';
+    src: url('../../font/BRoya/BRoya.ttf') format('truetype');
+}
+.count{
+    font-family: BRoya,'BRoya',tahoma;
+}
+body{
+    font-family: IRANSansWeb;
+}
+.navbar{
+    border-radius: 0;
+}
+.jumbotron{
+    margin: 20px;
+ padding: 20px 0 20px 0;
+}
+.container{
+    width: 100%;
+    margin: 0 0 0 0 ;
+}
+.problem-cont{
+    min-height: 350px;
+    margin: 20px;
+    background-color:#E0E0E0 ;
+}
+.eachproblem{
+    width: 20%;
+    margin-top: 10px;
+    height: 330px;
+    /*border: dashed;*/
+}
+.problembod{
+    background-color: #f7f7f7;
+    text-align: center;
+    padding: 20px;
+    height: 100%;
+    border-radius: 10px;
+}
+.problembod:hover{
+    background-color: #bce8f1;
+}
+.topproblem{
+    margin-bottom: 50px;
+    border-bottom: solid #5e5e5e 5px;
+}
+.problembod:hover span{
+    display:block;
+}
+
+.problemname{
+    height: 100px;
+}
+.nextstage{
+    width: 100%;
+    padding-left: 10px;
+}
+
+.problembod span{
+    background:#F8F8F8;
+    border: 5px solid #DFDFDF;
+    color: #717171;
+    font-size: 15px;
+    height: 100px;
+    letter-spacing: 1px;
+    line-height: 30px;
+    position: absolute;
+    text-align: justify;
+    text-transform: uppercase;
+    top: -100px;
+    /*right:-50px;*/
+    display:none;
+    padding:0 20px;
+
+}
+.problembod span:after{
+    content:'';
+    position:absolute;
+    bottom:-10px;
+    width:10px;
+    height:10px;
+    border-bottom:5px solid #dfdfdf;
+    border-right:5px solid #dfdfdf;
+    background:#f8f8f8;
+    left:50%;
+    margin-left:-10px;
+    -moz-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    transform:rotate(45deg);
+}

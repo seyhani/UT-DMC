@@ -14,41 +14,104 @@
     <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
     <!-- ===============    Bootstrap core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
+    <!-- ===============    dashboard core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/problem-view/problemcss.css" media="all" />
 </head>
 <body>
-<% include ../partials/header %>
-<div class="row">
-    <div class="col-md-3">
-        <p class="lead">Survey</p>
+<nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/firstpage/img/logo.png" width="30px"height="30px">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <% if(!currentUser){ %>
+                <li><a class="btn-group-sm btn-default navbar-btn" href="/login">ورود</a></li>
+                <li><a class="btn-group-sm btn-default navbar-btn" href="/register">ثبت نام</a></li>
+                <% } else { %>
+                <%if(currentUser.group){%>
+                <li><a href="#"><%= currentUser.group.name%></a></li>
+                <%}%>
+                <li><a href="#"><%= currentUser.username %> حساب کاربری  </a></li>
+                <li><a href="/logout">خروج</a></li>
+                <% } %>
+            </ul>
+        </div>
     </div>
-    <%if(puzzle.solved){%>
-        <div class="col-md-9">
-            <div class="thumbnail">
-                <div class="caption-full">
-                    <h4><%=puzzle.name%></h4>
-                    <p><%= puzzle.feedback%></p>
-                </div>
-            </div>
-        </div>
-    <%}else{%>
-        <div class="col-md-9">
-            <div class="thumbnail">
-                <div class="caption-full">
-                    <h4><%=puzzle.name%></h4>
-                    <p><%= puzzle.problem.description %></p>
-                </div>
-            </div>
-        </div>
-    <%}%>
+</nav>
+
+<div class="container">
+    <% if(error && error.length > 0) { %>
+    <div class="alert alert-danger"><p><%=error %></p></div>
+    <% } %>
+
+    <% if(success && success.length > 0) { %>
+    <div class="alert alert-success"><p><%= success %></p></div>
+    <% } %>
 </div>
-<%if(!(puzzle.requestedForHint||puzzle.solved||puzzle.reviewd)){%>
-    <a href="/dashboard/puzzles/<%=puzzle._id%>/hint"><button class="btn btn-xs btn-success">Request Hint</button></a>
-<%}%>
-<%if(!puzzle.solved){%>
-<form style="display: inline" class="pull-right" action="/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST">
-    <input type="text" name="answer" placeholder="Answer">
-    <button class="btn btn-xs btn-default" type="submit">Submit</button>
-</form>
-<%}%>
-<% include ../partials/footer %>
+<div class="row problemname">
+    <div class="container">
+        <div class="col-md-6"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3 pname">
+            <h1><%=puzzle.name%></h1>
+        </div>
+    </div>
+</div>
+<div class="row problembody">
+    <div class="container">
+        <div class="col-md-3 submitpart">
+            <form action="/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST">
+                <input style="width: 100%;height: 50px;padding: 20px;border: 0;margin-bottom: 25px;border-radius:10px; " type="text" name="answer" placeholder="Answer">
+                <button class="btn btn-default btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت جواب</button>
+            </form>
+            <%if(!(puzzle.requestedForHint||puzzle.solved||puzzle.reviewd)){%>
+            <a style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-success" style="margin-bottom:25px; ">درخواست کمک</button></a>
+            <%}%>
+            <button class="btn btn-default btn-lg btn-block btn-warning" >بازگشت</button>
+        </div>
+        <div class="col-md-9 prbody">
+            <%if(puzzle.solved){%>
+                <p><%= puzzle.feedback%></p>
+            <%}else{%>
+                <p><%= puzzle.problem.description %></p>
+            <%}%>
+        </div>
+    </div>
+</div>
+<!--<div class="row">-->
+    <!--<div class="col-md-3">-->
+        <!--<p class="lead">Survey</p>-->
+    <!--</div>-->
+    <!--<%if(puzzle.solved){%>-->
+        <!--<div class="col-md-9">-->
+            <!--<div class="thumbnail">-->
+                <!--<div class="caption-full">-->
+                    <!--<h4><%=puzzle.name%></h4>-->
+                    <!--<p><%= puzzle.feedback%></p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--<%}else{%>-->
+        <!--<div class="col-md-9">-->
+            <!--<div class="thumbnail">-->
+                <!--<div class="caption-full">-->
+                    <!--<h4><%=puzzle.name%></h4>-->
+                    <!--<p><%= puzzle.problem.description %></p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--<%}%>-->
+<!--</div>-->
+<!--<%if(!(puzzle.requestedForHint||puzzle.solved||puzzle.reviewd)){%>-->
+    <!--<a href="/dashboard/puzzles/<%=puzzle._id%>/hint"><button class="btn btn-xs btn-success">Request Hint</button></a>-->
+<!--<%}%>-->
+<!--<%if(!puzzle.solved){%>-->
+<!--<form style="display: inline" class="pull-right" action="/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST">-->
+    <!--<input type="text" name="answer" placeholder="Answer">-->
+    <!--<button class="btn btn-xs btn-default" type="submit">Submit</button>-->
+<!--</form>-->
+<!--<%}%>-->
 </body>
