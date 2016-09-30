@@ -14,53 +14,66 @@
     <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
     <!-- ===============    Bootstrap core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
 </head>
 <body>
-<% include ../partials/header %>
-    <div class="row">
-        <div class="col-md-3">
-            <p class="lead">Survey</p>
-            <div class="list-group">
-                <%problem.files.forEach(function (file) {%>
-                <li class="list-group-item"><%=file%></li>
-                <%});%>
-            </div>
+<nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/firstpage/img/logo.png" width="40px"height="40px">
+            </a>
         </div>
-        <div class="col-md-9">
-            <div class="thumbnail">
-                <div class="caption-full">
-                    <h4><%=problem.name%></h4>
-                    <h4>Answer :<%=problem.answer%></h4>
-                    <h4>Score :<%=problem.score%></h4>
-                    <h4>Feedback :<%=problem.feedback%></h4>
-                    <%if(problem.submits){%>
-                    <h4>Wrong Submits :<%=problem.submits.wrong%></h4>
-                    <h4>Correct Submits :<%=problem.submits.correct%></h4>
-                    <%}%>
-                    <p><%= problem.description %></p>
-                    <%if(problem.tags){%>
-                    <h4> TAGS:
-                    <%problem.tags.forEach(function (tag) {%>
-                        <%=tag%> ,
-                    <%});%>
-                    </h4>
-                    <%}%>
-                </div>
-            </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
         </div>
     </div>
-    <form style="display: inline" class="pull-right" action="/admin/problems/<%=problem._id%>/tag" method="POST">
-        <input type="text" name="tag">
-        <button class="btn btn-xs btn-default" type="submit">TAG</button>
-    </form>
-    <form style="display: inline" class="pull-right" action="/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
-        <button class="btn btn-xs btn-danger">DELETE</button>
-    </form>
-    <a href="/admin/problems/<%=problem._id%>/reset" >
-        <button class="btn btn-xs btn-danger">RESET</button>
-    </a>
-    <a href="/admin/problems/<%=problem._id%>/edit" >
-        <button class="btn btn-xs btn-danger">EDIT</button>
-    </a>
+</nav>
+<div class="row">
+    <div class="container probbd">
+        <div class="col-md-3 tag">
+            <form action="/admin/problems/<%=problem._id%>/tag" method="POST">
+                <input type="text" name="tag" style="width: 100%;">
+                <button class="btn btn-lg btn-block btn-default" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
+            </form>
+            <form action="/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
+                <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 20px;">DELETE</button>
+            </form>
+            <a href="/admin/problems/<%=problem._id%>/reset" >
+                <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 20px;">RESET</button>
+            </a>
+            <a href="/admin/problems/<%=problem._id%>/edit" >
+                <button class="btn btn-lg btn-block btn-warning">EDIT</button>
+            </a>
+        </div>
+        <div class="col-md-9 pbd">
+            <h4><%=problem.name%></h4>
+            <h4>Answer :<%=problem.answer%></h4>
+            <h4>Score :<%=problem.score%></h4>
+            <h4>Feedback :<%=problem.feedback%></h4>
+            <%if(problem.submits){%>
+            <h4>Wrong Submits :<%=problem.submits.wrong%></h4>
+            <h4>Correct Submits :<%=problem.submits.correct%></h4>
+            <%}%>
+            <p><%= problem.description %></p>
+            <%if(problem.tags){%>
+            <h4> TAGS:
+                <%problem.tags.forEach(function (tag) {%>
+                <%=tag%> ,
+                <%});%>
+            </h4>
+            <%}%>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="list-group">
+        <%problem.files.forEach(function (file) {%>
+        <li class="list-group-item"><%=file%></li>
+        <%});%>
+    </div>
+</div>
+
 <% include ../partials/footer %>
 </body>

@@ -22,6 +22,7 @@ body{
 .container{
     width: 100%;
     margin: 0 0 0 0 ;
+
 }
 .problem-cont{
     min-height: 350px;
@@ -91,4 +92,16 @@ body{
     -moz-transform:rotate(45deg);
     -webkit-transform:rotate(45deg);
     transform:rotate(45deg);
+}
+body{
+    background-color: #fff;
+    -webkit-animation: random 5s infinite;
+    animation: random 100s infinite;
+}
+@keyframes  random {
+    15% { background-color: #FF3D00; }
+    30% { background-color: #FFEA00; }
+    45% { background-color: #69F0AE; }
+    60% { background-color: #0288D1; }
+    75% { background-color: #607D8B; }
 }

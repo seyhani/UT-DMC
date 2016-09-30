@@ -16,17 +16,32 @@
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
 </head>
 <body>
+<nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/firstpage/img/logo.png" width="40px"height="40px">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1><span class="glyphicon glyphicon-tent"></span>Puzzles</h1>
+            </div>
+            <div class="col-md-6" style="padding-top: 20px;">
+                <a class="btn btn-primary btn-lg btn-block" href="/admin/problems/new">Add New Puzzles</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-<% include ../partials/header %>
-
-     <header class="jumbotron">
-         <div class="container">
-             <h1><span class="glyphicon glyphicon-tent"></span>Puzzles!</h1>
-             <p>
-                <a class="btn btn-primary btn-lg" href="/admin/problems/new">Add New Puzzle</a>
-             </p>
-         </div>
-     </header>
      
      <div class="row text-center" style="display:flex; flex-wrap: wrap;">
         <% problems.forEach(function(problem){ %>

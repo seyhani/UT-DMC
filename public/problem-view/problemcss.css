@@ -35,6 +35,9 @@ body{
 }
 .prbody{
     margin-top: 20px;
+    padding: 20px;
+    font-family: 14px;
+    direction: rtl;
     background-color: #F8F8F8;
     min-height: 360px;
     border-radius: 10px;

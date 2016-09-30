@@ -14,32 +14,45 @@
     <!-- ===============    Bootstrap core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
 </head>
-<% include ../partials/header %>
+<body><nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/firstpage/img/logo.png" width="30px"height="30px">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+    </div>
+</nav>
     <div class="row">
         <h1 style="text-align: center">Edit <%= problem.name %></h1>
-        <div style="width: 30%; margin: 25px auto;">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
             <form action="/admin/problems/<%=problem._id%>?_method=PUT" method="POST">
-                <div class="form-group">
+                <div class="form-group col-md-12 col-xs-12">
                     Name: <input class="form-control" type="text" name="name" value="<%= problem.name %>">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-xs-12">
                     Answer: <input class="form-control" type="text" name="answer" value="<%= problem.answer %>">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-xs-12">
                     Feedback: <input class="form-control" type="text" name="feedback" value="<%= problem.feedback%>">
                 </div>
-                <div class="form-group">
+                <div class="form-group col-xs-12">
                     Score: <input class="form-control" type="number" name="score" placeholder="Score">
                 </div>
-                <div class="form-group">
-                    <textarea name="description" > <%= problem.description %></textarea>
+                <div class="form-group col-xs-12">
+                    <textarea name="description" style="width: 100%;min-height: 100px;" > <%= problem.description %></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-xs-12">
                     <button class="btn btn-lg btn-primary btn-block">Update!</button>
                 </div>
             </form>
             <a href="/admin/problems">Go Back</a>
         </div>
     </div>
-<% include ../partials/footer %>
 
+</body>
