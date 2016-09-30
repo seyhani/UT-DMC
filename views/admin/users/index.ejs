@@ -1,13 +1,49 @@
-<% include ../../partials/header %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Responsive Coming soon Template">
+    <meta name="keywords" content="Coming soon template, Bootstrap template, Coming soon, Responsive coming soon Template, Under Construction, countdown , Mailchimp, Youtube Video">
+    <meta name="author" content="traivan98">
 
-     <header class="jumbotron">
-         <div class="container">
-             <h1><span class="glyphicon glyphicon-tent"></span>Users</h1>
-             <p>
-                <a class="btn btn-primary btn-lg" href="/admin/users/new">Add New User</a>
-             </p>
-         </div>
-     </header>
+    <title>شکار معما</title>
+
+    <!-- favicon linke -->
+    <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
+
+    <!-- ===============    Bootstrap core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
+    <!-- ===============    Bootstrap core CSS     =============== -->
+
+</head>
+<body>
+<nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/firstpage/img/logo.png" width="40px"height="40px">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1><span class="glyphicon glyphicon-tent"></span>Users</h1>
+            </div>
+            <div class="col-md-6" style="padding-top: 20px;">
+                <a class="btn btn-primary btn-lg btn-block" href="/admin/users/new">Add New Users</a>
+            </div>
+        </div>
+    </div>
+</div>
      
      <div class="row text-center" style="display:flex; flex-wrap: wrap;">
         <% users.forEach(function(user){ %>
@@ -24,4 +60,4 @@
         <% }); %>
     </div>
 
-<% include ../../partials/footer %>
+</body>

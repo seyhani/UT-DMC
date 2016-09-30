@@ -1,31 +1,71 @@
-<% include ../partials/header %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Responsive Coming soon Template">
+    <meta name="keywords" content="Coming soon template, Bootstrap template, Coming soon, Responsive coming soon Template, Under Construction, countdown , Mailchimp, Youtube Video">
+    <meta name="author" content="traivan98">
 
-<header class="jumbotron" dir="rtl">
-    <div class="container">
-        <h1> Welcome To Proff Administration!</h1>
-        <p>
-            <a class="btn btn-primary btn-lg" href="/admin/users">
-                <span class="glyphicon glyphicon-th-list"></span> Users
-            </a>
-        </p>
+    <title>شکار معما</title>
 
-        <p>
-            <a class="btn btn-primary btn-lg" href="/admin/groups">
-                <span class="glyphicon glyphicon-th-list"></span> Groups
+    <!-- favicon linke -->
+    <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
+
+    <!-- ===============    Bootstrap core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
+    <!-- ===============    dashboard core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+</head>
+<body>
+<nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="/firstpage/img/logo.png" width="30px"height="30px">
             </a>
-        </p>
-        <p>
-            <a class="btn btn-primary btn-lg" href="/admin/problems">
-                <span class="glyphicon glyphicon-th-list"></span> Problems
-            </a>
-        </p>
-        <p>
-            <a class="btn btn-primary btn-lg" href="/admin/tags">
-                <span class="glyphicon glyphicon-th-list"></span> Tags
-            </a>
-        </p>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="btn-group-sm btn-default navbar-btn" href="/">Home</a></li>
+            </ul>
+        </div>
     </div>
-    <a href="/admin/jobs"><span class="glyphicon glyphicon-chevron-left"></span>  Go back</a>
-</header>
+</nav>
+<div class="jumbotron" dir="rtl">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <h2>صفحه مدیریت</h2>
+            </div>
+        </div>
+        </div>
+</div>
+<div class="jumbotron" dir="rtl">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <a class="btn btn-default btn-lg btn-block" href="/admin/users">
+                        <span class="glyphicon glyphicon-th-list"></span> Users
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-default btn-lg btn-block" href="/admin/groups">
+                        <span class="glyphicon glyphicon-th-list"></span> Groups
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-default btn-lg btn-block" href="/admin/problems">
+                        <span class="glyphicon glyphicon-th-list"></span> Problems
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<% include ../partials/footer %>
+
+</body>

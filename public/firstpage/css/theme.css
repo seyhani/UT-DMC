@@ -142,7 +142,7 @@ section {
   width: 100%;
   height: auto;
   position: relative;
-  top: 50%;
+  top: 40%;
 }
 
 .boss-countdown div {
@@ -170,8 +170,8 @@ section {
 
 .boss-scroll-down {
   position: absolute;
-  bottom: 20px;
-  left: 50%;
+  bottom: 80px;
+  left: 47%;
   margin-left: -20px;
   width: 40px;
   display: inline-block;
