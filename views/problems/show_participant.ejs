@@ -63,10 +63,12 @@
 <div class="row problembody">
     <div class="container">
         <div class="col-md-3 submitpart">
+            <%if(!puzzle.solved){%>
             <form action="/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST">
                 <input style="width: 100%;height: 50px;padding: 20px;border: 0;margin-bottom: 25px;border-radius:10px; " type="text" name="answer" placeholder="Answer">
                 <button class="btn btn-default btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت جواب</button>
             </form>
+            <%}%>
             <%if(!(puzzle.requestedForHint||puzzle.solved||puzzle.reviewd)){%>
             <a style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-success" style="margin-bottom:25px; ">درخواست کمک</button></a>
             <%}%>
@@ -77,6 +79,7 @@
                 <p><%= puzzle.feedback%></p>
             <%}else{%>
                 <p><%= puzzle.problem.description %></p>
+            <!--public/Uploads/Files/puzzle.problem.id/-->
             <%}%>
         </div>
     </div>

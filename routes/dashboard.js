@@ -22,9 +22,9 @@ var sanitize = require('mongo-sanitize');
 router.all("/*",middleware.isLoggedIn);
 
 router.get("/", function(req, res){
-    User.findById(req.user._id).populate("group").exec(function (err,user) {
+    User.findById(req.user.id).populate("group").exec(function (err,user) {
         if(!user.group) {
-            res.render("dashboard/index", {puzzles: null, metaPuzzle: null, canGoToNextStage: null});
+            res.render("dashboard/index", {user:user,puzzles: null, metaPuzzle: null, canGoToNextStage: null});
         }else {
             user.group.findCurrentStagePuzzles(function (err, puzzles) {
                 user.group.findCurrentStageMetaPuzzle(function (err, metaPuzzle) {
@@ -36,6 +36,7 @@ router.get("/", function(req, res){
                     } else {
                         res.render("dashboard/index",
                             {
+                                user:user,
                                 puzzles: puzzles,
                                 metaPuzzle: metaPuzzle,
                                 canGoToNextStage: canGoToNextStage
@@ -57,6 +58,7 @@ router.get("/ranking", function(req, res){
 router.get("/puzzles/:puzzle_id", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
         Puzzle.findById(req.params.puzzle_id).populate(["problem","group"]).exec( function (err, puzzle) {
+            console.log(puzzle.problem.files);
             if (err) {
                 console.log(err);
             } else {
@@ -87,7 +89,7 @@ router.post("/puzzles/:puzzle_id/answer", function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                if(Date.now() - 1*1000 > puzzle.lastSubmit ) {
+                if(Date.now() - 20*1000 > puzzle.lastSubmit ) {
                     if (puzzle.submitAnswer(answer)) {
                         console.log("Your answer was correct :)");
                         req.flash("success", "Your answer was correct :)");

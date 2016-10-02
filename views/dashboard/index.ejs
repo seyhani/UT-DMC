@@ -47,19 +47,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h1><span class="glyphicon glyphicon-tent"></span>Puzzles!</h1>
+                    <h1><span class="glyphicon glyphicon-map-marker"></span>پازل ها!</h1>
                 </div>
 
                 <div class="col-md-3" >
 
                 </div>
                 <div class="col-md-3" style="text-align: right;padding-top: 10px;">
-                    <button type="button" class="btn btn-primary btn-lg btn-block">
-                        <% if(currentUser.group){ %>
-                            <li><a href="#"><%= currentUser.group.name%></a></li>
+                    <button type="button" class="btn btn-success btn-lg btn-block">
+                        <% if(user.group){ %>
+                            <a style="text-decoration: none;" href="#"><%= user.group.name%></a>
                         <% } else { %><a>شما گروهی ندارید</a> <% } %>
                     </button>
-                    <button type="button" class="btn btn-default btn-lg btn-block">امتیاز گروه ها</button>
+                    <a style="text-decoration: none;" href="/dashboard/ranking"><button  type="button" class="btn btn-default btn-lg btn-block">امتیاز گروه ها</button></a>
                 </div>
             </div>
         </div>

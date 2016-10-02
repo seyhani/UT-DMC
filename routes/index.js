@@ -9,7 +9,8 @@ var middleware = require('../middleware/index');
 var crypto = require("crypto");
 var async = require("async");
 var SMTPServer = require('smtp-server').SMTPServer;
-
+var simplesmtp = require("simplesmtp");
+var fs = require("fs");
 var smtpTransport = require('nodemailer-smtp-transport');
 var directTransport = require('nodemailer-direct-transport');
 

@@ -95,7 +95,7 @@ body{
 }
 body{
     background-color: #fff;
-    -webkit-animation: random 5s infinite;
+    -webkit-animation: random 200s infinite;
     animation: random 100s infinite;
 }
 @keyframes  random {
