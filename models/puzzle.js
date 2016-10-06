@@ -33,6 +33,7 @@ PuzzleSchema.methods.submitAnswer = function (answer) {
     if(answer == correctAnswer) {
         this.status = 'solved';
         this.problem.submits.correct++;
+        // this.group.competition.score++;
     }else{
         this.problem.submits.wrong++;
     }

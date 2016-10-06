@@ -26,6 +26,7 @@
               // preloader function
                 $('#boss-preloader').fadeOut(); // will first fade out the loading animation
                 $('body').delay(350).css({'overflow':'visible'});
+
         // active owl carousel
         $(".boss-owl").owlCarousel({
             pagination: false,
@@ -54,7 +55,7 @@
 
      // countdown
       // To change date, simply edit: var endDate = "May 26, 2015 20:39:00";
-      var endDate = "October 6, 2016 08:00:00";
+      var endDate = "November 3, 2016 08:00:00";
         $('.boss-countdown').countdown({
           date: endDate,
           render: function(data) {

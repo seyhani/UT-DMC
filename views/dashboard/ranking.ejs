@@ -13,7 +13,9 @@
     <!-- favicon linke -->
     <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
     <!-- ===============    Bootstrap core CSS     =============== -->
-    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.rtl.css" media="all" />
+    <!-- ===============    Bootstrap core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/ranking/ranking.css" media="all" />
 </head>
 <body>
 <nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
@@ -32,6 +34,7 @@
                 <%if(currentUser.group){%>
                 <li><a href="#"><%= currentUser.group.name%></a></li>
                 <%}%>
+                <li><a href="/dashboard">بازگشت</a> </li>
                 <li><a href="#"><%= currentUser.username %> حساب کاربری  </a></li>
                 <li><a href="/logout">خروج</a></li>
                 <% } %>
@@ -40,12 +43,30 @@
     </div>
 </nav>
 <div class="row">
-    <div class="col-md-3">
-        <p class="lead">Survey</p>
-        <div class="list-group">
-            <%groups.forEach(function (group) {%>
-            <li class="list-group-item"><%=group.name%>  Stage : <%=group.competition.stage%></li>
-            <%});%>
+    <div class="container">
+        <div class="col-md-3 text-left">
+            <h1>وضعیت گروه ها</h1></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="col-md-10 col-md-offset-1">
+
+            <div class="list-group">
+                <div class="list-group-item text-left eachgroup">
+                    <div class="col-md-4 text-center" style="border-left: solid #000000 2px;height: 100%;padding: 15px 0 0 0 ;border-bottom: solid #000000 2px;">اسم گروه ها</div>
+                    <div class="col-md-4 text-center" style="border-left: solid #000000 2px;height: 100%;padding: 15px 0 0 0 ;border-bottom: solid #000000 2px;">مرحله گروه</div>
+                    <div class="col-md-4 text-center" style="height: 100%;padding: 15px 0 0 0 ;border-bottom: solid #000000 2px;">امتیاز گروه</div>
+                </div>
+                <%groups.forEach(function (group) {%>
+                <div class="list-group-item text-left eachgroup">
+                    <div class="col-md-4" style="border-left: solid #E0E0E0 2px;height: 100%;padding: 20px 30px 0 0;"><%=group.name%></div>
+                    <div class="col-md-4 text-center" style="border-left: solid #E0E0E0 2px;height: 100%;padding: 20px 10px 0 0;"><%=group.competition.stage%></div>
+                    <div class="col-md-4 text-center" style="padding: 20px 10px 0 0;"><%=group.competition.score%></div>
+                      </div>
+                <%});%>
+            </div>
         </div>
     </div>
 </div>

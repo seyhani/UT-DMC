@@ -131,6 +131,7 @@ section {
   background-size: cover;
   background-attachment: fixed;
   opacity: 0.8;
+  /*-webkit-filter: blur(5px); filter: blur(5px);*/
 }
 
 .boss-home-area > .container {
@@ -342,6 +343,7 @@ section {
   -webkit-background-size: cover;
   background-size: cover;
   position: relative;
+
 }
 
 .boss-form {

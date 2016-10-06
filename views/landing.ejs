@@ -58,19 +58,19 @@
 
 <!-- preloader -->
 
-<div id="boss-preloader">
-    <div class="boss-pre-vcenter text-center">
-        <div id="boss-status">
-            <img src="/firstpage/img/logo-one.png" alt="traivan98 logo" class="img-responsive center-block">
-        </div>
-        <h4>Loading</h4>
-        <div class="spinner">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
-        </div>
-    </div>
-</div>
+<!--<div id="boss-preloader">-->
+    <!--<div class="boss-pre-vcenter text-center">-->
+        <!--<div id="boss-status">-->
+            <!--<img src="/firstpage/img/logo-one.png" alt="traivan98 logo" class="img-responsive center-block">-->
+        <!--</div>-->
+        <!--<h4>Loading</h4>-->
+        <!--<div class="spinner">-->
+            <!--<div class="bounce1"></div>-->
+            <!--<div class="bounce2"></div>-->
+            <!--<div class="bounce3"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 <nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -87,7 +87,7 @@
                 <%if(currentUser.group){%>
                 <li><a href="#"><%= currentUser.group.name%></a></li>
                 <%}%>
-                <li><a href="#"><%= currentUser.username %> حساب کاربری  </a></li>
+                <li><a href="/dashboard"><%= currentUser.username %> حساب کاربری  </a></li>
                 <li><a href="/logout">خروج</a></li>
                 <% } %>
             </ul>
@@ -110,16 +110,16 @@
     <!--</div>-->
 <!--</nav>-->
 <!--    home area section-->
-<section class="boss-home-area" id="boss-home" >
+<section class="boss-home-area" id="boss-home"   >
     <div class="boss-gradient"></div><!-- gradient image -->
     <!-- container -->
-    <div class="container">
+    <div class="container" style="background-color: rgba(10, 10, 10, 0.51);">
         <!-- boss-wrapper vertically center -->
-        <div class="boss-wrapper">
-            <div class="row">
+        <div class="boss-wrapper" >
+            <div class="row" >
                 <div class="col-sm-12 text-center">
                     <div class="boss-logo wow fadeIn" data-wow-delay="1.5s">
-                        <img src="/firstpage/img/logo.png" alt="traivan98 logo" class="img-responsive center-block" >
+                        <img  src="/firstpage/img/logo.png" alt="traivan98 logo" class="img-responsive center-block" >
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@
 
 
 <!-- START service area -->
-<section class="boss-service-area" id="service" style="font-family: IRANSansWeb;">
+<section class="boss-service-area" id="service" style="font-family: IRANSansWeb;padding-top: 20px;">
     <!-- container -->
     <div class="container">
         <div class="row">
@@ -170,9 +170,9 @@
                     <img src="/firstpage/img/badges-dark/BADGE-1.png" alt="" class="img-responsive boss-service-2-image">
                     <div class="boss-single-service-2-content">
                         <article class="text-left row">
-                            <div class="col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-                                <h3>RESPONSIVE DESIGN</h3>
-                                <p class="sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursu</p>
+                            <div class="col-md-8 col-md-offset-5 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                                <h3 >مرحله سوم</h3>
+                                <p class="sub-title">The Maze</p>
                             </div>
                         </article>
                         <div class="row">
@@ -188,8 +188,8 @@
                     <img src="/firstpage/img/badges-dark/BADGE-2.png" alt="" class="img-responsive boss-service-2-image">
                     <div class="boss-single-service-2-content">
                         <article class="text-left row">
-                            <div class="  col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-                                <h3>RESPONSIVE DESIGN</h3>
+                            <div class="  col-md-8 col-md-offset-5 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                                <h3>مرحله دوم</h3>
                                 <p class="sub-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam cursu</p>
                             </div>
                         </article>
@@ -206,14 +206,14 @@
                     <img src="/firstpage/img/badges-dark/BADGE-3.png" alt="" class="img-responsive boss-service-2-image">
                     <div class="boss-single-service-2-content">
                         <article class="text-left row">
-                            <div class="  col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-                                <h3>RESPONSIVE </h3>
-                                <p class="sub-title">Lorem ipsum dolor sit amet,  cursu</p>
+                            <div class="  col-md-8 col-md-offset-5 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
+                                <h3>مرحله اول </h3>
+                                <p class="sub-title">The Balloon</p>
                             </div>
                         </article>
                         <div class="row">
                             <div class="col-md-12">
-                                <p class="text-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint alias fugiat asperiores delectus adipisci placeat eius cumque molestias impedit culpa cupiditate non, nobis illo eum possimus voluptatibus recusandae, est vel.</p>
+                                <p class="text-right">در این مرحله هر گروه باید ۵ معما را حل کند.پس از حل کردن معما و ثبت آن در سایت در صورت درست بودن شماره ی یک بادکنک داده می شود که باید آن بادکنک را در اتاق بادکنک در مدت زمان معین پیدا کنند و کد داخل آن را باید ثبت کنند تا در پایان بتوانند به مرحله بعد بروند</p>
                             </div>
                         </div>
                     </div>

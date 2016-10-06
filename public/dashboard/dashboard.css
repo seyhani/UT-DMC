@@ -12,12 +12,13 @@
 body{
     font-family: IRANSansWeb;
 }
+
 .navbar{
     border-radius: 0;
 }
 .jumbotron{
     margin: 20px;
- padding: 20px 0 20px 0;
+    padding: 20px 0 20px 0;
 }
 .container{
     width: 100%;
@@ -96,7 +97,13 @@ body{
 body{
     background-color: #fff;
     -webkit-animation: random 200s infinite;
-    animation: random 100s infinite;
+    animation: random 200s infinite;
+}
+.btncolor{
+    border: 0;
+    background-color: #64B5F6;
+    -webkit-animation: random 200s infinite;
+    animation: random 200s infinite;
 }
 @keyframes  random {
     15% { background-color: #FF3D00; }
