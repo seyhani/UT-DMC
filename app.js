@@ -16,41 +16,7 @@ var express     = require("express"),
     var directTransport = require('nodemailer-direct-transport');
     var nodemailer = require('nodemailer');
 mongoose.Promise = global.Promise;
-var server = new SMTPServer({allowInsecureAuth:true, onAuth: function(auth, session, callback){
-    // if(auth.username !== 'abc' || auth.password !== 'def'){
-    //     return callback(new Error('Invalid username or password' + auth.user));
-    // }
-    callback(null, {user: 123}); // where 123 is the user id or similar property
-}});
-    server.listen(1567);
-var transporter = nodemailer.createTransport({
-    port:1567,
-    auth:{
-        username: 'abc',
-        password: 'def'
-    },
-    tls:{
-        rejectUnauthorized: false
-    }
 
-});
-var mailOptions = {
-    from: '"Fred Foo" <ahsprim@gmail.com>', // sender address
-    to: "ahsprim@gmail.com", // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world 🐴', // plaintext body
-    html: '<b>Hello world 🐴</b>' // html body
-};
-
-// // send mail with defined transport object
-// transporter.sendMail(mailOptions, function(error, info){
-//     if(error){
-//         return console.log(error);
-//     }
-//     console.log('Message sent: ' + info.response);
-// });
-transporter.close();
-//requiring routes
 var groupRoutes    = require("./routes/group"),
     dashboardRoutes    = require("./routes/dashboard"),
     adminRoutes    = require("./routes/admin"),
@@ -58,7 +24,7 @@ var groupRoutes    = require("./routes/group"),
     indexRoutes      = require("./routes/index");
     userRoutes      = require("./routes/user");
     
-mongoose.connect("mongodb://localhost/MystryHunt");
+mongoose.connect("mongodb://localhost/MystryHuntTest");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");

@@ -11,6 +11,7 @@ var UserSchema = new mongoose.Schema({
     username: String,
     password: String,
     groupname:String,
+    isAdmin:Boolean,
     group:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Group"
@@ -18,9 +19,6 @@ var UserSchema = new mongoose.Schema({
 
     resetPasswordToken:String,
     resetPasswordExpires:Date,
-});
-UserSchema.virtual("isAdmin").get(function () {
-   return (this.username == "a");
 });
 
 UserSchema.pre('save', function(next) {

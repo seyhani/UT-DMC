@@ -44,7 +44,9 @@
 
 <div class="container">
     <% if(error && error.length > 0) { %>
-    <div class="alert alert-danger"><p><%=error %></p></div>
+    <div class="alert
+
+     alert-danger"><p><%=error %></p></div>
     <% } %>
 
     <% if(success && success.length > 0) { %>
@@ -81,8 +83,6 @@
                 <p><%= puzzle.problem.description %></p>
             <!--public/Uploads/Files/puzzle.problem.id/-->
             <%}%>
-            <% if(puzzles){puzzles.forEach(function(puzzle){ %>
-            <% });} %>
         </div>
     </div>
 </div>
