@@ -33,7 +33,7 @@
                     <li><a class="btn-group-sm btn-default navbar-btn" href="/register">ثبت نام</a></li>
                     <% } else { %>
                     <%if(currentUser.group){%>
-                    <li><a href="#"><%= currentUser.group.name%></a></li>
+                    <li><a href="#"><%= user.group.name%></a></li>
                     <%}%>
                     <li><a href="#"><%= currentUser.username %> حساب کاربری  </a></li>
                     <li><a href="/logout">خروج</a></li>
