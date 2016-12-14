@@ -1,1 +1,2 @@
-DM Contest Site
+DMC
+Discrete Mathematics Contest Site
