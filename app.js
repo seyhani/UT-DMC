@@ -9,7 +9,6 @@ var express     = require("express"),
     Comment     = require("./models/comment"),
     User        = require("./models/user"),
     session = require("express-session"),
-    seedDB      = require("./seeds"),
     methodOverride = require("method-override");
     var SMTPServer = require('smtp-server').SMTPServer;
     var smtpTransport = require('nodemailer-smtp-transport');

@@ -13,7 +13,7 @@ var simplesmtp = require("simplesmtp");
 var fs = require("fs");
 var smtpTransport = require('nodemailer-smtp-transport');
 var directTransport = require('nodemailer-direct-transport');
-router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
+// router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
 router.get("/", function(req, res){
     res.render("landing");
 });
