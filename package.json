@@ -4,7 +4,7 @@
   "description": "Survey v1",
   "main": "app.js",
   "scripts": {
-    "start": "mongod",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Colt Steele",
