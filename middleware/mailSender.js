@@ -1,4 +1,5 @@
 'use strict';
+const EmailTemplate = require('email-templates').EmailTemplate;
 const User = require('./../models/user');
 const nodemailer = require('nodemailer');
 
@@ -7,7 +8,7 @@ const mailOptions = {
     subject: 'DM Contest'
 };
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
         user: '', // Your email id
@@ -15,11 +16,36 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-const FUNCS = {
+module.exports = {
     sendTemplateToAll: (pathToTemplate, params, callback) => {
+        User.find({}, 'email', (err, docs) => {
+            if(err)
+                return callback(err);
+            if(!docs)
+                return callback(null);
+            new EmailTemplate(pathToTemplate).render(params, (err, res) => {
+                if(err)
+                    return callback(err);
+                delete res.text;
+                if(!res.html)
+                    return callback(new Error("no html file in template"));
+                let receivers = docs.map(x => x.email).join(', ');
+                let options = Object.assign({}, mailOptions, {to: receivers}, res);
+                return transporter.sendMail(options, callback);
+            });
+        });
     },
 
     sendTemplateTo: (pathToTemplate, params, email, callback) => {
+        new EmailTemplate(pathToTemplate).render(params, (err, res) => {
+            if(err)
+                return callback(err);
+            delete res.text;
+            if(!res.html)
+                return callback(new Error("no html file in template"));
+            let options = Object.assign({}, mailOptions, {to: email}, res);
+            return transporter.sendMail(options, callback);
+        });
     },
 
     sendHtmlToAll: (html, callback) => {
@@ -28,7 +54,8 @@ const FUNCS = {
                 return callback(err);
             if(!docs)
                 return callback(null);
-            let options = Object.assign({}, mailOptions, {to: docs.map(x => x.email).join(', '), html: html});
+            let receivers = docs.map(x => x.email).join(', ');
+            let options = Object.assign({}, mailOptions, {to: receivers, html: html});
             return transporter.sendMail(options, callback);
         });
     },
@@ -38,5 +65,3 @@ const FUNCS = {
         return transporter.sendMail(options, callback);
     }
 };
-
-module.exports = FUNCS;

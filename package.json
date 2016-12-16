@@ -19,6 +19,7 @@
     "cookie-parser": "^1.4.3",
     "crypto": "0.0.3",
     "ejs": "^2.3.4",
+    "email-templates": "^2.5.4",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "method-override": "^2.3.5",
