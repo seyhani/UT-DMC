@@ -17,13 +17,13 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports = {
-    sendTemplateToAll: (pathToTemplate, params, callback) => {
-        User.find({}, 'email', (err, docs) => {
+    sendTemplateToAll:function (pathToTemplate, params, callback) {
+        User.find({}, 'email', function(err, docs) {
             if(err)
                 return callback(err);
             if(!docs)
                 return callback(null);
-            new EmailTemplate(pathToTemplate).render(params, (err, res) => {
+            new EmailTemplate(pathToTemplate).render(params, function(err, res)  {
                 if(err)
                     return callback(err);
                 delete res.text;
@@ -36,8 +36,8 @@ module.exports = {
         });
     },
 
-    sendTemplateTo: (pathToTemplate, params, email, callback) => {
-        new EmailTemplate(pathToTemplate).render(params, (err, res) => {
+    sendTemplateTo: function(pathToTemplate, params, email, callback) {
+        new EmailTemplate(pathToTemplate).render(params, function(err, res) {
             if(err)
                 return callback(err);
             delete res.text;
@@ -48,19 +48,19 @@ module.exports = {
         });
     },
 
-    sendHtmlToAll: (html, callback) => {
-        User.find({}, 'email', (err, docs) => {
+    sendHtmlToAll: function(html, callback)  {
+        User.find({}, 'email', function(err, docs) {
             if(err)
                 return callback(err);
             if(!docs)
                 return callback(null);
-            let receivers = docs.map(x => x.email).join(', ');
+            let receivers = docs.map( x.email).join(', ');
             let options = Object.assign({}, mailOptions, {to: receivers, html: html});
             return transporter.sendMail(options, callback);
         });
     },
 
-    sendHtmlTo: (html, email, callback) => {
+    sendHtmlTo:function (html, email, callback)  {
         let options = Object.assign({}, mailOptions, {to: email, html: html});
         return transporter.sendMail(options, callback);
     }

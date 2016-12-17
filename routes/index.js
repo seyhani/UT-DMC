@@ -13,7 +13,17 @@ var simplesmtp = require("simplesmtp");
 var fs = require("fs");
 var smtpTransport = require('nodemailer-smtp-transport');
 var directTransport = require('nodemailer-direct-transport');
+'use strict';
+
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
+router.get('/asset', function(req, res){
+    var tempFile="public/HW4.pdf";
+    // fs.readFile(tempFile, function (err,data){
+    //     res.contentType("application/pdf");
+    //     res.send(data);
+    // });
+    res.render("test");
+});
 router.get("/", function(req, res){
     res.render("landing");
 });

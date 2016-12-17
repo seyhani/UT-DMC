@@ -62,7 +62,7 @@ router.get("/puzzles/:puzzle_id", function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                res.render("problems/show_participant",{puzzle: puzzle});
+                res.render("dashboard/puzzle/show",{puzzle: puzzle});
             }
         });
     });

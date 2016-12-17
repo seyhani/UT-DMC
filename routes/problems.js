@@ -21,7 +21,7 @@ router.get("/", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            res.render("problems/index", {problems: allProblems});
+            res.render("admin/problems/index", {problems: allProblems});
         }
     });
 });
@@ -37,8 +37,6 @@ router.post("/",upload.any() ,function(req, res){
     var newProblem = {name: name, description: desc,answer:answer,feedback:feedback,score:score ,submits:{correct:0,wrong:0}};
     // Create a new problem and save to DB
     Problem.create(newProblem, function(err, problem){
-        if(!fs.existsSync("./public/Uploads/Files/"+problem.id))
-            fs.mkdirSync("./public/Uploads/Files/"+problem.id);
         if(req.files)
         {
             req.files.forEach(function (file) {
@@ -50,8 +48,6 @@ router.post("/",upload.any() ,function(req, res){
         if(err){
             console.log(err);
         } else {
-            //redirect back to problems page
-            // console.log(newlyCreated);
             res.redirect("/admin/problems");
         }
     });
@@ -59,18 +55,19 @@ router.post("/",upload.any() ,function(req, res){
 
 //NEW - show form to create new problem
 router.get("/new", function(req, res){
-   res.render("problems/new"); 
+   res.render("admin/problems/new");
 });
 
 // SHOW - shows more info about one problem
 router.get("/:id", function(req, res){
     //find the problem with provided ID
     Problem.findById(req.params.id).populate("comments").exec(function(err, foundProblem){
+        console.log(foundProblem);
         if(err){
             console.log(err);
         } else {
             //render show template with that problem
-            res.render("problems/show", {problem: foundProblem});
+            res.render("admin/problems/show", {problem: foundProblem});
         }
     });
 });
@@ -82,7 +79,7 @@ router.get("/:id/edit", function(req, res){
             console.log(err);
         } else {
             //render show template with that problem
-            res.render("problems/edit", {problem: foundProblem});
+            res.render("admin/problems/edit", {problem: foundProblem});
         }
     });
 });
