@@ -108,6 +108,18 @@ router.post("/puzzles/:puzzle_id/answer", function(req, res){
     });
 });
 
+router.post(‍‍"/puzzles/:puzzle_id/uploadImage", upload.single(), function(req, res) {
+    if(!req.file)
+        return res.status(400).send("no file given");
+    Puzzle.findById(req.params.puzzle_id, function(err, puzzle) {
+        if(err && !puzzle)
+            return res.status(400).send("no such file");
+        if(err)
+            return res.status(500);
+        
+    });
+}
+
 router.get("/nextstage", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
         user.group.findCurrentStageMetaPuzzle(function (err,metaPuzzle){
@@ -130,4 +142,3 @@ router.get("/nextstage", function(req, res){
 });
 
 module.exports = router;
-

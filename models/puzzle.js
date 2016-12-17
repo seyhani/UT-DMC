@@ -9,6 +9,7 @@ var PuzzleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Group"
     },
+    submitImg: {data: Buffer, contentType: String}, //TODO: to save file
     tags:[String],
     lastSubmit:{type:Date,default:Date.now()-60000},
     status: String
@@ -69,4 +70,3 @@ PuzzleSchema.virtual('requestedForHint').get(function () {
 });
 
 module.exports = mongoose.model("Puzzle", PuzzleSchema);
-

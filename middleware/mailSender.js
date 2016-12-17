@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports = {
-    sendTemplateToAll:function (pathToTemplate, params, callback) {
+    sendTemplateToAll: function (pathToTemplate, params, callback) {
         User.find({}, 'email', function(err, docs) {
             if(err)
                 return callback(err);
@@ -60,7 +60,7 @@ module.exports = {
         });
     },
 
-    sendHtmlTo:function (html, email, callback)  {
+    sendHtmlTo: function (html, email, callback)  {
         let options = Object.assign({}, mailOptions, {to: email, html: html});
         return transporter.sendMail(options, callback);
     }
