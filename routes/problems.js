@@ -97,7 +97,7 @@ router.get("/:id/reset", function(req, res){
 });
 
 router.put("/:id", function(req, res){
-    var newData = {name: req.body.name, answer: req.body.answer, 
+    var newData = {name: req.body.name, answer: req.body.answer,
         description: req.body.description,score:req.body.score,feedback:req.body.feedback
     };
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
@@ -130,4 +130,3 @@ router.delete("/:problem_id",function(req, res,next){
 });
 
 module.exports = router;
-

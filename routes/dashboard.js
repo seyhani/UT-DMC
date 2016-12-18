@@ -108,16 +108,12 @@ router.post("/puzzles/:puzzle_id/answer", function(req, res){
     });
 });
 
-router.post(‍‍"/puzzles/:puzzle_id/uploadImage", upload.single(), function(req, res) {
+router.post(‍‍"/problem/:problem_id/groups/:group_id/uploadImage", upload.single(), function(req, res) {
+    let pid = req.params.problem_id, gid = req.params.group_id;
     if(!req.file)
         return res.status(400).send("no file given");
-    Puzzle.findById(req.params.puzzle_id, function(err, puzzle) {
-        if(err && !puzzle)
-            return res.status(400).send("no such file");
-        if(err)
-            return res.status(500);
-        
-    });
+    middleware.uploadToDir(req.file.path ,pid ,gid);
+    return res.status(200).send("done");
 }
 
 router.get("/nextstage", function(req, res){
