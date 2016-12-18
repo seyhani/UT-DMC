@@ -17,55 +17,51 @@
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
     <!-- ===============    dashboard core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <style>
+        .container{
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
-                <img alt="Brand" src="/firstpage/img/logo.png" width="30px"height="30px">
+                <img alt="Brand" src="/firstpage/img/logo.png" width="40px"height="40px">
             </a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="btn-group-sm btn-default navbar-btn" href="/">Home</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="jumbotron" dir="rtl">
+<div class="jumbotron">
     <div class="container">
         <div class="row">
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-                <h2>صفحه مدیریت</h2>
-            </div>
-        </div>
-        </div>
-</div>
-<div class="jumbotron" dir="rtl">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <a class="btn btn-default btn-lg btn-block" href="/admin/users">
-                        <span class="glyphicon glyphicon-th-list"></span> Users
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a class="btn btn-default btn-lg btn-block" href="/admin/competitions">
-                        <span class="glyphicon glyphicon-th-list"></span> Competitions
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a class="btn btn-default btn-lg btn-block" href="/admin/problems">
-                        <span class="glyphicon glyphicon-th-list"></span> Problems
-                    </a>
-                </div>
+            <div class="col-md-6">
+                <h1><span class="glyphicon glyphicon-tent"></span>puzzles</h1>
             </div>
         </div>
     </div>
 </div>
 
+<div class="row text-center" style="display:flex; flex-wrap: wrap;margin-left: 10px;">
+    <% puzzles.forEach(function(puzzle){ %>
+        <%if(puzzle.submisson.file){%>
+            <div class="col-md-3 col-xs-12">
+                <div class="thumbnail">
+                    <div class="caption">
+                            <h4><%= puzzle.group.name %></h4>
+                    </div>
+                    <p>
+                        <a href="/admin/competition/puzzles/<%= puzzle._id %>" class="btn btn-primary">More Info</a>
+                    </p>
+                </div>
+            </div>
+        <%}%>
+    <%});%>
+</div>
 
 </body>

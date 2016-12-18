@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var middleware = require("../middleware/index");
 
 var ProblemSchema = new mongoose.Schema({
     name: String,
@@ -23,7 +24,7 @@ ProblemSchema.methods.reset = function () {
     this.submits.correct = 0;
     this.submits.wrong = 0;
     this.save();
-}
+};
 
 ProblemSchema.methods.getFeedback = function (group_id) {
     var feedback;
@@ -33,7 +34,7 @@ ProblemSchema.methods.getFeedback = function (group_id) {
     else
         feedback = feedbacks;
     return feedback;
-}
+};
 
 ProblemSchema.methods.submitAnswer = function (answer) {
     var answers = this.answer.split(" ");
@@ -42,7 +43,7 @@ ProblemSchema.methods.submitAnswer = function (answer) {
     else {
 
     }
-}
+};
 
 ProblemSchema.virtual('tag').set(function (tag) {
     var problem = this;
@@ -58,7 +59,13 @@ ProblemSchema.virtual('tag').set(function (tag) {
     }
 });
 
+ProblemSchema.virtual('dir').get(function () {
+    return "Files/Problems/"+this.name+"/";
+});
 
+ProblemSchema.post("remove",function (problem) {
+    middleware.removeProblemDirectories(problem.name);
+});
 
 module.exports = mongoose.model("Problem", ProblemSchema);
 

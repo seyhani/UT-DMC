@@ -1,6 +1,7 @@
 var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
+var mongoose = require("mongoose");
 var User = require("../models/user");
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
@@ -8,6 +9,19 @@ var Group = require("../models/group");
 
 router.get("/", function(req, res){
     res.render('admin/index');
+});
+
+router.get("/console", function(req, res){
+    res.render('console');
+});
+
+router.post("/console", function(req, res){
+    var command = req.body.input.split(" ");
+    var model = command[1];
+    command = command[0];
+    if(command == "clean")
+        mongoose.model(model).remove({},function (err) {});
+    res.redirect('/admin/console');
 });
 
 router.get("/puzzles", function(req, res){

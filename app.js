@@ -6,8 +6,6 @@ var express     = require("express"),
     cookieParser = require("cookie-parser"),
     LocalStrategy = require("passport-local"),
     flash        = require("connect-flash"),
-    Comment     = require("./models/comment"),
-    User        = require("./models/user"),
     session = require("express-session"),
     methodOverride = require("method-override");
     var SMTPServer = require('smtp-server').SMTPServer;
@@ -21,6 +19,7 @@ var groupRoutes    = require("./routes/group"),
     adminRoutes    = require("./routes/admin"),
     problemRoutes = require("./routes/problems"),
     indexRoutes      = require("./routes/index");
+    competitionRoutes = require("./routes/competition")
     userRoutes      = require("./routes/user");
     
 mongoose.connect("mongodb://localhost/MystryHuntTest");
@@ -39,9 +38,9 @@ app.use(require("express-session")({
     saveUninitialized: false
 }));
 
-app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 require('./config/passport')(passport);
 
@@ -55,6 +54,7 @@ app.use(function(req, res, next){
 
 app.use("/", indexRoutes);
 app.use("/admin/", groupRoutes);
+app.use("/admin/", competitionRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/admin", adminRoutes);
 app.use("/admin/users", userRoutes);

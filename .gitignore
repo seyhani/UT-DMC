@@ -34,7 +34,7 @@ proguard/
 
 # Android Studio captures folder
 captures/
-
+Files/
 # Intellij
 *.iml
 .idea/workspace.xml
@@ -461,3 +461,13 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+.idea/markdown-navigator/
+.idea/misc.xml
+Files/Problems/
+Files/Uploads/
+Uploads/
+a.out
+public/HW4.pdf
+public/hi.in
+public/hi.out
+public/test.cpp

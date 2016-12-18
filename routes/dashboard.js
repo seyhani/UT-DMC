@@ -17,12 +17,16 @@ var upload = multer({
 });
 var fs = require("fs");
 var sanitize = require('mongo-sanitize');
+var path = require('path')
+
+
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
 router.all("/*",middleware.isLoggedIn);
 
 router.get("/", function(req, res){
-    User.findById(req.user.id).populate("group").exec(function (err,user) {
+
+    User.findById(req.user.id).deepPopulate(["group","group.competition.puzzles","group.competition"]).exec(function (err,user) {
         if(!user.group) {
             res.render("dashboard/index", {user:user,puzzles: null, metaPuzzle: null, canGoToNextStage: null});
         }else {
@@ -58,7 +62,6 @@ router.get("/ranking", function(req, res){
 router.get("/puzzles/:puzzle_id", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
         Puzzle.findById(req.params.puzzle_id).populate(["problem","group"]).exec( function (err, puzzle) {
-            console.log(puzzle.problem.files);
             if (err) {
                 console.log(err);
             } else {
@@ -82,42 +85,51 @@ router.get("/puzzles/:puzzle_id/hint", function(req, res){
     });
 });
 
-router.post("/puzzles/:puzzle_id/answer", function(req, res){
+router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, res){
     var answer = sanitize(req.body.answer);
     User.findById(req.user._id).populate("group").exec(function (err,user) {
         Puzzle.findById(req.params.puzzle_id).populate(["problem","group"]).exec(function (err, puzzle) {
             if (err) {
                 console.log(err);
             } else {
-                if(Date.now() - 20*1000 > puzzle.lastSubmit ) {
+                if(Date.now() - 1*1000 > puzzle.lastSubmit ) {
+                    var submission_dir = puzzle.problem.dir+"Submissions";
+                    var submission_name = puzzle.submisson.file;
+                    if(puzzle.submisson.file)
+                        if (fs.existsSync(submission_dir+"/"+submission_name))fs.unlinkSync(submission_dir+"/"+submission_name);
+                    submission_name = user.group.name+path.extname(req.file.originalname)
+                    middleware.uploadToDir(req.file.path,submission_dir,submission_name);
+                    puzzle.submisson.file = user.group.name+path.extname(req.file.originalname);
+                    puzzle.save();
                     if (puzzle.submitAnswer(answer)) {
-                        console.log("Your answer was correct :)");
+                        // console.log("Your answer was correct :)");
                         req.flash("success", "Your answer was correct :)");
                     }
                     else {
-                        console.log("Your answer was not correct :(");
+                        // console.log("Your answer was not correct :(");
                         req.flash("error", "Your answer was not correct :(");
                     }
                 }else{
-                    console.log( "Wait a little before next submit!");
+                    // console.log( "Wait a little before next submit!");
                     req.flash("error", "Wait a little before next submit!");
                 }
-                res.redirect("/dashboard");
+                res.redirect("/dashboard/puzzles/"+puzzle._id);
             }
         });
     });
 });
 
-router.post(‍‍"/problem/:problem_id/groups/:group_id/uploadImage", upload.single(), function(req, res) {
+router.post("/problems/:problem_id/groups/:group_id/uploadFile", function(req, res){
     let pid = req.params.problem_id, gid = req.params.group_id;
     if(!req.file)
         return res.status(400).send("no file given");
     middleware.uploadToDir(req.file.path ,pid ,gid);
     return res.status(200).send("done");
-}
+});
+
 
 router.get("/nextstage", function(req, res){
-    User.findById(req.user._id).populate("group").exec(function (err,user) {
+    User.findById(req.user._id).deepPopulate(["competition","competition.puzzles","group"]).exec(function (err,user) {
         user.group.findCurrentStageMetaPuzzle(function (err,metaPuzzle){
                 if (err) {
                     console.log(err);

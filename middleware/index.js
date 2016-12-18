@@ -1,5 +1,21 @@
 
 var fs = require('fs');
+function deleteFolderRecursive (path) {
+    if( fs.existsSync(path) ) {
+        fs.readdirSync(path).forEach(function(file,index){
+            var curPath = path + "/" + file;
+            if(fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
+};
+function mkdir(dir) {
+    if (!fs.existsSync(dir))fs.mkdirSync(dir);
+}
 module.exports = {
     isLoggedIn: function(req, res, next){
         if(req.isAuthenticated()){
@@ -35,8 +51,21 @@ module.exports = {
 
         return text;
     },
+
+    initialProblemDirectories : function (problemName) {
+        var dir = "Files/Problems/";
+        dir += problemName;
+        mkdir(dir);
+        dir += "/";
+        mkdir(dir+"Submissions");
+        mkdir(dir+"Sources");
+
+    },
+    removeProblemDirectories :function (problemName) {
+        deleteFolderRecursive("Files/Problems/"+problemName);
+    },
     uploadToDir:function (tmp_path,folder_name,file_name) {
-        var target_path = './public/Uploads/Files/' + folder_name + '/' + file_name;
+        var target_path =  folder_name + '/' + file_name;
         fs.rename(tmp_path, target_path, function (err) {
             if (err) throw err;
             fs.unlink(tmp_path, function () {
@@ -44,4 +73,4 @@ module.exports = {
             });
         });
     }
-}
+};

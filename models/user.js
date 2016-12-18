@@ -2,6 +2,7 @@ var crypto = require('crypto');
 var bcrypt = require('bcrypt');
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var UserSchema = new mongoose.Schema({
     firstname:String,
@@ -29,7 +30,6 @@ UserSchema.pre('save', function(next) {
         if (err) return next(err);
         var hash = bcrypt.hashSync(user.password, salt, null);
         user.password = hash;
-        console.log(user.password);
         return next();
     });
 });
@@ -42,5 +42,5 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 };
 
 UserSchema.plugin(passportLocalMongoose)
-
+UserSchema.plugin(deepPopulate);
 module.exports = mongoose.model("User", UserSchema);

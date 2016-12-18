@@ -6,6 +6,7 @@ var middleware = require("../middleware/index");
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
+var Competition = require("../models/competition");
 
 
 
@@ -21,21 +22,36 @@ router.get("/groups/new", function(req, res){
 
 router.post("/groups", function(req, res){
     Problem.find({}).exec(function (err,problems) {
-        var newGroup = new Group({name:req.body.groupName,competition:{stage:0,puzzles:[]}});
-        newGroup.index = Math.floor(Math.random() * 1000);
-        Group.create(newGroup,function (err,group) {
-            if(err)
-                console.log(err);
-            problems.forEach(function (problem) {
-                Puzzle.create({problem:problem,group:group,status:"unsolved",tags:problem.tags},
-                    function (err,puzzle) {
-                    group.competition.puzzles.push(puzzle);
-                    group.save();
+        var newComp = {
+            name:req.body.competitionName,stage: 0, puzzles: []
+        };
+        Competition.create(newComp, function (err, competition) {
+            var newGroup = new Group({name: req.body.groupName, competition:competition});
+            newGroup.index = Math.floor(Math.random() * 1000);
+            Group.create(newGroup, function (err, group) {
+                if (err)
+                    console.log(err);
+                problems.forEach(function (problem) {
+                    Puzzle.create({problem: problem, group: group, status: "unsolved", tags: problem.tags},
+                        function (err, puzzle) {
+                            group.competition.puzzles.push(puzzle);
+                            group.competition.save();
+                            group.save();
+                        });
                 });
+                res.redirect('groups/' + group._id);
             });
-            res.redirect('groups/'+group._id);
         });
     });
+});
+
+router.get("/groups/:groupId", function(req, res){
+    Group.findById(req.params.groupId).deepPopulate(['members','competition.puzzles','competition.puzzles.problem'])
+        .exec(function (err,group) {
+            User.find({_id:{$nin:group.members}}).exec(function (err,users) {
+                res.render("admin/groups/show",{group:group,users:users});
+            });
+        });
 });
 
 router.post("/groups/:groupId/addUser", function(req, res){
@@ -49,15 +65,6 @@ router.post("/groups/:groupId/addUser", function(req, res){
         });
         res.redirect('/admin/groups/'+group._id);
     });
-});
-
-router.get("/groups/:groupId", function(req, res){
-    Group.findById(req.params.groupId).deepPopulate(['members','competition.puzzles','competition.puzzles.problem'])
-        .exec(function (err,group) {
-            User.find({_id:{$nin:group.members}}).exec(function (err,users) {
-                res.render("admin/groups/show",{group:group,users:users});
-            });
-        });
 });
 
 router.get("/groups/:groupId/puzzles/:puzzle_id", function(req, res){

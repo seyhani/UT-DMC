@@ -41,7 +41,8 @@ router.post("/",upload.any() ,function(req, res){
         {
             req.files.forEach(function (file) {
                 problem.files.push(file.originalname);
-                middleware.uploadToDir(file.path,problem.id,file.originalname);
+                middleware.initialProblemDirectories(problem.name);
+                middleware.uploadToDir(file.path,problem.dir+"Sources",file.originalname);
             });
             problem.save();
         }
@@ -62,7 +63,6 @@ router.get("/new", function(req, res){
 router.get("/:id", function(req, res){
     //find the problem with provided ID
     Problem.findById(req.params.id).populate("comments").exec(function(err, foundProblem){
-        console.log(foundProblem);
         if(err){
             console.log(err);
         } else {

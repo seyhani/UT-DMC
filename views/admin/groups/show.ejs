@@ -46,8 +46,8 @@
                             Solved Problems:
                             <p style="width: 100%;">
                                 <%group.competition.puzzles.forEach(function(puzzle){%>
-                                    <%if(puzzle.solved){%>
-                                        <a href="/admin/groups/<%=group._id%>/puzzles/<%=puzzle._id%>" style="text-decoration: none;"><%= puzzle.name%> -- </a>
+                                    <%if(puzzle&&puzzle.solved){%>
+
                                 <%}%>
                             <%});%>
                             </p>

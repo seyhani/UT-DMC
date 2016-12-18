@@ -16,16 +16,10 @@ var directTransport = require('nodemailer-direct-transport');
 'use strict';
 
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
-router.get('/asset', function(req, res){
-    var tempFile="public/HW4.pdf";
-    // fs.readFile(tempFile, function (err,data){
-    //     res.contentType("application/pdf");
-    //     res.send(data);
-    // });
-    res.render("test");
-});
+
 router.get("/", function(req, res){
-    res.render("landing");
+    req.flash("info","dsdadasdasdasdsd");
+    res.render('landing', { messages: req.flash('info') });
 });
 
 // show register form
@@ -34,44 +28,31 @@ router.get("/register", function(req, res){
 });
 
 router.post('/register',function(req, res,next) {
-    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret="+ '6LdbUwcUAAAAAMquB_XKPwD5XtUPwhY19iIU8umM' +"&response=" +req.body['g-recaptcha-response'];
-    request(verificationUrl,function(error,response,body) {
-        body = JSON.parse(body);
-        if (body.success) {
-            if (!req.body.username) {
-                res.redirect('/register');
-            }
-            else {
-                var username = sanitize(req.body.username);
-                var password = sanitize(req.body.password);
-                var firstname = sanitize(req.body.firstname);
-                var lastname = sanitize(req.body.lastname);
-                var studentId = sanitize(req.body.studentId);
-                var email = sanitize(req.body.email);
-                var user = new User({
-                    firstname: firstname,
-                    lastname: lastname,
-                    username: username,
-                    studentId: studentId,
-                    email: email,
-                    password: password,
-                });
-                User.findOne({username: user.username}).exec(function (err, existUser) {
-                    if (err) return next(err);
-                    if (existUser) {
-                        req.flash('error', 'Username already exist');
-                        res.redirect('/register');
-                    } else {
-                        user.save(function (err) {
-                            req.logIn(user, function (err) {
-                                res.redirect('/dashboard');
-                            });
-                        });
-                    }
-                });
-            }
+    var username = sanitize(req.body.username);
+    var password = sanitize(req.body.password);
+    var firstname = sanitize(req.body.firstname);
+    var lastname = sanitize(req.body.lastname);
+    var studentId = sanitize(req.body.studentId);
+    var email = sanitize(req.body.email);
+    var user = new User({
+        firstname: firstname,
+        lastname: lastname,
+        username: username,
+        studentId: studentId,
+        email: email,
+        password: password,
+    });
+    User.findOne({username: user.username}).exec(function (err, existUser) {
+        if (err) return next(err);
+        if (existUser) {
+            req.flash('error', 'Username already exist');
+            res.redirect('/register');
         } else {
-         res.redirect('/register')
+            user.save(function (err) {
+                req.logIn(user, function (err) {
+                    res.redirect('/dashboard');
+                });
+            });
         }
     });
 });

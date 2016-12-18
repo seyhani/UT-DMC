@@ -11,7 +11,11 @@ var PuzzleSchema = new mongoose.Schema({
     },
     tags:[String],
     lastSubmit:{type:Date,default:Date.now()-60000},
-    status: String
+    status: String,
+    submisson:{
+        file:String,
+        answer:String,
+    }
 });
 
 PuzzleSchema.methods.hasTag = function (tag) {

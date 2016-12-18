@@ -8,19 +8,14 @@ var GroupSchema = new mongoose.Schema({
         ref: "User"
     }],
     competition:{
-        stage:{type:Number,default:0},
-        score:{type:Number,default:0},
-        hints:{type:Number,default:5},
-        puzzles:[{
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Puzzle"
-        }],
-    }
+            ref: "Competition"
+        },
 });
 
 GroupSchema.methods.findCurrentStagePuzzles = function (callback) {
     var group = this;
-    mongoose.model("Puzzle").find({$and:[{tags:group.competition.stage},{_id:{$in:group.competition.puzzles}}]})
+    mongoose.model("Puzzle").find({_id:{$in:group.competition.puzzles}})
         .populate("problem").exec(callback);
 };
 
@@ -43,6 +38,11 @@ GroupSchema.methods.addPuzzle = function (puzzle) {
     this.competition.puzzles.push(puzzle);
     this.competition.save();
 };
+
+GroupSchema.pre("remove",function (next) {
+    var group = this;
+    mongoose.model("Puzzle").remove({group:group},function (err) {group.competition.remove();next();});
+});
 
 GroupSchema.plugin(deepPopulate);
 

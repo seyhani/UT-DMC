@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,21 +14,8 @@
     <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
     <!-- ===============    Bootstrap core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
-    <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-    <script>
-        $(document).ready(function(){
-
-            $.validate({
-                modules : 'location, date, security, file',
-                onModulesLoaded : function() {
-                }
-            });
-
-        });
-    </script>
+    <!-- ===============    dashboard core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/problem-view/problemcss.css" media="all" />
 </head>
 <body>
 <nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
@@ -43,6 +29,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <% if(!currentUser){ %>
                 <li><a class="btn-group-sm btn-default navbar-btn" href="/login">ورود</a></li>
+                <li><a class="btn-group-sm btn-default navbar-btn" href="/register">ثبت نام</a></li>
                 <% } else { %>
                 <%if(currentUser.group){%>
                 <li><a href="#"><%= currentUser.group.name%></a></li>
@@ -52,29 +39,43 @@
                 <% } %>
             </ul>
         </div>
-
     </div>
 </nav>
 
 <div class="container">
-    <div class="row">
+    <% if(error && error.length > 0) { %>
+    <div class="alert
 
-        <div class="col-md-4 col-md-0"></div>
-        <div class="col-md-4 col-xs-12" style=" margin: 25px auto;">
-            <h1 style="text-align: center">Sign Up</h1>
-            <form  class=" row"  action="/register" method="post">
-                <div class="form-group col-xs-12">
-                    <input class="form-control" type="text" name="username" placeholder="username" required >
-                </div>
-                <div class="form-group col-xs-12">
-                    <input class="form-control" type="password" name="password" placeholder="password" required>
-                </div>
+     alert-danger"><p><%=error %></p></div>
+    <% } %>
 
-                <div class="form-group col-xs-12">
-                    <button class="btn btn-lg btn-primary btn-block" >ثبت نام</button>
-                </div>
-            </form>
-            <a href="/">بازگشت</a>
+    <% if(success && success.length > 0) { %>
+    <div class="alert alert-success"><p><%= success %></p></div>
+    <% } %>
+</div>
+<div class="row problemname">
+    <div class="container">
+        <div class="col-md-6"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3 pname">
+            <h1><%=puzzle.name%></h1>
+        </div>
+    </div>
+</div>
+<div class="row problembody">
+    <div class="container">
+        <div class="col-md-3 submitpart">
+            <a style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" >
+                <button class="btn btn-default btn-lg btn-block btn-success" style="margin-bottom:25px; ">Accept</button></a>
+            <a href="/dashboard/" style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" >
+                <button class="btn btn-default btn-lg btn-block btn-danger" >Reject</button></a>
+        </div>
+        <div class="col-md-9 prbody">
+            <%if(puzzle.solved){%>
+            <p><%= puzzle.feedback%></p>
+            <%}else{%>
+            <p><%= puzzle.problem.description %></p>
+            <%}%>
         </div>
     </div>
 </div>
