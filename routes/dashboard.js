@@ -92,15 +92,17 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
             if (err) {
                 console.log(err);
             } else {
-                if(Date.now() - 1*1000 > puzzle.lastSubmit ) {
-                    var submission_dir = puzzle.problem.dir+"Submissions";
-                    var submission_name = puzzle.submisson.file;
-                    if(puzzle.submisson.file)
-                        if (fs.existsSync(submission_dir+"/"+submission_name))fs.unlinkSync(submission_dir+"/"+submission_name);
-                    submission_name = user.group.name+path.extname(req.file.originalname)
-                    middleware.uploadToDir(req.file.path,submission_dir,submission_name);
-                    puzzle.submisson.file = user.group.name+path.extname(req.file.originalname);
-                    puzzle.save();
+                if(Date.now() - 15*1000 > puzzle.lastSubmit ) {
+                    if(req.file) {
+                        var submission_dir = puzzle.problem.dir + "Submissions";
+                        var submission_name = puzzle.submisson.file;
+                        middleware.uploadToDir(req.file.path, submission_dir, submission_name);
+                        puzzle.submisson.file = user.group.name + path.extname(req.file.originalname);
+                        if (puzzle.submisson.file)
+                            if (fs.existsSync(submission_dir + "/" + submission_name))fs.unlinkSync(submission_dir + "/" + submission_name);
+                        submission_name = user.group.name + path.extname(req.file.originalname)
+                        puzzle.save();
+                    }
                     if (puzzle.submitAnswer(answer)) {
                         // console.log("Your answer was correct :)");
                         req.flash("success", "Your answer was correct :)");
@@ -111,7 +113,7 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                     }
                 }else{
                     // console.log( "Wait a little before next submit!");
-                    req.flash("error", "Wait a little before next submit!");
+                    req.flash("error", "Wait a little before next submit! (15 Seconds)");
                 }
                 res.redirect("/dashboard/puzzles/"+puzzle._id);
             }
