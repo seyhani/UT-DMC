@@ -1,53 +1,58 @@
 @font-face {
-    font-family: IRANSansWeb;
-    src: url(../../font/IRANSansWeb.ttf);
+  font-family: IRANSansWeb;
+  src: url(../../font/IRANSansWeb.ttf);
 }
 @font-face {
-    font-family: 'BRoya';
-    src: url('../../font/BRoya/BRoya.ttf') format('truetype');
+  font-family: 'BRoya';
+  src: url('../../font/BRoya/BRoya.ttf') format('truetype');
 }
-.count{
-    font-family: BRoya,'BRoya',tahoma;
+.count {
+  font-family: BRoya, 'BRoya', tahoma;
 }
-body{
-    font-family: IRANSansWeb;
+body {
+  font-family: IRANSansWeb;
 }
-.container{
-    margin: 0;
-    width: 100%;
+.container {
+  margin: 0;
+  width: 100%;
 }
-.navbar{
-    border-radius: 0;
+.navbar {
+  border-radius: 0;
 }
-.problemname{
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-    margin-bottom: 30px;
+.problemname {
+  text-align: center;
+  padding: 20px;
+  margin: 50px;
 }
-.pname{
-    background-color: #eeeeee;
+.pname {
+  background-color: #eeeeee;
 }
-.problembody{
-    min-height: 400px;
-    margin: 20px;
-    background-color: #eeeeee;
+.problembody {
+  min-height: 400px;
+  margin: 50px;
+  background-color: #fff;
 }
-.prbody{
-    margin-top: 20px;
-    padding: 20px;
-    font-family: 14px;
-    direction: rtl;
-    background-color: #F8F8F8;
-    min-height: 360px;
-    border-radius: 10px;
+.prbody {
+  padding: 20px;
+  direction: rtl;
+  min-height: 360px;
+  border-left: 1px dashed #ccc;
 }
-.submitpart{
-    background-color: #F8F8F8;
-    margin-top: 20px;
-    margin-right: 20px;
-    padding-top: 45px;
-    min-height: 360px;
-    border-radius: 20px;
-    width: 23%;
+.submitpart {
+  margin-right: 2%;
+  padding: 20px 10px;
+  min-height: 360px;
+  width: 23%;
+}
+.answer-input {
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: #fff;
+  border: 2px solid #ddd;
+  direction: rtl;
+}
+.answer-input:focus {
+  border-color: #f0ad4e;
+  outline: none;
 }
