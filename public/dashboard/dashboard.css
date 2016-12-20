@@ -2,68 +2,80 @@
     font-family: IRANSansWeb;
     src: url(../../font/IRANSansWeb.ttf);
 }
+
 @font-face {
     font-family: 'BRoya';
     src: url('../../font/BRoya/BRoya.ttf') format('truetype');
 }
-.count{
-    font-family: BRoya,'BRoya',tahoma;
+
+.count {
+    font-family: BRoya, 'BRoya', tahoma;
 }
-body{
+
+body {
     font-family: IRANSansWeb;
 }
 
-.navbar{
+.backch {
+    padding: 50px;
+}
+
+.navbar {
     border-radius: 0;
 }
-.jumbotron{
-    margin: 20px;
-    padding: 20px 0 20px 0;
+
+.jumbotron {
+    padding: 30px 20px;
+    background: #fff;
 }
-.container{
+
+.container {
     width: 100%;
-    margin: 0 0 0 0 ;
-
+    margin: 0 0 0 0;
 }
-.problem-cont{
+
+.problem-cont {
     min-height: 350px;
-    margin: 20px;
-    background-color:#E0E0E0 ;
-}
-.eachproblem{
-    width: 20%;
-    margin-top: 10px;
-    height: 330px;
-    /*border: dashed;*/
-}
-.problembod{
-    background-color: #f7f7f7;
-    text-align: center;
-    padding: 20px;
-    height: 100%;
-    border-radius: 10px;
-}
-.problembod:hover{
-    background-color: #bce8f1;
-}
-.topproblem{
-    margin-bottom: 50px;
-    border-bottom: solid #5e5e5e 5px;
-}
-.problembod:hover span{
-    display:block;
 }
 
-.problemname{
+.eachproblem {
+    width: 19%;
+    margin: 20px 0.6%;
+    min-height: 330px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 50px #dae3f1;
+    border-bottom: 2px solid #c0d6e8;
+}
+
+.problembod {
+    text-align: center;
+}
+
+.topproblem {
+    margin-bottom: 50px;
+    border-bottom: 2px dashed #b6d1e9;
+    background: #f6f8fb;
+    padding: 1px;
+    color: #4372ba;
+}
+
+.problembod:hover span {
+    display: block;
+}
+
+.problemname {
     height: 100px;
 }
-.nextstage{
+
+.nextstage {
     width: 100%;
     padding-left: 10px;
 }
 
-.problembod span{
-    background:#F8F8F8;
+.problembod span {
+    background: #F8F8F8;
     border: 5px solid #DFDFDF;
     color: #717171;
     font-size: 15px;
@@ -74,40 +86,26 @@ body{
     text-align: justify;
     text-transform: uppercase;
     top: -100px;
-    display:none;
-    padding:0 20px;
+    display: none;
+    padding: 0 20px;
+}
 
+.problembod span:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    width: 10px;
+    height: 10px;
+    border-bottom: 5px solid #dfdfdf;
+    border-right: 5px solid #dfdfdf;
+    background: #f8f8f8;
+    left: 50%;
+    margin-left: -10px;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
-.problembod span:after{
-    content:'';
-    position:absolute;
-    bottom:-10px;
-    width:10px;
-    height:10px;
-    border-bottom:5px solid #dfdfdf;
-    border-right:5px solid #dfdfdf;
-    background:#f8f8f8;
-    left:50%;
-    margin-left:-10px;
-    -moz-transform:rotate(45deg);
-    -webkit-transform:rotate(45deg);
-    transform:rotate(45deg);
-}
-body{
-    background-color: #fff;
-    -webkit-animation: random 200s infinite;
-    animation: random 200s infinite;
-}
-.btncolor{
-    border: 0;
-    background-color: #64B5F6;
-    -webkit-animation: random 200s infinite;
-    animation: random 200s infinite;
-}
-@keyframes  random {
-    15% { background-color: #FF3D00; }
-    30% { background-color: #FFEA00; }
-    45% { background-color: #69F0AE; }
-    60% { background-color: #0288D1; }
-    75% { background-color: #607D8B; }
+
+body {
+    background-color: #f6f8fb;
 }
