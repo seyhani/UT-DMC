@@ -3,6 +3,7 @@ var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var GroupSchema = new mongoose.Schema({
     name:String,
     index:Number,
+    credit:{type:Number,default:0},
     members:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
@@ -39,9 +40,24 @@ GroupSchema.methods.addPuzzle = function (puzzle) {
     this.competition.save();
 };
 
+GroupSchema.methods.view= function (puzzle) {
+
+    if(!puzzle.new)
+        return true;
+    if(this.credit  >= puzzle.cost) {
+        this.credit -= puzzle.cost;
+        puzzle.status = "sold";
+        puzzle.save();
+        this.save();
+        return true;
+    }
+    return false;
+
+};
+
 GroupSchema.pre("remove",function (next) {
     var group = this;
-    mongoose.model("Puzzle").remove({group:group},function (err) {group.competition.remove();next();});
+    mongoose.model("Puzzle").remove({group:group},function (err) {next();});
 });
 
 GroupSchema.plugin(deepPopulate);

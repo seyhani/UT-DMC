@@ -34,6 +34,7 @@
                     <% } else { %>
                     <%if(currentUser.group){%>
                     <li><a href="#"><%= user.group.name%></a></li>
+                    <li><a href="#"> اعتبار :<%= user.group.credit%></a></li>
                     <%}%>
                     <li><a href="#"><%= currentUser.username %> حساب کاربری  </a></li>
                     <li><a href="/logout">خروج</a></li>
@@ -42,6 +43,17 @@
             </div>
         </div>
     </nav>
+    <div class="container">
+        <% if(error && error.length > 0) { %>
+        <div class="alert
+
+     alert-danger"><p><%=error %></p></div>
+        <% } %>
+
+        <% if(success && success.length > 0) { %>
+        <div class="alert alert-success"><p><%= success %></p></div>
+        <% } %>
+    </div>
 <div class="backch">
     <div class="jumbotron">
         <div class="container">
@@ -90,10 +102,10 @@
         <div class="eachproblem col-md-3 " >
             <div class="problembod">
                 <div class="caption topproblem">
-                    <h1>معما</h1>
+                    <h1><%= puzzle.problem.name %></h1>
                 </div>
                 <div class="problemname">
-                    <h4><%= puzzle.name %></h4>
+                    <h4><%= puzzle.problem.name %></h4>
                 </div>
             <p>
                 <%if(puzzle.solved){%>

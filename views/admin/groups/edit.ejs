@@ -16,7 +16,7 @@
     <!-- ===============    Bootstrap core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.min.css" media="all" />
     <!-- ===============    Bootstrap core CSS     =============== -->
-
+    <link rel="stylesheet" type="text/css" href="/group/groupedit.css" media="all" />
 </head>
 <body>
 <nav class="navbar navbar-inverse  " style="margin-bottom: 0;">
@@ -32,32 +32,24 @@
         </div>
     </div>
 </nav>
-<div class="jumbotron">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h1><span class="glyphicon glyphicon-tent"></span>Puzzles</h1>
+<div class="row">
+    <h1 style="text-align: center">Create New Group</h1>
+    <div style="width: 30%; margin: 25px auto;">
+        <form action="/admin/groups/<%=group._id%>?_method=PUT" method="POST">
+            <div class="form-group">
+                <label>Name:</label>
+                <input class="form-control" type="text" name="groupName" value="<%=group.name%>">
+                <label>index:</label>
+                <input class="form-control" type="text" name="index" value="<%=group.index%>">
+                <label>credit:</label>
+                <input class="form-control" type="text" name="credit" value="<%=group.credit%>">
             </div>
-            <div class="col-md-6" style="padding-top: 20px;">
-                <a class="btn btn-primary btn-lg btn-block" href="/admin/problems/new">Add New Puzzles</a>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block">Update!</button>
             </div>
-        </div>
+        </form>
+        <a href="/admin/groups/<%=group._id%>">Go Back</a>
     </div>
 </div>
-     
-     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-        <% problems.forEach(function(problem){ %>
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                   <div class="caption">
-                       <h4><%= problem.name %></h4>
-                   </div>
-                   <p>
-                       <a href="/admin/problems/<%= problem._id %>" class="btn btn-primary">More Info</a>
-                   </p>
-                </div>
-            </div>
-        <% }); %>
-    </div>
-
 </body>
+

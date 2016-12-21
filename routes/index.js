@@ -64,7 +64,7 @@ router.get("/login", function(req, res){
 router.post('/login', function(req, res, next) {
     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret="+ '6LdbUwcUAAAAAMquB_XKPwD5XtUPwhY19iIU8umM' +"&response=" +req.body['g-recaptcha-response'];
     request(verificationUrl,function(error,response,body) {
-        body = JSON.parse(body);
+        
         // if(body.success)
         if(true)
         {
