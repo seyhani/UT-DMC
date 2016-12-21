@@ -10,9 +10,13 @@ var Competition = require("../models/competition");
 
 
 
-router.get("/competitions", function(req, res){
-    Problem.find({}).exec(function (err,problems) {
-        res.render("admin/competitions/index",{problems:problems});
+router.get("/competition", function(req, res){
+    Problem.find({}, function(err, allProblems) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("admin/competitions/index", {problems: allProblems});
+        }
     });
 });
 
@@ -46,12 +50,17 @@ router.post("/competitions", function(req, res){
 });
 
 router.get("/competition/problems/:problem_id", function(req, res){
-    Problem.findById(req.params.competitionId).exec(function (err,problem) {
-        Puzzle.find({}).populate("group").exec(function (err,puzzles) {
+    // Get all problems from DB
+    Problem.findById(req.params.problem_id, function(err, problem) {
+        Puzzle.find({problem:problem,status:"submitted"}).populate("group").exec(function (err,puzzles) {
             console.log(puzzles);
-                res.render("admin/competitions/problem",{puzzles:puzzles});
-            });
+            if (err) {
+                console.log(err);
+            } else {
+                res.render("admin/competitions/showSubmissions", {puzzles: puzzles});
+            }
         });
+    });
 });
 
 router.post("/competitions/:competitionId/addUser", function(req, res){

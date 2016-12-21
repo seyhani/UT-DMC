@@ -22,6 +22,7 @@
     "email-templates": "^2.5.4",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "lodash": "^4.17.2",
     "method-override": "^2.3.5",
     "mongo-sanitize": "^1.0.0",
     "mongoose": "^4.1.12",
@@ -38,6 +39,7 @@
     "request": "^2.65.0",
     "rimraf": "^2.5.4",
     "simplesmtp": "^0.3.35",
-    "smtp-server": "^1.14.2"
+    "smtp-server": "^1.14.2",
+    "underscore": "^1.8.3"
   }
 }

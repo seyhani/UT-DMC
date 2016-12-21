@@ -32,7 +32,7 @@ router.post("/groups", function(req, res){
                 if (err)
                     console.log(err);
                 problems.forEach(function (problem) {
-                    Puzzle.create({problem: problem, group: group, status: "unsolved", tags: problem.tags},
+                    Puzzle.create({problem: problem, group: group, tags: problem.tags},
                         function (err, puzzle) {
                             group.competition.puzzles.push(puzzle);
                             group.competition.save();
@@ -52,6 +52,30 @@ router.get("/groups/:groupId", function(req, res){
                 res.render("admin/groups/show",{group:group,users:users});
             });
         });
+});
+
+router.get("/groups/:groupId/edit", function(req, res){
+    Group.findById(req.params.groupId).deepPopulate(['members','competition.puzzles','competition.puzzles.problem'])
+        .exec(function (err,group) {
+            User.find({_id:{$nin:group.members}}).exec(function (err,users) {
+                res.render("admin/groups/edit",{group:group});
+            });
+        });
+});
+
+router.put("/groups/:groupId", function(req, res){
+    var newData = {name: req.body.groupName, index: req.body.index,
+        credit: req.body.credit
+    };
+    Group.findByIdAndUpdate(req.params.groupId, {$set: newData}, function(err, group){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            req.flash("success","Successfully Updated!");
+            res.redirect("/admin/groups/"+group._id);
+        }
+    });
 });
 
 router.post("/groups/:groupId/addUser", function(req, res){
