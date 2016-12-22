@@ -2,7 +2,7 @@ body {
   background-color: #f6f8fb;
 }
 .jumbotron,
-.problemname,
+.row.problemname,
 .problembody {
   padding: 30px 20px;
   background: #fff;
@@ -47,6 +47,8 @@ body {
   border-color: #eee;
   border-width: 1px;
   font-weight: bold;
+  margin: 0;
+  background: #fff;
 }
 .navbar-inverse .navbar-nav>li>a:focus,
 .navbar-inverse .navbar-nav>li>a:hover {
@@ -191,6 +193,14 @@ fieldset[disabled] .btn-success:hover {
   background-color: #dd9d42;
   border-color: #cb9d5d;
 }
+.btn-primary {
+    background-color: #337ab7;
+    border-bottom: 2px solid #195181;
+}
+.btn-primary:hover {
+    background-color: #286090;
+    border-color: #103352;
+}
 .alert {
   margin: 35px;
   margin-bottom: 10px;
@@ -203,4 +213,18 @@ fieldset[disabled] .btn-success:hover {
 }
 .thumbnail .caption-full {
   padding: 9px;
+}
+
+
+input.form-control {
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    border: 2px solid #ddd;
+    background: #fff;
+    padding: 20px 15px;
+}
+a.forgot-pass-link {
+    margin: 20px 0;
+    display: block;
 }
