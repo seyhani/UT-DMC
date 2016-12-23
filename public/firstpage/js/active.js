@@ -28,7 +28,7 @@
                 $('body').delay(350).css({'overflow':'visible'});
 
         // active owl carousel
-        $(".boss-owl").owlCarousel({
+        /*$(".boss-owl").owlCarousel({
             pagination: false,
             autoPlay : true,
             stopOnHover : true,
@@ -38,7 +38,7 @@
             itemsDesktopSmall: 3,
             itemsTablet: 1,
             autoHeight : true
-        });
+        });*/
     });
 
     /* ==========================================================================
