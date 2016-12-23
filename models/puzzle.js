@@ -38,10 +38,13 @@ PuzzleSchema.methods.submitAnswer = function (answer) {
     else
         correctAnswer = this.problem.answer;
     if(answer == correctAnswer) {
-        this.status = 'solved';
+        this.status = 'accepted';
         this.problem.submits.correct++;
-        // this.group.competition.score++;
+        this.group.competition.score += this.problem.score;
+        this.group.competition.save();
+        this.group.save();
     }else{
+        this.status = "rejected";
         this.problem.submits.wrong++;
     }
     this.problem.save();
@@ -58,6 +61,10 @@ PuzzleSchema.methods.requsetForHint = function () {
     this.save();
     return true;
 };
+
+PuzzleSchema.virtual('name').get(function () {
+    return this.problem.name;
+});
 
 PuzzleSchema.virtual('new').get(function () {
     return this.status == "new";
@@ -81,6 +88,9 @@ PuzzleSchema.virtual('accepted').get(function () {
 
 PuzzleSchema.virtual('cost').get(function () {
     return this.problem.score/2 ;
+});
+PuzzleSchema.virtual('filePath').get(function () {
+    return this.problem.dir + "Submissions/" + this.submisson.file;
 });
 
 PuzzleSchema.virtual('requestedForHint').get(function () {

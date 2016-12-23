@@ -107,11 +107,12 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                         if (puzzle.submisson.file)
                             if (fs.existsSync(submission_dir + "/" + submission_name))fs.unlinkSync(submission_dir + "/" + submission_name);
                         middleware.uploadToDir(req.file.path, submission_dir, submission_name);
-                        submission_name = user.group.name + path.extname(req.file.originalname)
+                        submission_name = user.group.name + path.extname(req.file.originalname);
+                        puzzle.status = "submitted";
                         puzzle.save();
                         req.flash("success", "Your answer has been submitted!");
                     }
-                    else
+                    else if(answer != "")
                     {
                         if (puzzle.submitAnswer(answer))
                             req.flash("success", "Your answer was correct :)");
