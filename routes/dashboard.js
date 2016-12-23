@@ -109,19 +109,17 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                         middleware.uploadToDir(req.file.path, submission_dir, submission_name);
                         submission_name = user.group.name + path.extname(req.file.originalname)
                         puzzle.save();
+                        req.flash("success", "Your answer has been submitted!");
                     }
-                    if (puzzle.submitAnswer(answer)) {
-                        // console.log("Your answer was correct :)");
-                        req.flash("success", "Your answer was correct :)");
+                    else
+                    {
+                        if (puzzle.submitAnswer(answer))
+                            req.flash("success", "Your answer was correct :)");
+                        else
+                            req.flash("error", "Your answer was not correct :(");
                     }
-                    else {
-                        // console.log("Your answer was not correct :(");
-                        req.flash("error", "Your answer was not correct :(");
-                    }
-                }else{
-                    // console.log( "Wait a little before next submit!");
+                }else
                     req.flash("error", "Wait a little before next submit! (15 Seconds)");
-                }
                 res.redirect("/dashboard/puzzles/"+puzzle._id);
             }
         });

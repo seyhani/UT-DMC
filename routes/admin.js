@@ -6,6 +6,7 @@ var User = require("../models/user");
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
+var rycode = require("../middleware/rycode");
 var _ = require("lodash");
 
 router.get("/", function(req, res){
@@ -19,30 +20,28 @@ router.get("/rycode", function(req, res){
     res.render('dev/rycode');
 });
 router.post("/newpass", function(req, res){
-    var newpass = [];
-    for(var key in req.body) {
-        newpass.push(req.body[key]);
-    }
-    var uniq = _.uniq(newpass, function(x){
-        return x;
-    });
-    newpass  = newpass.map(function (item ,index) {
-        return uniq.indexOf(item);
-    });
+    var newpass = rycode.encode(req.body);
     User.findOne({username:"a"}).exec(function (err,user) {
-        if(!user.rycode != []) {
-            if (user.rycode != newpass) {
-                req.flash("error", "Your rycodes do not match!");
-                user.rycode = [];
-                user.save();
-            }
-            else
-                req.flash("success", "Your rycode has been set!");
-        }
-        else {
+        if(user.rycode == "")
+        {
             user.rycode = newpass;
             user.save();
-            req.flash("success", "Confirm your rycode again!");
+            req.flash("success","Again");
+        }
+        else
+        {
+            if(newpass != ""&&user.rycode == newpass)
+            {
+                user.rycode = newpass;
+                user.save();
+                req.flash("success","Completed");
+            }
+            else
+            {
+                user.rycode = "";
+                user.save();
+                req.flash("error","Wrong");
+            }
         }
         res.redirect('/admin/newpass');
     });
@@ -50,31 +49,12 @@ router.post("/newpass", function(req, res){
 
 
 router.post("/rycode", function(req, res){
-    var newpass = [];
-    for(var key in req.body) {
-        newpass.push(req.body[key]);
-    }
-    var uniq = _.uniq(newpass, function(x){
-        return x;
-    });
-    newpass  = newpass.map(function (item ,index) {
-        return uniq.indexOf(item);
-    });
-    newpass =[];
-    for(var i in newpass)
-        newpass.push(newpass[i]);
+    var newpass = rycode.encode(req.body);
     User.findOne({username:"a"}).exec(function (err,user) {
-        console.log(user.rycode);
-        console.log(newpass);
-        console.log(user.rycode[0]==newpass)
-        var is_same = (user.rycode.length == newpass) && newpass(function(element, index) {
-                return element == user.rycode[index];
-            });
-        if (is_same)
-            req.flash("success", "Your rycode was true!");
+        if(newpass != ""&&user.rycode == newpass)
+            req.flash("success","Correct");
         else
-            req.flash("error", "Your rycode was wrong!");
-
+            req.flash("error","Wrong");
         res.redirect('/admin/rycode');
     });
 });
