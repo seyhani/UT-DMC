@@ -17,7 +17,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1><span class="glyphicon glyphicon-tent"></span>puzzles</h1>
+                <h1><span class="glyphicon glyphicon-tent"></span>DMC</h1>
             </div>
         </div>
     </div>
@@ -25,19 +25,17 @@
 
 <div class="row text-center" style="display:flex; flex-wrap: wrap;margin-left: 10px;">
     <% puzzles.forEach(function(puzzle){ %>
-        <%if(puzzle.submisson.file){%>
-            <div class="col-md-3 col-xs-12">
-                <div class="thumbnail">
-                    <div class="caption">
-                            <h4><%= puzzle.group.name %></h4>
-                    </div>
-                    <p>
-                        <a href="/admin/competition/puzzles/<%= puzzle._id %>" class="btn btn-primary">More Info</a>
-                    </p>
-                </div>
+    <div class="col-md-3 col-xs-12">
+        <div class="thumbnail">
+            <div class="caption">
+                <h4><%= puzzle.group.name %></h4>
             </div>
-        <%}%>
-    <%});%>
+            <p>
+                <a href="/admin/competition/puzzles/<%= puzzle._id %>" class="btn btn-primary">More Info</a>
+            </p>
+        </div>
+    </div>
+    <% }); %>
 </div>
 <% include ../../partials/footer %>
 </body>

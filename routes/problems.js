@@ -37,11 +37,11 @@ router.post("/",upload.any() ,function(req, res){
     var newProblem = {name: name, description: desc,answer:answer,feedback:feedback,score:score ,submits:{correct:0,wrong:0}};
     // Create a new problem and save to DB
     Problem.create(newProblem, function(err, problem){
+        middleware.initialProblemDirectories(problem.name);
         if(req.files)
         {
             req.files.forEach(function (file) {
                 problem.files.push(file.originalname);
-                middleware.initialProblemDirectories(problem.name);
                 middleware.uploadToDir(file.path,problem.dir+"Sources",file.originalname);
             });
             problem.save();

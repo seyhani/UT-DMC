@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
-
+//Puzzle status
+//new -> sold -> submitted -> rejected
+//                         -> accepted
 var PuzzleSchema = new mongoose.Schema({
     problem: {
         type: mongoose.Schema.Types.ObjectId,
@@ -11,7 +13,7 @@ var PuzzleSchema = new mongoose.Schema({
     },
     tags:[String],
     lastSubmit:{type:Date,default:Date.now()-60000},
-    status: String,
+    status: {type:String,default:"new"},
     submisson:{
         file:String,
         answer:String,
@@ -28,6 +30,7 @@ PuzzleSchema.virtual('feedback').get(function (){
 
 PuzzleSchema.methods.submitAnswer = function (answer) {
     this.lastSubmit = Date.now();
+    this.status = "submitted";
     var answers = this.problem.answer.split(" ");
     var correctAnswer;
     if(answers.length > 1)
@@ -35,10 +38,13 @@ PuzzleSchema.methods.submitAnswer = function (answer) {
     else
         correctAnswer = this.problem.answer;
     if(answer == correctAnswer) {
-        this.status = 'solved';
+        this.status = 'accepted';
         this.problem.submits.correct++;
-        // this.group.competition.score++;
+        this.group.competition.score += this.problem.score;
+        this.group.competition.save();
+        this.group.save();
     }else{
+        this.status = "rejected";
         this.problem.submits.wrong++;
     }
     this.problem.save();
@@ -56,16 +62,35 @@ PuzzleSchema.methods.requsetForHint = function () {
     return true;
 };
 
-PuzzleSchema.virtual('reviewd').get(function () {
-    return this.status == 'reviewd';
-});
-
 PuzzleSchema.virtual('name').get(function () {
     return this.problem.name;
 });
 
-PuzzleSchema.virtual('solved').get(function () {
-    return this.status == 'solved';
+PuzzleSchema.virtual('new').get(function () {
+    return this.status == "new";
+});
+
+PuzzleSchema.virtual('sold').get(function () {
+    return this.status == "sold";
+});
+
+PuzzleSchema.virtual('submitted').get(function () {
+    return this.status == "submitted";
+});
+
+PuzzleSchema.virtual('rejected').get(function () {
+    return this.status == 'rejected';
+});
+
+PuzzleSchema.virtual('accepted').get(function () {
+    return this.status == "accepted";
+});
+
+PuzzleSchema.virtual('cost').get(function () {
+    return this.problem.score/2 ;
+});
+PuzzleSchema.virtual('filePath').get(function () {
+    return this.problem.dir + "Submissions/" + this.submisson.file;
 });
 
 PuzzleSchema.virtual('requestedForHint').get(function () {

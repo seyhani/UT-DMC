@@ -56,7 +56,7 @@ app.use("/", indexRoutes);
 app.use("/admin/", groupRoutes);
 app.use("/admin/", competitionRoutes);
 app.use("/dashboard", dashboardRoutes);
-app.use("/admin", adminRoutes);
+app.use("/admin/", adminRoutes);
 app.use("/admin/users", userRoutes);
 app.use("/admin/problems", problemRoutes);
 

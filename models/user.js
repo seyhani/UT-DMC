@@ -12,6 +12,7 @@ var UserSchema = new mongoose.Schema({
     username: String,
     password: String,
     groupname:String,
+    rycode:String,
     isAdmin:Boolean,
     group:{
         type: mongoose.Schema.Types.ObjectId,

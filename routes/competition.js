@@ -10,9 +10,13 @@ var Competition = require("../models/competition");
 
 
 
-router.get("/competitions", function(req, res){
-    Problem.find({}).exec(function (err,problems) {
-        res.render("admin/competitions/index",{problems:problems});
+router.get("/competition", function(req, res){
+    Problem.find({}, function(err, allProblems) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("admin/competitions/index", {problems: allProblems});
+        }
     });
 });
 
@@ -46,26 +50,47 @@ router.post("/competitions", function(req, res){
 });
 
 router.get("/competition/problems/:problem_id", function(req, res){
-    Problem.findById(req.params.competitionId).exec(function (err,problem) {
-        Puzzle.find({}).populate("group").exec(function (err,puzzles) {
-            console.log(puzzles);
-                res.render("admin/competitions/problem",{puzzles:puzzles});
-            });
-        });
-});
-
-router.post("/competitions/:competitionId/addUser", function(req, res){
-    competition.findById(req.params.competitionId,function (err,competition) {
-        User.findOne({username:req.body.username}).exec(function (err,user) {
-            if(user) {
-                competition.addMember(user);
+    // Get all problems from DB
+    Problem.findById(req.params.problem_id, function(err, problem) {
+        Puzzle.find({problem:problem,status:"submitted"}).populate("group").exec(function (err,puzzles) {
+            if (err) {
+                console.log(err);
             } else {
-                req.flash('error','User Not Found');
+                res.render("admin/competitions/submissonsIndex", {puzzles: puzzles});
             }
         });
-        res.redirect('/admin/competitions/'+competition._id);
     });
 });
+
+router.get("/competition/puzzles/:puzzle_id/:aorr", function(req, res){
+    Puzzle.findById(req.params.puzzle_id).populate(["group","problem"]).exec(function (err,puzzle) {
+        if (err) {
+            console.log(err);
+        } else {
+            if(req.params.aorr == "accept")
+            {
+                puzzle.submitAnswer(puzzle.problem.answer);
+            }
+            if(req.params.aorr == "reject")
+            {
+                puzzle.status = "rejected";
+                puzzle.save();
+            }
+        }
+        res.redirect("/admin/competition/problems/"+puzzle.problem._id);
+    });
+});
+
+router.get("/competition/puzzles/:puzzle_id", function(req, res){
+    Puzzle.findById(req.params.puzzle_id).populate(["group","problem"]).exec(function (err,puzzle) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("admin/competitions/submission", {puzzle: puzzle});
+        }
+    });
+});
+
 
 router.get("/competitions/:competitionId/puzzles/:puzzle_id", function(req, res){
     Puzzle.findById(req.params.puzzle_id).exec(function (err,puzzle) {
@@ -73,15 +98,6 @@ router.get("/competitions/:competitionId/puzzles/:puzzle_id", function(req, res)
     });
 });
 
-router.get("/competitions/:competitionId/hint/:problem_id", function(req, res){
-    competition.findById(req.params.competitionId).populate(['members','competition.puzzles']).exec(function (err,competition) {
-        Puzzle.findById(req.params.problem_id).populate("problem").exec(function (err,puzzle) {
-            puzzle.status = "reviewd";
-            puzzle.save();
-            res.redirect("/admin/competitions/");
-        });
-    });
-});
 
 router.delete("/competitions/:competitionId", function(req, res){
     Competition.findById(req.params.competitionId).exec(function (err,competition) {

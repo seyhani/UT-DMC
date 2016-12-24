@@ -4,40 +4,48 @@
 <head>
     <title>شکار معما</title>
     <% include partials/head %>
-    <!-- ===============    main core CSS     =============== -->
-    <link rel="stylesheet" type="text/css" href="/dashboard/main.css" media="all" />
-    <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-    <script>
-        $(document).ready(function(){
-
-            $.validate({
-                modules : 'location, date, security, file',
-                onModulesLoaded : function() {
-                }
-            });
-
-        });
-    </script>
+    <style type="text/css">
+        .strength-meter{
+            margin: 0 auto;
+            border-radius: 5px;
+            display: inline-block !important;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            opacity: 0.6;
+            text-align: center;
+            width: 80px;
+        }
+        @media screen and (max-width: 992px){
+            .strength-meter{
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
 <% include partials/header %>
 <div class="container">
     <div class="row">
-
         <div class="col-md-4 col-md-0"></div>
         <div class="col-md-4 col-xs-12" style=" margin: 25px auto;">
-            <h1 style="text-align: center">Sign Up</h1>
+            <h1 style="text-align: center">ثبت‌نام</h1>
             <form  class=" row"  action="/register" method="post">
                 <div class="form-group col-xs-12">
-                    <input class="form-control" type="text" name="username" placeholder="username" required >
+                    <input class="form-control" type="text" name="email" placeholder="email" required  data-validation="email">
                 </div>
                 <div class="form-group col-xs-12">
-                    <input class="form-control" type="password" name="password" placeholder="password" required>
+                    <input class="form-control" type="text" name="first_name" placeholder="first name" required data-validation="custom" data-validation-regexp="^([a-zA-Z ]+)$">
                 </div>
-
+                <div class="form-group col-xs-12">
+                    <input class="form-control" type="text" name="last_name" placeholder="last name" required data-validation="custom" data-validation-regexp="^([a-zA-Z ]+)$">
+                </div>
+                <div class="form-group col-xs-12" style="position: relative;">
+                    <input class="form-control" type="password" name="password" placeholder="password" required data-validation="strength" data-validation-strength="1">
+                </div>
+                <div class="form-group col-xs-12">
+                    <input class="form-control" type="password" name="password_r" placeholder="repeat password" required data-validation="confirmation" data-validation-confirm="password">
+                </div>
                 <div class="form-group col-xs-12">
                     <button class="btn btn-lg btn-primary btn-block" >ثبت نام</button>
                 </div>
@@ -46,5 +54,15 @@
         </div>
     </div>
 </div>
+<% include partials/formvalidation %>
+<script>
+    $.validate({
+      modules : 'security',
+      onModulesLoaded : function() {
+        $('input[name="password"]').displayPasswordStrength();
+      }
+    });
+</script>
+<% include partials/footer %>
 </body>
 </html>

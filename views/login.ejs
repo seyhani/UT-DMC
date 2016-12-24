@@ -3,31 +3,30 @@
 <head>
     <title>شکار معما</title>
     <% include partials/head %>
-    <!-- ===============    main core CSS     =============== -->
-    <link rel="stylesheet" type="text/css" href="/dashboard/main.css" media="all" />
     <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
     </head>
 <body>
 <% include partials/header %>
 <div class="container">
     <div class="row">
-        <h1 style="text-align: center">Login</h1>
+        <h1 style="text-align: center">ورود</h1>
         <div style="width: 30%; margin: 25px auto;">
             <form action="/login" method="post">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="username">
+                    <input class="form-control" type="text" name="username" placeholder="email">
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="password" name="password" placeholder="password">
                 </div>
-                <a href="/forgot">forgot password</a>
+                <a href="/forgot">فراموشی گذرواژه</a>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Login</button>
+                    <button class="btn btn-lg btn-primary btn-block">ورود</button>
                 </div>
             </form>
             <a href="/">بازگشت</a>
         </div>
     </div>
 </div>
+<% include partials/footer %>
 </body>
 </html>

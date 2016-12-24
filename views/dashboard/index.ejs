@@ -3,8 +3,6 @@
 <head>
     <title>شکار معما</title>
     <% include ../partials/head %>
-    <!-- ===============    main core CSS     =============== -->
-    <link rel="stylesheet" type="text/css" href="/dashboard/main.css" media="all" />
     <!-- ===============    dashboard core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
 </head>
@@ -64,9 +62,13 @@
                     <h4><%= puzzle.name %></h4>
                 </div>
             <p>
-                <%if(puzzle.solved){%>
+                <%if(puzzle.accepted){%>
                 <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success">حل شده است</a>
-                <%}else{%>
+                <%}else if(puzzle.rejected){%>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger">رد شده است</a>
+                <%}else if(puzzle.submitted){%>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">ثبت شده است</a>
+                <%}else {%>
                 <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">وارد شوید</a>
                 <%}%>
             </p>
@@ -84,5 +86,6 @@
         </div>
     </div>
 </div>
+<% include ../partials/footer %>
 </body>
 </html>

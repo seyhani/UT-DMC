@@ -6,9 +6,57 @@ var User = require("../models/user");
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
+var rycode = require("../middleware/rycode");
+var _ = require("lodash");
 
 router.get("/", function(req, res){
     res.render('admin/index');
+});
+
+router.get("/newpass", function(req, res){
+    res.render('dev/newpass');
+});
+router.get("/rycode", function(req, res){
+    res.render('dev/rycode');
+});
+router.post("/newpass", function(req, res){
+    var newpass = rycode.encode(req.body);
+    User.findOne({username:"a"}).exec(function (err,user) {
+        if(user.rycode == "")
+        {
+            user.rycode = newpass;
+            user.save();
+            req.flash("success","Again");
+        }
+        else
+        {
+            if(newpass != ""&&user.rycode == newpass)
+            {
+                user.rycode = newpass;
+                user.save();
+                req.flash("success","Completed");
+            }
+            else
+            {
+                user.rycode = "";
+                user.save();
+                req.flash("error","Wrong");
+            }
+        }
+        res.redirect('/admin/newpass');
+    });
+});
+
+
+router.post("/rycode", function(req, res){
+    var newpass = rycode.encode(req.body);
+    User.findOne({username:"a"}).exec(function (err,user) {
+        if(newpass != ""&&user.rycode == newpass)
+            req.flash("success","Correct");
+        else
+            req.flash("error","Wrong");
+        res.redirect('/admin/rycode');
+    });
 });
 
 router.get("/console", function(req, res){
@@ -24,6 +72,41 @@ router.post("/console", function(req, res){
     res.redirect('/admin/console');
 });
 
+// router.post("/newpass", function(req, res){
+//     var newpass = [];
+//
+//     for(var key in req.body) {
+//         newpass.push(req.body[key]);
+//     }
+//     User.findOne({username:"a"}).exec(function (err,user) {
+//         user.newpass.push(newpass);
+//         if(user.newpass.length>3)
+//         {
+//             var pass = user.newpass;
+//             var confirm = [];
+//                 for (j = 0; j < pass[0].length; j++) {
+//                         var count = 0;
+//                     for (i = 0; i < 3; i++) {
+//                         if(pass[i][j] == true)
+//                             count++;
+//                     }
+//                     if(count>=2)
+//                         confirm.push(true);
+//                     else
+//                         confirm.push(false);
+//
+//                 }
+//             user.newpass = [];
+//             console.log("CONFIRM :" + confirm);
+//         }
+//
+//         user.save();
+//         console.log(user.newpass);
+//         res.redirect('/admin/knock');
+//     });
+// });
+
+
 router.get("/puzzles", function(req, res){
     // Get all problems from DB
     Problem.find({}, function(err, allProblems) {
@@ -34,37 +117,6 @@ router.get("/puzzles", function(req, res){
         }
     });
 });
-
-//CREATE - add new problem to DB
-// router.post("/puzzles",upload.any() ,function(req, res){
-//     // get data from form and add to problems array
-//     var name = req.body.name;
-//     var desc = req.body.description;
-//     var answer = req.body.answer;
-//     var score= req.body.score;
-//     var feedback= req.body.feedback;
-//     var newProblem = {name: name, description: desc,answer:answer,feedback:feedback,score:score ,submits:{correct:0,wrong:0}};
-//     // Create a new problem and save to DB
-//     Problem.create(newProblem, function(err, problem){
-//         if(!fs.existsSync("./public/Uploads/Files/"+problem.id))
-//             fs.mkdirSync("./public/Uploads/Files/"+problem.id);
-//         if(req.files)
-//         {
-//             req.files.forEach(function (file) {
-//                 problem.files.push(file.originalname);
-//                 middleware.uploadToDir(file.path,problem.id,file.originalname);
-//             });
-//             problem.save();
-//         }
-//         if(err){
-//             console.log(err);
-//         } else {
-//             //redirect back to problems page
-//             // console.log(newlyCreated);
-//             res.redirect("/admin/problems");
-//         }
-//     });
-// });
 
 //NEW - show form to create new problem
 router.get("/puzzles/new", function(req, res){

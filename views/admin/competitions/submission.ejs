@@ -3,7 +3,7 @@
 <head>
     <title>شکار معما</title>
     <% include ../../partials/head %>
-    <!-- ===============    dashboard core CSS     =============== -->
+    <!-- ===============    problemcss core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/problem-view/problemcss.css" media="all" />
 </head>
 <body>
@@ -14,25 +14,20 @@
         <div class="col-md-3"></div>
         <div class="col-md-3 pname">
             <h1><%=puzzle.name%></h1>
+            <h1><%=puzzle.group.name%></h1>
         </div>
     </div>
 </div>
 <div class="row problembody">
-    <div class="container">
+        <img src="GG.png">
         <div class="col-md-3 submitpart">
-            <a style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" >
+            <a style="text-decoration: none;" href="/admin/competition/puzzles/<%=puzzle._id%>/accept" >
                 <button class="btn btn-default btn-lg btn-block btn-success" style="margin-bottom:25px; ">Accept</button></a>
-            <a href="/dashboard/" style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" >
-                <button class="btn btn-default btn-lg btn-block btn-danger" >Reject</button></a>
-        </div>
-        <div class="col-md-9 prbody">
-            <%if(puzzle.solved){%>
-            <p><%= puzzle.feedback%></p>
-            <%}else{%>
-            <p><%= puzzle.problem.description %></p>
-            <%}%>
+            <a style="text-decoration: none;" href="/admin/competition/puzzles/<%=puzzle._id%>/reject" >
+                <button class="btn btn-default btn-lg btn-block btn-warning" style="margin-bottom:25px; ">Reject</button></a>
         </div>
     </div>
 </div>
+<% include ../../partials/footer %>
 </body>
 </html>
