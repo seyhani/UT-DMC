@@ -15,6 +15,9 @@ var upload = multer({
 var fs = require("fs");
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
+
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+
 router.get("/", function(req, res){
     // Get all problems from DB
     Problem.find({}, function(err, allProblems) {

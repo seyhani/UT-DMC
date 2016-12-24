@@ -30,7 +30,6 @@ module.exports = {
         if(req.isAuthenticated()){
             return next();
         }
-        console.log(req.url);
         req.flash("error", "You must be signed in to do that!");
         res.redirect("/admin/login");
     },

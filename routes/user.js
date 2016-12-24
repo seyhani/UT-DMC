@@ -5,7 +5,9 @@ var User = require("../models/user");
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
+var middleware = require("../middleware/index");
 
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 router.get("/", function(req, res){
     User.find({}).exec(function (err,users) {
         res.render("admin/users/index",{users:users});
