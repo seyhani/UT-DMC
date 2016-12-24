@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Responsive Coming soon Template">
+    <meta name="keywords" content="Coming soon template, Bootstrap template, Coming soon, Responsive coming soon Template, Under Construction, countdown , Mailchimp, Youtube Video">
+    <meta name="author" content="traivan98">
+
+    <title>شکار معما</title>
+
+    <!-- favicon linke -->
+    <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
+
+
+</head>
+<body onkeydown="down()" onkeyup="up()">
+<div class="container">
+    <% if(error && error.length > 0) { %>
+    <div class="alert
+
+     alert-danger"><p><%=error %></p></div>
+    <% } %>
+
+    <% if(success && success.length > 0) { %>
+    <div class="alert alert-success"><p><%= success %></p></div>
+    <% } %>
+</div>
+<h1><%=username%></h1>
+
+
+<script>
+    var a = 0;
+    var t =[];
+    function down() {
+
+    }
+    function up() {
+
+        if(event.keyCode!=13)
+            t.push(event.keyCode);
+        else {
+            if(t.length == 0)
+                    return;
+            window.alert("Entered");
+            post("/admin/login/<%=username%>", t, "POST");
+        }
+    }
+    function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            console.log(key +" : "+ params[key]);
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
+</body>

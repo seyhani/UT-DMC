@@ -24,8 +24,20 @@ module.exports = {
         req.flash("error", "You must be signed in to do that!");
         res.redirect("/login");
     },
+    isAdminLoggedIn: function(req, res, next){
+        if(req.url.indexOf("login")!=-1)
+            return next();
+        if(req.isAuthenticated()){
+            return next();
+        }
+        console.log(req.url);
+        req.flash("error", "You must be signed in to do that!");
+        res.redirect("/admin/login");
+    },
     havePermission: function(req, res, next){
-        if(req.user.isAdmin){
+        if(req.url.indexOf("login")!=-1)
+            return next();
+        if(req.user.isAdmin == true){
             return next();
         }
         req.flash("error", "you have not permission!");
