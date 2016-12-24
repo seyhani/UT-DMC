@@ -20,7 +20,7 @@
 <div class="row problembody">
     <div class="container">
         <div class="col-md-3 submitpart">
-            <%if(!puzzle.solved){%>
+            <%if(!puzzle.accepted){%>
             <form action="/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST" enctype="multipart/form-data">
                 <input class="answer-input" type="text" name="answer" placeholder="Answer">
                 <label class="btn btn-default btn-lg btn-block" >
@@ -31,7 +31,7 @@
                 <button class="btn btn-default btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت جواب</button>
             </form>
             <%}%>
-            <%if(!(puzzle.requestedForHint||puzzle.solved||puzzle.reviewd)){%>
+            <%if(!(puzzle.accepted)){%>
             <a style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-success" style="margin-bottom:25px; ">درخواست کمک</button></a>
             <%}%>
             <a href="/dashboard/" style="text-decoration: none;"><button class="btn btn-default btn-lg btn-block btn-warning" >بازگشت</button></a>
@@ -44,7 +44,11 @@
             <%}%>
         </div>
     </div>
+    <%puzzle.sources.forEach(function (source) {%>
+    <a href="<%=source%>" style="text-decoration: none;"><%=source%></a>
+    <%})%>
 </div>
+
 <% include ../../partials/footer %>
 </body>
 </html>

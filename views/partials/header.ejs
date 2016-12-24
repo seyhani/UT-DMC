@@ -14,7 +14,8 @@
                     <%if(currentUser.group){%>
                         <li><a href="#"><%= currentUser.group.name%></a></li>
                     <%}%>
-                    <li><a href="#"><%= currentUser.username %> حساب کاربری  </a></li>
+                    <li><a href="/dashboard">خانه</a></li>
+                    <li><a href="/dashboard"><%=currentUser.group.credit%>اعتبار : </a></li>
                     <li><a href="/logout">خروج</a></li>
                 <% } %>
                 <li><a class="btn-group-sm btn-default navbar-btn" href="/">خانه</a></li>

@@ -60,7 +60,7 @@ ProblemSchema.virtual('tag').set(function (tag) {
 });
 
 ProblemSchema.virtual('dir').get(function () {
-    return "Files/Problems/"+this.name+"/";
+    return "public/Files/Problems/"+this.name+"/";
 });
 
 ProblemSchema.post("remove",function (problem) {

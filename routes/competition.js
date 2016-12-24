@@ -63,10 +63,11 @@ router.get("/competition/problems/:problem_id", function(req, res){
 });
 
 router.get("/competition/puzzles/:puzzle_id/:aorr", function(req, res){
-    Puzzle.findById(req.params.puzzle_id).populate(["group","problem"]).exec(function (err,puzzle) {
+    Puzzle.findById(req.params.puzzle_id).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzle) {
         if (err) {
             console.log(err);
         } else {
+            
             if(req.params.aorr == "accept")
             {
                 puzzle.submitAnswer(puzzle.problem.answer);
@@ -76,6 +77,7 @@ router.get("/competition/puzzles/:puzzle_id/:aorr", function(req, res){
                 puzzle.status = "rejected";
                 puzzle.save();
             }
+            middleware.removeSubmission(puzzle.name,puzzle.submisson.file);
         }
         res.redirect("/admin/competition/problems/"+puzzle.problem._id);
     });

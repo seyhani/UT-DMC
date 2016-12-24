@@ -3,15 +3,34 @@
 <head>
     <meta charset="utf-8">
     <title>شکار معما</title>
+
 </head>
 <body>
-    <form action="/admin/console" method="post">
-        <div class="form-group">
-            <input class="form-control" type="text" name="input" >
-        </div>
-        <div class="form-group">
-            <button class="btn btn-lg btn-primary btn-block">Enter</button>
-        </div>
-    </form>
+<div id="hacker-list">
+
+    <input class="search" />
+    <span class="sort" data-sort="name">Sort by name</span>
+    <span class="sort" data-sort="city">Sort by city</span>
+
+    <ul class="list">
+        <li>
+            <h3 class="name">Jonny</h3>
+            <p class="city">Stockholm</p>
+        </li>
+        <li>
+            <h3 class="name">Jonas</h3>
+            <p class="city">Berlin</p>
+        </li>
+    </ul>
+</div>
+
 </body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.3.0/list.min.js"></script>
+<script>
+    var options = {
+        valueNames: [ 'name', 'city' ]
+    };
+
+    var hackerList = new List('hacker-list', options);
+</script>
 </html>

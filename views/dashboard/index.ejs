@@ -30,37 +30,22 @@
             </div>
         </div>
     </div>
-    <div class="row problem-cont">
-        <div class="eachproblem col-md-3 ">
-            <%if(metaPuzzle){%>
-                <div class="problembod">
-                    <div class="caption topproblem" style="position: relative;">
-                        <h1>معمای اصلی</h1>
-                        <span >برای آنکه به مرحله بعد بروید حتما باید این معما را حل کنید</span>
-                    </div>
-                    <div class="problemname">
-                        <h4><%= metaPuzzle.name %></h4>
-                    </div>
-                    <div>
-
-                        <%if(metaPuzzle.solved){%>
-                            <a href="/dashboard/puzzles/<%= metaPuzzle._id %>" class="btn btn-success">حل شده است</a>
-                        <%}else{%>
-                            <a href="/dashboard/puzzles/<%= metaPuzzle._id %>" class="btn btn-warning">وارد شوید</a>
-                        <%}%>
-                    </div>
-                </div>
-            <%}%>
-        </div>
+    <div class="row problem-cont" id="puzzles_list">
+        <input class="search" />
+        <ul class="list" style="list-style-type: none;">
         <% if(puzzles){puzzles.forEach(function(puzzle){ %>
+
+        <li>
         <div class="eachproblem col-md-3 " >
             <div class="problembod">
-                <div class="caption topproblem">
-                    <h1>معما</h1>
+                <div class="problemname caption topproblem">
+                    <h1><%= puzzle.name %></h1>
                 </div>
-                <div class="problemname">
-                    <h4><%= puzzle.name %></h4>
-                </div>
+                <%puzzle.problem.tags.forEach(function (tag) {%>
+                    <div class="tag">
+                        <%=tag%>
+                    </div>
+                <%})%>
             <p>
                 <%if(puzzle.accepted){%>
                 <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success">حل شده است</a>
@@ -68,13 +53,17 @@
                 <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger">رد شده است</a>
                 <%}else if(puzzle.submitted){%>
                 <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">ثبت شده است</a>
-                <%}else {%>
-                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">وارد شوید</a>
+                <%}else if(puzzle.sold) {%>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">مشاهده</a>
+                <%}else  {%>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">خرید</a>
                 <%}%>
             </p>
         </div>
         </div>
+        </li>
         <% });} %>
+        </ul>
     </div>
     <div class="row nextstage">
         <div class="container">
@@ -86,6 +75,14 @@
         </div>
     </div>
 </div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.3.0/list.min.js"></script>
+<script>
+    var options = {
+        valueNames: [ 'problemname','tag' ]
+    };
+
+    var hackerList = new List('puzzles_list', options);
+</script>
 <% include ../partials/footer %>
 </body>
 </html>

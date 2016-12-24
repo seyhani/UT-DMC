@@ -53,7 +53,7 @@ module.exports = {
     },
 
     initialProblemDirectories : function (problemName) {
-        var dir = "Files/Problems/";
+        var dir = "public/Files/Problems/";
         dir += problemName;
         mkdir(dir);
         dir += "/";
@@ -62,7 +62,12 @@ module.exports = {
 
     },
     removeProblemDirectories :function (problemName) {
-        deleteFolderRecursive("Files/Problems/"+problemName);
+        deleteFolderRecursive("public/Files/Problems/"+problemName);
+    },
+    removeSubmission :function (problemName,submisson) {
+        var path = "public/Files/Problems/"+problemName+"/Submissions/"+submisson;
+        if( fs.existsSync(path) ) 
+            fs.unlinkSync(path);
     },
     uploadToDir:function (tmp_path,folder_name,file_name) {
         var target_path =  folder_name + '/' + file_name;
@@ -72,5 +77,24 @@ module.exports = {
                 if (err) throw err;
             });
         });
+    },
+    getAllFilesFromFolder : function(dir) {
+
+        var filesystem = require("fs");
+        var results = [];
+
+        filesystem.readdirSync(dir).forEach(function(file) {
+
+            file = dir+'/'+file;
+            var stat = filesystem.statSync(file);
+
+            if (stat && stat.isDirectory()) {
+                results = results.concat(_getAllFilesFromFolder(file))
+            } else results.push(file);
+
+        });
+
+        return results;
+
     }
 };

@@ -54,7 +54,7 @@ router.get("/", function(req, res){
 });
 
 router.get("/ranking", function(req, res){
-    Group.find({}).sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
+    Group.find({}).populate("competition").sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
        res.render("dashboard/ranking",{groups:groups});
     });
 });
@@ -95,7 +95,7 @@ router.get("/puzzles/:puzzle_id/hint", function(req, res){
 router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, res){
     var answer = sanitize(req.body.answer);
     User.findById(req.user._id).populate("group").exec(function (err,user) {
-        Puzzle.findById(req.params.puzzle_id).populate(["problem","group"]).exec(function (err, puzzle) {
+        Puzzle.findById(req.params.puzzle_id).deepPopulate(["problem","group","group.competition"]).exec(function (err, puzzle) {
             if (err) {
                 console.log(err);
             } else {

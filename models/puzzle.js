@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var middleware = require("../middleware/index");
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 //Puzzle status
 //new -> sold -> submitted -> rejected
 //                         -> accepted
@@ -86,6 +88,10 @@ PuzzleSchema.virtual('accepted').get(function () {
     return this.status == "accepted";
 });
 
+PuzzleSchema.virtual('score').get(function () {
+    return this.problem.score;
+});
+
 PuzzleSchema.virtual('cost').get(function () {
     return this.problem.score/2 ;
 });
@@ -93,8 +99,14 @@ PuzzleSchema.virtual('filePath').get(function () {
     return this.problem.dir + "Submissions/" + this.submisson.file;
 });
 
+PuzzleSchema.virtual('sources').get(function () {
+    return middleware.getAllFilesFromFolder(this.problem.dir+"Sources") ;
+});
+
 PuzzleSchema.virtual('requestedForHint').get(function () {
     return  this.status == "requestedForHint";
 });
+
+PuzzleSchema.plugin(deepPopulate);
 
 module.exports = mongoose.model("Puzzle", PuzzleSchema);

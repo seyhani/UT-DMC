@@ -55,6 +55,10 @@ GroupSchema.methods.view= function (puzzle) {
 
 };
 
+GroupSchema.virtual('score').get(function () {
+    return this.competition.score;
+});
+
 GroupSchema.pre("remove",function (next) {
     var group = this;
     mongoose.model("Puzzle").remove({group:group},function (err) {next();});
