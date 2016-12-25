@@ -15,6 +15,18 @@ var ProblemSchema = new mongoose.Schema({
     },
 });
 
+ProblemSchema.statics.getAllTags = function(cb) {
+    var tags = [];
+    this.find({},function (err,allProblems) {
+        allProblems.forEach(function (problem) {
+            problem.tags.forEach(function (tag) {
+               if(tags.indexOf(tag)==-1)
+                   tags.push(tag);
+            });
+        });
+        return cb(tags);
+    });
+};
 
 ProblemSchema.methods.hasTag = function (tag) {
     return (this.tags.indexOf(tag) != -1);

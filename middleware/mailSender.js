@@ -29,7 +29,7 @@ module.exports = {
                 delete res.text;
                 if(!res.html)
                     return callback(new Error("no html file in template"));
-                let receivers = docs.map(x => x.email).join(', ');
+                let receivers = docs.map(function (x) {return x.email;}).join(', ');
                 let options = Object.assign({}, mailOptions, {to: receivers}, res);
                 return transporter.sendMail(options, callback);
             });

@@ -16,15 +16,16 @@ var fs = require("fs");
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
 
-router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
-    // Get all problems from DB
     Problem.find({}, function(err, allProblems) {
         if (err) {
             console.log(err);
         } else {
-            res.render("admin/problems/index", {problems: allProblems});
+            Problem.getAllTags(function (tags) {
+                res.render("admin/problems/index", {problems: allProblems,tags:tags});
+            });
         }
     });
 });
