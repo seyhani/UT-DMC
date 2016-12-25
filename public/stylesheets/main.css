@@ -63,7 +63,6 @@ body {
   border-radius: 3px;
   border: none;
   border-bottom: 2px solid #bbb;
-  background: #eee;
   margin-bottom: 10px;
 }
 .btn.active.focus,
