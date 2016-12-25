@@ -70,7 +70,7 @@ router.get("/:id", function(req, res){
         if(err){
             console.log(err);
         } else {
-            //render show template with that problem
+
             res.render("admin/problems/show", {problem: foundProblem});
         }
     });

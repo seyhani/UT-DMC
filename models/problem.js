@@ -75,6 +75,15 @@ ProblemSchema.virtual('dir').get(function () {
     return "public/Files/Problems/"+this.name+"/";
 });
 
+ProblemSchema.virtual('sources').get(function () {
+    var sources = [];
+    var problem = this;
+    this.files.forEach(function (file) {
+       sources.push("public/Files/Problems/"+problem.name+"/Sources/"+file);
+    });
+    return sources;
+});
+
 ProblemSchema.post("remove",function (problem) {
     middleware.removeProblemDirectories(problem.name);
 });
