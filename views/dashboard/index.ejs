@@ -34,6 +34,7 @@
         <input class="search" />
         <ul class="taglist">
             <li><a href="javascript: void();">همه</a></li>
+            <li><a href="javascript: void();">tag1</a></li>
             <li><a href="javascript: void();">tag2</a></li>
         </ul>
         <ul class="list" style="list-style-type: none;">
@@ -44,9 +45,11 @@
                 <div class="caption topproblem">
                     <h1 class="problemname"><%= puzzle.name %></h1>
                 </div>
+                <div class="tags">
                 <%puzzle.problem.tags.forEach(function (tag) {%>
                     <div class="tag"><%=tag%></div>
                 <%})%>
+                </div>
             <p>
                 <%if(puzzle.accepted){%>
                 <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success">حل شده است</a>

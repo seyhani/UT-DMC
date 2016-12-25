@@ -1,11 +1,11 @@
 var options = {
-    valueNames: [ 'problemname','tag' ]
+    valueNames: [ 'problemname','tags' ]
 };
 
 var hackerList = new List('puzzles_list', options);
 
 function tagfilter(item, tag){
-	return item.values().tag.indexOf(tag) > -1;
+	return item.values().tags.indexOf(tag) > -1;
 }
 
 $(document).ready(function(){
