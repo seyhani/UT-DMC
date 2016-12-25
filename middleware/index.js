@@ -62,7 +62,6 @@ module.exports = {
 
         return text;
     },
-
     initialProblemDirectories : function (problemName) {
         var dir = "public/Files/Problems/";
         dir += problemName;

@@ -18,7 +18,6 @@ var UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Group"
     },
-
     resetPasswordToken:String,
     resetPasswordExpires:Date,
 });
@@ -44,4 +43,5 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 UserSchema.plugin(passportLocalMongoose)
 UserSchema.plugin(deepPopulate);
+
 module.exports = mongoose.model("User", UserSchema);

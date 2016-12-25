@@ -63,7 +63,6 @@ PuzzleSchema.methods.requsetForHint = function () {
     this.save();
     return true;
 };
-
 PuzzleSchema.virtual('name').get(function () {
     return this.problem.name;
 });

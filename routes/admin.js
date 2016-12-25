@@ -10,7 +10,7 @@ var middleware = require("../middleware/index");
 var rycode = require("../middleware/rycode");
 var _ = require("lodash");
 
-router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     res.render('admin/index');
