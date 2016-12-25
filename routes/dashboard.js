@@ -1,10 +1,13 @@
 var express = require("express");
 var router  = express.Router();
+
 var Problem = require("../models/problem");
 var Group = require("../models/group");
 var Puzzle = require("../models/puzzle");
 var User = require("../models/user");
+
 var middleware = require("../middleware");
+
 var request = require("request");
 var multer = require('multer');
 var rimraf = require('rimraf');
@@ -25,28 +28,30 @@ var path = require('path')
 router.all("/*",middleware.isLoggedIn);
 
 router.get("/", function(req, res){
-
     User.findById(req.user.id).deepPopulate(["group","group.competition.puzzles","group.competition.puzzles.problem","group.competition"]).exec(function (err,user) {
         if(!user.group) {
             res.render("dashboard/index", {user:user,puzzles: null, metaPuzzle: null, canGoToNextStage: null});
         }else {
             user.group.findCurrentStagePuzzles(function (err, puzzles) {
                 user.group.findCurrentStageMetaPuzzle(function (err, metaPuzzle) {
-                    var canGoToNextStage = false;
-                    if (metaPuzzle)
-                        canGoToNextStage = metaPuzzle.solved;
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        res.render("dashboard/index",
-                            {
-                                user:user,
-                                puzzles: puzzles,
-                                metaPuzzle: metaPuzzle,
-                                canGoToNextStage: canGoToNextStage
-                            }
-                        );
-                    }
+                    Puzzle.getAllTags(user.group.competition,function (tags) {
+                        var canGoToNextStage = false;
+                        if (metaPuzzle)
+                            canGoToNextStage = metaPuzzle.solved;
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.render("dashboard/index",
+                                {
+                                    user:user,
+                                    puzzles: puzzles,
+                                    tags:tags,
+                                    metaPuzzle: metaPuzzle,
+                                    canGoToNextStage: canGoToNextStage
+                                }
+                            );
+                        }
+                    });
                 });
             });
         }

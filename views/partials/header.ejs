@@ -1,8 +1,8 @@
-<nav class="navbar navbar-inverse  navbar-fixed-top" style="margin-bottom: 0;">
+<nav class="navbar navbar-default  navbar-fixed-top" style="margin-bottom: 0;">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-                <img alt="Brand" src="/firstpage/img/logo.png" width="30px" height="30px">
+            <a class="navbar-brand" href="http://acm.ut.ac.ir/" target="_blank">
+                <img alt="ACM" src="/img/logo.png" width="30px" height="30px">
             </a>
         </div>
         <div class="collapse navbar-collapse">
@@ -13,10 +13,10 @@
                     <li><a class="btn-group-sm btn-default navbar-btn" href="/">خانه</a></li>
                 <% } else { %>
                     <%if(currentUser.group){%>
-                        <li><a href="#"><%= currentUser.group.name%></a></li>
-                        <li><a href="/dashboard"><%=currentUser.group.credit%>اعتبار : </a></li>
+                        <li><a href="javascript: void();" style="cursor: default;"><%= currentUser.group.name%></a></li>
+                        <li><a href="javascript: void();" style="cursor: default;">اعتبار : </a></li>
                     <%}%>
-                    <li><a href="/dashboard"><%=currentUser.username %> خانه </a></li>
+                    <li><a href="/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><%=currentUser.username %> خانه </a></li>
                     <li><a href="/logout">خروج</a></li>
                 <% } %>
             </ul>
