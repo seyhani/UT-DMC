@@ -34,21 +34,24 @@ router.get("/", function(req, res){
         }else {
             user.group.findCurrentStagePuzzles(function (err, puzzles) {
                 user.group.findCurrentStageMetaPuzzle(function (err, metaPuzzle) {
-                    var canGoToNextStage = false;
-                    if (metaPuzzle)
-                        canGoToNextStage = metaPuzzle.solved;
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        res.render("dashboard/index",
-                            {
-                                user:user,
-                                puzzles: puzzles,
-                                metaPuzzle: metaPuzzle,
-                                canGoToNextStage: canGoToNextStage
-                            }
-                        );
-                    }
+                    Puzzle.getAllTags(function (tags) {
+                        var canGoToNextStage = false;
+                        if (metaPuzzle)
+                            canGoToNextStage = metaPuzzle.solved;
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.render("dashboard/index",
+                                {
+                                    user:user,
+                                    puzzles: puzzles,
+                                    tags:tags,
+                                    metaPuzzle: metaPuzzle,
+                                    canGoToNextStage: canGoToNextStage
+                                }
+                            );
+                        }
+                    });
                 });
             });
         }

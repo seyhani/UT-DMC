@@ -106,6 +106,19 @@ PuzzleSchema.virtual('requestedForHint').get(function () {
     return  this.status == "requestedForHint";
 });
 
+PuzzleSchema.statics.getAllTags = function(cb) {
+    var tags = [];
+    this.find({},function (err,allPuzzles) {
+        allPuzzles.forEach(function (puzzle) {
+            puzzle.problem.tags.forEach(function (tag) {
+                if(tags.indexOf(tag)==-1)
+                    tags.push(tag);
+            });
+        });
+        return cb(tags);
+    });
+};
+
 PuzzleSchema.plugin(deepPopulate);
 
 module.exports = mongoose.model("Puzzle", PuzzleSchema);
