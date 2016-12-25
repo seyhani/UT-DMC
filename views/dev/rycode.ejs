@@ -1,35 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="description" content="Responsive Coming soon Template">
-        <meta name="keywords" content="Coming soon template, Bootstrap template, Coming soon, Responsive coming soon Template, Under Construction, countdown , Mailchimp, Youtube Video">
-        <meta name="author" content="traivan98">
-
         <title>شکار معما</title>
-
-        <!-- favicon linke -->
-        <link rel="icon" type="image/png" href="/firstpage/img/favicon.png" />
-
-
+        <% include ../partials/head %>
     </head>
 <body onkeydown="down()" onkeyup="up()">
-<div class="container">
-    <% if(error && error.length > 0) { %>
-    <div class="alert
-
-     alert-danger"><p><%=error %></p></div>
-    <% } %>
-
-    <% if(success && success.length > 0) { %>
-    <div class="alert alert-success"><p><%= success %></p></div>
-    <% } %>
-</div>
+<% include ../partials/header %>
 <h1>KNOCK</h1>
 
-
+<% include ../partials/footer %>
 <script>
     var a = 0;
     var t =[];
@@ -72,3 +51,4 @@
 
 </script>
 </body>
+</html>
