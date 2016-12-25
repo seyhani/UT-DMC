@@ -34,7 +34,9 @@
         <input class="search" />
         <ul class="taglist">
             <li><a href="javascript: void();">همه</a></li>
-            <li><a href="javascript: void();">tag1</a></li>
+            <% if(tags){tags.forEach(function(tag){ %>
+            <li><a href="javascript: void();"><%= tag%></a></li>
+            <%});}%>
             <li><a href="javascript: void();">tag2</a></li>
         </ul>
         <ul class="list" style="list-style-type: none;">
