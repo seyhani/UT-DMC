@@ -106,14 +106,16 @@ PuzzleSchema.virtual('requestedForHint').get(function () {
     return  this.status == "requestedForHint";
 });
 
-PuzzleSchema.statics.getAllTags = function(cb) {
+PuzzleSchema.statics.getAllTags = function(competition,cb) {
     var tags = [];
-    this.find({},function (err,allPuzzles) {
+    this.find({_id:{$in:competition.puzzles}}).populate("problem").exec(function (err,allPuzzles) {
         allPuzzles.forEach(function (puzzle) {
-            puzzle.problem.tags.forEach(function (tag) {
-                if(tags.indexOf(tag)==-1)
-                    tags.push(tag);
-            });
+            if(puzzle.problem) {
+                puzzle.problem.tags.forEach(function (tag) {
+                    if (tags.indexOf(tag) == -1)
+                        tags.push(tag);
+                });
+            }
         });
         return cb(tags);
     });

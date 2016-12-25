@@ -34,7 +34,7 @@ router.get("/", function(req, res){
         }else {
             user.group.findCurrentStagePuzzles(function (err, puzzles) {
                 user.group.findCurrentStageMetaPuzzle(function (err, metaPuzzle) {
-                    Puzzle.getAllTags(function (tags) {
+                    Puzzle.getAllTags(user.group.competition,function (tags) {
                         var canGoToNextStage = false;
                         if (metaPuzzle)
                             canGoToNextStage = metaPuzzle.solved;
