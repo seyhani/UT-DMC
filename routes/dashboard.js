@@ -32,12 +32,8 @@ router.get("/", function(req, res){
         if(!user.group) {
             res.render("dashboard/index", {user:user,puzzles: null, metaPuzzle: null, canGoToNextStage: null});
         }else {
-            user.group.findCurrentStagePuzzles(function (err, puzzles) {
-                user.group.findCurrentStageMetaPuzzle(function (err, metaPuzzle) {
+            Puzzle.find({_id:{$in:user.group.competition.puzzles}}).populate("problem").exec(function (err,puzzles){
                     Puzzle.getAllTags(user.group.competition,function (tags) {
-                        var canGoToNextStage = false;
-                        if (metaPuzzle)
-                            canGoToNextStage = metaPuzzle.solved;
                         if (err) {
                             console.log(err);
                         } else {
@@ -46,13 +42,10 @@ router.get("/", function(req, res){
                                     user:user,
                                     puzzles: puzzles,
                                     tags:tags,
-                                    metaPuzzle: metaPuzzle,
-                                    canGoToNextStage: canGoToNextStage
                                 }
                             );
                         }
                     });
-                });
             });
         }
     });
