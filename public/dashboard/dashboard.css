@@ -48,9 +48,6 @@ body {
 .problembod:hover span {
   display: block;
 }
-.problemname {
-  height: 100px;
-}
 .nextstage {
   width: 100%;
   padding-left: 10px;
