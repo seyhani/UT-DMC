@@ -1,0 +1,25 @@
+.msgbox #msgok{
+	display: none;
+}
+.msgbox.hide{
+	display: none;
+}
+@media screen and (min-width: 992px){
+	.msgbox{
+		position: fixed;
+		top: 45%;
+		z-index: 100;
+		left: 30%;
+		right: 30%;
+		background: #fff;
+		border-radius: 5px;
+		box-shadow: black 0 0 15px;
+		padding-bottom: 25px;
+	}
+	.msgbox #msgok{
+		margin: -10px auto;
+		display: block;
+		padding: 5px 10px;
+		border-radius: 10px;
+	}
+}
