@@ -223,7 +223,8 @@ input.form-control {
     outline: none;
     border: 2px solid #ddd;
     background: #fff;
-    padding: 20px 15px;
+    padding: 5px 15px;
+    height: 44px;
 }
 a.forgot-pass-link {
     margin: 20px 0;

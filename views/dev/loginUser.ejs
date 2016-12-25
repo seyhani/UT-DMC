@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>شکار معما</title>
+    <% include ../partials/head %>
+</head>
+<body onkeydown="down()" onkeyup="up()">
+<% include ../partials/header %>
+<h1><%=username%></h1>
+
+<% include ../partials/footer %>
+<script>
+    var a = 0;
+    var t =[];
+    function down() {
+
+    }
+    function up() {
+
+        if(event.keyCode!=13)
+            t.push(event.keyCode);
+        else {
+            if(t.length == 0)
+                    return;
+            window.alert("Entered");
+            post("/admin/login/<%=username%>", t, "POST");
+        }
+    }
+    function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            console.log(key +" : "+ params[key]);
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
+</body>
+</html>

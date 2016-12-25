@@ -3,8 +3,7 @@
 <head>
     <title>شکار معما</title>
     <% include partials/head %>
-    <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
-    </head>
+</head>
 <body>
 <% include partials/header %>
 <div class="container">
@@ -13,7 +12,7 @@
         <div style="width: 30%; margin: 25px auto;">
             <form action="/login" method="post">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="username" placeholder="email">
+                    <input class="form-control" type="text" name="username" placeholder="email" data-validation="email">
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="password" name="password" placeholder="password">
@@ -27,6 +26,7 @@
         </div>
     </div>
 </div>
+<% include partials/formvalidation %>
 <% include partials/footer %>
 </body>
 </html>

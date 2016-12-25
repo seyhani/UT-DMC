@@ -6,8 +6,9 @@ var middleware = require("../middleware/index");
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
 var Competition = require("../models/competition");
+var middleware = require("../middleware/index");
 
-
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 
 router.get("/competition", function(req, res){

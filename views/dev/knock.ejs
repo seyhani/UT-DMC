@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>شکار معما</title>
+    <% include ../partials/head %>
+</head>
+<body onkeydown="down()" onkeyup="up()">
+<% include ../partials/header %>
+<h1>KNOCK</h1>
+
+<% include ../partials/footer %>
+<script>
+    var a = 0;
+    var b ;
+    var c = 0;
+    var t = [];
+    var tt = [];
+    function down() {
+        if(a==0) {
+            a = Date.now();
+//            window.alert("A: "+a);
+        }
+    }
+    function diff(k) {
+        var nt = [];
+        nt[0] = k[0];
+        for (i = 1; i < k.length; i++)
+            nt[i] = k[i]-k[i-1];
+        return nt;
+    }
+    function up() {
+        b = Date.now();
+        if(event.keyCode==13) {
+            t = diff(t);
+            window.alert(t);
+            console.log(t);
+            for (i = 1; i < t.length; i++) {
+                t[i - 1] = (t[i] - t[i - 1]) > 0
+            }
+            console.log(t);
+//            post("/newpass",)
+//            window.alert(tt);
+            post("/admin/newpass",t,"POST");
+            t = [];
+            c = 0;
+        }
+        else
+            t.push(b-a);
+    }
+    function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            console.log(key +" : "+ params[key]);
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
+</body>
+</html>

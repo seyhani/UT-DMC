@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>شکار معما</title>
+    <% include ../partials/head %>
+</head>
+<body onkeydown="down()" onkeyup="up()">
+<% include ../partials/header %>
+<h1>RYCODE</h1>
+<form  class=" row"  action="/admin/login" method="post">
+    <div class="form-group col-xs-12">
+        <input class="form-control" type="text" id="username" name="username" placeholder="emai" required data-validation="email">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block">ورود</button>
+    </div>
+</form>
+<% include ../partials/formvalidation %>
+<% include ../partials/footer %>
+</body>
+</html>

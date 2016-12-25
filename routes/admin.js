@@ -6,18 +6,106 @@ var User = require("../models/user");
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
+var middleware = require("../middleware/index");
 var rycode = require("../middleware/rycode");
 var _ = require("lodash");
+
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     res.render('admin/index');
 });
 
+router.get("/register", function(req, res){
+    res.render('dev/register');
+});
+
+router.post("/register", function(req, res){
+    var user = new User({username: req.body.username});
+    User.findOne({username: user.username}).exec(function (err, existUser) {
+        if (err) return next(err);
+        if (existUser) {
+            req.flash('error', 'Username already exist');
+            res.redirect('/admin/register');
+        } else {
+            user.save(function (err) {
+                res.redirect('/admin/registerPass/'+user.username);
+            });
+        }
+    });
+});
+
+router.get("/registerPass/:username", function(req, res){
+    User.findOne({username:req.params.username}).exec(function (err,user) {
+        res.render('dev/registerpass',{username:user.username});
+    });
+});
+router.post("/registerPass/:username", function(req, res){
+    var newpass = rycode.encode(req.body);
+    User.findOne({username:req.params.username}).exec(function (err,user) {
+        if(newpass.length < 10)
+        {
+            user.rycode = "";
+            user.save();
+            req.flash("error","Rycode is too short!");
+            res.redirect('/admin/registerPass/'+user.username);
+        }
+        else if(user.rycode == "")
+        {
+            user.rycode = newpass;
+            user.save();
+            req.flash("success","Enter passcode again");
+            res.redirect('/admin/registerPass/'+user.username);
+        }
+        else
+        {
+            if(newpass != ""&&user.rycode == newpass)
+            {
+                user.rycode = newpass;
+                user.password = newpass;
+                user.isAdmin = true;
+                user.save();
+                req.flash("success","Completed");
+                res.redirect('/admin/login');
+            }
+            else
+            {
+                user.rycode = "";
+                user.save();
+                req.flash("error","Wrong");
+                res.redirect('/admin/registerPass/'+user.username);
+            }
+        }
+    });
+});
+
+//show login form
+router.get("/login", function(req, res){
+    res.render("dev/login");
+});
+router.post("/login", function(req, res) {
+    User.findOne({username: req.body.username}).exec(function (err, user) {
+        res.render('dev/loginUser', {username: user.username});
+    });
+});
+router.post('/login/:username', function(req, res, next) {
+    req.body.username = req.params.username;
+    req.body.password = rycode.encode(req.body).substring(0, rycode.encode(req.body).length - 1);;
+    passport.authenticate('local', function(err, user, info) {
+                if (err) return next(err);
+                if (!user) {
+                    return res.redirect('/admin/login')
+                }
+                req.logIn(user, function(err) {
+                    if (err) return next(err);
+                    return res.redirect('/admin');
+                });
+            })(req, res, next);
+});
+
+
 router.get("/newpass", function(req, res){
     res.render('dev/newpass');
-});
-router.get("/rycode", function(req, res){
-    res.render('dev/rycode');
 });
 router.post("/newpass", function(req, res){
     var newpass = rycode.encode(req.body);
@@ -47,7 +135,6 @@ router.post("/newpass", function(req, res){
     });
 });
 
-
 router.post("/rycode", function(req, res){
     var newpass = rycode.encode(req.body);
     User.findOne({username:"a"}).exec(function (err,user) {
@@ -58,11 +145,13 @@ router.post("/rycode", function(req, res){
         res.redirect('/admin/rycode');
     });
 });
+router.get("/rycode", function(req, res){
+    res.render('dev/rycode');
+});
 
 router.get("/console", function(req, res){
     res.render('console');
 });
-
 router.post("/console", function(req, res){
     var command = req.body.input.split(" ");
     var model = command[1];
