@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="row problem-cont" id="puzzles_list">
+    <div class="problem-cont" id="puzzles_list">
         <input class="search" />
         <ul class="taglist">
             <li><a href="javascript: void();">همه</a></li>
@@ -38,11 +38,12 @@
             <li><a href="javascript: void();"><%= tag%></a></li>
             <%});}%>
         </ul>
-        <div class="row">
         <ul class="list" style="list-style-type: none;">
+        <div class="row">
         <% if(puzzles){puzzles.forEach(function(puzzle){ %>
         <li>
-        <div class="eachproblem col-md-3 col-sm-6 col-md-12" >
+        <div class="col-md-3 col-sm-6 col-md-12" >
+            <div class="eachproblem">
             <div class="problembod">
                 <div class="caption topproblem">
                     <h1 class="problemname"><%= puzzle.name %></h1>
@@ -67,10 +68,11 @@
             </p>
         </div>
         </div>
+        </div>
         </li>
         <% });} %>
-        </ul>
-        </div>  
+        </div>
+        </ul>  
     </div>
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.3.0/list.min.js"></script>
