@@ -127,48 +127,48 @@ fieldset[disabled] .btn-default:hover {
   background-color: #fff;
   border-color: #ccc;
 }
-.btn-success {
+.btn-info {
   background-color: #51afff;
   border-color: #3378b3;
 }
-.btn-success.focus,
-.btn-success:focus {
+.btn-info.focus,
+.btn-info:focus {
   background-color: #70bdff;
   border-color: #4788bf;
   outline: none;
 }
-.btn-success:hover {
+.btn-info:hover {
   background-color: #70bdff;
   border-color: #4788bf;
 }
-.btn-success.active,
-.btn-success:active,
-.open>.dropdown-toggle.btn-success {
+.btn-info.active,
+.btn-info:active,
+.open>.dropdown-toggle.btn-info {
   background-color: #4ca7f5;
   border-color: transparent;
 }
-.btn-success.active.focus,
-.btn-success.active:focus,
-.btn-success.active:hover,
-.btn-success:active.focus,
-.btn-success:active:focus,
-.btn-success:active:hover,
-.open>.dropdown-toggle.btn-success.focus,
-.open>.dropdown-toggle.btn-success:focus,
-.open>.dropdown-toggle.btn-success:hover {
+.btn-info.active.focus,
+.btn-info.active:focus,
+.btn-info.active:hover,
+.btn-info:active.focus,
+.btn-info:active:focus,
+.btn-info:active:hover,
+.open>.dropdown-toggle.btn-info.focus,
+.open>.dropdown-toggle.btn-info:focus,
+.open>.dropdown-toggle.btn-info:hover {
   background-color: #4ca7f5;
   border-color: transparent;
   outline: none;
 }
-.btn-success.disabled.focus,
-.btn-success.disabled:focus,
-.btn-success.disabled:hover,
-.btn-success[disabled].focus,
-.btn-success[disabled]:focus,
-.btn-success[disabled]:hover,
-fieldset[disabled] .btn-success.focus,
-fieldset[disabled] .btn-success:focus,
-fieldset[disabled] .btn-success:hover {
+.btn-info.disabled.focus,
+.btn-info.disabled:focus,
+.btn-info.disabled:hover,
+.btn-info[disabled].focus,
+.btn-info[disabled]:focus,
+.btn-info[disabled]:hover,
+fieldset[disabled] .btn-info.focus,
+fieldset[disabled] .btn-info:focus,
+fieldset[disabled] .btn-info:hover {
   background-color: #4ca7f5;
   border-color: #4788bf;
 }
@@ -201,6 +201,10 @@ fieldset[disabled] .btn-success:hover {
     background-color: #286090;
     border-color: #103352;
 }
+/*.btn-success{
+  background-color: #00ab66;
+  color: #E0E0E0;
+}*/
 .alert {
   margin: 35px;
   margin-bottom: 10px;
