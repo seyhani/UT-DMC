@@ -9,17 +9,19 @@
 <body>
 <% include ../../partials/header %>
     <div class="row">
-        <h1 style="text-align: center">Create New Group</h1>
-        <div style="width: 30%; margin: 25px auto;">
+        <h1 style="text-align: center">Create New Competition</h1>
+        <div class="col-md-4 col-md-offset-4" style="padding: 25px;">
             <form action="/admin/groups" method="POST">
                 <div class="form-group">
                     <input class="form-control" type="text" name="groupName" placeholder="name">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Create!</button>
+                    <button class="btn btn-lg btn-success btn-block">Create!</button>
                 </div>
             </form>
-            <a href="/">Go Back</a>
+            <div class="form-group">
+                <a class="btn btn-primary"  href="/">Go Back</a>
+            </div>
         </div>
     </div>
     <% include ../../partials/footer %>

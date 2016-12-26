@@ -5,16 +5,16 @@
     <% include ../../partials/head %>
 </head>
 <body>
-
+    <% include ../../partials/header %>
     <div class="row">
         <h1 style="text-align: center">Create a New problem</h1>
-        <div style="width: 30%; margin: 25px auto;">
+        <div class="col-md-4 col-md-offset-4" style="padding: 25px;">
             <form action="/admin/problems" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <input class="form-control" type="text" name="name" placeholder="Name">
                 </div>
                 <div class="form-group" >
-                    <textarea rows="10" cols="60" ></textarea>
+                    <textarea class="form-control" id="comment" rows="10" style="resize: vertical;"></textarea>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="text" name="answer" placeholder="Answer">
@@ -25,16 +25,16 @@
                 <div class="form-group">
                     <input class="form-control" type="number" name="score" placeholder="Score">
                 </div>
-                <label class="btn btn-default btn-primary">
+                <label class="btn btn-block btn-warning btn-lg">
                     <span class="glyphicon"></span> files<input
                             name='file' type="file" style="display: none;" multiple>
                 </label>
                 <div class="form-group">
-                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                    <button class="btn btn-lg btn-success btn-block">Submit!</button>
                 </div>
 
             </form>
-            <a href="/admin/problems">Go Back</a>
+            <a class="btn btn-primary" href="/admin/problems">Go Back</a>
         </div>
     </div>
     <% include ../../partials/footer %>

@@ -19,7 +19,5 @@
 	.msgbox #msgok{
 		margin: 0 auto;
 		display: block;
-		padding: 5px 30px;
-		border-radius: 6px;
 	}
 }

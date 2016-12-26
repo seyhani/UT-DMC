@@ -11,7 +11,7 @@
     <div class="container probbd">
         <div class="col-md-3 tag">
             <form action="/admin/problems/<%=problem._id%>/tag" method="POST">
-                <input type="text" name="tag" style="width: 100%;">
+                <input class="form-control" type="text" name="tag" style="width: 100%;">
                 <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
             </form>
             <form action="/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">

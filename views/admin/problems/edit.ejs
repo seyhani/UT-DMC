@@ -4,12 +4,11 @@
     <title>شکار معما</title>
     <% include ../../partials/head %>
 </head>
-<body>
+<body style="padding: 5px;">
     <% include ../../partials/header %>
     <div class="row">
         <h1 style="text-align: center">Edit <%= problem.name %></h1>
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-md-offset-4" style="padding: 25px;">
             <form action="/admin/problems/<%=problem._id%>?_method=PUT" method="POST">
                 <div class="form-group col-md-12 col-xs-12">
                     Name: <input class="form-control" type="text" name="name" value="<%= problem.name %>">
@@ -27,10 +26,12 @@
                     <textarea name="description" style="width: 100%;min-height: 100px;" > <%= problem.description %></textarea>
                 </div>
                 <div class="form-group col-xs-12">
-                    <button class="btn btn-lg btn-primary btn-block">Update!</button>
+                    <button class="btn btn-lg btn-success btn-block">Update!</button>
                 </div>
             </form>
-            <a href="/admin/problems">Go Back</a>
+            <div class="form-group col-xs-12">
+                <a class="btn btn-primary" href="/admin/problems">Go Back</a>
+            </div>
         </div>
     </div>
     <% include ../../partials/footer %>
