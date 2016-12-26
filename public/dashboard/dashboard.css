@@ -71,6 +71,7 @@
 .thumbnail{
   min-height: 150px;
   position: relative;
+  padding-bottom: 60px;
 }
 .thumbnail .btn-primary{
   position: absolute;

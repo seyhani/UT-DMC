@@ -264,3 +264,13 @@ a.forgot-pass-link {
 .nav{
   padding-right: 0;
 }
+.eachproblem{
+  position: relative;
+  padding-bottom: 50px;
+}
+.eachproblem .mainbtn{
+  position: absolute;
+  bottom: 20px;
+  left: 35%;
+  right: 35%;
+}

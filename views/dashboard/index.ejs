@@ -20,12 +20,12 @@
 
                 </div>
                 <div class="col-md-3" style="text-align: right;padding-top: 10px;">
-                    <button type="button" class="btn btn-info btn-lg btn-block btncolor">
+                    <button type="button" class="btn btn-primary btn-lg btn-block btncolor">
                         <% if(user.group){ %>
-                            <a style="text-decoration: none;color: #ffffff;" href="#"><%= user.group.name%></a>
+                            <a style="text-decoration: none;color: #ffffff;" href="javascript: void();"><%= user.group.name%></a>
                         <% } else { %><a>شما گروهی ندارید</a> <% } %>
                     </button>
-                    <a style="text-decoration: none;" href="/dashboard/ranking"><button  type="button" class="btn btn-default btn-lg btn-block">امتیاز گروه ها</button></a>
+                    <a style="text-decoration: none;" href="/dashboard/ranking"><button  type="button" class="btn btn-info btn-lg btn-block">امتیاز گروه ها</button></a>
                 </div>
             </div>
         </div>
@@ -38,10 +38,11 @@
             <li><a href="javascript: void();"><%= tag%></a></li>
             <%});}%>
         </ul>
+        <div class="row">
         <ul class="list" style="list-style-type: none;">
         <% if(puzzles){puzzles.forEach(function(puzzle){ %>
         <li>
-        <div class="eachproblem col-md-3 " >
+        <div class="eachproblem col-md-3 col-sm-6 col-md-12" >
             <div class="problembod">
                 <div class="caption topproblem">
                     <h1 class="problemname"><%= puzzle.name %></h1>
@@ -53,15 +54,15 @@
                 </div>
             <p>
                 <%if(puzzle.accepted){%>
-                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success">حل شده است</a>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success mainbtn">حل شده است</a>
                 <%}else if(puzzle.rejected){%>
-                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger">رد شده است</a>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger mainbtn">رد شده است</a>
                 <%}else if(puzzle.submitted){%>
-                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">ثبت شده است</a>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning mainbtn">ثبت شده است</a>
                 <%}else if(puzzle.sold) {%>
-                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">مشاهده</a>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-info mainbtn">مشاهده</a>
                 <%}else  {%>
-                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning">خرید</a>
+                <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-primary mainbtn">خرید</a>
                 <%}%>
             </p>
         </div>
@@ -69,6 +70,7 @@
         </li>
         <% });} %>
         </ul>
+        </div>  
     </div>
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.3.0/list.min.js"></script>
