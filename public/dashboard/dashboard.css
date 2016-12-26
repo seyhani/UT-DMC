@@ -68,3 +68,13 @@
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+.thumbnail{
+  min-height: 150px;
+  position: relative;
+}
+.thumbnail .btn-primary{
+  position: absolute;
+  bottom: 20px;
+  left: 30%;
+  right: 30%;
+}
