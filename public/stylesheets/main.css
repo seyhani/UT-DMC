@@ -60,7 +60,7 @@ body {
   background-color: #f9f9f9;
 }
 .btn {
-  border-radius: 3px;
+  /*border-radius: 3px;*/
   border: none;
   border-bottom: 2px solid #bbb;
   margin-bottom: 10px;
