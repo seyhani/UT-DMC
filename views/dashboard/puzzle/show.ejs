@@ -22,19 +22,18 @@
         <div class="col-md-3 submitpart">
             <%if(!puzzle.accepted){%>
             <form action="/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST" enctype="multipart/form-data">
-                <input class="answer-input" type="text" name="answer" placeholder="Answer">
-                <label class="btn btn-default btn-lg btn-block" >
-                    <span class="glyphicon"></span> files<input
-                            name='file' type="file" style="display: none;" >
+                <input class="answer-input form-control" type="text" name="answer" placeholder="پاسخ" style="text-align: center;">
+                <label class="btn btn-info btn-lg btn-block" >
+                    files<input name='file' type="file" style="display: none;" >
                 </label>
                 </label>
-                <button class="btn btn-default btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت جواب</button>
+                <button class="btn btn-success btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت جواب</button>
             </form>
             <%}%>
             <%if(!(puzzle.accepted)){%>
-            <a style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-info" style="margin-bottom:25px; ">درخواست کمک</button></a>
+            <a style="text-decoration: none;" href="/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-warning" style="margin-bottom:25px; ">درخواست کمک</button></a>
             <%}%>
-            <a href="/dashboard/" style="text-decoration: none;"><button class="btn btn-default btn-lg btn-block btn-warning" >بازگشت</button></a>
+            <a href="/dashboard/" style="text-decoration: none;"><button class="btn btn-danger btn-lg btn-block" >بازگشت</button></a>
         </div>
         <div class="col-md-9 prbody">
             <%if(puzzle.solved){%>

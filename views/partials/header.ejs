@@ -12,12 +12,12 @@
                     <li><a class="btn-group-sm btn-default navbar-btn" href="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
                     <li><a class="btn-group-sm btn-default navbar-btn" href="/"><span class="glyphicon glyphicon-home"></span></a></li>
                 <% } else { %>
-                    <%if(currentUser.group){%>
-                        <li><a href="javascript: void();" style="cursor: default;"><%= currentUser.group.name%></a></li>
-                        <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= currentUser.group.score%></a></li>
-                    <%}%>
-                    <li><a href="/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><%=currentUser.username %></a></li>
                     <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                    <%if(currentUser.group){%>
+                        <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= currentUser.group.score%></a></li>
+                        <li><a href="javascript: void();" style="cursor: default;"><%= currentUser.group.name%></a></li>
+                    <%}%>
+                    <li><a href="/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><span class="glyphicon glyphicon-home"></span><%=currentUser.username %></a></li>
                 <% } %>
             </ul>
         </div>
