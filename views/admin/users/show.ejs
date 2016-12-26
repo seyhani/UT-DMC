@@ -9,6 +9,9 @@
 <% include ../../partials/header %>
     <div class="container probbd">
         <div class="col-md-3 tag">
+            <a href="<%if(user.group){%> /admin/groups/<%=user.group._id%> <%}else{%> javascript: void(); <%}%> " >
+                <button class="btn btn-lg btn-block btn-info <%if(!user.group){%> disabled <%}%>" style="margin-bottom: 10px;">GRUOP<%if(user.group){%>: <%= user.group.name%><%}%></button>
+            </a>
             <form action="/admin/users/<%=user._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
             </form>
