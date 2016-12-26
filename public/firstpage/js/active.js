@@ -49,13 +49,14 @@
     // your plugin activation here
 
      // backstretch active here 
-     $(".boss-home-area").backstretch([
+     /*$(".boss-home-area").backstretch([
             "http://i.imgur.com/kvTfQzd.jpg"
-          ]);
+          ]);*/
 
      // countdown
       // To change date, simply edit: var endDate = "May 26, 2015 20:39:00";
-      var endDate = "November 3, 2016 08:00:00";
+      // var endDate = "November 3, 2026 08:00:00";
+      // var endDate = new Date(2017, 0, 5, 8, 0);
         $('.boss-countdown').countdown({
           date: endDate,
           render: function(data) {
@@ -87,3 +88,7 @@
 
 })(jQuery);
 
+// wow js active here
+new WOW().init({
+    offset:       200   // distance to the element when triggering the animation (default is 0)
+});
