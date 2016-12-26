@@ -261,3 +261,6 @@ a.forgot-pass-link {
     margin: 20px 0;
     display: block;
 }
+.nav{
+  padding-right: 0;
+}

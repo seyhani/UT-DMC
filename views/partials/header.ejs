@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default  navbar-fixed-top" style="margin-bottom: 0;">
+<nav class="navbar navbar-default  navbar-fixed-top" style="margin-bottom: 0;" dir="rtl">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="http://acm.ut.ac.ir/" target="_blank">
@@ -8,16 +8,16 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <% if(!currentUser){ %>
-                    <li><a class="btn-group-sm btn-default navbar-btn" href="/login">ورود</a></li>
-                    <li><a class="btn-group-sm btn-default navbar-btn" href="/register">ثبت نام</a></li>
-                    <li><a class="btn-group-sm btn-default navbar-btn" href="/">خانه</a></li>
+                    <li><a class="btn-group-sm btn-default navbar-btn" href="/register"><span class="glyphicon glyphicon-plus-sign"></span></a></li>
+                    <li><a class="btn-group-sm btn-default navbar-btn" href="/login"><span class="glyphicon glyphicon-log-in"></span></a></li>
+                    <li><a class="btn-group-sm btn-default navbar-btn" href="/"><span class="glyphicon glyphicon-home"></span></a></li>
                 <% } else { %>
                     <%if(currentUser.group){%>
                         <li><a href="javascript: void();" style="cursor: default;"><%= currentUser.group.name%></a></li>
-                        <li><a href="javascript: void();" style="cursor: default;">اعتبار : </a></li>
+                        <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= currentUser.group.score%></a></li>
                     <%}%>
-                    <li><a href="/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><%=currentUser.username %> خانه </a></li>
-                    <li><a href="/logout">خروج</a></li>
+                    <li><a href="/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><%=currentUser.username %></a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></a></li>
                 <% } %>
             </ul>
         </div>
@@ -26,11 +26,11 @@
 <% if((error && error.length > 0) || (success && success.length > 0)) { %>
 <div class="msgbox">
    <% if(error && error.length > 0) { %>
-     <div class="alert alert-danger"><p><%=error %></p></div>
+     <div class="alert alert-danger"><p><span class="glyphicon glyphicon-exclamation-sign"></span> <%=error %></p></div>
    <% } %>
    
    <% if(success && success.length > 0) { %>
-     <div class="alert alert-success"><p><%= success %></p></div>
+     <div class="alert alert-success"><p><span class="glyphicon glyphicon-ok-sign"></span> <%= success %></p></div>
    <% } %>
    <button class="btn btn-primary" id="msgok">خب</button>
 </div>
