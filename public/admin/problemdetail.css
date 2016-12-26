@@ -4,8 +4,10 @@
     min-height: 100vh;
 }
 .probbd{
-    margin: 20px auto;
+    margin: 0 auto;
+    padding: 20px 15px;
     background-color: #eeeeee;
+    height: 100vh;
     min-height: 440px;
 }
 .pbd{

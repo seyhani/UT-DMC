@@ -1,3 +1,30 @@
+@font-face {
+  font-family: IRANSansWeb;
+  src: url("../../font/IRANSansWeb(NoEn)_Light.ttf");
+}
+@font-face {
+  font-family: IRANSansWeb;
+  font-weight: bold;
+  src: url("../../font/IRANSansWeb(NoEn)_Medium.ttf");
+}
+@font-face {
+  font-family: IRANSansWeb;
+  font-weight: light;
+  src: url("../../font/IRANSansWeb(NoEn)_UltraLight.ttf");
+}
+@font-face {
+  font-family: 'BRoya';
+  src: url('../../font/BRoya/BRoya.ttf');
+}
+body {
+  font-family: IRANSansWeb, Geneva, sans-serif;
+}
+h1, h2, h3, h4, h5, h6{
+  font-weight: bold;
+}
+.count {
+  font-family: BRoya, tahoma, sans-serif, inherit;
+}
 body {
   background-color: #f6f8fb;
   padding-top: 50px;

@@ -1,18 +1,3 @@
-@font-face {
-    font-family: IRANSansWeb;
-    src: url(../../font/IRANSansWeb.ttf);
-}
-@font-face {
-    font-family: 'BRoya';
-    src: url('../../font/BRoya/BRoya.ttf') format('truetype');
-}
-.count{
-    font-family: BRoya,'BRoya',tahoma;
-}
-body{
-    font-family: IRANSansWeb;
-}
-
 .navbar{
     border-radius: 0;
 }
