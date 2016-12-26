@@ -1,3 +1,10 @@
+h1, h2, h3{
+    color: #195181;
+}
+a, a:hover, a:active, a:focus{
+    color: inherit;
+    text-decoration: none;
+}
 .container{
     width:100%;
     margin: 0;
@@ -32,10 +39,6 @@
     color: #fff;
     box-shadow: #222 0 0 15px inset;
     border-color: #000;
-}
-a, a:hover, a:active, a:focus{
-    color: inherit;
-    text-decoration: none;
 }
 .form-control{
     margin-bottom: 6px;

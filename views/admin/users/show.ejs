@@ -3,40 +3,27 @@
 <head>
     <title>شکار معما</title>
     <% include ../../partials/head %>
-    <!-- ===============    dashboard core CSS     =============== -->
-    <link rel="stylesheet" type="text/css" href="/problem-view/problemcss.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
 </head>
 <body>
 <% include ../../partials/header %>
-<div class="row problemname">
-    <div class="container">
-        <div class="col-md-6"></div>
-        <div class="col-md-3"></div>
-        <div class="col-md-3 pname">
-            <p class="lead">اعضا</p>
-        </div>
-    </div>
-</div>
-<div class="row problembody">
-    <div class="container">
-        <div class="col-md-3 submitpart">
+    <div class="container probbd">
+        <div class="col-md-3 tag">
             <form action="/admin/users/<%=user._id%>?_method=DELETE" method="POST">
-                <button class="btn btn-lg btn-danger btn-block">DELETE</button>
+                <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
             </form>
+            <a href="/admin/users" >
+                <button class="btn btn-lg btn-block btn-success">BACK</button>
+            </a>
         </div>
-        <div class="col-md-9 prbody">
-                    <img class="img-responsive" src="<%= user.image %>">
-                    <div class="caption-full">
-                        <h4>اسم عضو : </h4>
-                            <p><%=user.username%></p>
-                        <%if(user.group){%>
-                            <h4>اسم گروه :</h4>
-                            <p><a href="/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></p>
-                        <%}%>
-                    </div>
-             </div>
+        <div class="col-md-9 pbd">
+            <img class="img-responsive" src="<%= user.image %>">
+            <h2><%=user.username%></h2>
+            <%if(user.group){%>
+            <h4>Group: <a href="/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
+            <%}%>
+        </div>
     </div>
-</div>
 <% include ../../partials/footer %>
 </body>
 </html>
