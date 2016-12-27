@@ -81,3 +81,24 @@
 .list{
   padding: 0;
 }
+ul.taglist{
+  list-style: none;
+  display: inline-block;
+  vertical-align: text-top;
+}
+ul.taglist li{
+  display: inline-block;
+}
+#puzzles_list .search{
+  border: solid 2px #ddd;
+  border-radius: 6px;
+  padding: 6px 24px;
+}
+#puzzles_list .search::-moz-placeholder{
+  font-family: 'Glyphicons Halflings';
+  font-weight: lighter;
+}
+#puzzles_list .search::placeholder{
+  font-family: 'Glyphicons Halflings';
+  font-weight: lighter;
+}

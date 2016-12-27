@@ -9,10 +9,10 @@
             <ul class="nav navbar-nav navbar-right">
                 <% if(!currentUser){ %>
                     <li><a class="btn-group-sm btn-default navbar-btn" href="/register"><span class="glyphicon glyphicon-plus-sign"></span> ثبت‌نام</a></li>
-                    <li><a class="btn-group-sm btn-default navbar-btn" href="/login"><span class="glyphicon glyphicon-log-in"></span> ورود</a></li>
+                    <li><a class="btn-group-sm btn-default navbar-btn" href="/login"><span class="glyphicon glyphicon-ok-sign"></span> ورود</a></li>
                     <li><a class="btn-group-sm btn-default navbar-btn" href="/"><span class="glyphicon glyphicon-home"></span></a></li>
                 <% } else { %>
-                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> خروج</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> خروج</a></li>
                     <%if(currentUser.group){%>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= currentUser.group.score%></a></li>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-th-large"></span> <%= currentUser.group.name%></a></li>

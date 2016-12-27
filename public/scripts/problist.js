@@ -11,6 +11,8 @@ function tagfilter(item, tag){
 $(document).ready(function(){
 	$(".taglist li a").each(function(index, el) {
 		$(this).click(function() {
+			$(".taglist li a").removeClass('active');
+			$(this).addClass('active');
 			if(index)
 				hackerList.filter(function(item){
 					return tagfilter(item, $(el).text());

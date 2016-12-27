@@ -274,3 +274,6 @@ a.forgot-pass-link {
   left: 35%;
   right: 35%;
 }
+.nav .glyphicon{
+  vertical-align: -1px;
+}
