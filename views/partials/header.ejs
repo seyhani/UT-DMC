@@ -23,15 +23,7 @@
         </div>
     </div>
 </nav>
-<% if((error && error.length > 0) || (success && success.length > 0)) { %>
-<div class="msgbox">
-   <% if(error && error.length > 0) { %>
-     <div class="alert alert-danger"><p><span class="glyphicon glyphicon-exclamation-sign"></span> <%=error %></p></div>
-   <% } %>
-   
-   <% if(success && success.length > 0) { %>
-     <div class="alert alert-success"><p><span class="glyphicon glyphicon-ok-sign"></span> <%= success %></p></div>
-   <% } %>
-   <button class="btn btn-primary" id="msgok">خب</button>
-</div>
-<% } %>
+<script>
+    <% if(error && error.length > 0) { %> swal("1", "<%= error %>", "error"); <% } %>
+    <% if(success && success.length > 0) { %> swal("1", "<%= success %>", "success"); <% } %>
+</script>
