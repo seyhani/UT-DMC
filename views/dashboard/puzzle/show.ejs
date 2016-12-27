@@ -41,11 +41,15 @@
             <%}else{%>
                 <p><%= puzzle.problem.description %></p>
             <%}%>
+            <%if(puzzle.sources.length){%>
+            <div dir="ltr"><h4>Files</h4>
+            <%puzzle.sources.forEach(function (source) {%>
+            <a class="btn btn-default" href="/<%=source%>"><%=source%></a>
+            <%})%>
+            </div>
+            <%}%>
         </div>
     </div>
-    <%puzzle.sources.forEach(function (source) {%>
-    <a href="/<%=source%>" style="text-decoration: none;"><%=source%></a>
-    <%})%>
 </div>
 
 <% include ../../partials/footer %>

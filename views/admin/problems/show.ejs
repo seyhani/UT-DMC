@@ -45,16 +45,14 @@
                 <%});%>
             </h4>
             <%}%>
+            <%if(problem.files.length){%>
+            <h4>Files:</h4>
+            <%problem.files.forEach(function (file) {%>
+                <a class="btn btn-default" href="<%=file%>" target="_blank"><%=file%></a>
+            <%});%>
+            <%}%>
         </div>
     </div>
-<!-- </div> -->
-<div class="row">
-    <div class="list-group">
-        <%problem.files.forEach(function (file) {%>
-        <li class="list-group-item"><%=file%></li>
-        <%});%>
-    </div>
-</div>
 <% include ../../partials/footer %>
 </body>
 </html>
