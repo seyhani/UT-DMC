@@ -3,38 +3,37 @@
 <head>
     <title>شکار معما</title>
     <% include ../partials/head %>
-    <!-- ===============    ranking CSS     =============== -->
-    <link rel="stylesheet" type="text/css" href="/ranking/ranking.css" media="all" />
+    <!-- ===============    dashboard core CSS     =============== -->
+    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
 </head>
 <body>
 <% include ../partials/header %>
-<div class="row">
-    <div class="container">
-        <div class="col-md-3 text-left">
-            <h1>وضعیت گروه ها</h1></div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-
-        <div class="col-md-10 col-md-offset-1">
-
-            <div class="list-group">
-                <div class="list-group-item text-left eachgroup">
-                    <div class="col-md-4 text-center" style="border-left: solid #000000 2px;height: 100%;padding: 15px 0 0 0 ;border-bottom: solid #000000 2px;">اسم گروه ها</div>
-                    <div class="col-md-4 text-center" style="border-left: solid #000000 2px;height: 100%;padding: 15px 0 0 0 ;border-bottom: solid #000000 2px;">مرحله گروه</div>
-                    <div class="col-md-4 text-center" style="height: 100%;padding: 15px 0 0 0 ;border-bottom: solid #000000 2px;">امتیاز گروه</div>
+<div class="backch">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    <h1><span class="glyphicon glyphicon-stats"></span> وضعیت گروه‌ها</h1>
                 </div>
-                <%groups.forEach(function (group) {%>
-                <div class="list-group-item text-left eachgroup">
-                    <div class="col-md-4" style="border-left: solid #E0E0E0 2px;height: 100%;padding: 20px 30px 0 0;"><%=group.name%></div>
-                    <div class="col-md-4 text-center" style="border-left: solid #E0E0E0 2px;height: 100%;padding: 20px 10px 0 0;"><%=group.competition.stage%></div>
-                    <div class="col-md-4 text-center" style="padding: 20px 10px 0 0;"><%=group.competition.score%></div>
-                      </div>
-                <%});%>
             </div>
         </div>
     </div>
+    <div class="jumbotron"><div class="container"><div class="row">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>نام گروه</th>
+                <th>مرحلهٔ گروه</th>
+                <th>امتیاز گروه</th>
+            </tr>
+            <%groups.forEach(function (group) {%>
+            <tr class="<%if(group.name == currentUser.group.name){%>info<%}%>">
+                <td><%=group.name%></td>
+                <td><%=group.competition.stage%></td>
+                <td><%=group.competition.score%></td>
+            </tr>
+            <%});%>
+        </table>
+    </div></div></div>
 </div>
 <% include ../partials/footer %>
 </body>

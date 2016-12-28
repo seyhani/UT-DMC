@@ -277,3 +277,9 @@ a.forgot-pass-link {
 .nav .glyphicon{
   vertical-align: -1px;
 }
+table.table{
+  text-align: center;
+}
+table.table th{
+  text-align: center;
+}
