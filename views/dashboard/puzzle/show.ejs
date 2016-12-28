@@ -44,7 +44,7 @@
             <%if(puzzle.sources.length){%>
             <div dir="ltr"><h4>Files</h4>
             <%puzzle.sources.forEach(function (source) {%>
-            <a class="btn btn-default" href="/<%=source%>"><%=source%></a>
+            <a class="btn btn-default" href="/<%=source%>"><%=source.substr(source.lastIndexOf("/") + 1)%></a>
             <%})%>
             </div>
             <%}%>
