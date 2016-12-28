@@ -23,7 +23,7 @@
             <h1><%=puzzle.name%></h1>
             <h4>Group: <%=puzzle.group.name%></h4>
             <hr>
-            <%=puzzle.filePath%>
+            <a class="btn btn-default" href="/<%=puzzle.filePath%>" target="_blank"><%=puzzle.filePath%></a>
         </div></div>
     </div>
 <% include ../../partials/footer %>
