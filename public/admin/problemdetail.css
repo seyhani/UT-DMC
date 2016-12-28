@@ -20,16 +20,18 @@ h1, h2, h3{
 .pbd{
     background-color: #F8F8F8;
     min-height: 400px;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
+    padding: 20px;
     border-radius: 10px;
 }
 .tag{
     background-color: #F8F8F8;
     min-height: 400px;
-    margin-top: 20px;
-    margin-right: 20px;
-    padding-top: 20px;
-    width: 23%;
+    /*margin-top: 20px;*/
+    /*margin-right: 20px;*/
+    /*padding-top: 20px;*/
+    /*width: 23%;*/
+    padding: 20px;
     border-radius: 10px;
 }
 .list-group-item{

@@ -9,7 +9,7 @@
 <body>
 <% include ../../partials/header %>
     <div class="container probbd">
-        <div class="col-md-3 tag">
+        <div class="col-md-3"><div class="tag">
             <div class="list-group">
                 <h3>Members</h3>
                 <%group.members.forEach(function (member) {%>
@@ -23,7 +23,6 @@
                     </select>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Add Member</button>
                 </form>
-
             </div>
             <a href="/admin/groups/<%=group._id%>/edit" >
                 <button class="btn btn-lg btn-block btn-warning" >EDIT</button>
@@ -34,8 +33,8 @@
             <a href="/admin/groups/" >
                 <button class="btn btn-lg btn-block btn-success">BACK</button>
             </a>
-        </div>
-        <div class="col-md-9 pbd">
+        </div></div>
+        <div class="col-md-9"><div class="pbd">
             <h3>Group Name:</h3>
                 <h4><%=group.name%></h4>
             <p>Score: <%= group.score%></p>
@@ -50,7 +49,7 @@
                 <%}%>
             <%});%>
             </p>
-        </div>
+        </div></div>
     </div>
 <% include ../../partials/footer %>
 </body>

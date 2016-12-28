@@ -8,7 +8,7 @@
 <body>
 <% include ../../partials/header %>
     <div class="container probbd">
-        <div class="col-md-3 tag">
+        <div class="col-md-3 "><div class="tag">
             <a href="<%if(user.group){%> /admin/groups/<%=user.group._id%> <%}else{%> javascript: void(); <%}%> " >
                 <button class="btn btn-lg btn-block btn-info <%if(!user.group){%> disabled <%}%>" style="margin-bottom: 10px;">GRUOP<%if(user.group){%>: <%= user.group.name%><%}%></button>
             </a>
@@ -18,14 +18,14 @@
             <a href="/admin/users" >
                 <button class="btn btn-lg btn-block btn-success">BACK</button>
             </a>
-        </div>
-        <div class="col-md-9 pbd">
+        </div></div>
+        <div class="col-md-9 "><div class="pbd">
             <img class="img-responsive" src="<%= user.image %>">
             <h2><%=user.username%></h2>
             <%if(user.group){%>
             <h4>Group: <a href="/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
             <%}%>
-        </div>
+        </div></div>
     </div>
 <% include ../../partials/footer %>
 </body>

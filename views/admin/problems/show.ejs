@@ -9,7 +9,7 @@
 <% include ../../partials/header %>
 <!-- <div class="row"> -->
     <div class="container probbd">
-        <div class="col-md-3 tag">
+        <div class="col-md-3"><div class="tag">
             <form action="/admin/problems/<%=problem._id%>/tag" method="POST">
                 <input class="form-control" type="text" name="tag" style="width: 100%;">
                 <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
@@ -26,9 +26,8 @@
             <a href="/admin/problems" >
                 <button class="btn btn-lg btn-block btn-success">BACK</button>
             </a>
-
-        </div>
-        <div class="col-md-9 pbd">
+        </div></div>
+        <div class="col-md-9"><div class="pbd">
             <h2><%=problem.name%></h2>
             <h4>Answer :<%=problem.answer%></h4>
             <h4>Score :<%=problem.score%></h4>
@@ -51,7 +50,7 @@
                 <a class="btn btn-default" href="<%=file%>" target="_blank"><%=file%></a>
             <%});%>
             <%}%>
-        </div>
+        </div></div>
     </div>
 <% include ../../partials/footer %>
 </body>

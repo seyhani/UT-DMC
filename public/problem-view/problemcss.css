@@ -22,13 +22,11 @@
   padding: 20px;
   direction: rtl;
   min-height: 360px;
-  border-left: 1px dashed #ccc;
 }
 .submitpart {
   margin-right: 2%;
   padding: 20px 10px;
   min-height: 360px;
-  width: 23%;
 }
 .answer-input {
   width: 100%;
@@ -41,4 +39,17 @@
 .answer-input:focus {
   border-color: #f0ad4e;
   outline: none;
+}
+@media screen and (min-width: 992px){
+  .prbody{
+    border-left: 1px dashed #ccc;
+  }
+  .submitpart{
+    width: 23%;
+  }
+}
+@media screen and (max-width: 992px){
+  .prbody{
+    border-top: 1px dashed #ccc;
+  }
 }
