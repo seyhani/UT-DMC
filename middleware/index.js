@@ -1,5 +1,6 @@
 
 var fs = require('fs');
+var root = "public/";
 function deleteFolderRecursive (path) {
     if( fs.existsSync(path) ) {
         fs.readdirSync(path).forEach(function(file,index){
@@ -80,7 +81,7 @@ module.exports = {
             fs.unlinkSync(path);
     },
     uploadToDir:function (tmp_path,folder_name,file_name) {
-        var target_path =  folder_name + '/' + file_name;
+        var target_path = root + folder_name + '/' + file_name;
         fs.rename(tmp_path, target_path, function (err) {
             if (err) throw err;
             fs.unlink(tmp_path, function () {
@@ -92,7 +93,7 @@ module.exports = {
 
         var filesystem = require("fs");
         var results = [];
-
+        dir = root+dir;
         filesystem.readdirSync(dir).forEach(function(file) {
 
             file = dir+'/'+file;
