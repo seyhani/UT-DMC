@@ -57,7 +57,7 @@ router.get("/competition/problems/:problem_id", function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                res.render("admin/competitions/submissonsIndex", {puzzles: puzzles});
+                res.render("admin/competitions/submissonsIndex", {puzzles: puzzles,problem:problem});
             }
         });
     });
