@@ -106,5 +106,6 @@ module.exports = {
 
         return results;
 
-    }
+    },
+    mkdir : mkdir,
 };

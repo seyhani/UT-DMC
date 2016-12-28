@@ -72,7 +72,7 @@ ProblemSchema.virtual('tag').set(function (tag) {
 });
 
 ProblemSchema.virtual('dir').get(function () {
-    return "public/Files/Problems/"+this.name+"/";
+    return "Files/Problems/"+this.name+"/";
 });
 
 ProblemSchema.virtual('sources').get(function () {

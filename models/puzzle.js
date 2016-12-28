@@ -94,6 +94,7 @@ PuzzleSchema.virtual('score').get(function () {
 PuzzleSchema.virtual('cost').get(function () {
     return this.problem.score/2 ;
 });
+
 PuzzleSchema.virtual('filePath').get(function () {
     return this.problem.dir + "Submissions/" + this.submisson.file;
 });

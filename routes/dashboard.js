@@ -18,11 +18,8 @@ var upload = multer({
         console.log(file.fieldname + ' uploaded to  ' + file.path)
     }
 });
-var fs = require("fs");
 var sanitize = require('mongo-sanitize');
-var path = require('path')
-
-
+var path = require('path');
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
 router.all("/*",middleware.isLoggedIn);
