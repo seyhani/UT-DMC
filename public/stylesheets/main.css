@@ -283,3 +283,13 @@ table.table{
 table.table th{
   text-align: center;
 }
+img.upedpic{
+    border-radius: 26px;
+    margin: 26px auto;
+    display: block;
+    max-width: 100%;
+    transition: 0.3s;
+}
+img.upedpic:hover{
+    filter: contrast(120%)
+}

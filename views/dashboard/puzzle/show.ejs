@@ -42,6 +42,11 @@
                 <p><%= puzzle.problem.description %></p>
             <%}%>
             <%if(puzzle.sources.length){%>
+            <div>
+                <%puzzle.sources.forEach(function (source) {switch(source.substr(source.lastIndexOf("\.") + 1)){ case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
+                <img src="/<%=source%>" class="upedpic">
+                <%}})%>
+            </div>
             <div dir="ltr"><h4>Files</h4>
             <%puzzle.sources.forEach(function (source) {%>
             <a class="btn btn-default" href="/<%=source%>"><%=source.substr(source.lastIndexOf("/") + 1)%></a>
