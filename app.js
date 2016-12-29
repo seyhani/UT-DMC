@@ -42,9 +42,7 @@ app.use(flash());
 require('./config/passport')(passport);
 
 app.use(function(req, res, next){
-    if(!app.locals.currentUser)
-        app.locals.currentUser = req.user;
-
+    app.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();

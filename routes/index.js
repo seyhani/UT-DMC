@@ -79,19 +79,16 @@ router.get("/login", function(req, res){
 
 router.post('/login', function(req, res, next){
     passport.authenticate('local', function(err, user, info) {
-                if (err) return next(err);
-                if (!user) {
-                    return res.redirect('/login')
-                }
-                req.logIn(user, function(err) {
-                    if (err) return next(err);
-                    User.findById(user._id).deepPopulate(["group","group.competition"])
-                        .exec(function (err,usr) {
-                            res.locals.user = usr;
-                            return res.redirect('/dashboard'); 
-                        });
-                });
-            })(req, res, next);
+        if (err) return next(err);
+        if (!user) {
+            return res.redirect('/login')
+        }
+        req.logIn(user, function(err) {
+            if (err) return next(err);
+            req.user = null;
+            return res.redirect('/dashboard');
+        });
+    })(req, res, next);
 });
 
 // logout route

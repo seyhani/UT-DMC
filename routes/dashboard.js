@@ -28,14 +28,18 @@ router.get("/", function(req, res){
     User.findById(req.user.id)
         .deepPopulate(["group","group.competition.puzzles", "group.competition.puzzles.problem","group.competition"])
         .exec(function (err,user) {
-        Puzzle.find({_id:{$in:user.group.competition.puzzles}}).populate("problem").exec(function (err,puzzles){
-            Puzzle.getAllTags(user.group.competition,function (tags) {
-                if (err)
-                    console.log(err);
-                else
-                   res.render("dashboard/index",{user:user,puzzles: puzzles,tags:tags});
-            });
-        });
+            if(err)
+                console.log(err);
+            else {
+                Puzzle.find({_id: {$in: user.group.competition.puzzles}}).populate("problem").exec(function (err, puzzles) {
+                    Puzzle.getAllTags(user.group.competition, function (tags) {
+                        if (err)
+                            console.log(err);
+                        else
+                            res.render("dashboard/index", {user: user, puzzles: puzzles, tags: tags});
+                    });
+                });
+            }
     });
 });
 
