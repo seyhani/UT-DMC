@@ -6,7 +6,6 @@ var expireLenght = 60*60*1000;
 module.exports = {
     setToken: function(user){
         user.resetPasswordExpires = Date.now() + expireLenght;
-        user.save();
         return jwt.encode(user, secret);
     },
     decodeToken : function (token) {

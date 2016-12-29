@@ -37,37 +37,35 @@ router.post('/register',function(req, res,next) {
     var lastname = sanitize(req.body.lastname);
     var studentId = sanitize(req.body.studentId);
     var email = sanitize(req.body.email);
-    var user = new User({
+    var user = {
         firstname: firstname,
         lastname: lastname,
         username: username,
         studentId: studentId,
         email: email,
         password: password,
-    });
+    };
+
     User.findOne({username: user.username}).exec(function (err, existUser) {
         if (err) return next(err);
         if (existUser) {
             req.flash('error', 'Username already exist');
             res.redirect('/register');
         } else {
-            var link = " " + token.setToken(user);
-            mailer.sendTemplateTo(mailTemplates+"verification", {link:link , firstname:user.firstname}, user.mail,function (err, info) {
-                console.log(info);
-                console.log(err);
-            });
+            var link =req.headers.host + "/register/"+ token.setToken(user);
+
+            res.redirect('/');
         }
     });
 });
 
-router.post('/register/:verification_token',function(req, res,next) {
+router.get('/register/:verification_token',function(req, res,next) {
     var user = token.decodeToken(req.params.verification_token);
+    console.log(user);
     User.create(user,function (err, newUser) {
         if (err) return next(err);
-            mailer.sendTemplateTo(mailTemplates+"verification", {link:link , firstname:user.firstname}, user.mail,function (err, info) {
-                console.log(info);
-                console.log(err);
-            });
+           
+            res.redirect('/login');
         });
 });
 //show login form
@@ -107,13 +105,14 @@ router.post('/forgot', function(req, res, next) {
 });
 
 router.get('/reset/:token', function(req, res,next) {
-    User.findOne({ resetPasswordToken: req.params.token,
+    var user = token.decodeToken(req.params.token);
+    User.findOne({ _id:user._id,
         resetPasswordExpires: { $gt: Date.now() }
     }
         , function(err, user) {
         if(err) return next(err);
         if (!user) {
-            // req.flash('error', 'Password reset token is invalid or has expired.');
+            req.flash('error', 'Password reset token is invalid or has expired.');
             return res.redirect('/forgot');
         } else{
             res.render('reset_password', {user:user});
@@ -122,19 +121,17 @@ router.get('/reset/:token', function(req, res,next) {
 });
 
 router.post('/reset/:token', function(req, res,next) {
+    var user = token.decodeToken(req.params.token);
     async.waterfall([
         function(done) {
-            User.findOne({$and:[{resetPasswordToken: req.params.token},{resetPasswordExpires: { $gt: Date.now() }} ]},
+            User.findOne({$and:[{_id:user._id},{resetPasswordExpires: { $gt: Date.now() }} ]},
                 function(err, user) {
                     if (!user) {
                         req.flash('error', 'Password reset token is invalid or has expired.');
                         return res.redirect('back');
                     }
-    
                     user.password = req.body.password;
-                    user.resetPasswordToken = undefined;
                     user.resetPasswordExpires = undefined;
-    
                     user.save(function(err) {
                     req.logIn(user, function(err) {
                         req.flash('success', 'Success! Your password has been changed.');
