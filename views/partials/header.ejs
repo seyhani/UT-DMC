@@ -13,10 +13,10 @@
                     <li><a class="btn-group-sm btn-default navbar-btn" href="/"><span class="glyphicon glyphicon-home"></span></a></li>
                 <% } else { %>
                     <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> خروج</a></li>
-                    <%if(currentUser.group){%>
+                    <!--<%if(currentUser.group){%>-->
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= currentUser.group.score%></a></li>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-th-large"></span> <%= currentUser.group.name%></a></li>
-                    <%}%>
+                    <!--<%}%>-->
                     <li><a href="/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><span class="glyphicon glyphicon-home"></span> <%=currentUser.username %></a></li>
                 <% } %>
             </ul>
