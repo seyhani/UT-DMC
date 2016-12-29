@@ -3,12 +3,11 @@
 <head>
     <title>شکار معما</title>
     <% include ../../partials/head %>
-    <!-- ===============    groupedit CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/group/groupedit.css" media="all" />
 </head>
 <body>
 <% include ../../partials/header %>
-    <div class="row">
+    <div class="container"><div class="row">
         <h1 style="text-align: center">Create New Competition</h1>
         <div class="col-md-4 col-md-offset-4" style="padding: 25px;">
             <form action="/admin/groups" method="POST">
@@ -23,7 +22,7 @@
                 <a class="btn btn-primary"  href="/admin/competitions">Go Back</a>
             </div>
         </div>
-    </div>
+    </div></div>
     <% include ../../partials/footer %>
 </body>
 </html>
