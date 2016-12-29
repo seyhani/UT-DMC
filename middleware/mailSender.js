@@ -4,15 +4,15 @@ const User = require('./../models/user');
 const nodemailer = require('nodemailer');
 
 const mailOptions = {
-    from: '', // Your email id
+    from: 'utacmcontest@gmail.com',
     subject: 'DM Contest'
 };
 
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-        user: '', // Your email id
-        pass: '' // Your password
+        user: 'utacmcontest@gmail.com',
+        pass: '1234!@#$'
     }
 });
 
