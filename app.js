@@ -8,10 +8,8 @@ var express     = require("express"),
     flash        = require("connect-flash"),
     session = require("express-session"),
     methodOverride = require("method-override");
-    var SMTPServer = require('smtp-server').SMTPServer;
-    var smtpTransport = require('nodemailer-smtp-transport');
-    var directTransport = require('nodemailer-direct-transport');
-    var nodemailer = require('nodemailer');
+var mailer = require('./middleware/mailSender');
+
 mongoose.Promise = global.Promise;
 
 var groupRoutes    = require("./routes/group"),
@@ -21,7 +19,7 @@ var groupRoutes    = require("./routes/group"),
     indexRoutes      = require("./routes/index");
     competitionRoutes = require("./routes/competition")
     userRoutes      = require("./routes/user");
-    
+
 mongoose.connect("mongodb://localhost/MystryHuntTest");
 
 app.use(bodyParser.urlencoded({extended: true}));
