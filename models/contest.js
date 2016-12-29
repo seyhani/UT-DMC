@@ -1,16 +1,16 @@
 var mongoose = require("mongoose");
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
-var CompetitionSchema = new mongoose.Schema({
+var ContestSchema = new mongoose.Schema({
     name:String,
     stage:{type:Number,default:0},
     hints:{type:Number,default:5},
-    puzzles:[{
+    Problems:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Puzzle"
+        ref: "Problem"
     }]
 });
-CompetitionSchema.virtual('score').get(function () {
+ContestSchema.virtual('score').get(function () {
     var score = 0;
     this.puzzles.forEach(function (puzzle) {
         if(puzzle.accepted)
@@ -20,6 +20,6 @@ CompetitionSchema.virtual('score').get(function () {
 });
 
 
-CompetitionSchema.plugin(deepPopulate);
+ContestSchema.plugin(deepPopulate);
 
-module.exports = mongoose.model("Competition", CompetitionSchema);
+module.exports = mongoose.model("Contest", ContestSchema);

@@ -4,8 +4,8 @@ var passport = require("passport");
 var User = require("../models/user");
 var middleware = require("../middleware/index");
 var Problem = require("../models/problem");
-var Puzzle = require("../models/puzzle");
-var Competition = require("../models/competition");
+var Puzzle = require("../models/agent");
+var Competition = require("../models/contest");
 var middleware = require("../middleware/index");
 
 // router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
@@ -58,8 +58,8 @@ router.get("/competition/problems/:problem_id", function(req, res){
                 console.log(err);
             } else {
                 res.render("admin/competitions/submissonsIndex", {puzzles: puzzles,problem:problem});
-            }
-        });
+}
+});
     });
 });
 

@@ -4,9 +4,9 @@ var passport = require("passport");
 var User = require("../models/user");
 var middleware = require("../middleware/index");
 var Problem = require("../models/problem");
-var Puzzle = require("../models/puzzle");
+var Puzzle = require("../models/agent");
 var Group = require("../models/group");
-var Competition = require("../models/competition");
+var Competition = require("../models/contest");
 var middleware = require("../middleware/index");
 
 

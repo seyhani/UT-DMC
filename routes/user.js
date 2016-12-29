@@ -3,7 +3,7 @@ var router  = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
 var Problem = require("../models/problem");
-var Puzzle = require("../models/puzzle");
+var Puzzle = require("../models/agent");
 var Group = require("../models/group");
 var middleware = require("../middleware/index");
 

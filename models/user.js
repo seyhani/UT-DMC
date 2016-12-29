@@ -11,15 +11,22 @@ var UserSchema = new mongoose.Schema({
     email:String,
     username: String,
     password: String,
-    groupname:String,
-    rycode:String,
     isAdmin:Boolean,
-    group:{
+    
+    group:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Group"
+    }],
+    
+    records:{
+        score:Number,
     },
-    resetPasswordToken:String,
-    resetPasswordExpires:Date,
+    
+    resetPassword:{
+        Token:String,
+        ExpiresAt:Date
+    },
+
 });
 
 UserSchema.pre('save', function(next) {

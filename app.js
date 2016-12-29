@@ -14,14 +14,6 @@ var express     = require("express"),
     var nodemailer = require('nodemailer');
 mongoose.Promise = global.Promise;
 
-var groupRoutes    = require("./routes/group"),
-    dashboardRoutes    = require("./routes/dashboard"),
-    adminRoutes    = require("./routes/admin"),
-    problemRoutes = require("./routes/problems"),
-    indexRoutes      = require("./routes/index");
-    competitionRoutes = require("./routes/competition")
-    userRoutes      = require("./routes/user");
-    
 mongoose.connect("mongodb://localhost/MystryHuntTest");
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -45,26 +37,17 @@ app.use(flash());
 require('./config/passport')(passport);
 
 app.use(function(req, res, next){
-   res.locals.currentUser = req.user;
-   res.locals.success = req.flash('success');
-   res.locals.error = req.flash('error');
-   next();
+    res.locals.currentUser =  null;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
 });
-
-
-app.use("/", indexRoutes);
-app.use("/admin/", groupRoutes);
-app.use("/admin/", competitionRoutes);
-app.use("/dashboard", dashboardRoutes);
-app.use("/admin/", adminRoutes);
-app.use("/admin/users", userRoutes);
-app.use("/admin/problems", problemRoutes);
 
 app.use(function(req, res, next) {
     res.status(404).send('Sorry cant find that!');
 });
 
-var server = app.listen(3002, function () {
+var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log('Survey listening at http://%s:%s', host, port);
