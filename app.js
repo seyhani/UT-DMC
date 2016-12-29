@@ -8,7 +8,6 @@ var express     = require("express"),
     flash        = require("connect-flash"),
     session = require("express-session"),
     methodOverride = require("method-override");
-var mailer = require('./middleware/mailSender');
 
 mongoose.Promise = global.Promise;
 

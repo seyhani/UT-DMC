@@ -7,7 +7,7 @@ var nodemailer = require('nodemailer');
 var request = require('request');
 var middleware = require('../middleware/index');
 var mailer = require('../middleware/mailSender');
-var mailTemplates = '../middleware/mailTemplates';
+var mailTemplates = 'middleware/mailTemplates';
 var token = require('../middleware/token');
 var crypto = require("crypto");
 var async = require("async");
@@ -52,9 +52,13 @@ router.post('/register',function(req, res,next) {
             req.flash('error', 'Username already exist');
             res.redirect('/register');
         } else {
-            var link =req.headers.host + "/register/"+ token.setToken(user);
+            // mailer.sendTemplateTo(mailTemplates+"/resetpass/html.ejs",{address:req.headers.host,link:"/register/"+ token.setToken(user)},user.email,function (err,info) {
+            //     console.log("ERR: "+err);
+            //     console.log("INF: "+info);
+            console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
+                res.redirect('/');
+            // });
 
-            res.redirect('/');
         }
     });
 });
@@ -64,7 +68,7 @@ router.get('/register/:verification_token',function(req, res,next) {
     console.log(user);
     User.create(user,function (err, newUser) {
         if (err) return next(err);
-           
+
             res.redirect('/login');
         });
 });
@@ -99,8 +103,12 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        token.setToken(user);
-        res.redirect('/');
+        // mailer.sendTemplateTo(mailTemplates+"/resetpass/html.ejs",{address:req.headers.host,link:"/register/"+token.setToken(user)},user.email,function (err,info) {
+        //     console.log(info);
+        //     console.log(err);
+            console.log("http://"+req.headers.host+"/reset/"+token.setToken(user));
+            res.redirect('/');
+        // });
     });
 });
 
@@ -115,7 +123,7 @@ router.get('/reset/:token', function(req, res,next) {
             req.flash('error', 'Password reset token is invalid or has expired.');
             return res.redirect('/forgot');
         } else{
-            res.render('reset_password', {user:user});
+            res.render('reset_password', {user:user,token:req.params.token});
         }
     });
 });

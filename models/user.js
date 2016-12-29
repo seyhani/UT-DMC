@@ -33,6 +33,10 @@ UserSchema.pre('save', function(next) {
     });
 });
 
+UserSchema.statics.viewDashboard = function(user_id,cb) {
+    
+};
+
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
