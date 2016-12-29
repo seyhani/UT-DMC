@@ -14,8 +14,8 @@
                 <% } else { %>
                     <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> خروج</a></li>
                     <!--<%if(currentUser.group){%>-->
-                        <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= currentUser.group.score%></a></li>
-                        <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-th-large"></span> <%= currentUser.group.name%></a></li>
+                        <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= user.group.score%></a></li>
+                        <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-th-large"></span> <%= user.group.name%></a></li>
                     <!--<%}%>-->
                     <li><a href="/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><span class="glyphicon glyphicon-home"></span> <%=currentUser.username %></a></li>
                 <% } %>

@@ -28,7 +28,6 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride('_method'));
 app.use(cookieParser('secret'));
 
-
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Once again Rusty wins cutest dog!",
@@ -43,22 +42,12 @@ app.use(flash());
 require('./config/passport')(passport);
 
 app.use(function(req, res, next){
-    if(req.user)
-    {
-        User.find(req.user._id).deepPopulate(["group","group.competition"]).exec(function (err,user) {
-            res.locals.currentUser = user;
-            res.locals.success = req.flash('success');
-            res.locals.error = req.flash('error');
-            next();
-        })
-    }
-    else{
-        res.locals.currentUser = req.user;
-        res.locals.success = req.flash('success');
-        res.locals.error = req.flash('error');
-        next();
-    }
+    if(!app.locals.currentUser)
+        app.locals.currentUser = req.user;
 
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
 });
 
 

@@ -85,7 +85,11 @@ router.post('/login', function(req, res, next){
                 }
                 req.logIn(user, function(err) {
                     if (err) return next(err);
-                    return res.redirect('/dashboard');
+                    User.findById(user._id).deepPopulate(["group","group.competition"])
+                        .exec(function (err,usr) {
+                            res.locals.user = usr;
+                            return res.redirect('/dashboard'); 
+                        });
                 });
             })(req, res, next);
 });
