@@ -6,6 +6,9 @@ var sanitize = require('mongo-sanitize');
 var nodemailer = require('nodemailer');
 var request = require('request');
 var middleware = require('../middleware/index');
+var mailer = require('../middleware/mailSender');
+var mailTemplates = '../middleware/mailTemplates';
+var token = require('../middleware/token');
 var crypto = require("crypto");
 var async = require("async");
 var SMTPServer = require('smtp-server').SMTPServer;
@@ -48,26 +51,32 @@ router.post('/register',function(req, res,next) {
             req.flash('error', 'Username already exist');
             res.redirect('/register');
         } else {
-            user.save(function (err) {
-                req.logIn(user, function (err) {
-                    res.redirect('/dashboard');
-                });
+            var link = " " + token.setToken(user);
+            mailer.sendTemplateTo(mailTemplates+"verification", {link:link , firstname:user.firstname}, user.mail,function (err, info) {
+                console.log(info);
+                console.log(err);
             });
         }
     });
+});
+
+router.post('/register/:verification_token',function(req, res,next) {
+    var user = token.decodeToken(req.params.verification_token);
+    User.create(user,function (err, newUser) {
+        if (err) return next(err);
+            mailer.sendTemplateTo(mailTemplates+"verification", {link:link , firstname:user.firstname}, user.mail,function (err, info) {
+                console.log(info);
+                console.log(err);
+            });
+        });
 });
 //show login form
 router.get("/login", function(req, res){
    res.render("login"); 
 });
 
-router.post('/login', function(req, res, next) {
-    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret="+ '6LdbUwcUAAAAAMquB_XKPwD5XtUPwhY19iIU8umM' +"&response=" +req.body['g-recaptcha-response'];
-    request(verificationUrl,function(error,response,body) {
-        // if(body.success)
-        if(true)
-        {
-            passport.authenticate('local', function(err, user, info) {
+router.post('/login', function(req, res, next){
+    passport.authenticate('local', function(err, user, info) {
                 if (err) return next(err);
                 if (!user) {
                     return res.redirect('/login')
@@ -77,11 +86,6 @@ router.post('/login', function(req, res, next) {
                     return res.redirect('/dashboard');
                 });
             })(req, res, next);
-        }else{
-            res.redirect('/login');
-        }
-
-    });
 });
 
 // logout route
@@ -96,39 +100,8 @@ router.get('/forgot', function(req, res,next) {
 });
 
 router.post('/forgot', function(req, res, next) {
-    var usr;
-    async.waterfall([
-        function(done) {
-            crypto.randomBytes(24, function(err, buf) {
-                var token = buf.toString('hex');
-                done(err, token);
-            });
-        },
-        function(token, done) {
-            User.findOne({ username: req.body.username}, function(err, user) {
-                if(err) return next(err);
-                if (!user) {
-                    req.flash('error', 'No account with that email address exists.');
-                    return res.redirect('/forgot');
-                }
-                usr = user;
-                user.resetPasswordToken = token;
-                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-                // var server  = emailjs.server.connect(require('../config/mailserver'));
-                // server.send({
-                //     text: 'http://' + req.headers.host + '/reset/' + token   ,
-                //     from:    "you <ahsprim@gmail.com>",
-                //     to:      "you <ahsprim@gmail.com>",
-                //     subject: "Proff Reset Password"
-                // }, function(err, message) { console.log(err || message); });
-                user.save(function(err) {
-                    console.log('http://' + req.headers.host + '/reset/' + token);
-                    done(err, token, user);
-                });
-            });
-        },
-    ], function(err) {
-        if (err) return next(err);
+    User.findOne({ username: req.body.username}, function(err, user) {
+        token.setToken(user);
         res.redirect('/');
     });
 });

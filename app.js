@@ -16,8 +16,9 @@ var groupRoutes    = require("./routes/group"),
     dashboardRoutes    = require("./routes/dashboard"),
     adminRoutes    = require("./routes/admin"),
     problemRoutes = require("./routes/problems"),
-    indexRoutes      = require("./routes/index");
-    competitionRoutes = require("./routes/competition")
+    indexRoutes      = require("./routes/index"),
+    User = require("./models/user"),
+    competitionRoutes = require("./routes/competition"),
     userRoutes      = require("./routes/user");
 
 mongoose.connect("mongodb://localhost/MystryHuntTest");
@@ -43,10 +44,22 @@ app.use(flash());
 require('./config/passport')(passport);
 
 app.use(function(req, res, next){
-   res.locals.currentUser = req.user;
-   res.locals.success = req.flash('success');
-   res.locals.error = req.flash('error');
-   next();
+    if(req.user)
+    {
+        User.find(req.user._id).deepPopulate(["group","group.competition"]).exec(function (err,user) {
+            res.locals.currentUser = user;
+            res.locals.success = req.flash('success');
+            res.locals.error = req.flash('error');
+            next();
+        })
+    }
+    else{
+        res.locals.currentUser = req.user;
+        res.locals.success = req.flash('success');
+        res.locals.error = req.flash('error');
+        next();
+    }
+
 });
 
 
