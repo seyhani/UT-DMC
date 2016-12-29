@@ -101,7 +101,7 @@ router.get("/:id/reset", function(req, res){
     });
 });
 
-router.post("/:id/edit",upload.any() , function(req, res){
+router.put("/:id/edit",upload.any() , function(req, res){
     var newData = {name: req.body.name, answer: req.body.answer,
         description: req.body.description,score:req.body.score,feedback:req.body.feedback
     };
