@@ -7,22 +7,25 @@ var nodemailer = require('nodemailer');
 var request = require('request');
 var middleware = require('../middleware/index');
 var mailer = require('../middleware/mailSender');
+var Group = require("../models/group");
 var mailTemplates = 'middleware/mailTemplates';
 var token = require('../middleware/token');
 var crypto = require("crypto");
 var async = require("async");
-var SMTPServer = require('smtp-server').SMTPServer;
 var simplesmtp = require("simplesmtp");
 var fs = require("fs");
-var smtpTransport = require('nodemailer-smtp-transport');
-var directTransport = require('nodemailer-direct-transport');
 'use strict';
 
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
-    req.flash("info","dsdadasdasdasdsd");
     res.render('landing', { messages: req.flash('info') });
+});
+
+router.get("/ranking", function(req, res){
+    Group.find({}).populate(["competition"]).sort({"competition.score":-1}).exec(function (err,groups) {
+        res.render("dashboard/ranking",{groups:groups});
+    });
 });
 
 // show register form

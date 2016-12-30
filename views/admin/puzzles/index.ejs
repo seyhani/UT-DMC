@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <title>شکار معما</title>
+    <% include ../../partials/head %>
+    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <style type="text/css">.thumbnail{min-height: 250px;}</style>
+</head>
+<body>
+<% include ../../partials/header %>
+<div class="backch">
+
+    <div id="puzzles_list" class="row text-center" style="/*display:flex; flex-wrap: wrap;*/">
+        <ul class="list" style="list-style: none;">
+            <% puzzles.forEach(function(puzzle){ %>
+            <li>
+                <div class="col-md-3 col-sm-6">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h4 class="puzzlename"><%= puzzle.name %></h4>
+                        </div>
+                        <div class="tags">
+                            <%puzzle.tags.forEach(function (tag) {%>
+                            <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>
+                            <%})%>
+                        </div>
+                        <p>
+                            <a href="/admin/puzzles/<%= puzzle._id %>" class="btn btn-primary">More Info</a>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+</div>
+<script src="/listjs/list.min.js"></script>
+<script src="/scripts/problist.js"></script>
+<% include ../../partials/footer %>
+</body>
+</html>

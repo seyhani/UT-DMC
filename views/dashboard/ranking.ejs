@@ -22,13 +22,11 @@
         <table class="table table-striped table-hover">
             <tr>
                 <th>نام گروه</th>
-                <th>مرحلهٔ گروه</th>
                 <th>امتیاز گروه</th>
             </tr>
             <%groups.forEach(function (group) {%>
-            <tr class="<%if(group.name == currentUser.group.name){%>info<%}%>">
+            <tr >
                 <td><%=group.name%></td>
-                <td><%=group.competition.stage%></td>
                 <td><%=group.competition.score%></td>
             </tr>
             <%});%>

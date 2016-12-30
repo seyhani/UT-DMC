@@ -55,14 +55,26 @@ PuzzleSchema.methods.submitAnswer = function (answer) {
     return answer == correctAnswer;
 };
 
-PuzzleSchema.methods.requsetForHint = function () {
-    if(this.group.competition.hints < 1)
-        return false;
-    this.group.competition.hints--;
-    this.status = "requestedForHint";
+PuzzleSchema.methods.accept = function () {
+    this.group.competition.score += this.score;
+    this.status = "accepted";
+    this.problem.submits.correct++;
+    this.problem.save();
+    this.group.competition.save();
+    this.group.save();
     this.save();
-    return true;
 };
+
+PuzzleSchema.methods.reject= function () {
+    this.group.competition.score += this.score;
+    this.status = "accepted";
+    this.problem.submits.wrong++;
+    this.problem.save();
+    this.group.competition.save();
+    this.group.save();
+    this.save();
+};
+
 PuzzleSchema.virtual('name').get(function () {
     return this.problem.name;
 });
