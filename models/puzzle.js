@@ -27,7 +27,7 @@ PuzzleSchema.methods.hasTag = function (tag) {
 };
 
 PuzzleSchema.virtual('type').get(function (){
-    return this.problem.getFeedback(this.group.index);
+    return this.problem.type;
 });
 
 PuzzleSchema.methods.submitAnswer = function (answer) {

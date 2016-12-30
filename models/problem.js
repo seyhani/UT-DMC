@@ -25,16 +25,6 @@ ProblemSchema.methods.reset = function () {
     this.save();
 };
 
-ProblemSchema.methods.getFeedback = function (group_id) {
-    var feedback;
-    var feedbacks = this.type.split(" ");
-    if(feedbacks.length > 1)
-        feedback = feedbacks[group_id%feedbacks.length];
-    else
-        feedback = feedbacks;
-    return feedback;
-};
-
 ProblemSchema.methods.submitAnswer = function (answer) {
     var answers = this.answer.split(" ");
     if(answers.length==1)
