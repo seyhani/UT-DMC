@@ -28,12 +28,13 @@
        <input class="search" placeholder="&#xe003;" type="text" />
        <ul class="taglist">
            <span class="glyphicon glyphicon-tags" style="transform:rotateY(180deg);"></span>
+           <li><a class="btn btn-primary btn-sm active" href="javascript: void();">همه</a></li>
            <% if(superTags){superTags.forEach(function(superTag){ %>
-           <br>
-           <li><a class="btn btn-success btn-xs" href="javascript: void();">**<%= superTag.title%>**</a></li>
+           <li style="padding-left: 6px;"><a class="btn btn-danger btn-sm disabled" href="javascript: void();"><%= superTag.title%></a></li><ul style="padding: 0; display: inline;">
                <% superTag.tags.forEach(function(tag){ %>
                <li><a class="btn btn-success btn-xs" href="javascript: void();"><%= tag%></a></li>
                <%});%>
+              </ul>
            <%});}%>
        </ul>
      </div>

@@ -3,7 +3,6 @@
 <head>
     <title>شکار معما</title>
     <% include ../partials/head %>
-    <!-- ===============    dashboard core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
 </head>
 <body>
@@ -22,7 +21,6 @@
                 <div class="col-md-3" style="text-align: right;padding-top: 10px;">
                     <button type="button" class="btn btn-primary btn-lg btn-block btncolor <% if(!user.group){ %> disabled <%}%>" style="cursor: default;">
                         <% if(user.group){ %>
-                            <!-- <a style="text-decoration: none;color: #ffffff;" href="javascript: void();"><%= user.group.name%></a> -->
                             <%= user.group.name%>
                         <% } else { %><a>شما گروهی ندارید.</a> <% } %>
                     </button>
@@ -35,12 +33,13 @@
         <input class="search" placeholder="&#xe003;" type="text" />
         <ul class="taglist">
             <span class="glyphicon glyphicon-tags" style="transform:rotateY(180deg);"></span>
+            <li><a class="btn btn-primary btn-sm active" href="javascript: void();">همه</a></li>
             <% if(superTags){superTags.forEach(function(superTag){ %>
-            <br>
-            <li><a class="btn btn-success btn-xs" href="javascript: void();">**<%= superTag.title%>**</a></li>
+            <li style="padding-left: 6px;"><a class="btn btn-danger btn-sm disabled" href="javascript: void();"><%= superTag.title%></a></li><ul style="display: inline; padding: 0;">
             <% superTag.tags.forEach(function(tag){ %>
             <li><a class="btn btn-success btn-xs" href="javascript: void();"><%= tag%></a></li>
             <%});%>
+            </ul>
             <%});}%>
         </ul>
         <ul class="list row" style="list-style-type: none;">

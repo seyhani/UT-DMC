@@ -13,40 +13,38 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h1></span><span class="glyphicon glyphicon-pencil"></span> Tags</h1>
+                    <h1></span><span class="glyphicon glyphicon-tags" style="transform:rotateY(180deg);"></span> Tags</h1>
                 </div>
                 <div class="col-md-6" style="padding-top: 20px;">
                     <form action="/admin/tags" method="POST">
                         <input class="form-control" type="text" name="tagTitle" style="width: 100%;">
-                        <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
+                        <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG CATEGORY</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
     <div id="puzzles_list" class="row text-center" style="/*display:flex; flex-wrap: wrap;*/">
         <ul class="list" style="list-style: none;">
             <% tags.forEach(function(tag){ %>
             <li>
                 <div class="col-md-3 col-sm-6">
-                    <div class="thumbnail">
+                    <div class="thumbnail" style="padding-bottom: 130px;">
                         <div class="caption">
-                            <h4 class="problemname"><%= tag.title %></h4>
+                            <h3 class="problemname"><i class="glyphicon glyphicon-tags" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%= tag.title %></h3>
                         </div>
-                        <div class="tags">
+                        <div class="tags" style="min-height: 100px;">
                             <%tag.tags.forEach(function (tag) {%>
                             <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>
                             <%})%>
                         </div>
-                        <div class="tag">
+                        <div class="tag" style="padding: 6px; position: absolute; bottom: 0; width: 100%;">
                             <form action="/admin/tags/<%=tag._id%>" method="POST">
-                                <input class="form-control" type="text" name="tag" style="width: 100%;">
-                                <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
+                                <input class="form-control" type="text" name="tag" style="width: 65%; margin: 6px auto; display: inline-block;">
+                                <button class="btn btn-lg btn btn-success" type="submit" style="margin: 6px auto; width: 30%;">TAG</button>
                             </form>
                             <form action="/admin/tags/<%=tag._id%>?_method=DELETE" method="POST">
-                                <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
+                                <button class="btn btn-lg btn btn-danger btn-block" style="margin: 6px auto; ">DELETE</button>
                             </form>
                         </div>
                     </div>
