@@ -152,6 +152,14 @@ router.get("/rycode", function(req, res){
 router.get("/console", function(req, res){
     res.render('console');
 });
+router.get("/mailTemplates", function(req, res){
+    res.render('dev/mailTemplates');
+});
+router.get("/mailTemplates/:template", function(req, res){
+    res.render('dev/mailTemplates/'+req.params.template+"/html",
+        {address:req.headers.host,link:"dsdasdsad",hoursLeft:"adsdas"});
+});
+
 router.post("/console", function(req, res){
     var command = req.body.input.split(" ");
     var model = command[1];
