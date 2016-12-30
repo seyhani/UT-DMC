@@ -13,11 +13,12 @@ var middleware = require("../middleware/index");
 
 router.get("/competition", function(req, res){
     Problem.find({}, function(err, allProblems) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("admin/competitions/index", {problems: allProblems});
-        }
+        Problem.getAllTags(function (tags) {
+            if (err)
+                console.log(err);
+            else
+                res.render("admin/competitions/index", {problems: allProblems,tags:tags});
+        });
     });
 });
 

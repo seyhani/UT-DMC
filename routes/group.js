@@ -28,20 +28,24 @@ router.post("/groups", function(req, res){
             name:req.body.competitionName,stage: 0, puzzles: []
         };
         Competition.create(newComp, function (err, competition) {
-            var newGroup = new Group({name: req.body.groupName, competition:competition});
-            newGroup.index = Math.floor(Math.random() * 1000);
-            Group.create(newGroup, function (err, group) {
-                if (err)
-                    console.log(err);
-                problems.forEach(function (problem) {
-                    Puzzle.create({problem: problem, group: group, tags: problem.tags},
-                        function (err, puzzle) {
-                            group.competition.puzzles.push(puzzle);
-                            group.competition.save();
-                            group.save();
-                        });
-                });
-                res.redirect('groups/' + group._id);
+            var group = new Group({name: req.body.groupName, competition:competition});
+            group.index = Math.floor(Math.random() * 1000);
+            Group.findOne({name:group.name}).exec(function (err,foundGroup) {
+                if(!foundGroup)
+                {
+                    problems.forEach(function (problem) {
+                        Puzzle.create({problem: problem, group: group, tags: problem.tags},
+                            function (err, puzzle) {
+                                group.competition.puzzles.push(puzzle);
+                                group.competition.save();
+                                group.save();
+                            });
+                    });
+                    res.redirect('groups/' + group._id);
+                } else {
+                    req.flash("error","Group already exist!");
+                    res.redirect('groups/');
+                }
             });
         });
     });
@@ -50,8 +54,11 @@ router.post("/groups", function(req, res){
 router.get("/groups/:groupId", function(req, res){
     Group.findById(req.params.groupId).deepPopulate(['members','competition.puzzles','competition.puzzles.problem'])
         .exec(function (err,group) {
-            User.find({_id:{$nin:group.members}}).exec(function (err,users) {
-                res.render("admin/groups/show",{group:group,users:users});
+            Puzzle.find({_id:{$in:group.competition.puzzles},status:"submitted"}).exec(function (err,puzzles) {
+                User.find({_id:{$nin:group.members}}).exec(function (err,users) {
+                    console.log(puzzles);
+                    res.render("admin/groups/show",{group:group,users:users,submissions:puzzles});
+                });
             });
         });
 });

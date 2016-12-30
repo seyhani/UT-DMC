@@ -1,6 +1,7 @@
 var express = require("express");
 var router  = express.Router();
 var Problem = require("../models/problem");
+var Puzzle = require("../models/puzzle");
 var middleware = require("../middleware");
 var request = require("request");
 var multer = require('multer');
@@ -38,23 +39,27 @@ router.post("/",upload.any() ,function(req, res){
     var answer = req.body.answer;
     var score= req.body.score;
     var feedback= req.body.feedback;
-    var newProblem = {name: name, description: desc,answer:answer,feedback:feedback,score:score ,submits:{correct:0,wrong:0}};
+    var problem =new Problem( {name: name, description: desc,answer:answer,feedback:feedback,score:score ,submits:{correct:0,wrong:0}});
     // Create a new problem and save to DB
-    Problem.create(newProblem, function(err, problem){
-        middleware.initialProblemDirectories(problem.name);
-        if(req.files)
-        {
-            req.files.forEach(function (file) {
-                problem.files.push(file.originalname);
-                middleware.uploadToDir(file.path,problem.dir+"Sources",file.originalname);
-            });
-            problem.save();
-        }
-        if(err){
-            req.flash("error", err.message);
-            res.redirect("back");
-        } else {
-            req.flash("success","Successfully Added!");
+    Problem.findOne({name:problem.name}).exec(function (err,foundProblem) {
+        if(!foundProblem) {
+            middleware.initialProblemDirectories(problem.name);
+            if (req.files) {
+                req.files.forEach(function (file) {
+                    problem.files.push(file.originalname);
+                    middleware.uploadToDir(file.path, problem.dir + "Sources", file.originalname);
+                });
+                problem.save();
+            }
+            if (err) {
+                req.flash("error", err.message);
+                res.redirect("back");
+            } else {
+                req.flash("success", "Successfully Added!");
+                res.redirect("/admin/problems");
+            }
+        }else{
+            req.flash("error", "Problem already exist!");
             res.redirect("/admin/problems");
         }
     });
@@ -69,11 +74,13 @@ router.get("/new", function(req, res){
 router.get("/:id", function(req, res){
     //find the problem with provided ID
     Problem.findById(req.params.id).populate("comments").exec(function(err, foundProblem){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("admin/problems/show", {problem: foundProblem});
-        }
+        Puzzle.find({problem:foundProblem,status:"submitted"}).exec(function (err,submissons) {
+            console.log(submissons);
+            if(err)
+                console.log(err);
+            else
+                res.render("admin/problems/show", {problem: foundProblem,submissions:submissons});
+        });
     });
 });
 
