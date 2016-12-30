@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <title>شکار معما</title>
+    <% include ../partials/head %>
+    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <style type="text/css">.thumbnail{min-height: 250px;}</style>
+</head>
+<body>
+<% include ../partials/header %>
+<div class="backch">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1></span><span class="glyphicon glyphicon-pencil"></span> Tags</h1>
+                </div>
+                <div class="col-md-6" style="padding-top: 20px;">
+                    <form action="/admin/tags" method="POST">
+                        <input class="form-control" type="text" name="tagTitle" style="width: 100%;">
+                        <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="puzzles_list" class="row text-center" style="/*display:flex; flex-wrap: wrap;*/">
+        <ul class="list" style="list-style: none;">
+            <% tags.forEach(function(tag){ %>
+            <li>
+                <div class="col-md-3 col-sm-6">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h4 class="problemname"><%= tag.title %></h4>
+                        </div>
+                        <div class="tags">
+                            <%tag.tags.forEach(function (tag) {%>
+                            <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>
+                            <%})%>
+                        </div>
+                        <div class="tag">
+                            <form action="/admin/tags/<%=tag._id%>" method="POST">
+                                <input class="form-control" type="text" name="tag" style="width: 100%;">
+                                <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
+                            </form>
+                            <form action="/admin/tags/<%=tag._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <% }); %>
+        </ul>
+    </div>
+</div>
+<script src="/listjs/list.min.js"></script>
+<script src="/scripts/problist.js"></script>
+<% include ../partials/footer %>
+</body>
+</html>
