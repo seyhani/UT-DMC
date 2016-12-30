@@ -51,8 +51,10 @@ router.post("/",upload.any() ,function(req, res){
             problem.save();
         }
         if(err){
-            console.log(err);
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
+            req.flash("success","Successfully Added!");
             res.redirect("/admin/problems");
         }
     });
@@ -99,13 +101,22 @@ router.get("/:id/reset", function(req, res){
     });
 });
 
-router.put("/:id", function(req, res){
+router.put("/:id/edit",upload.any() , function(req, res){
     var newData = {name: req.body.name, answer: req.body.answer,
         description: req.body.description,score:req.body.score,feedback:req.body.feedback
     };
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
+        middleware.initialProblemDirectories(problem.name);
+        if(req.files)
+        {
+            req.files.forEach(function (file) {
+                problem.files.push(file.originalname);
+                middleware.uploadToDir(file.path,problem.dir+"Sources",file.originalname);
+            });
+            problem.save();
+        }
         if(err){
-            req.flash("error", err.message);
+            req.flash("error", err.message + req.body.score);
             res.redirect("back");
         } else {
             req.flash("success","Successfully Updated!");
