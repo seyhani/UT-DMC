@@ -1,4 +1,44 @@
-<a href="mailTemplates/reminder">reminder</a>
-<a href="mailTemplates/resetpass">resetpass</a>
-<a href="mailTemplates/verification">verification</a>
-<a href="mailTemplates/welcome">welcome</a>
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <title>شکار معما</title>
+    <% include ../partials/head %>
+    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+</head>
+<body>
+<% include ../partials/header %>
+<div class="backch">
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-6">
+                <h2><span class="glyphicon glyphicon-envelope"></span> Mail Templates</h2>
+            </div>
+        </div>
+        </div>
+</div>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <a class="btn btn-primary btn-lg btn-block" href="mailTemplates/reminder">Reminder</a>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-primary btn-lg btn-block" href="mailTemplates/resetpass">Resetpass</a>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-primary btn-lg btn-block" href="mailTemplates/verification">Verification</a>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-primary btn-lg btn-block" href="mailTemplates/welcome">Welcome</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<% include ../partials/footer %>
+</body>
+</html>
