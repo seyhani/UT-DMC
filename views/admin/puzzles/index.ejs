@@ -4,38 +4,58 @@
     <title>شکار معما</title>
     <% include ../../partials/head %>
     <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
-    <style type="text/css">.thumbnail{min-height: 250px;}</style>
+    <style type="text/css">.btn{margin-bottom: 0;</style>
 </head>
 <body>
 <% include ../../partials/header %>
 <div class="backch">
-
-    <div id="puzzles_list" class="row text-center" style="/*display:flex; flex-wrap: wrap;*/">
-        <ul class="list" style="list-style: none;">
-            <% puzzles.forEach(function(puzzle){ %>
-            <li>
-                <div class="col-md-3 col-sm-6">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h4 class="puzzlename"><%= puzzle.name %></h4>
-                        </div>
-                        <div class="tags">
-                            <%puzzle.tags.forEach(function (tag) {%>
-                            <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>
-                            <%})%>
-                        </div>
-                        <p>
-                            <a href="/admin/competition/puzzles/<%= puzzle._id %>" class="btn btn-primary">More Info</a>
-                        </p>
-                    </div>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    <h1><span class="glyphicon glyphicon-stats"></span> All Submission</h1>
                 </div>
-            </li>
-            <% }); %>
-        </ul>
+                <div class="col-md-6" style="padding-top: 20px;">
+                <a class="btn btn-primary btn-lg btn-block" href="/admin/competition">Back</a>
+            </div>
+            </div>
+        </div>
     </div>
+    <div class="jumbotron"><div class="container"><div class="row" id="puzzles_list">
+        <div style="padding: 6px;">
+            <input class="search" placeholder="&#xe003;" type="text" />
+            <button class="sort btn btn-info btn-sm" data-sort="problemname">Sort by name</button>
+            <button class="sort btn btn-success btn-sm" data-sort="gpname">Sort by group name</button>
+            <button class="sort btn btn-danger btn-sm" data-sort="tags">Sort by tags</button>
+        </div>
+        <table class="table table-striped table-hover">
+            <thead><tr>
+                <th>Group</th>
+                <th>Problem</th>
+                <th>Tags</th>
+                <th>&nbsp;</th>
+            </tr></thead>
+            <tbody class="list">
+                <% puzzles.forEach(function(puzzle){ %>
+                <tr class="">
+                    <td class="problemname"><%= puzzle.name %></td>
+                    <td class="gpname"><%= puzzle.group.name %></td>
+                    <td class="tags"><%puzzle.tags.forEach(function (tag) {%><span style="padding: 2px 6px;"><%=tag%></span><%})%></td>
+                    <td><a href="/admin/competition/puzzles/<%= puzzle._id %>" class="btn btn-info btn-xs" style="padding: 1px 16px;">More</a></td>
+                </tr>
+                <%});%>
+            </tbody>
+        </table>
+    </div></div></div>
 </div>
 <script src="/listjs/list.min.js"></script>
-<script src="/scripts/problist.js"></script>
+<script>
+    var options = {
+        valueNames: [ 'problemname','tags', 'gpname' ]
+    };
+
+    var hackerList = new List('puzzles_list', options);
+</script>
 <% include ../../partials/footer %>
 </body>
 </html>
