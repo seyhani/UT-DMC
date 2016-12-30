@@ -34,10 +34,13 @@
     <div class="problem-cont" id="puzzles_list">
         <input class="search" placeholder="&#xe003;" type="text" />
         <ul class="taglist">
-            <span class="glyphicon glyphicon-tags" style="transform:rotateY(180deg);"></span> 
-            <li><a class="btn btn-primary btn-xs active" href="javascript: void();">همه</a></li>
-            <% if(tags){tags.forEach(function(tag){ %>
+            <span class="glyphicon glyphicon-tags" style="transform:rotateY(180deg);"></span>
+            <% if(superTags){superTags.forEach(function(superTag){ %>
+            <br>
+            <li><a class="btn btn-success btn-xs" href="javascript: void();">**<%= superTag.title%>**</a></li>
+            <% superTag.tags.forEach(function(tag){ %>
             <li><a class="btn btn-success btn-xs" href="javascript: void();"><%= tag%></a></li>
+            <%});%>
             <%});}%>
         </ul>
         <ul class="list row" style="list-style-type: none;">

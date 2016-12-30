@@ -25,8 +25,8 @@ router.get("/", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            Problem.getAllTags(function (tags) {
-                res.render("admin/problems/index", {problems: allProblems,tags:tags});
+            Tag.find({}).exec(function (err,superTags) {
+                res.render("admin/problems/index", {problems: allProblems,superTags:superTags});
             });
         }
     });
@@ -77,7 +77,6 @@ router.get("/:id", function(req, res){
     Problem.findById(req.params.id).exec(function(err, foundProblem){
         Puzzle.find({problem:foundProblem,status:"submitted"}).exec(function (err,submissons) {
             Tag.find({}).exec(function (err,superTags) {
-                console.log(superTags);
                 if(err)
                     console.log(err);
                 else
