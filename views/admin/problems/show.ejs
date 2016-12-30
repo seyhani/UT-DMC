@@ -45,8 +45,15 @@
             </h4>
             <%}%>
             <%if(problem.files.length){%>
-            <%problem.sources.forEach(function (source) {switch(source.substr(source.lastIndexOf("\.") + 1)){ case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
+            <%problem.sources.forEach(function (source) {
+                switch(source.substr(source.lastIndexOf("\.") + 1)){
+                    case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
             <img src="/<%=source%>" class="upedpic">
+            <%break;
+            case "pdf": case "PDF":%>
+            <object data="/<%=source%>" class="upedpic">
+                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="/<%=source%>" target="_blank">این جا</a> بارگیری کنید.</p>
+            </object>
             <%}})%>
             <h4>Files:</h4>
             <%problem.sources.forEach(function (file) {%>
