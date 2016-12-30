@@ -3,17 +3,29 @@
 <head>
     <title>شکار معما</title>
     <% include partials/head %>
+    <link rel="stylesheet" href="/stylesheets/landing.css">
     <link rel="stylesheet" href="/flipclock/flipclock.css">
 </head>
 <body>
 <% include partials/header %>
 <body>
+<div class="container-fluid">
+	<div class="main_countainer">
+		<div class="inner_row">
+			<div class="inner_countainer">
+				<h1>DM Contest</h1>
+			</div>
+		</div>
+		<div class="inner_row">
+			<div class="inner_countainer">
+				<div class="clock"></div>
+			</div>
+		</div>
+	</div>
+</div>
 <script src="/flipclock/flipclock.js"></script>
 <script src="/flipclock/flipclock.min.js"></script>
-<div class="clock"></div>
-
 <script type="text/javascript">
-
     var clock = $('.clock').FlipClock((new Date(2017,0,6,8,0)-Date.now())/1000, {
         clockFace: 'DailyCounter',
         countdown: true
