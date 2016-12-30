@@ -299,3 +299,9 @@ object.upedpic{
 img.upedpic:hover{
     filter: contrast(120%)
 }
+fieldset{
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 6px 16px;
+  background: rgba(0, 0, 0, 0.01);
+}

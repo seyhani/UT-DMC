@@ -20,7 +20,10 @@
                     <input class="form-control" type="text" name="answer" placeholder="Answer" value="<%= problem.answer %>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="feedback" placeholder="Feedback" value="<%= problem.type%>">
+                    <fieldset>
+                        <div class="radio"><label><input type="radio" class="" name="type" value="open" <%if(problem.type == "close"){%>checked<%}%> >File</label></div>
+                        <div class="radio"><label><input type="radio" class="" name="type" value="close" <%if(problem.type == "open"){%>checked<%}%> >Text</label></div>
+                    </fieldset>
                 </div>
                 <div class="form-group">
                     <input class="form-control" type="number" name="score" placeholder="Score" value="<%= problem.score%>">
