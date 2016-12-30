@@ -15,6 +15,7 @@ var groupRoutes    = require("./routes/group"),
     dashboardRoutes    = require("./routes/dashboard"),
     adminRoutes    = require("./routes/admin"),
     problemRoutes = require("./routes/problems"),
+    tagRoutes = require("./routes/tag"),
     indexRoutes      = require("./routes/index"),
     User = require("./models/user"),
     competitionRoutes = require("./routes/competition"),
@@ -56,6 +57,7 @@ app.use("/dashboard", dashboardRoutes);
 app.use("/admin/", adminRoutes);
 app.use("/admin/users", userRoutes);
 app.use("/admin/problems", problemRoutes);
+app.use("/admin/tags", tagRoutes);
 
 app.use(function(req, res, next) {
     res.status(404).send('Sorry cant find that!');

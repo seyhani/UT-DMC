@@ -8,25 +8,12 @@ var ProblemSchema = new mongoose.Schema({
     answer:String,
     tags:[String],
     score:Number,
-    feedback:String,
+    type:String,
     submits:{
         wrong:{type:Number,default:0},
         correct:{type:Number,default:0}
     },
 });
-
-ProblemSchema.statics.getAllTags = function(cb) {
-    var tags = [];
-    this.find({},function (err,allProblems) {
-        allProblems.forEach(function (problem) {
-            problem.tags.forEach(function (tag) {
-               if(tags.indexOf(tag)==-1)
-                   tags.push(tag);
-            });
-        });
-        return cb(tags);
-    });
-};
 
 ProblemSchema.methods.hasTag = function (tag) {
     return (this.tags.indexOf(tag) != -1);
@@ -40,7 +27,7 @@ ProblemSchema.methods.reset = function () {
 
 ProblemSchema.methods.getFeedback = function (group_id) {
     var feedback;
-    var feedbacks = this.feedback.split(" ");
+    var feedbacks = this.type.split(" ");
     if(feedbacks.length > 1)
         feedback = feedbacks[group_id%feedbacks.length];
     else

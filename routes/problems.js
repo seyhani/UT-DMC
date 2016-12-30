@@ -2,6 +2,7 @@ var express = require("express");
 var router  = express.Router();
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
+var Tag = require("../models/tag");
 var middleware = require("../middleware");
 var request = require("request");
 var multer = require('multer');
@@ -38,8 +39,8 @@ router.post("/",upload.any() ,function(req, res){
     var desc = req.body.description;
     var answer = req.body.answer;
     var score= req.body.score;
-    var feedback= req.body.feedback;
-    var problem =new Problem( {name: name, description: desc,answer:answer,feedback:feedback,score:score ,submits:{correct:0,wrong:0}});
+    var type= req.body.type;
+    var problem =new Problem( {name: name, description: desc,answer:answer,type:type,score:score ,submits:{correct:0,wrong:0}});
     // Create a new problem and save to DB
     Problem.findOne({name:problem.name}).exec(function (err,foundProblem) {
         if(!foundProblem) {
@@ -56,11 +57,11 @@ router.post("/",upload.any() ,function(req, res){
                 res.redirect("back");
             } else {
                 req.flash("success", "Successfully Added!");
-                res.redirect("/admin/problems");
+                res.redirect("/admin/problems/"+problem._id);
             }
         }else{
             req.flash("error", "Problem already exist!");
-            res.redirect("/admin/problems");
+            res.redirect("/admin/problems/");
         }
     });
 });
@@ -73,13 +74,15 @@ router.get("/new", function(req, res){
 // SHOW - shows more info about one problem
 router.get("/:id", function(req, res){
     //find the problem with provided ID
-    Problem.findById(req.params.id).populate("comments").exec(function(err, foundProblem){
+    Problem.findById(req.params.id).exec(function(err, foundProblem){
         Puzzle.find({problem:foundProblem,status:"submitted"}).exec(function (err,submissons) {
-            console.log(submissons);
-            if(err)
-                console.log(err);
-            else
-                res.render("admin/problems/show", {problem: foundProblem,submissions:submissons});
+            Tag.find({}).exec(function (err,superTags) {
+                console.log(superTags);
+                if(err)
+                    console.log(err);
+                else
+                    res.render("admin/problems/show", {problem: foundProblem,submissions:submissons,superTags:superTags});
+            });
         });
     });
 });
@@ -110,7 +113,7 @@ router.get("/:id/reset", function(req, res){
 
 router.put("/:id/edit",upload.any() , function(req, res){
     var newData = {name: req.body.name, answer: req.body.answer,
-        description: req.body.description,score:req.body.score,feedback:req.body.feedback
+        description: req.body.description,score:req.body.score,type:req.body.type
     };
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
         middleware.initialProblemDirectories(problem.name);

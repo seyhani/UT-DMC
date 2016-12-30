@@ -247,7 +247,7 @@ router.get("/puzzles/:id/edit", function(req, res){
 
 router.put("/puzzles/:id", function(req, res){
     var newData = {name: req.body.name, answer: req.body.answer,
-        description: req.body.description,score:req.body.score,feedback:req.body.feedback
+        description: req.body.description,score:req.body.score,type:req.body.type
     };
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
         if(err){

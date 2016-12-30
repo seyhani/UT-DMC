@@ -1,13 +1,11 @@
 var express = require("express");
 var router  = express.Router();
-
 var Problem = require("../models/problem");
+var Tag = require("../models/tag");
 var Group = require("../models/group");
 var Puzzle = require("../models/puzzle");
 var User = require("../models/user");
-
 var middleware = require("../middleware");
-
 var request = require("request");
 var multer = require('multer');
 var rimraf = require('rimraf');
@@ -32,12 +30,12 @@ router.get("/", function(req, res){
                 console.log(err);
             else {
                 Puzzle.find({_id: {$in: user.group.competition.puzzles}}).populate("problem").exec(function (err, puzzles) {
-                    Puzzle.getAllTags(user.group.competition, function (tags) {
+                    Tag.find({}).exec(function (err,superTags) {
                         if (err)
                             console.log(err);
                         else
-                            res.render("dashboard/index", {user: user, puzzles: puzzles, tags: tags});
-                    });
+                            res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags});
+                    })
                 });
             }
     });

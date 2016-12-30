@@ -11,7 +11,16 @@
     <div class="container probbd">
         <div class="col-md-3"><div class="tag">
             <form action="/admin/problems/<%=problem._id%>/tag" method="POST">
-                <input class="form-control" type="text" name="tag" style="width: 100%;">
+                <!--<input class="form-control" type="text" name="tag" style="width: 100%;">-->
+                <select class="form-control" name="tag">
+                    <%superTags.forEach(function (superTag) {%>
+                        <optgroup label="<%=superTag.title%>">
+                            <%superTag.tags.forEach(function (tag) {%>
+                                <option value="<%=tag%>"><%=tag%></option>
+                            <%})%>
+                        </optgroup>
+                    <%})%>
+                </select>
                 <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
             </form>
             <form action="/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
@@ -31,7 +40,7 @@
             <h2><%=problem.name%></h2>
             <h4>Answer :<%=problem.answer%></h4>
             <h4>Score :<%=problem.score%></h4>
-            <h4>Feedback :<%=problem.feedback%></h4>
+            <h4>Feedback :<%=problem.type%></h4>
             <%if(problem.submits){%>
             <h4>Wrong Submits :<%=problem.submits.wrong%></h4>
             <h4>Correct Submits :<%=problem.submits.correct%></h4>

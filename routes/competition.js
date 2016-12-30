@@ -4,6 +4,7 @@ var passport = require("passport");
 var User = require("../models/user");
 var middleware = require("../middleware/index");
 var Problem = require("../models/problem");
+var Tag = require("../models/tag");
 var Puzzle = require("../models/puzzle");
 var Competition = require("../models/competition");
 var middleware = require("../middleware/index");
@@ -13,11 +14,11 @@ var middleware = require("../middleware/index");
 
 router.get("/competition", function(req, res){
     Problem.find({}, function(err, allProblems) {
-        Problem.getAllTags(function (tags) {
+        Tag.find({}).exec(function (err,superTags) {
             if (err)
                 console.log(err);
             else
-                res.render("admin/competitions/index", {problems: allProblems,tags:tags});
+                res.render("admin/competitions/index", {problems: allProblems,superTags:superTags});
         });
     });
 });
