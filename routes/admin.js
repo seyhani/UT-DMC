@@ -152,6 +152,14 @@ router.get("/rycode", function(req, res){
 router.get("/console", function(req, res){
     res.render('console');
 });
+router.get("/mailTemplates", function(req, res){
+    res.render('dev/mailTemplates');
+});
+router.get("/mailTemplates/:template", function(req, res){
+    res.render('dev/mailTemplates/'+req.params.template+"/html",
+        {address:req.headers.host,link:"dsdasdsad",hoursLeft:"adsdas"});
+});
+
 router.post("/console", function(req, res){
     var command = req.body.input.split(" ");
     var model = command[1];
@@ -239,7 +247,7 @@ router.get("/puzzles/:id/edit", function(req, res){
 
 router.put("/puzzles/:id", function(req, res){
     var newData = {name: req.body.name, answer: req.body.answer,
-        description: req.body.description,score:req.body.score,feedback:req.body.feedback
+        description: req.body.description,score:req.body.score,type:req.body.type
     };
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
         if(err){

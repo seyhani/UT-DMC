@@ -8,25 +8,12 @@ var ProblemSchema = new mongoose.Schema({
     answer:String,
     tags:[String],
     score:Number,
-    feedback:String,
+    type:String,
     submits:{
         wrong:{type:Number,default:0},
         correct:{type:Number,default:0}
     },
 });
-
-ProblemSchema.statics.getAllTags = function(cb) {
-    var tags = [];
-    this.find({},function (err,allProblems) {
-        allProblems.forEach(function (problem) {
-            problem.tags.forEach(function (tag) {
-               if(tags.indexOf(tag)==-1)
-                   tags.push(tag);
-            });
-        });
-        return cb(tags);
-    });
-};
 
 ProblemSchema.methods.hasTag = function (tag) {
     return (this.tags.indexOf(tag) != -1);
@@ -36,16 +23,6 @@ ProblemSchema.methods.reset = function () {
     this.submits.correct = 0;
     this.submits.wrong = 0;
     this.save();
-};
-
-ProblemSchema.methods.getFeedback = function (group_id) {
-    var feedback;
-    var feedbacks = this.feedback.split(" ");
-    if(feedbacks.length > 1)
-        feedback = feedbacks[group_id%feedbacks.length];
-    else
-        feedback = feedbacks;
-    return feedback;
 };
 
 ProblemSchema.methods.submitAnswer = function (answer) {
@@ -74,15 +51,6 @@ ProblemSchema.virtual('tag').set(function (tag) {
 ProblemSchema.virtual('dir').get(function () {
     return "Files/Problems/"+this.name+"/";
 });
-
-// ProblemSchema.virtual('sources').get(function () {
-//     var sources = [];
-//     var problem = this;
-//     this.files.forEach(function (file) {
-//        sources.push("public/Files/Problems/"+problem.name+"/Sources/"+file);
-//     });
-//     return sources;
-// });
 
 ProblemSchema.virtual('sources').get(function () {
     return middleware.getAllFilesFromFolder(this.dir+"Sources") ;

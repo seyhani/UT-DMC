@@ -8,7 +8,6 @@ var express     = require("express"),
     flash        = require("connect-flash"),
     session = require("express-session"),
     methodOverride = require("method-override");
-var mailer = require('./middleware/mailSender');
 
 mongoose.Promise = global.Promise;
 
@@ -16,6 +15,7 @@ var groupRoutes    = require("./routes/group"),
     dashboardRoutes    = require("./routes/dashboard"),
     adminRoutes    = require("./routes/admin"),
     problemRoutes = require("./routes/problems"),
+    tagRoutes = require("./routes/tag"),
     indexRoutes      = require("./routes/index"),
     User = require("./models/user"),
     competitionRoutes = require("./routes/competition"),
@@ -35,7 +35,6 @@ app.use(express.static(__dirname + "/public"));
 app.use(methodOverride('_method'));
 app.use(cookieParser('secret'));
 
-
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Once again Rusty wins cutest dog!",
@@ -50,22 +49,10 @@ app.use(flash());
 require('./config/passport')(passport);
 
 app.use(function(req, res, next){
-    if(req.user)
-    {
-        User.find(req.user._id).deepPopulate(["group","group.competition"]).exec(function (err,user) {
-            res.locals.currentUser = user;
-            res.locals.success = req.flash('success');
-            res.locals.error = req.flash('error');
-            next();
-        })
-    }
-    else{
-        res.locals.currentUser = req.user;
-        res.locals.success = req.flash('success');
-        res.locals.error = req.flash('error');
-        next();
-    }
-
+    app.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
 });
 
 
@@ -76,6 +63,7 @@ app.use("/dashboard", dashboardRoutes);
 app.use("/admin/", adminRoutes);
 app.use("/admin/users", userRoutes);
 app.use("/admin/problems", problemRoutes);
+app.use("/admin/tags", tagRoutes);
 
 app.use(function(req, res, next) {
     res.status(404).send('Sorry cant find that!');

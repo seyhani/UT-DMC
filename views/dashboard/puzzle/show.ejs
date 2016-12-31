@@ -3,7 +3,6 @@
 <head>
     <title>شکار معما</title>
     <% include ../../partials/head %>
-    <!-- ===============    problemcss core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/problem-view/problemcss.css" media="all" />
 </head>
 <body>
@@ -22,11 +21,10 @@
         <div class="col-md-3 submitpart">
             <%if(!puzzle.accepted){%>
             <form action="/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST" enctype="multipart/form-data">
-                <input class="answer-input form-control" type="text" name="answer" placeholder="پاسخ" style="text-align: center;">
-                <label class="btn btn-info btn-lg btn-block" >
+                <%if(puzzle.type == "close"){%><input class="answer-input form-control" type="text" name="answer" placeholder="پاسخ" style="text-align: center;"><%}%>
+                <%if(puzzle.type == "open"){%><label class="btn btn-info btn-lg btn-block" >
                     files<input name='file' type="file" style="display: none;" >
-                </label>
-                </label>
+                </label><%}%>
                 <button class="btn btn-success btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت جواب</button>
             </form>
             <%}%>
@@ -37,14 +35,20 @@
         </div>
         <div class="col-md-9 prbody">
             <%if(puzzle.solved){%>
-                <p><%= puzzle.feedback%></p>
+                <p><%= puzzle.type%></p>
             <%}else{%>
                 <p><%= puzzle.problem.description %></p>
             <%}%>
             <%if(puzzle.sources.length){%>
             <div>
-                <%puzzle.sources.forEach(function (source) {switch(source.substr(source.lastIndexOf("\.") + 1)){ case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
-                <img src="/<%=source%>" class="upedpic">
+                <%puzzle.sources.forEach(function (source) {switch(source.substr(source.lastIndexOf("\.") + 1)){
+                    case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
+            <img src="/<%=source%>" class="upedpic">
+            <%break;
+            case "pdf": case "PDF":%>
+            <object data="/<%=source%>" class="upedpic">
+                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="/<%=source%>" target="_blank">این جا</a> بارگیری کنید.</p>
+            </object>
                 <%}})%>
             </div>
             <div dir="ltr"><h4>Files</h4>
@@ -56,7 +60,6 @@
         </div>
     </div>
 </div>
-
 <% include ../../partials/footer %>
 </body>
 </html>

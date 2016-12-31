@@ -1,13 +1,11 @@
 var express = require("express");
 var router  = express.Router();
-
 var Problem = require("../models/problem");
+var Tag = require("../models/tag");
 var Group = require("../models/group");
 var Puzzle = require("../models/puzzle");
 var User = require("../models/user");
-
 var middleware = require("../middleware");
-
 var request = require("request");
 var multer = require('multer');
 var rimraf = require('rimraf');
@@ -25,26 +23,21 @@ var path = require('path');
 router.all("/*",middleware.isLoggedIn);
 
 router.get("/", function(req, res){
-    User.findById(req.user.id).deepPopulate(["group","group.competition.puzzles","group.competition.puzzles.problem","group.competition"]).exec(function (err,user) {
-        if(!user.group) {
-            res.render("dashboard/index", {user:user,puzzles: null, metaPuzzle: null, canGoToNextStage: null});
-        }else {
-            Puzzle.find({_id:{$in:user.group.competition.puzzles}}).populate("problem").exec(function (err,puzzles){
-                    Puzzle.getAllTags(user.group.competition,function (tags) {
-                        if (err) {
+    User.findById(req.user.id)
+        .deepPopulate(["group","group.competition.puzzles", "group.competition.puzzles.problem","group.competition"])
+        .exec(function (err,user) {
+            if(err)
+                console.log(err);
+            else {
+                Puzzle.find({_id: {$in: user.group.competition.puzzles}}).populate("problem").exec(function (err, puzzles) {
+                    Tag.find({}).exec(function (err,superTags) {
+                        if (err)
                             console.log(err);
-                        } else {
-                            res.render("dashboard/index",
-                                {
-                                    user:user,
-                                    puzzles: puzzles,
-                                    tags:tags,
-                                }
-                            );
-                        }
-                    });
-            });
-        }
+                        else
+                            res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags});
+                    })
+                });
+            }
     });
 });
 
@@ -119,27 +112,6 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                 res.redirect("/dashboard/puzzles/"+puzzle._id);
             }
         });
-    });
-});
-
-router.get("/nextstage", function(req, res){
-    User.findById(req.user._id).deepPopulate(["competition","competition.puzzles","group"]).exec(function (err,user) {
-        user.group.findCurrentStageMetaPuzzle(function (err,metaPuzzle){
-                if (err) {
-                    console.log(err);
-                } else {
-                    if(!metaPuzzle.solved)
-                    {
-                        req.flash("success", "Your have not solved the meta puzzle yet :(" );
-                        res.redirect("/dashboard");
-                    }
-                    else {
-                        user.group.competition.stage += 1;
-                        user.group.save();
-                        res.redirect("/dashboard");
-                    }
-                }
-            });
     });
 });
 

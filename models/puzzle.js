@@ -26,8 +26,8 @@ PuzzleSchema.methods.hasTag = function (tag) {
     return (this.tags.indexOf(tag) != -1);
 };
 
-PuzzleSchema.virtual('feedback').get(function (){
-    return this.problem.getFeedback(this.group.index);
+PuzzleSchema.virtual('type').get(function (){
+    return this.problem.type;
 });
 
 PuzzleSchema.methods.submitAnswer = function (answer) {
@@ -55,14 +55,26 @@ PuzzleSchema.methods.submitAnswer = function (answer) {
     return answer == correctAnswer;
 };
 
-PuzzleSchema.methods.requsetForHint = function () {
-    if(this.group.competition.hints < 1)
-        return false;
-    this.group.competition.hints--;
-    this.status = "requestedForHint";
+PuzzleSchema.methods.accept = function () {
+    this.group.competition.score += this.score;
+    this.status = "accepted";
+    this.problem.submits.correct++;
+    this.problem.save();
+    this.group.competition.save();
+    this.group.save();
     this.save();
-    return true;
 };
+
+PuzzleSchema.methods.reject= function () {
+    this.group.competition.score += this.score;
+    this.status = "accepted";
+    this.problem.submits.wrong++;
+    this.problem.save();
+    this.group.competition.save();
+    this.group.save();
+    this.save();
+};
+
 PuzzleSchema.virtual('name').get(function () {
     return this.problem.name;
 });
@@ -106,21 +118,6 @@ PuzzleSchema.virtual('sources').get(function () {
 PuzzleSchema.virtual('requestedForHint').get(function () {
     return  this.status == "requestedForHint";
 });
-
-PuzzleSchema.statics.getAllTags = function(competition,cb) {
-    var tags = [];
-    this.find({_id:{$in:competition.puzzles}}).populate("problem").exec(function (err,allPuzzles) {
-        allPuzzles.forEach(function (puzzle) {
-            if(puzzle.problem) {
-                puzzle.problem.tags.forEach(function (tag) {
-                    if (tags.indexOf(tag) == -1)
-                        tags.push(tag);
-                });
-            }
-        });
-        return cb(tags);
-    });
-};
 
 PuzzleSchema.plugin(deepPopulate);
 

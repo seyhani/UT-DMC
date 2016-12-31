@@ -3,8 +3,8 @@
 <head>
     <title>شکار معما</title>
     <% include ../../partials/head %>
-    <!-- ===============    dashboard core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <style type="text/css">.thumbnail{min-height: 250px;}</style>
 </head>
 <body>
 <% include ../../partials/header %>
@@ -17,27 +17,56 @@
             </div>
             <div class="col-md-6" style="padding-top: 20px;">
                 <a class="btn btn-primary btn-lg btn-block" href="/admin/problems/new">Add New Problem</a>
+                <a class="btn btn-info btn-lg btn-block" href="/admin/tags">Tags</a>
             </div>
         </div>
     </div>
 </div>
 
      
-     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+     <div id="puzzles_list" class="row text-center" style="/*display:flex; flex-wrap: wrap;*/">
+     <div style="padding: 6px 26px; text-align: left;">
+       <input class="search" placeholder="&#xe003;" type="text" />
+       <ul class="taglist">
+           <span class="glyphicon glyphicon-tags" style="transform:rotateY(180deg);"></span>
+           <li class="tagsearchgp"><ul>
+                <li><button class="btn btn-info btn-xs alltagsearchbtn">همه</button></li>
+            </ul></li>
+            <% if(superTags){superTags.forEach(function(superTag){ %>
+            <li class="tagsearchgp"><ul>
+                <span class="supertagsearchgp"><%= superTag.title%></span>
+                <% superTag.tags.forEach(function(tag){ %>
+                <li><button class="btn btn-primary btn-xs tagsearchbtn"><%= tag%></button></li>
+                <%});%>
+            </ul></li>
+            <%});}%>
+       </ul>
+     </div>
+      <ul class="list" style="list-style: none;">
         <% problems.forEach(function(problem){ %>
+          <li>
             <div class="col-md-3 col-sm-6">
                 <div class="thumbnail">
                    <div class="caption">
-                       <h4><%= problem.name %></h4>
+                       <h4 class="problemname"><%= problem.name %></h4>
+                   </div>
+                   <div class="tags">
+                   <%problem.tags.forEach(function (tag) {%>
+                       <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>
+                   <%})%>
                    </div>
                    <p>
                        <a href="/admin/problems/<%= problem._id %>" class="btn btn-primary">More Info</a>
                    </p>
                 </div>
             </div>
+          </li>
         <% }); %>
+      </ul>
     </div>
   </div>
-    <% include ../../partials/footer %>
+  <% include ../../partials/footer %>
+  <script src="/listjs/list.min.js"></script>
+  <script src="/scripts/problist.js"></script>
 </body>
 </html>

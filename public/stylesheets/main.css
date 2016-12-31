@@ -283,13 +283,25 @@ table.table{
 table.table th{
   text-align: center;
 }
-img.upedpic{
+.upedpic{
     border-radius: 26px;
     margin: 26px auto;
     display: block;
     max-width: 100%;
+    min-width: 60%;
     transition: 0.3s;
+}
+object.upedpic{
+  width: 90%;
+  min-height: 600px;
+  border-radius: 5px;
 }
 img.upedpic:hover{
     filter: contrast(120%)
+}
+fieldset{
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 6px 16px;
+  background: rgba(0, 0, 0, 0.01);
 }

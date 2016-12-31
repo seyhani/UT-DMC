@@ -40,6 +40,8 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
+
+
 UserSchema.plugin(passportLocalMongoose)
 UserSchema.plugin(deepPopulate);
 

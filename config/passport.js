@@ -8,7 +8,7 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
+        User.findById(id).deepPopulate(["group","group.competition"]).exec(function(err, user) {
             done(err, user);
         });
     });
@@ -16,7 +16,7 @@ module.exports = function(passport) {
     passport.use(new LocalStrategy(User.authenticate()));
     
     passport.use(new LocalStrategy(function(username, password, done) {
-        User.findOne({ username: username }, function(err, user) {
+        User.findOne({ username: username }).exec( function(err, user) {
             if (err) return done(err);
             if (!user) return done(null, false, { message: 'Incorrect username.' });
             user.comparePassword(password, function(err, isMatch) {

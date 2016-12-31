@@ -7,22 +7,25 @@ var nodemailer = require('nodemailer');
 var request = require('request');
 var middleware = require('../middleware/index');
 var mailer = require('../middleware/mailSender');
-var mailTemplates = '../middleware/mailTemplates';
+var Group = require("../models/group");
+var mailTemplates = 'middleware/mailTemplates';
 var token = require('../middleware/token');
 var crypto = require("crypto");
 var async = require("async");
-var SMTPServer = require('smtp-server').SMTPServer;
 var simplesmtp = require("simplesmtp");
 var fs = require("fs");
-var smtpTransport = require('nodemailer-smtp-transport');
-var directTransport = require('nodemailer-direct-transport');
 'use strict';
 
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
-    req.flash("info","dsdadasdasdasdsd");
     res.render('landing', { messages: req.flash('info') });
+});
+
+router.get("/ranking", function(req, res){
+    Group.find({}).populate(["competition"]).sort({"competition.score":-1}).exec(function (err,groups) {
+        res.render("dashboard/ranking",{groups:groups});
+    });
 });
 
 // show register form
@@ -52,9 +55,13 @@ router.post('/register',function(req, res,next) {
             req.flash('error', 'Username already exist');
             res.redirect('/register');
         } else {
-            var link =req.headers.host + "/register/"+ token.setToken(user);
+            // mailer.sendTemplateTo(mailTemplates+"/resetpass/html.ejs",{address:req.headers.host,link:"/register/"+ token.setToken(user)},user.email,function (err,info) {
+            //     console.log("ERR: "+err);
+            //     console.log("INF: "+info);
+            console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
+                res.redirect('/');
+            // });
 
-            res.redirect('/');
         }
     });
 });
@@ -64,7 +71,7 @@ router.get('/register/:verification_token',function(req, res,next) {
     console.log(user);
     User.create(user,function (err, newUser) {
         if (err) return next(err);
-           
+
             res.redirect('/login');
         });
 });
@@ -75,15 +82,16 @@ router.get("/login", function(req, res){
 
 router.post('/login', function(req, res, next){
     passport.authenticate('local', function(err, user, info) {
-                if (err) return next(err);
-                if (!user) {
-                    return res.redirect('/login')
-                }
-                req.logIn(user, function(err) {
-                    if (err) return next(err);
-                    return res.redirect('/dashboard');
-                });
-            })(req, res, next);
+        if (err) return next(err);
+        if (!user) {
+            return res.redirect('/login')
+        }
+        req.logIn(user, function(err) {
+            if (err) return next(err);
+            req.user = null;
+            return res.redirect('/dashboard');
+        });
+    })(req, res, next);
 });
 
 // logout route
@@ -99,8 +107,12 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        token.setToken(user);
-        res.redirect('/');
+        // mailer.sendTemplateTo(mailTemplates+"/resetpass/html.ejs",{address:req.headers.host,link:"/register/"+token.setToken(user)},user.email,function (err,info) {
+        //     console.log(info);
+        //     console.log(err);
+            console.log("http://"+req.headers.host+"/reset/"+token.setToken(user));
+            res.redirect('/');
+        // });
     });
 });
 
@@ -115,7 +127,7 @@ router.get('/reset/:token', function(req, res,next) {
             req.flash('error', 'Password reset token is invalid or has expired.');
             return res.redirect('/forgot');
         } else{
-            res.render('reset_password', {user:user});
+            res.render('reset_password', {user:user,token:req.params.token});
         }
     });
 });

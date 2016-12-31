@@ -4,6 +4,7 @@ var passport = require("passport");
 var User = require("../models/user");
 var middleware = require("../middleware/index");
 var Problem = require("../models/problem");
+var Tag = require("../models/tag");
 var Puzzle = require("../models/puzzle");
 var Competition = require("../models/competition");
 var middleware = require("../middleware/index");
@@ -13,11 +14,12 @@ var middleware = require("../middleware/index");
 
 router.get("/competition", function(req, res){
     Problem.find({}, function(err, allProblems) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("admin/competitions/index", {problems: allProblems});
-        }
+        Tag.find({}).exec(function (err,superTags) {
+            if (err)
+                console.log(err);
+            else
+                res.render("admin/competitions/index", {problems: allProblems,superTags:superTags});
+        });
     });
 });
 
@@ -63,21 +65,21 @@ router.get("/competition/problems/:problem_id", function(req, res){
     });
 });
 
+router.get("/competition/puzzles", function(req, res){
+    Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
+        res.render("admin/puzzles/index",{puzzles:puzzles});
+    });
+});
+
 router.get("/competition/puzzles/:puzzle_id/:aorr", function(req, res){
     Puzzle.findById(req.params.puzzle_id).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzle) {
         if (err) {
             console.log(err);
         } else {
-            
             if(req.params.aorr == "accept")
-            {
-                puzzle.submitAnswer(puzzle.problem.answer);
-            }
+                puzzle.accept();
             if(req.params.aorr == "reject")
-            {
-                puzzle.status = "rejected";
-                puzzle.save();
-            }
+                puzzle.reject();
             middleware.removeSubmission(puzzle.name,puzzle.submisson.file);
         }
         res.redirect("/admin/competition/problems/"+puzzle.problem._id);
