@@ -37,7 +37,7 @@
             </tr></thead>
             <tbody class="list">
                 <% puzzles.forEach(function(puzzle){ %>
-                <tr class="">
+                <tr>
                     <td class="problemname"><%= puzzle.name %></td>
                     <td class="gpname"><%= puzzle.group.name %></td>
                     <td class="tags"><%puzzle.tags.forEach(function (tag) {%><span style="padding: 2px 6px;"><%=tag%></span><%})%></td>
