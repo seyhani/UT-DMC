@@ -81,13 +81,34 @@
 .list{
   padding: 0;
 }
-ul.taglist{
+ul.taglist, ul.taglist ul{
   list-style: none;
   display: inline-block;
-  vertical-align: text-top;
+  /*vertical-align: text-top;*/
 }
 ul.taglist li{
   display: inline-block;
+}
+.taglist .btn{
+  margin: 0;
+}
+.tagsearchgp{
+  padding: 3px 6px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+.tagsearchgp:nth-child(2){
+  border: none;
+}
+.tagsearchgp ul{
+  padding: 0;
+}
+.supertagsearchgp{
+  font-weight: lighter;
+  margin-right: 6px;
+  padding: 0 3px;
+  padding-right: 6px;
+  border-right: solid 1px #ddd;
 }
 #puzzles_list .search{
   border: solid 2px #ddd;
