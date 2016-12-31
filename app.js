@@ -21,7 +21,15 @@ var groupRoutes    = require("./routes/group"),
     competitionRoutes = require("./routes/competition"),
     userRoutes      = require("./routes/user");
 
-mongoose.connect("mongodb://localhost/MystryHuntTest");
+// const mailer = require('./middleware/mailSender');
+// const templates = `./middleware/mailTemplates/`;
+// mailer.sendTemplateTo(templates + `welcome`, {address:`google.com`}, `abtinbateni@gmail.com`, (err, info) => {
+//     console.log(`Sent`);
+//     console.log(err);
+//     console.log(info)
+// });
+
+mongoose.connect("mongodb://localhost/DMC");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");

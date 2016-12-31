@@ -18,7 +18,8 @@ var UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Group"
     },
-    resetPasswordExpires:Date
+    token:String,
+    tokenExpires:Date
 });
 
 UserSchema.pre('save', function(next) {

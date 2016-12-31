@@ -110,17 +110,22 @@ router.post('/forgot', function(req, res, next) {
         // mailer.sendTemplateTo(mailTemplates+"/resetpass/html.ejs",{address:req.headers.host,link:"/register/"+token.setToken(user)},user.email,function (err,info) {
         //     console.log(info);
         //     console.log(err);
-            console.log("http://"+req.headers.host+"/reset/"+token.setToken(user));
-            res.redirect('/');
+            if(user) {
+                user.token = token.generateToken(50);
+                user.tokenExpires = Date.now() + 3600*60;
+                user.save();
+                console.log("http://"+req.headers.host+"/reset/"+user.token);
+                res.redirect('/');
+            } else {
+                req.flash("error","Username doesnt exist!")
+                res.redirect('/forgot');
+            }
         // });
     });
 });
 
 router.get('/reset/:token', function(req, res,next) {
-    var user = token.decodeToken(req.params.token);
-    User.findOne({ _id:user._id,
-        resetPasswordExpires: { $gt: Date.now() }
-    }
+    User.findOne({ token:req.params.token}
         , function(err, user) {
         if(err) return next(err);
         if (!user) {
@@ -133,17 +138,18 @@ router.get('/reset/:token', function(req, res,next) {
 });
 
 router.post('/reset/:token', function(req, res,next) {
-    var user = token.decodeToken(req.params.token);
+    // ,{resetPasswordExpires: { $gt: Date.now() }} ]
     async.waterfall([
         function(done) {
-            User.findOne({$and:[{_id:user._id},{resetPasswordExpires: { $gt: Date.now() }} ]},
+            User.findOne({ token:req.params.token},
                 function(err, user) {
                     if (!user) {
                         req.flash('error', 'Password reset token is invalid or has expired.');
                         return res.redirect('back');
                     }
                     user.password = req.body.password;
-                    user.resetPasswordExpires = undefined;
+                    user.token = undefined;
+                    user.tokenExpires = undefined;
                     user.save(function(err) {
                     req.logIn(user, function(err) {
                         req.flash('success', 'Success! Your password has been changed.');
