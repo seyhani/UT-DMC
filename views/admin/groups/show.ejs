@@ -4,6 +4,16 @@
     <title>DMC</title>
     <% include ../../partials/head %>
     <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/chosen/chosen.min.css">
+    <style type="text/css">
+        .chosen-single div{
+            padding: 8px 0 !important;
+        }
+        .chosen-single{
+            height: 40px !important;
+            padding: 10px !important;
+        }
+    </style>
 </head>
 <body>
 <% include ../../partials/header %>
@@ -20,7 +30,7 @@
                         <option value="<%=user.username%>"><%=user.username%></option>
                         <%});%>
                     </select>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Add Member</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 10px;">Add Member</button>
                 </form>
             </div>
             <a href="/admin/groups/<%=group._id%>/edit" >
@@ -51,6 +61,10 @@
         </div></div>
     </div>
     <% include ../../partials/footer %>
+    <script src="/chosen/chosen.jquery.min.js"></script>
+    <script>
+        $("select").chosen();
+    </script>
     <script src="/scripts/setheight.js"></script>
 </body>
 </html>

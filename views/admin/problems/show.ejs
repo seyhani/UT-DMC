@@ -4,6 +4,16 @@
     <title>DMC</title>
     <% include ../../partials/head %>
     <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/chosen/chosen.min.css">
+    <style type="text/css">
+        .chosen-single div{
+            padding: 8px 0 !important;
+        }
+        .chosen-single{
+            height: 40px !important;
+            padding: 10px !important;
+        }
+    </style>
 </head>
 <body>
 <% include ../../partials/header %>
@@ -64,14 +74,18 @@
                 <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="/<%=source%>" target="_blank">این جا</a> بارگیری کنید.</p>
             </object>
             <%}})%>
-            <!--<h4>Files:</h4>
+            <%if(false){%><h4>Files:</h4>
             <%problem.sources.forEach(function (file) {%>
                 <a class="btn btn-default" href="/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("/") + 1)%></a>
-            <%});%>-->
+            <%});%><%}%>
             <%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
+    <script src="/chosen/chosen.jquery.min.js"></script>
+    <script>
+        $("select").chosen();
+    </script>
     <script src="/scripts/setheight.js"></script>
 </body>
 </html>
