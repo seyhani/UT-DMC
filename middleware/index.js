@@ -26,7 +26,7 @@ module.exports = {
         res.redirect("/login");
     },
     isAdminLoggedIn: function(req, res, next){
-        if(req.url.indexOf("login")!=-1)
+        if(req.url.indexOf("login")!=-1||req.url.indexOf("register")!=-1)
             return next();
         if(req.isAuthenticated()){
             return next();
@@ -35,7 +35,7 @@ module.exports = {
         res.redirect("/admin/login");
     },
     havePermission: function(req, res, next){
-        if(req.url.indexOf("login")!=-1)
+        if(req.url.indexOf("login")!=-1||req.url.indexOf("register")!=-1)
             return next();
         if(req.user.isAdmin == true){
             return next();

@@ -1,4 +1,5 @@
 var express     = require("express"),
+    router  = express.Router(),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
@@ -7,6 +8,7 @@ var express     = require("express"),
     LocalStrategy = require("passport-local"),
     flash        = require("connect-flash"),
     session = require("express-session"),
+    middleware = require("./middleware/index"),
     methodOverride = require("method-override");
 
 mongoose.Promise = global.Promise;
@@ -20,16 +22,9 @@ var groupRoutes    = require("./routes/group"),
     User = require("./models/user"),
     competitionRoutes = require("./routes/competition"),
     userRoutes      = require("./routes/user");
-const templates = `./middleware/mailTemplates/`;
-// mailer.sendTemplateTo(templates + `welcome`, {address: `google.com`}, `ahsprim@gmail.com`, (err, info) => {
-//   console.log(`Sent`);
-//   console.log(err);
-//   console.log(info);
-// });
-
 // const mailer = require('./middleware/mailSender');
-// const templates = `./middleware/mailTemplates/`;
-// mailer.sendTemplateTo(templates + `welcome`, {address:`google.com`}, `abtinbateni@gmail.com`, (err, info) => {
+// const mailTemplates = 'middleware/mailTemplates/';
+// mailer.sendTemplateTo(templates + `welcome`, {address:`google.com`}, `ahsprim@gmail.com`, (err, info) => {
 //     console.log(`Sent`);
 //     console.log(err);
 //     console.log(info)
@@ -62,7 +57,6 @@ app.use(function(req, res, next){
     res.locals.error = req.flash('error');
     next();
 });
-
 
 app.use("/", indexRoutes);
 app.use("/admin/", groupRoutes);

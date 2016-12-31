@@ -14,11 +14,8 @@ var upload = multer({
         console.log(file.fieldname + ' uploaded to  ' + file.path)
     }
 });
-var fs = require("fs");
-// router.all("/*",middleware.isLoggedIn,middleware.havePermission);
-//INDEX - show all problems
 
-// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     Problem.find({}, function(err, allProblems) {

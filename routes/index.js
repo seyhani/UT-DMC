@@ -8,9 +8,9 @@ var request = require('request');
 var middleware = require('../middleware/index');
 var mailer = require('../middleware/mailSender');
 var Group = require("../models/group");
-var mailTemplates = 'middleware/mailTemplates';
 var token = require('../middleware/token');
 var crypto = require("crypto");
+const mailTemplates = 'middleware/mailTemplates/';
 var async = require("async");
 var simplesmtp = require("simplesmtp");
 var fs = require("fs");
@@ -55,12 +55,13 @@ router.post('/register',function(req, res,next) {
             req.flash('error', 'Username already exist');
             res.redirect('/register');
         } else {
-            // mailer.sendTemplateTo(mailTemplates+"/resetpass/html.ejs",{address:req.headers.host,link:"/register/"+ token.setToken(user)},user.email,function (err,info) {
-            //     console.log("ERR: "+err);
-            //     console.log("INF: "+info);
-            console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
+            mailer.sendTemplateTo(mailTemplates+"verification",{address:req.headers.host,link:req.headers.host+"/register/"+ token.setToken(user)}
+                ,user.username,function (err,info) {
+                console.log("MERR: "+err);
+                console.log("MINF: "+info);
+                // console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
                 res.redirect('/');
-            // });
+            });
 
         }
     });
@@ -107,9 +108,9 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        // mailer.sendTemplateTo(mailTemplates+"/resetpass/html.ejs",{address:req.headers.host,link:"/register/"+token.setToken(user)},user.email,function (err,info) {
-        //     console.log(info);
-        //     console.log(err);
+        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:req.headers.host,link:req.headers.host+"/reset/"+token.setToken(user)},user.email,function (err,info) {
+            console.log(info);
+            console.log(err);
             if(user) {
                 user.token = token.generateToken(50);
                 user.tokenExpires = Date.now() + 3600*60;
@@ -120,7 +121,7 @@ router.post('/forgot', function(req, res, next) {
                 req.flash("error","Username doesnt exist!")
                 res.redirect('/forgot');
             }
-        // });
+        });
     });
 });
 
@@ -162,7 +163,5 @@ router.post('/reset/:token', function(req, res,next) {
         res.redirect('/login');
     });
 });
-
-
 
 module.exports = router;

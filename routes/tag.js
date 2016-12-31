@@ -13,7 +13,8 @@ var upload = multer({
     }
 });
 var fs = require("fs");
-// router.all("/*",middleware.isLoggedIn,middleware.havePermission);
+
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     Tag.find({}, function(err, alltags) {

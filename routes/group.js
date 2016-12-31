@@ -9,8 +9,7 @@ var Group = require("../models/group");
 var Competition = require("../models/competition");
 var middleware = require("../middleware/index");
 
-
-// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/groups", function(req, res){
     Group.find({}).deepPopulate(['members','competition.puzzles','competition.puzzles.problem']).exec(function (err,groups) {
