@@ -10,10 +10,10 @@
     <div class="container probbd">
         <div class="col-md-3 "><div class="tag">
             <a href="/admin/competition/puzzles/<%=puzzle._id%>/accept" >
-                <button class="btn btn-lg btn-block btn-success">Accept</button>
+                <button class="btn btn-lg btn-block btn-success btn-verify">Accept</button>
             </a>
             <a href="/admin/competition/puzzles/<%=puzzle._id%>/reject" >
-                <button class="btn btn-lg btn-block btn-danger">Reject</button>
+                <button class="btn btn-lg btn-block btn-danger btn-verify">Reject</button>
             </a>
             <a href="/admin/competition/" >
                 <button class="btn btn-lg btn-block btn-primary">Back</button>
@@ -32,10 +32,36 @@
                 <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="/<%=puzzle.filePath%>" target="_blank">این جا</a> بارگیری کنید.</p>
             </object>
             <%}%>
-            <!--<a class="btn btn-default" href="/<%=puzzle.filePath%>" target="_blank"><%=puzzle.filePath.substr(puzzle.filePath.lastIndexOf("/") + 1)%></a>-->
+            <%if(false){%><a class="btn btn-default" href="/<%=puzzle.filePath%>" target="_blank"><%=puzzle.filePath.substr(puzzle.filePath.lastIndexOf("/") + 1)%></a><%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
+    <script src=""></script>
+    <script>
+        $(document).ready(function(){
+            $(".btn-verify").click(function(event){
+                event.preventDefault();
+                var el = this;
+                swal({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, ' + $(el).text() + "!"
+                }).then(function () {
+                  swal(
+                    $(el).text() + 'ed!',
+                    'Problem has been ' + $(el).text() + 'ed.',
+                    $(el).text() == "Accept" ? 'success' : 'error'
+                  ).then(function(){
+                    window.location.href = $(el).parent().attr('href');
+                  });
+                });
+            });
+        });
+    </script>
     <script src="/scripts/setheight.js"></script>
 </body>
 </html>
