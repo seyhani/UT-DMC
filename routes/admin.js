@@ -94,6 +94,7 @@ router.post('/login/:username', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
                 if (err) return next(err);
                 if (!user) {
+                    req.flash("error","RYCODE wasnt correct!")
                     return res.redirect('/admin/login')
                 }
                 req.logIn(user, function(err) {
@@ -161,11 +162,13 @@ router.get("/mailTemplates/:template", function(req, res){
 });
 
 router.post("/console", function(req, res){
-    var command = req.body.input.split(" ");
-    var model = command[1];
-    command = command[0];
-    if(command == "clean")
-        mongoose.model(model).remove({},function (err) {});
+    // var command = req.body.input.split(" ");
+    // var model = command[1];
+    // command = command[0];
+    var s = "search" + "1";
+    console.log(req.body[s]);
+    // if(command == "clean")
+    //     mongoose.model(model).remove({},function (err) {});
     res.redirect('/admin/console');
 });
 

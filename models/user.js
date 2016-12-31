@@ -41,6 +41,9 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
+UserSchema.virtual('name').get(function () {
+    return firstname+lastname;
+});
 
 
 UserSchema.plugin(passportLocalMongoose)

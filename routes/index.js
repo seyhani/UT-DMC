@@ -59,7 +59,7 @@ router.post('/register',function(req, res,next) {
                 ,user.username,function (err,info) {
                 console.log("MERR: "+err);
                 console.log("MINF: "+info);
-                // console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
+                console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
                 res.redirect('/');
             });
 

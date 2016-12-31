@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <title>DMC</title>
+    <% include ../partials/head %>
+    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+</head>
+<body>
+<% include ../partials/header %>
+<div class="backch">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    <h1><span class="glyphicon glyphicon-pencil"></span> معماها</h1>
+                </div>
+
+                <div class="col-md-3" >
+
+                </div>
+                <div class="col-md-3" style="text-align: right;padding-top: 10px;">
+                    <button type="button" class="btn btn-primary btn-lg btn-block btncolor <% if(!user.group){ %> disabled <%}%>" style="cursor: default;">
+                        <% if(user.group){ %>
+                        <%= user.group.name%>
+                        <% } else { %><a>شما گروهی ندارید.</a> <% } %>
+                    </button>
+                    <a style="text-decoration: none;" href="/dashboard/ranking"><button  type="button" class="btn btn-info btn-lg btn-block">امتیاز گروه ها</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="problem-cont" id="puzzles_list">
+        <input class="search" placeholder="&#xe003;" type="text" />
+        <ul class="taglist">
+            <span class="glyphicon glyphicon-tags" style="transform:rotateY(180deg);"></span>
+            <li class="tagsearchgp"><ul>
+                    <li><button class="btn btn-info btn-xs alltagsearchbtn">همه</button></li>
+                </ul></li>
+            <% if(superTags){superTags.forEach(function(superTag){ %>
+            <li class="tagsearchgp"><ul>
+                    <span class="supertagsearchgp"><%= superTag.title%></span>
+                    <% superTag.tags.forEach(function(tag){ %>
+                    <li><button class="btn btn-primary btn-xs tagsearchbtn"><%= tag%></button></li>
+                    <%});%>
+                </ul></li>
+            <%});}%>
+        </ul>
+        <ul class="list row" style="list-style-type: none;">
+            <% if(puzzles){puzzles.forEach(function(puzzle){ %>
+            <li>
+                <div class="col-md-3 col-sm-6 col-md-12" >
+                    <div class="eachproblem">
+                        <div class="problembod">
+                            <div class="caption topproblem">
+                                <h1 class="problemname"><%= puzzle.name %></h1>
+                            </div>
+                            <p>
+                                <%if(puzzle.rejected||puzzle.submitted){%>
+                                    <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success mainbtn">Accept</a>
+                                <%}else if(puzzle.accepted||puzzle.submitted){%>
+                                    <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger mainbtn">Reject</a>
+                                <%}%>
+                            </p>
+                        </div>
+                    </div>
+            </li>
+            <% });} %>
+        </ul>
+    </div>
+</div>
+<% include ../partials/footer %>
+<script src="/listjs/list.min.js"></script>
+<script src="/scripts/problist.js"></script>
+</body>
+</html>

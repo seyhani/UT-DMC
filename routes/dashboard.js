@@ -18,6 +18,7 @@ var upload = multer({
 });
 var sanitize = require('mongo-sanitize');
 var path = require('path');
+const submissionWait = 5*1000;
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
 router.all("/*",middleware.isLoggedIn);
@@ -26,17 +27,21 @@ router.get("/", function(req, res){
     User.findById(req.user.id)
         .deepPopulate(["group","group.competition.puzzles", "group.competition.puzzles.problem","group.competition"])
         .exec(function (err,user) {
-            if(err)
-                console.log(err);
-            else {
-                Puzzle.find({_id: {$in: user.group.competition.puzzles}}).populate("problem").exec(function (err, puzzles) {
-                    Tag.find({}).exec(function (err,superTags) {
-                        if (err)
-                            console.log(err);
-                        else
-                            res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags});
-                    })
-                });
+            if(!user.group) {
+                res.render("dashboard/index", {user: user, puzzles: null, superTags: null});
+            } else {
+                if (err)
+                    console.log(err);
+                else {
+                    Puzzle.find({_id: {$in: user.group.competition.puzzles}}).populate("problem").exec(function (err, puzzles) {
+                        Tag.find({}).exec(function (err, superTags) {
+                            if (err)
+                                console.log(err);
+                            else
+                                res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags});
+                        })
+                    });
+                }
             }
     });
 });
@@ -87,7 +92,7 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
             if (err) {
                 console.log(err);
             } else {
-                if(Date.now() - 1*1000 > puzzle.lastSubmit ) {
+                if(Date.now() - submissionWait > puzzle.lastSubmit ) {
                     if(req.file) {
                         puzzle.submisson.file = user.group.name + path.extname(req.file.originalname);
                         var submission_dir = puzzle.problem.dir + "Submissions";
@@ -98,17 +103,17 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                         submission_name = user.group.name + path.extname(req.file.originalname);
                         puzzle.status = "submitted";
                         puzzle.save();
-                        req.flash("success", "Your answer has been submitted!");
+                        req.flash("success", "جواب شما ثبت شد!");
                     }
                     else if(answer != "")
                     {
                         if (puzzle.submitAnswer(answer))
-                            req.flash("success", "Your answer was correct :)");
+                            req.flash("success", "جواب شما درست بود:)");
                         else
-                            req.flash("error", "Your answer was not correct :(");
+                            req.flash("error", "جواب شما نادرست بود :(");
                     }
                 }else
-                    req.flash("error", "Wait a little before next submit! (15 Seconds)");
+                    req.flash("error", "برای ثبت دوباره جواب باید منتظر بمانید");
                 res.redirect("/dashboard/puzzles/"+puzzle._id);
             }
         });

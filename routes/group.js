@@ -8,6 +8,8 @@ var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
 var Competition = require("../models/competition");
 var middleware = require("../middleware/index");
+var async = require('async');
+
 
 router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
@@ -21,6 +23,7 @@ router.get("/groups/new", function(req, res){
     res.render("admin/groups/new");
 });
 
+
 router.post("/groups", function(req, res){
     Problem.find({}).exec(function (err,problems) {
         var newComp = {
@@ -32,15 +35,19 @@ router.post("/groups", function(req, res){
             Group.findOne({name:group.name}).exec(function (err,foundGroup) {
                 if(!foundGroup)
                 {
+                    var puzzles = [];
                     problems.forEach(function (problem) {
-                        Puzzle.create({problem: problem, group: group, tags: problem.tags},
-                            function (err, puzzle) {
-                                group.competition.puzzles.push(puzzle);
-                                group.competition.save();
-                                group.save();
-                            });
+                        puzzles.push({problem: problem, group: group, tags: problem.tags});
                     });
-                    res.redirect('groups/' + group._id);
+                    Puzzle.create(puzzles,
+                        function (err, newPuzzles) {
+                            group.competition.puzzles = newPuzzles;
+                            group.competition.save();
+                            group.save(function (err) {
+                                res.redirect('groups/' + group._id);
+                            });
+                        });
+
                 } else {
                     req.flash("error","Group already exist!");
                     res.redirect('groups/');
