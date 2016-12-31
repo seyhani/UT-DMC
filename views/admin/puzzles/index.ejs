@@ -37,7 +37,7 @@
             </tr></thead>
             <tbody class="list">
                 <% puzzles.forEach(function(puzzle){ %>
-                <tr class="">
+                <tr>
                     <td class="problemname"><%= puzzle.name %></td>
                     <td class="gpname"><%= puzzle.group.name %></td>
                     <td class="tags"><%puzzle.tags.forEach(function (tag) {%><span style="padding: 2px 6px;"><%=tag%></span><%})%></td>
@@ -48,6 +48,7 @@
         </table>
     </div></div></div>
 </div>
+<% include ../../partials/footer %>
 <script src="/listjs/list.min.js"></script>
 <script>
     var options = {
@@ -56,6 +57,5 @@
 
     var hackerList = new List('puzzles_list', options);
 </script>
-<% include ../../partials/footer %>
 </body>
 </html>

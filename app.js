@@ -20,6 +20,12 @@ var groupRoutes    = require("./routes/group"),
     User = require("./models/user"),
     competitionRoutes = require("./routes/competition"),
     userRoutes      = require("./routes/user");
+const templates = `./middleware/mailTemplates/`;
+mailer.sendTemplateTo(templates + `welcome`, {address: `google.com`}, `ahsprim@gmail.com`, (err, info) => {
+  console.log(`Sent`);
+  console.log(err);
+  console.log(info);
+});
 
 // const mailer = require('./middleware/mailSender');
 // const templates = `./middleware/mailTemplates/`;

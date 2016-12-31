@@ -3,8 +3,8 @@
 <head>
     <title>شکار معما</title>
     <% include ../partials/head %>
-    <!-- ===============    dashboard core CSS     =============== -->
     <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <style type="text/css">.btn{margin-bottom: 0;</style>
 </head>
 <body>
 <% include ../partials/header %>
@@ -18,17 +18,23 @@
             </div>
         </div>
     </div>
-    <div class="jumbotron"><div class="container"><div class="row">
+    <div class="jumbotron"><div class="container"><div class="row" id="puzzles_list">
+        <div style="padding: 6px;">
+            <input class="search" placeholder="&#xe003;" type="text" />
+            مرتب بر اساس: 
+            <button class="sort btn btn-primary btn-sm" data-sort="gpname">نام گروه</button>
+            <button class="sort btn btn-info btn-sm" data-sort="gpscore" id="defaultsortbtn">امتیاز</button>
+        </div>
         <table class="table table-striped table-hover">
             <thead><tr>
                 <th>نام گروه</th>
                 <th>امتیاز گروه</th>
             </tr></thead>
-            <tbody>
+            <tbody class="list">
                 <%groups.forEach(function (group) {%>
-                <tr >
-                    <td><%=group.name%></td>
-                    <td><%=group.competition.score%></td>
+                <tr class="<% if(group.name == currentUser.group.name){%>info<%}%>">
+                    <td class="gpname"><%=group.name%></td>
+                    <td class="gpscore"><%=group.competition.score%></td>
                 </tr>
                 <%});%>
             </tbody>
@@ -36,5 +42,18 @@
     </div></div></div>
 </div>
 <% include ../partials/footer %>
+<script src="/listjs/list.min.js"></script>
+<script>
+    var options = {
+        valueNames: ['gpname', 'gpscore']
+    };
+
+    var hackerList = new List('puzzles_list', options);
+
+    jQuery(document).ready(function($) {
+        $("#defaultsortbtn").trigger("click");
+        $("#defaultsortbtn").trigger("click");
+    });
+</script>
 </body>
 </html>
