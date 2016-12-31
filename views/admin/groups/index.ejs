@@ -26,28 +26,33 @@
          </div>
      </div>
      
-     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-        <% groups.forEach(function(group){ %>
-            <div class="col-md-3 col-xs-12">
-                <div class="thumbnail">
-                   <div class="caption">
-                       <h4><%= group.name %></h4>
-                   </div>
-                    <%group.competition.puzzles.forEach(function (puzzle) {%>
-                        <%if(puzzle.requestedForHint){%>
-                            <p>
-                                <a href="/admin/groups/<%= group._id %>/hint/<%=puzzle._id%>" class="btn btn-warning"><%=puzzle.name%></a>
-                            </p>
-                        <%}%>
-                    <%});%>
-                    <p>
-                        <a href="/admin/groups/<%= group._id %>" class="btn btn-primary">More Info</a>
-                    </p>
-                </div>
-            </div>
-        <% }); %>
+     <div class="row text-center" style="/*display:flex; flex-wrap: wrap;*/" id="puzzles_list">
+        <div class="col-xs-12" style="padding: 6px 16px; text-align: left;"><input class="form-input search" placeholder="&#xe003;" type="text" /></div>
+        <ul class="list" style="list-style: none;">
+            <% groups.forEach(function(group){ %>
+                <li><div class="col-md-3 col-xs-12">
+                    <div class="thumbnail">
+                       <div class="caption">
+                           <h4 class="problemname"><%= group.name %></h4>
+                       </div>
+                        <%group.competition.puzzles.forEach(function (puzzle) {%>
+                            <%if(puzzle.requestedForHint){%>
+                                <p>
+                                    <a href="/admin/groups/<%= group._id %>/hint/<%=puzzle._id%>" class="btn btn-warning"><%=puzzle.name%></a>
+                                </p>
+                            <%}%>
+                        <%});%>
+                        <p>
+                            <a href="/admin/groups/<%= group._id %>" class="btn btn-primary">More Info</a>
+                        </p>
+                    </div>
+                </div></li>
+            <% }); %>
+        </ul>
     </div>
     </div>
+    <script src="/listjs/list.min.js"></script>
+    <script src="/scripts/problist.js"></script>
     <% include ../../partials/footer %>
 </body>
 </html>
