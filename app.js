@@ -50,7 +50,8 @@ app.use(function(req, res, next){
     res.locals.error = req.flash('error');
     next();
 });
-app.use("/", indexRoutes);
+var baseURL = "/dmc";
+app.use(baseURL+"/", indexRoutes);
 app.use("/admin/", groupRoutes);
 app.use("/admin/", competitionRoutes);
 app.use("/dashboard", dashboardRoutes);

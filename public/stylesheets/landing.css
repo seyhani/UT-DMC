@@ -1,5 +1,5 @@
 body{
-    background: #500 url("/img/background.jpg") center center /cover fixed;
+    background: #500 url("/img/background.png") top center /cover fixed;
     /*background-image: url("https://images.unsplash.com/photo-1414016642750-7fdd78dc33d9?dpr=2&fit=crop&fm=jpg&h=825&ixlib=rb-0.3.5&q=50&w=1450");*/
 }
 .main_countainer{
