@@ -9,9 +9,15 @@
 <% include ../../partials/header %>
     <div class="container probbd">
         <div class="col-md-3 "><div class="tag">
+            <%if(user.isAdmin){%>
+            <button class="btn btn-lg btn-block btn-warning disabled" style="margin-bottom: 10px;">Administrator</button>
+            <%}%>
+            <%if(!user.isAdmin){%>
             <a href="<%if(user.group){%> /admin/groups/<%=user.group._id%> <%}else{%> javascript: void(); <%}%> " >
                 <button class="btn btn-lg btn-block btn-info <%if(!user.group){%> disabled <%}%>" style="margin-bottom: 10px;">GRUOP<%if(user.group){%>: <%= user.group.name%><%}%></button>
             </a>
+            <%}%>
+            <hr>
             <form action="<%=baseURL%>/admin/users/<%=user._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
             </form>
@@ -22,8 +28,12 @@
         <div class="col-md-9 "><div class="pbd">
             <img class="img-responsive" src="<%= user.image %>">
             <h2><%=user.username%></h2>
+            <%if(user.isAdmin){%><h4> &nbsp; &nbsp; &nbsp; &nbsp; <span class="glyphicon glyphicon-star"></span> Administrator</h4><%}%>
+            <hr>
+            <h3>Name</h3>
+            <h4>&nbsp;<%=user.firstname%> <%=user.lastname%></h4>
             <%if(user.group){%>
-            <h4>Group: <a href="<%=baseURL%>/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
+            <h3>Group</h3><h4>&nbsp;<a href="<%=baseURL%>/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
             <%}%>
         </div></div>
     </div>

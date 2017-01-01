@@ -20,8 +20,8 @@
             </a>
         </div></div>
         <div class="col-md-9 "><div class="pbd">
-            <h1><%=puzzle.name%></h1>
-            <h4>Group: <%=puzzle.group.name%></h4>
+            <h2><%=puzzle.name%></h2>
+            <h3>Group</h3><h4>&nbsp;<%=puzzle.group.name%></h4>
             <hr>
             <%switch(puzzle.filePath.substr(puzzle.filePath.lastIndexOf("\.") + 1)){
                     case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>

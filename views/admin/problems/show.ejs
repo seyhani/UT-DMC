@@ -17,11 +17,9 @@
 </head>
 <body>
 <% include ../../partials/header %>
-<!-- <div class="row"> -->
     <div class="container probbd">
         <div class="col-md-3"><div class="tag">
             <form action="<%=baseURL%>/admin/problems/<%=problem._id%>/tag" method="POST">
-                <!--<input class="form-control" type="text" name="tag" style="width: 100%;">-->
                 <select class="form-control cselect" name="tag">
                     <%superTags.forEach(function (superTag) {%>
                         <optgroup label="<%=superTag.title%>">
@@ -48,20 +46,21 @@
         </div></div>
         <div class="col-md-9"><div class="pbd">
             <h2><%=problem.name%></h2>
-            <h4>Answer :<%=problem.answer%></h4>
-            <h4>Score :<%=problem.score%></h4>
-            <h4>File Submit :<%=problem.type%></h4>
+            <hr>
+            <h3>Answer</h3><h4>&nbsp;<%=problem.answer%></h4>
+            <h3>Score</h3><h4>&nbsp;<%=problem.score%></h4>
+            <h3>File Submit</h3><h4>&nbsp;<%=problem.type%></h4>
             <%if(problem.submits){%>
-            <h4>Wrong Submits :<%=problem.submits.wrong%></h4>
-            <h4>Correct Submits :<%=problem.submits.correct%></h4>
+            <h3>Wrong Submits</h3><h4>&nbsp;<%=problem.submits.wrong%></h4>
+            <h3>Correct Submits</h3><h4>&nbsp;<%=problem.submits.correct%></h4>
             <%}%>
             <p><%= problem.description %></p>
             <%if(problem.tags){%>
-            <h4> TAGS:
+            <h3>TAGS</h3><h4>
                 <%problem.tags.forEach(function (tag) {%>
-                <%=tag%> ,
+                &nbsp;<%=tag%>, 
                 <%});%>
-            </h4>
+            </h3>
             <%}%>
             <%if(problem.files.length){%>
             <%problem.sources.forEach(function (source) {
@@ -74,9 +73,9 @@
                 <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="<%=baseURL%>/<%=source%>" target="_blank">این جا</a> بارگیری کنید.</p>
             </object>
             <%}})%>
-            <%if(false){%><h4>Files:</h4>
+            <%if(false){%><h3>Files</h3>
             <%problem.sources.forEach(function (file) {%>
-                <a class="btn btn-default" href="<%=baseURL%>/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("<%=baseURL%>/") + 1)%></a>
+                &nbsp;<a class="btn btn-default" href="<%=baseURL%>/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("<%=baseURL%>/") + 1)%></a>
             <%});%><%}%>
             <%}%>
         </div></div>

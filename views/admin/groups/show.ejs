@@ -33,6 +33,7 @@
                     <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 10px;">Add Member</button>
                 </form>
             </div>
+            <hr>
             <a href="<%=baseURL%>/admin/groups/<%=group._id%>/edit" >
                 <button class="btn btn-lg btn-block btn-warning" >EDIT</button>
             </a>
@@ -44,20 +45,22 @@
             </a>
         </div></div>
         <div class="col-md-9"><div class="pbd">
-            <h3>Group Name:</h3>
-                <h4><%=group.name%></h4>
-            <p>Score: <%= group.score%></p>
-            <p>Index: <%= group.index%></p>
-            <p>Stage: <%= group.competition.stage%></p>
-            <p>Credit: <%= group.credit%></p>
-            Solved Problems:
-            <p style="width: 100%;">
+            <h2><%=group.name%></h2>
+            <hr>
+            <h3>Score</h3><h4>&nbsp;<%= group.score%></h4>
+            <h3>Index</h3><h4>&nbsp;<%= group.index%></h4>
+            <h3>Stage</h3><h4>&nbsp;<%= group.competition.stage%></h4>
+            <h3>Credit</h3><h4>&nbsp;<%= group.credit%></h4>
+            <%if(false){%>
+            <h3>Solved Problems</h3>
+            <h4>
                 <%group.competition.puzzles.forEach(function(puzzle){%>
                     <%if(puzzle&&puzzle.solved){%>
-
-                <%}%>
-            <%});%>
-            </p>
+                    &nbsp;
+                    <%}%>
+                <%});%>
+            </h4>
+            <%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
