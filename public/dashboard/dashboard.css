@@ -29,27 +29,27 @@
   padding: 1px;
 }
 .prb-accepted .topproblem{
-  background: #f6f6f6;
+  background: #f5faf5;
   color: #449d44;
   border-color: #5cb85c;;
 }
 .prb-rejected .topproblem{
-  background: #f6f6f6;
+  background: #faf5f5;
   color: #c9302c;
   border-color: #d9534f;
 }
 .prb-submitted .topproblem{
-  background: #f6f6f6;
+  background: #faf8f5;
   color: #eca72f;
   border-color: #f0ad4e;
 }
 .prb-sold .topproblem{
-  background: #f6f6f6;
+  background: #f5f8fa;
   color: #51afff;
   border-color: #70bdff;
 }
 .prb-buy .topproblem{
-  background: #f6f6f6;
+  background: #f5f8fa;
   color: #286090;
   border-color: #337ab7;
 }
