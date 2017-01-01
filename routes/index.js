@@ -102,6 +102,10 @@ router.get("/logout", function(req, res){
    res.redirect("/");
 });
 
+router.get("/test", function(req, res){
+    res.render("dev/test");
+});
+
 router.get('/forgot', function(req, res,next) {
     res.render('forgot_password', {user: req.user});
 });

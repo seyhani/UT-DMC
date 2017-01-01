@@ -27,7 +27,7 @@ module.exports = {
     },
     isAdminLoggedIn: function(req, res, next){
         if(req.url.indexOf("login")!=-1
-            // ||req.url.indexOf("register")!=-1
+            ||req.url.indexOf("register")!=-1
         )
             return next();
         if(req.isAuthenticated()){
@@ -38,7 +38,7 @@ module.exports = {
     },
     havePermission: function(req, res, next){
         if(req.url.indexOf("login")!=-1
-            // ||req.url.indexOf("register")!=-1
+            ||req.url.indexOf("register")!=-1
         )
             return next();
         if(req.user.isAdmin == true){

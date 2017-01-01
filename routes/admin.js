@@ -85,10 +85,15 @@ router.get("/login", function(req, res){
 });
 router.post("/login", function(req, res) {
     User.findOne({username: req.body.username}).exec(function (err, user) {
-        res.render('dev/loginUser', {username: user.username});
+        if(!user)
+            res.redirect("/admin/login");
+        else
+            res.render('dev/loginUser', {username: user.username});
     });
 });
 router.post('/login/:username', function(req, res, next) {
+    if(!req.params.username )
+        res.redirect("/admin/login");
     req.body.username = req.params.username;
     req.body.password = rycode.encode(req.body).substring(0, rycode.encode(req.body).length - 1);;
     passport.authenticate('local', function(err, user, info) {

@@ -16,7 +16,7 @@
                 <button class="btn btn-lg btn-block btn-danger btn-verify">Reject</button>
             </a>
             <a href="/admin/competition/" >
-                <button class="btn btn-lg btn-block btn-primary">Back</button>
+                <button class="btn btn-lg btn-block btn-primary btn-verify">Back</button>
             </a>
         </div></div>
         <div class="col-md-9 "><div class="pbd">
@@ -44,7 +44,7 @@
                 var el = this;
                 swal({
                   title: 'Are you sure?',
-                  text: "You won't be able to revert this!",
+                  text: $(el).parent().attr('href'),
                   type: 'warning',
                   showCancelButton: true,
                   confirmButtonColor: '#3085d6',
@@ -56,7 +56,7 @@
                     'Problem has been ' + $(el).text() + 'ed.',
                     $(el).text() == "Accept" ? 'success' : 'error'
                   ).then(function(){
-                    window.location.href = $(el).parent().attr('href');
+                    window.location.href = $(el).parent("a").attr('href');
                   });
                 });
             });
