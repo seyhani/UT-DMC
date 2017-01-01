@@ -305,3 +305,6 @@ fieldset{
   padding: 6px 16px;
   background: rgba(0, 0, 0, 0.01);
 }
+.hide{
+  display: none !important;
+}
