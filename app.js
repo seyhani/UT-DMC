@@ -33,7 +33,7 @@ app.use(cookieParser('secret'));
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Once again Rusty wins cutest dog!",
+    secret: "Devil May Cry",
     resave: false,
     saveUninitialized: false
 }));
