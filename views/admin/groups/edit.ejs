@@ -13,7 +13,7 @@
         <form action="/admin/groups/<%=group._id%>?_method=PUT" method="POST">
             <div class="form-group">
                 <label>Name:</label>
-                <input class="form-control" type="text" name="groupName" value="<%=group.name%>">
+                <input class="form-control" type="text" name="groupName" value="<%=group.name%>" autofocus required>
                 <label>index:</label>
                 <input class="form-control" type="text" name="index" value="<%=group.index%>">
                 <label>credit:</label>
