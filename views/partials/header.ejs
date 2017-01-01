@@ -25,6 +25,6 @@
     </div>
 </nav>
 <script>
-    <% if(error && error.length > 0) { %> swal("", "<%= error %>", "error"); <% } %>
-    <% if(success && success.length > 0) { %> swal("", "<%= success %>", "success"); <% } %>
+    <% if(error && error.length > 0) { %> swal({text: "<%= error %>", type: "error", customClass: "<%if(!currentUser || !currentUser.isAdmin){%>rtl<%}%>"});<% } %>
+    <% if(success && success.length > 0) { %> swal({text: "<%= success %>", type: "success", customClass: "<%if(!currentUser || !currentUser.isAdmin){%>rtl<%}%>"});<% } %>
 </script>
