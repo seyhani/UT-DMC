@@ -4,7 +4,6 @@
     <title>DMC</title>
     <% include ../../partials/head %>
     <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
-    <!-- <style type="text/css">.thumbnail{min-height: 250px;}</style> -->
     <style>
         .container{
             width: 100%;
@@ -38,6 +37,7 @@
                    <div class="caption">
                        <h4 class="problemname"><%= problem.name %></h4>
                    </div>
+                   <p>#</p>
                     <p>
                         <a href="/admin/competition/problems/<%= problem._id %>" class="btn btn-primary">More Info</a>
                     </p>

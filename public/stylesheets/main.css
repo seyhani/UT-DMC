@@ -308,3 +308,7 @@ fieldset{
 .hide{
   display: none !important;
 }
+.swal2-modal.rtl {
+  font-family: IRANSansWeb, Geneva, sans-serif;
+  direction: rtl;
+}
