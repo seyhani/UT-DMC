@@ -1,0 +1,21 @@
+body{
+    background: #500 url("../img/background.jpg") center center /cover fixed;
+    /*background-image: url("https://images.unsplash.com/photo-1414016642750-7fdd78dc33d9?dpr=2&fit=crop&fm=jpg&h=825&ixlib=rb-0.3.5&q=50&w=1450");*/
+}
+.main_countainer{
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    padding: 26px;
+    padding-top: 70px;
+    min-height: calc(100vh - 60px);
+    background: rgba(255, 255, 255, 0.5);
+}
+.inner_row{
+    text-align: center;
+    margin-top: 10%;
+}
+.inner_countainer{
+    margin: 0 auto;
+    display: inline-block;
+}

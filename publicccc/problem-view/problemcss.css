@@ -1,0 +1,55 @@
+.container {
+  margin: 0;
+  width: 100%;
+}
+.navbar {
+  border-radius: 0;
+}
+.problemname {
+  text-align: center;
+  padding: 20px;
+  margin: 50px;
+}
+.pname {
+  background-color: #eeeeee;
+}
+.problembody {
+  min-height: 400px;
+  margin: 50px;
+  background-color: #fff;
+}
+.prbody {
+  padding: 20px;
+  direction: rtl;
+  min-height: 360px;
+}
+.submitpart {
+  margin-right: 2%;
+  padding: 20px 10px;
+  min-height: 360px;
+}
+.answer-input {
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: #fff;
+  border: 2px solid #ddd;
+  direction: rtl;
+}
+.answer-input:focus {
+  border-color: #f0ad4e;
+  outline: none;
+}
+@media screen and (min-width: 992px){
+  .prbody{
+    border-left: 1px dashed #ccc;
+  }
+  .submitpart{
+    width: 23%;
+  }
+}
+@media screen and (max-width: 992px){
+  .prbody{
+    border-top: 1px dashed #ccc;
+  }
+}
