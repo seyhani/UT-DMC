@@ -1,20 +1,20 @@
 @font-face {
   font-family: IRANSansWeb;
-  src: url("../../font/IRANSansWeb(NoEn)_Light.ttf");
+  src: url("../font/IRANSansWeb(NoEn)_Light.ttf");
 }
 @font-face {
   font-family: IRANSansWeb;
   font-weight: bold;
-  src: url("../../font/IRANSansWeb(NoEn)_Medium.ttf");
+  src: url("../font/IRANSansWeb(NoEn)_Medium.ttf");
 }
 @font-face {
   font-family: IRANSansWeb;
   font-weight: light;
-  src: url("../../font/IRANSansWeb(NoEn)_UltraLight.ttf");
+  src: url("../font/IRANSansWeb(NoEn)_UltraLight.ttf");
 }
 @font-face {
   font-family: 'BRoya';
-  src: url('../../font/BRoya/BRoya.ttf');
+  src: url('../font/BRoya/BRoya.ttf');
 }
 body {
   font-family: IRANSansWeb, Geneva, sans-serif;
