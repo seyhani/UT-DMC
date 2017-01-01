@@ -1,6 +1,7 @@
 
 var fs = require('fs');
 var root = "public/";
+var validFileFormats= [".png",".jpg",".pdf"];
 function deleteFolderRecursive (path) {
     if( fs.existsSync(path) ) {
         fs.readdirSync(path).forEach(function(file,index){
@@ -111,6 +112,9 @@ module.exports = {
 
         return results;
 
+    },
+    hasValidFormat : function(fileExtension){
+        return validFileFormats.indexOf(fileExtension)!= -1;
     },
     // generateToken
     mkdir : mkdir,

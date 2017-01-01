@@ -114,7 +114,7 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                     }
                 }else
                     req.flash("error", "برای ثبت دوباره جواب باید منتظر بمانید");
-                res.redirect("/dashboard/puzzles/"+puzzle._id);
+                res.redirect("/dashboard");
             }
         });
     });
