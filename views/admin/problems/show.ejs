@@ -22,7 +22,7 @@
         <div class="col-md-3"><div class="tag">
             <form action="/admin/problems/<%=problem._id%>/tag" method="POST">
                 <!--<input class="form-control" type="text" name="tag" style="width: 100%;">-->
-                <select class="form-control" name="tag">
+                <select class="form-control cselect" name="tag">
                     <%superTags.forEach(function (superTag) {%>
                         <optgroup label="<%=superTag.title%>">
                             <%superTag.tags.forEach(function (tag) {%>
@@ -84,7 +84,7 @@
     <% include ../../partials/footer %>
     <script src="/chosen/chosen.jquery.min.js"></script>
     <script>
-        $("select").chosen();
+        $("select.cselect").chosen();
     </script>
     <script src="/scripts/setheight.js"></script>
 </body>

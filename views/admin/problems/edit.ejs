@@ -16,7 +16,7 @@
                 <div class="form-group" >
                     <textarea class="form-control" name="description" rows="10" style="resize: vertical;"><%= problem.description %></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group answerin <%if(problem.type == 'close'){%>hide<%}%>">
                     <input class="form-control" type="text" name="answer" placeholder="Answer" value="<%= problem.answer %>">
                 </div>
                 <div class="form-group">
@@ -39,6 +39,7 @@
             <a class="btn btn-primary" href="/admin/problems">Go Back</a>
         </div>
     </div></div>
+    <script src="/scripts/answerin.js"></script>
     <% include ../../partials/footer %>
 </body>
 </html>

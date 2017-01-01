@@ -25,7 +25,7 @@
                 <li class="list-group-item "><a link="white" href="/admin/users/<%=member._id%>"><%=member.username%></a></li>
                 <%});%>
                 <form action="/admin/groups/<%=group._id%>/addUser" method="POST">
-                    <select class="form-control" type="text" name="username" placeholder="User">
+                    <select class="form-control cselect" type="text" name="username" placeholder="User">
                         <%users.forEach(function (user) {%>
                         <option value="<%=user.username%>"><%=user.username%></option>
                         <%});%>
@@ -63,7 +63,7 @@
     <% include ../../partials/footer %>
     <script src="/chosen/chosen.jquery.min.js"></script>
     <script>
-        $("select").chosen();
+        $("select.cselect").chosen();
     </script>
     <script src="/scripts/setheight.js"></script>
 </body>
