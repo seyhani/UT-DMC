@@ -7,6 +7,6 @@ $(document).ready(function(){
 			$(this).val("");
 		}
 		else
-			swal("", "فایل اتخاب شد!", "success");
+			swal({text: "فایل اتخاب شد!", type: "success", customClass: "rtl"});
 	});
 });

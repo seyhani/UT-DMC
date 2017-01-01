@@ -25,10 +25,33 @@
 }
 .topproblem {
   margin-bottom: 50px;
-  border-bottom: 2px dashed #b6d1e9;
-  background: #f6f8fb;
+  border-bottom: 2px dashed;
   padding: 1px;
-  color: #4372ba;
+}
+.prb-accepted .topproblem{
+  background: #f6f6f6;
+  color: #449d44;
+  border-color: #5cb85c;;
+}
+.prb-rejected .topproblem{
+  background: #f6f6f6;
+  color: #c9302c;
+  border-color: #d9534f;
+}
+.prb-submitted .topproblem{
+  background: #f6f6f6;
+  color: #eca72f;
+  border-color: #f0ad4e;
+}
+.prb-sold .topproblem{
+  background: #f6f6f6;
+  color: #51afff;
+  border-color: #70bdff;
+}
+.prb-buy .topproblem{
+  background: #f6f6f6;
+  color: #286090;
+  border-color: #337ab7;
 }
 .problembod:hover span {
   display: block;

@@ -49,7 +49,7 @@
         <% if(puzzles){puzzles.forEach(function(puzzle){ %>
         <li>
         <div class="col-md-3 col-sm-6 col-md-12" >
-            <div class="eachproblem">
+            <div class="eachproblem <%if(puzzle.accepted){%>prb-accepted<%}else if(puzzle.rejected){%>prb-rejected<%}else if(puzzle.submitted){%>prb-submitted<%}else if(puzzle.sold) {%>prb-sold<%}else  {%>prb-buy<%}%>">
             <div class="problembod">
                 <div class="caption topproblem">
                     <h1 class="problemname"><%= puzzle.name %></h1>
