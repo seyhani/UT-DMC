@@ -21,7 +21,7 @@
             t.push(event.keyCode);
         else {
             window.alert(t);
-            post("/admin/newpass", t, "POST");
+            post("<%=baseURL%>/admin/newpass", t, "POST");
         }
     }
     function post(path, params, method) {

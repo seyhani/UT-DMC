@@ -3,7 +3,7 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
     <style>
         .container{
             width: 100%;
@@ -32,7 +32,7 @@
                             <h4><%= puzzle.group.name %></h4>
                     </div>
                     <p>
-                        <a href="/admin/competition/puzzles/<%= puzzle._id %>" class="btn btn-primary">More Info</a>
+                        <a href="<%=baseURL%>/admin/competition/puzzles/<%= puzzle._id %>" class="btn btn-primary">More Info</a>
                     </p>
                 </div>
             </div>

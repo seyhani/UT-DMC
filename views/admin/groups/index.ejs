@@ -3,7 +3,7 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
     <style>
         .container{
             width: 100%;
@@ -20,13 +20,13 @@
                      <h1><span class="glyphicon glyphicon-th-large"></span> Groups</h1>
                  </div>
                  <div class="col-md-6" style="padding-top: 20px;">
-                     <a class="btn btn-primary btn-lg btn-block" href="/admin/groups/new">Add New Group</a>
+                     <a class="btn btn-primary btn-lg btn-block" href="<%=baseURL%>/admin/groups/new">Add New Group</a>
                  </div>
              </div>
          </div>
      </div>
      
-     <div class="row text-center" style="/*display:flex; flex-wrap: wrap;*/" id="puzzles_list">
+     <div class="row text-center" style="<%=baseURL%>/*display:flex; flex-wrap: wrap;*/" id="puzzles_list">
         <div class="col-xs-12" style="padding: 6px 16px; text-align: left;"><input class="form-input search" placeholder="&#xe003;" type="text" /></div>
         <ul class="list" style="list-style: none;">
             <% groups.forEach(function(group){ %>
@@ -38,12 +38,12 @@
                         <%group.competition.puzzles.forEach(function (puzzle) {%>
                             <%if(puzzle.requestedForHint){%>
                                 <p>
-                                    <a href="/admin/groups/<%= group._id %>/hint/<%=puzzle._id%>" class="btn btn-warning"><%=puzzle.name%></a>
+                                    <a href="<%=baseURL%>/admin/groups/<%= group._id %>/hint/<%=puzzle._id%>" class="btn btn-warning"><%=puzzle.name%></a>
                                 </p>
                             <%}%>
                         <%});%>
                         <p>
-                            <a href="/admin/groups/<%= group._id %>" class="btn btn-primary">More Info</a>
+                            <a href="<%=baseURL%>/admin/groups/<%= group._id %>" class="btn btn-primary">More Info</a>
                         </p>
                     </div>
                 </div></li>
@@ -51,8 +51,8 @@
         </ul>
     </div>
     </div>
-    <script src="/listjs/list.min.js"></script>
-    <script src="/scripts/problist.js"></script>
+    <script src="<%=baseURL%>/listjs/list.min.js"></script>
+    <script src="<%=baseURL%>/scripts/problist.js"></script>
     <% include ../../partials/footer %>
 </body>
 </html>

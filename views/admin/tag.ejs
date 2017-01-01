@@ -3,7 +3,7 @@
 <head>
     <title>DMC</title>
     <% include ../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
     <style type="text/css">.thumbnail{min-height: 250px;}</style>
 </head>
 <body>
@@ -16,16 +16,16 @@
                     <h1></span><span class="glyphicon glyphicon-tags" style="transform:rotateY(180deg);"></span> Tags</h1>
                 </div>
                 <div class="col-md-6" style="padding-top: 20px;">
-                    <form action="/admin/tags" method="POST">
+                    <form action="<%=baseURL%>/admin/tags" method="POST">
                         <input class="form-control" type="text" name="tagTitle" style="width: 69%; display: inline-block;">
                         <button class="btn btn-lg btn btn-primary" type="submit" style="margin: 20px 0 20px 0; width: 30%;">TAG CATEGORY</button>
                     </form>
-                    <a class="btn btn-success btn-lg btn-block" href="/admin/problems">Back</a>
+                    <a class="btn btn-success btn-lg btn-block" href="<%=baseURL%>/admin/problems">Back</a>
                 </div>
             </div>
         </div>
     </div>
-    <div id="puzzles_list" class="row text-center" style="/*display:flex; flex-wrap: wrap;*/">
+    <div id="puzzles_list" class="row text-center" style="<%=baseURL%>/*display:flex; flex-wrap: wrap;*/">
         <ul class="list" style="list-style: none;">
             <% tags.forEach(function(tag){ %>
             <li>
@@ -40,11 +40,11 @@
                             <%})%>
                         </div>
                         <div class="tag" style="padding: 6px; position: absolute; bottom: 0; width: 100%;">
-                            <form action="/admin/tags/<%=tag._id%>" method="POST">
+                            <form action="<%=baseURL%>/admin/tags/<%=tag._id%>" method="POST">
                                 <input class="form-control" type="text" name="tag" style="width: 65%; margin: 6px auto; display: inline-block;">
                                 <button class="btn btn-lg btn btn-success" type="submit" style="margin: 6px auto; width: 30%;">TAG</button>
                             </form>
-                            <form action="/admin/tags/<%=tag._id%>?_method=DELETE" method="POST">
+                            <form action="<%=baseURL%>/admin/tags/<%=tag._id%>?_method=DELETE" method="POST">
                                 <button class="btn btn-lg btn btn-danger btn-block" style="margin: 6px auto; ">DELETE</button>
                             </form>
                         </div>
@@ -56,7 +56,7 @@
     </div>
 </div>
 <% include ../partials/footer %>
-<script src="/listjs/list.min.js"></script>
-<script src="/scripts/problist.js"></script>
+<script src="<%=baseURL%>/listjs/list.min.js"></script>
+<script src="<%=baseURL%>/scripts/problist.js"></script>
 </body>
 </html>

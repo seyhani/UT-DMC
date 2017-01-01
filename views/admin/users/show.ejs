@@ -3,7 +3,7 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/admin/problemdetail.css" media="all" />
 </head>
 <body>
 <% include ../../partials/header %>
@@ -12,10 +12,10 @@
             <a href="<%if(user.group){%> /admin/groups/<%=user.group._id%> <%}else{%> javascript: void(); <%}%> " >
                 <button class="btn btn-lg btn-block btn-info <%if(!user.group){%> disabled <%}%>" style="margin-bottom: 10px;">GRUOP<%if(user.group){%>: <%= user.group.name%><%}%></button>
             </a>
-            <form action="/admin/users/<%=user._id%>?_method=DELETE" method="POST">
+            <form action="<%=baseURL%>/admin/users/<%=user._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
             </form>
-            <a href="/admin/users" >
+            <a href="<%=baseURL%>/admin/users" >
                 <button class="btn btn-lg btn-block btn-success">BACK</button>
             </a>
         </div></div>
@@ -23,11 +23,11 @@
             <img class="img-responsive" src="<%= user.image %>">
             <h2><%=user.username%></h2>
             <%if(user.group){%>
-            <h4>Group: <a href="/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
+            <h4>Group: <a href="<%=baseURL%>/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
             <%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
-    <script src="/scripts/setheight.js"></script>
+    <script src="<%=baseURL%>/scripts/setheight.js"></script>
 </body>
 </html>

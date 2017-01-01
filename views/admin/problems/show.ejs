@@ -3,8 +3,8 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/chosen/chosen.min.css">
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/admin/problemdetail.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/chosen/chosen.min.css">
     <style type="text/css">
         .chosen-single div{
             padding: 8px 0 !important;
@@ -20,7 +20,7 @@
 <!-- <div class="row"> -->
     <div class="container probbd">
         <div class="col-md-3"><div class="tag">
-            <form action="/admin/problems/<%=problem._id%>/tag" method="POST">
+            <form action="<%=baseURL%>/admin/problems/<%=problem._id%>/tag" method="POST">
                 <!--<input class="form-control" type="text" name="tag" style="width: 100%;">-->
                 <select class="form-control cselect" name="tag">
                     <%superTags.forEach(function (superTag) {%>
@@ -33,16 +33,16 @@
                 </select>
                 <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
             </form>
-            <form action="/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
+            <form action="<%=baseURL%>/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
             </form>
-            <a href="/admin/problems/<%=problem._id%>/reset" >
+            <a href="<%=baseURL%>/admin/problems/<%=problem._id%>/reset" >
                 <button class="btn btn-lg btn-block btn-info" style="margin-bottom: 10px;">RESET</button>
             </a>
-            <a href="/admin/problems/<%=problem._id%>/edit" >
+            <a href="<%=baseURL%>/admin/problems/<%=problem._id%>/edit" >
                 <button class="btn btn-lg btn-block btn-warning" style="margin-bottom: 10px;">EDIT</button>
             </a>
-            <a href="/admin/problems" >
+            <a href="<%=baseURL%>/admin/problems" >
                 <button class="btn btn-lg btn-block btn-success">BACK</button>
             </a>
         </div></div>
@@ -67,25 +67,25 @@
             <%problem.sources.forEach(function (source) {
                 switch(source.substr(source.lastIndexOf("\.") + 1)){
                     case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
-            <img src="/<%=source%>" class="upedpic">
+            <img src="<%=baseURL%>/<%=source%>" class="upedpic">
             <%break;
             case "pdf": case "PDF":%>
-            <object data="/<%=source%>" class="upedpic">
-                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="/<%=source%>" target="_blank">این جا</a> بارگیری کنید.</p>
+            <object data="<%=baseURL%>/<%=source%>" class="upedpic">
+                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="<%=baseURL%>/<%=source%>" target="_blank">این جا</a> بارگیری کنید.</p>
             </object>
             <%}})%>
             <%if(false){%><h4>Files:</h4>
             <%problem.sources.forEach(function (file) {%>
-                <a class="btn btn-default" href="/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("/") + 1)%></a>
+                <a class="btn btn-default" href="<%=baseURL%>/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("<%=baseURL%>/") + 1)%></a>
             <%});%><%}%>
             <%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
-    <script src="/chosen/chosen.jquery.min.js"></script>
+    <script src="<%=baseURL%>/chosen/chosen.jquery.min.js"></script>
     <script>
         $("select.cselect").chosen();
     </script>
-    <script src="/scripts/setheight.js"></script>
+    <script src="<%=baseURL%>/scripts/setheight.js"></script>
 </body>
 </html>

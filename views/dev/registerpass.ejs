@@ -23,7 +23,7 @@
             if(t.length==0)
                     return;
             window.alert("Entered");
-            post("/admin/registerpass/<%=username%>", t, "POST");
+            post("<%=baseURL%>/admin/registerpass/<%=username%>", t, "POST");
         }
     }
     function post(path, params, method) {

@@ -3,7 +3,7 @@
 <head>
     <title>DMC</title>
     <% include ../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
     <style type="text/css">.btn{margin-bottom: 0;</style>
 </head>
 <body>
@@ -42,7 +42,7 @@
     </div></div></div>
 </div>
 <% include ../partials/footer %>
-<script src="/listjs/list.min.js"></script>
+<script src="<%=baseURL%>/listjs/list.min.js"></script>
 <script>
     var options = {
         valueNames: ['gpname', 'gpscore']
