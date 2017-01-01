@@ -44,6 +44,7 @@ PuzzleSchema.methods.submitAnswer = function (answer) {
         this.problem.submits.correct++;
         this.group.competition.score += this.problem.score;
         this.group.competition.save();
+        this.group.credit += this.payback;
         this.group.save();
     }else{
         this.status = "rejected";
@@ -57,6 +58,7 @@ PuzzleSchema.methods.submitAnswer = function (answer) {
 
 PuzzleSchema.methods.accept = function () {
     this.group.competition.score += this.score;
+    this.group.credit += this.payback;
     this.status = "accepted";
     this.problem.submits.correct++;
     this.problem.save();
@@ -105,6 +107,10 @@ PuzzleSchema.virtual('score').get(function () {
 
 PuzzleSchema.virtual('cost').get(function () {
     return this.problem.score/2 ;
+});
+
+PuzzleSchema.virtual('payback').get(function () {
+    return (this.problem.score/2)*3 ;
 });
 
 PuzzleSchema.virtual('filePath').get(function () {
