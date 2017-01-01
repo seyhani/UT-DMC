@@ -23,7 +23,7 @@
             <form action="/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST" enctype="multipart/form-data">
                 <%if(puzzle.type == "close"){%><input class="answer-input form-control" type="text" name="answer" placeholder="پاسخ" style="text-align: center;"><%}%>
                 <%if(puzzle.type == "open"){%><label class="btn btn-info btn-lg btn-block" >
-                    files<input name='file' type="file" style="display: none;" >
+                    files<input name='file' type="file" accept="image/* | application/pdf" style="display: none;" >
                 </label><%}%>
                 <button class="btn btn-success btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت جواب</button>
             </form>
@@ -51,15 +51,16 @@
             </object>
                 <%}})%>
             </div>
-            <!--<div dir="ltr"><h4>Files</h4>
+            <%if(false){%><div dir="ltr"><h4>Files</h4>
             <%puzzle.sources.forEach(function (source) {%>
             <a class="btn btn-default" href="/<%=source%>"><%=source.substr(source.lastIndexOf("/") + 1)%></a>
             <%})%>
-            </div>-->
+            </div><%}%>
             <%}%>
         </div>
     </div>
 </div>
+<script src="/scripts/checkfileformat.js"></script>
 <% include ../../partials/footer %>
 </body>
 </html>
