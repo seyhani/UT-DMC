@@ -4,8 +4,8 @@
     <title>DMC</title>
     <% include partials/head %>
 	<meta name="theme-color" content="#999999" />
-    <link rel="stylesheet" href="/stylesheets/landing.css">
-    <link rel="stylesheet" href="/flipclock/flipclock.css">
+    <link rel="stylesheet" href="<%=baseURL%>/stylesheets/landing.css">
+    <link rel="stylesheet" href="<%=baseURL%>/flipclock/flipclock.css">
 </head>
 <body>
 <% include partials/header %>
@@ -24,8 +24,8 @@
 	</div>
 </div>
 <% include partials/footer %>
-<script src="/flipclock/flipclock.js"></script>
-<script src="/flipclock/flipclock.min.js"></script>
+<script src="<%=baseURL%>/flipclock/flipclock.js"></script>
+<script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
 <script type="text/javascript">
     var clock = $('.clock').FlipClock((new Date(2017,0,6,8,0)-Date.now())/1000, {
         clockFace: 'DailyCounter',
