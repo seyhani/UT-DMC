@@ -75,7 +75,7 @@
             <%}})%>
             <%if(false){%><h3>Files</h3>
             <%problem.sources.forEach(function (file) {%>
-                &nbsp;<a class="btn btn-default" href="<%=baseURL%>/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("<%=baseURL%>/") + 1)%></a>
+                &nbsp;<a class="btn btn-default" href="<%=baseURL%>/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("/") + 1)%></a>
             <%});%><%}%>
             <%}%>
         </div></div>
