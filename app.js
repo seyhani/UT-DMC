@@ -57,10 +57,10 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use("/", indexRoutes);
-app.use(baseURL + "/admin/", groupRoutes);
-app.use(baseURL + "/admin/", competitionRoutes);
-app.use(baseURL + "/dashboard", dashboardRoutes);
+app.use("", indexRoutes);
+app.use(baseURL + "admin/", groupRoutes);
+app.use(baseURL + "admin/", competitionRoutes);
+app.use(baseURL + "dashboard", dashboardRoutes);
 app.use(baseURL + "/admin/", adminRoutes);
 app.use(baseURL + "/admin/users", userRoutes);
 app.use(baseURL + "/admin/problems", problemRoutes);

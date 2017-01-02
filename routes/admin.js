@@ -26,10 +26,10 @@ router.post("/register", function(req, res){
         if (err) return next(err);
         if (existUser) {
             req.flash('error', 'Username already exist');
-            res.redirect('/admin/register');
+            middleware.dmcRedirect(res,'/admin/register');
         } else {
             user.save(function (err) {
-                res.redirect('/admin/registerPass/'+user.username);
+                middleware.dmcRedirect(res,'/admin/registerPass/'+user.username);
             });
         }
     });
@@ -48,14 +48,14 @@ router.post("/registerPass/:username", function(req, res){
             user.rycode = "";
             user.save();
             req.flash("error","Rycode is too short!");
-            res.redirect('/admin/registerPass/'+user.username);
+            middleware.dmcRedirect(res,'/admin/registerPass/'+user.username);
         }
         else if(user.rycode == "")
         {
             user.rycode = newpass;
             user.save();
             req.flash("success","Enter passcode again");
-            res.redirect('/admin/registerPass/'+user.username);
+            middleware.dmcRedirect(res,'/admin/registerPass/'+user.username);
         }
         else
         {
@@ -66,14 +66,14 @@ router.post("/registerPass/:username", function(req, res){
                 user.isAdmin = true;
                 user.save();
                 req.flash("success","Completed");
-                res.redirect('/admin/login');
+                middleware.dmcRedirect(res,'/admin/login');
             }
             else
             {
                 user.rycode = "";
                 user.save();
                 req.flash("error","Wrong");
-                res.redirect('/admin/registerPass/'+user.username);
+                middleware.dmcRedirect(res,'/admin/registerPass/'+user.username);
             }
         }
     });
@@ -86,25 +86,25 @@ router.get("/login", function(req, res){
 router.post("/login", function(req, res) {
     User.findOne({username: req.body.username}).exec(function (err, user) {
         if(!user)
-            res.redirect("/admin/login");
+            middleware.dmcRedirect(res,"/admin/login");
         else
             res.render('dev/loginUser', {username: user.username});
     });
 });
 router.post('/login/:username', function(req, res, next) {
     if(!req.params.username )
-        res.redirect("/admin/login");
+        middleware.dmcRedirect(res,"/admin/login");
     req.body.username = req.params.username;
     req.body.password = rycode.encode(req.body).substring(0, rycode.encode(req.body).length - 1);;
     passport.authenticate('local', function(err, user, info) {
                 if (err) return next(err);
                 if (!user) {
                     req.flash("error","RYCODE wasnt correct!")
-                    return res.redirect('/admin/login')
+                    return middleware.dmcRedirect(res,'/admin/login')
                 }
                 req.logIn(user, function(err) {
                     if (err) return next(err);
-                    return res.redirect('/admin');
+                    return middleware.dmcRedirect(res,'/admin');
                 });
             })(req, res, next);
 });
@@ -137,7 +137,7 @@ router.post("/newpass", function(req, res){
                 req.flash("error","Wrong");
             }
         }
-        res.redirect('/admin/newpass');
+        middleware.dmcRedirect(res,'/admin/newpass');
     });
 });
 
@@ -148,7 +148,7 @@ router.post("/rycode", function(req, res){
             req.flash("success","Correct");
         else
             req.flash("error","Wrong");
-        res.redirect('/admin/rycode');
+        middleware.dmcRedirect(res,'/admin/rycode');
     });
 });
 router.get("/rycode", function(req, res){
@@ -174,7 +174,7 @@ router.post("/console", function(req, res){
     console.log(req.body[s]);
     // if(command == "clean")
     //     mongoose.model(model).remove({},function (err) {});
-    res.redirect('/admin/console');
+    middleware.dmcRedirect(res,'/admin/console');
 });
 
 // router.post("/newpass", function(req, res){
@@ -207,7 +207,7 @@ router.post("/console", function(req, res){
 //
 //         user.save();
 //         console.log(user.newpass);
-//         res.redirect('/admin/knock');
+//         middleware.dmcRedirect(res,'/admin/knock');
 //     });
 // });
 
@@ -260,10 +260,10 @@ router.put("/puzzles/:id", function(req, res){
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
         if(err){
             req.flash("error", err.message);
-            res.redirect("back");
+            middleware.dmcRedirect(res,"back");
         } else {
             req.flash("success","Successfully Updated!");
-            res.redirect("/admin/problems/"+problem._id);
+            middleware.dmcRedirect(res,"/admin/problems/"+problem._id);
         }
     });
 });
@@ -274,7 +274,7 @@ router.delete("/puzzles/:problem_id",function(req, res,next){
         if(err) return next(err);
         problem.remove();
         req.flash("success"," Successfully deleted!");
-        res.redirect("/admin/problems");
+        middleware.dmcRedirect(res,"/admin/problems");
     });
 });
 

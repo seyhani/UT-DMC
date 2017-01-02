@@ -19,12 +19,12 @@ var fs = require("fs");
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
-    // res.redirect("/aaaa");
+    // middleware.dmcRedirect(res,"/aaaa");
     res.render("landing");
 });
 
 // router.get("/aaaa", function(req, res){
-//     res.redirect("/eee");
+//     middleware.dmcRedirect(res,"/eee");
 // });
 // router.get("/eee", function(req, res){
 //     res.render('landing');
@@ -61,14 +61,14 @@ router.post('/register',function(req, res,next) {
         if (err) return next(err);
         if (existUser) {
             req.flash('error', 'Username already exist');
-            res.redirect('/register');
+            middleware.dmcRedirect(res,'/register');
         } else {
             mailer.sendTemplateTo(mailTemplates+"verification",{address:req.headers.host,link:req.headers.host+"/register/"+ token.setToken(user)}
                 ,user.username,function (err,info) {
                 console.log("MERR: "+err);
                 console.log("MINF: "+info);
                 console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
-                res.redirect('/');
+                middleware.dmcRedirect(res,'/');
             });
 
         }
@@ -81,7 +81,7 @@ router.get('/register/:verification_token',function(req, res,next) {
     User.create(user,function (err, newUser) {
         if (err) return next(err);
 
-            res.redirect('/login');
+            middleware.dmcRedirect(res,'/login');
         });
 });
 //show login form
@@ -93,12 +93,12 @@ router.post('/login', function(req, res, next){
     passport.authenticate('local', function(err, user, info) {
         if (err) return next(err);
         if (!user) {
-            return res.redirect('/login');
+            return middleware.dmcRedirect(res,'/login');
         }
         req.logIn(user, function(err) {
             if (err) return next(err);
             req.user = null;
-            return res.redirect('/dashboard');
+            return middleware.dmcRedirect(res,'/dashboard');
         });
     })(req, res, next);
 });
@@ -107,7 +107,7 @@ router.post('/login', function(req, res, next){
 router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "LOGGED YOU OUT!");
-   res.redirect("/");
+   middleware.dmcRedirect(res,"/");
 });
 
 router.get("/test", function(req, res){
@@ -128,10 +128,10 @@ router.post('/forgot', function(req, res, next) {
                 user.tokenExpires = Date.now() + 3600*60;
                 user.save();
                 console.log("http://"+req.headers.host+"/reset/"+user.token);
-                res.redirect('');
+                middleware.dmcRedirect(res,'');
             } else {
                 req.flash("error","Username doesnt exist!")
-                res.redirect('/forgot');
+                middleware.dmcRedirect(res,'/forgot');
             }
         });
     });
@@ -143,7 +143,7 @@ router.get('/reset/:token', function(req, res,next) {
         if(err) return next(err);
         if (!user) {
             req.flash('error', 'Password reset token is invalid or has expired.');
-            return res.redirect('/forgot');
+            return middleware.dmcRedirect(res,'/forgot');
         } else{
             res.render('reset_password', {user:user,token:req.params.token});
         }
@@ -158,7 +158,7 @@ router.post('/reset/:token', function(req, res,next) {
                 function(err, user) {
                     if (!user) {
                         req.flash('error', 'Password reset token is invalid or has expired.');
-                        return res.redirect('back');
+                        return middleware.dmcRedirect(res,'back');
                     }
                     user.password = req.body.password;
                     user.token = undefined;
@@ -172,7 +172,7 @@ router.post('/reset/:token', function(req, res,next) {
             });
         },
     ], function(err) {
-        res.redirect('/login');
+        middleware.dmcRedirect(res,'/login');
     });
 });
 
