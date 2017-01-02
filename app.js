@@ -51,8 +51,6 @@ app.use(function(req, res, next){
     app.locals.currentUser = req.user;
     res.locals.baseURL  = "/dmc";
     console.log("PRE:" + req.url);
-    if(req.url.indexOf("dmc")!=-1)
-        req.url = req.url.replace("/dmc","");
     console.log("POST:" + req.url);
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
