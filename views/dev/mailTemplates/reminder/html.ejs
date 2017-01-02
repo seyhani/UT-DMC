@@ -9,18 +9,16 @@
   <title>mail/reminder</title>
   <style type="text/css"><%include ../style %></style>
 </head>
-<body>
+<body><div class="dmmail-back">
   <div class="dmmail-countainer">
     <div class="dmmail-header">
-      <h2><a href="http://<%=address%>" target="_blank">مسابقه ریاضیات گسسته</a></h2>
-      <h6><a href="http://<%=address%>" target="_blank"><%=address%></a></h6>
-      <h1>یادآوری</h1>
       <%include ../header%>
+      <h1>یادآوری</h1>
     </div>
     <div class="dmmail-cnt">
       <p>فقط <%=hoursLeft%> ساعت تا شروع مسابقه مانده است!</p>
     </div>
     <div class="dmmail-footer"><%include ../footer%></div>
   </div>
-</body>
+</div></body>
 </html>

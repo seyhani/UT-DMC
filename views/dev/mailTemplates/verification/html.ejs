@@ -9,24 +9,21 @@
   <title>mail/reminder</title>
   <style type="text/css"><%include ../style %></style>
 </head>
-<body>
+<body><div class="dmmail-back">
   <div class="dmmail-countainer">
     <div class="dmmail-header">
-      <h2><a href="http://<%=address%>" target="_blank">مسابقه ریاضیات گسسته</a></h2>
-      <h6><a href="http://<%=address%>" target="_blank"><%=address%></a></h6>
-      <h1>تأیید ایمیل</h1>
       <%include ../header%>
+      <h1>تأیید ایمیل</h1>
     </div>
     <div class="dmmail-cnt">
       <p>کاربر گرامی</p>
       <p>با سلام</p>
-      <p>لطفاً برای تأیید ایمل و فعال‌شدن حساب کاربری خود به آدرس زیر مراجعه کنید:</p>
-      <p dir="ltr"><a href="<%=link%>" target="_blank"><%=link%></a></p>
+      <p>لطفاً برای تأیید ایمیل و فعال‌شدن حساب کاربری خود <a href="<%=link%>" target="_blank">این جا</a> را کلیک کنید.</p>
       <p>اگر شما درخواست ثبت‌نام نداده اید این ایمیل را نادیده بگیرید.</p>
       <p>با تشکر</p>
       <p class="dmmail-left">تیم فنی مسابقه</p>
     </div>
     <div class="dmmail-footer"><%include ../footer%></div>
   </div>
-</body>
+</div></body>
 </html>
