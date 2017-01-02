@@ -117,6 +117,7 @@ module.exports = {
         return validFileFormats.indexOf(fileExtension)!= -1;
     },
     dmcRedirect(res,url){
+        console.log("/dmc"+url);
         res.redirect("/dmc"+url);
     },
     // generateToken
