@@ -24,7 +24,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.redirect("/login");
+        res.redirect("/dmc/login");
     },
     isAdminLoggedIn: function(req, res, next){
         if(req.url.indexOf("login")!=-1
@@ -35,7 +35,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.redirect("/admin/login");
+        res.redirect("/dmc/admin/login");
     },
     havePermission: function(req, res, next){
         if(req.url.indexOf("login")!=-1
@@ -46,7 +46,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "you have not permission!");
-        res.redirect("/");
+        res.redirect("/dmc");
     },
     hashAnswer: function(answer,hashIndex)
     {
@@ -117,8 +117,7 @@ module.exports = {
         return validFileFormats.indexOf(fileExtension)!= -1;
     },
     dmcRedirect(res,url){
-        console.log("/dmc"+url);
-        res.redirect("/dmc"+url);
+        res.redirect("dmc/"+url);
     },
     // generateToken
     mkdir : mkdir,
