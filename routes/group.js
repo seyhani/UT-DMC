@@ -125,7 +125,7 @@ router.get("/groups/:groupId/hint/:problem_id", function(req, res){
 router.delete("/groups/:groupId", function(req, res){
     Group.findById(req.params.groupId).exec(function (err,group) {
         group.remove();
-        middleware.dmcRedirect(res,'/admin/groups');
+        middleware.dmcRedirect(res,'admin/groups');
     });
 });
 
