@@ -58,19 +58,19 @@ app.use(function(req, res, next){
 });
 
 app.use("", indexRoutes);
-app.use(baseURL + "admin/", groupRoutes);
-app.use(baseURL + "admin/", competitionRoutes);
-app.use(baseURL + "dashboard", dashboardRoutes);
-app.use(baseURL + "/admin/", adminRoutes);
-app.use(baseURL + "/admin/users", userRoutes);
-app.use(baseURL + "/admin/problems", problemRoutes);
-app.use(baseURL + "/admin/tags", tagRoutes);
+app.use("admin/", groupRoutes);
+app.use("admin/", competitionRoutes);
+app.use("dashboard", dashboardRoutes);
+app.use("/admin/", adminRoutes);
+app.use("/admin/users", userRoutes);
+app.use("/admin/problems", problemRoutes);
+app.use("/admin/tags", tagRoutes);
 
 app.use(function(req, res, next) {
     res.status(404).send('Sorry cant find that:   '+req.url);
 });
 
-var server = app.listen(3002, function () {
+var server = app.listen(3042, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log('Survey listening at http://%s:%s', host, port);
