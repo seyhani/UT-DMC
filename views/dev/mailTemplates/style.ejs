@@ -1,16 +1,22 @@
+@font-face{
+  font-family: homa;
+  src: url('https://fontlibrary.org/assets/fonts/homa/3c63b16bd5505bee488a0fedd9b5531a/9a09a003c2506f9d2733eb3500262f2f/HomaRegular.ttf') format('truetype');
+}
 *{
   box-sizing: border-box;
 }
 a, h:hover{
   text-decoration: none;
-  color: inherit;
+  color: inherit !important;
 }
 html, body {
   margin: 0;
   padding: 0;
+}
+.dmmail-back{
   direction: rtl;
   background: #f6f8fb;
-  font-family: BYekan, Yekan, OpenSans, Geneva, sans-serif;
+  font-family: homa, Geneva, sans-serif;
 }
 .dmmail-countainer{
   width: 60%;
@@ -30,12 +36,6 @@ html, body {
   border-top: 2px solid #c0d6e8;
   border-radius: 3px;
 }
-.dmmail-header h6{
-  direction: ltr;
-}
-.dmmail-header h2{
-  text-align: left;
-}
 .dmmail-cnt{
   background: rgba(255, 255, 255, 0.2);
   text-align: justify;
@@ -44,24 +44,24 @@ html, body {
   text-indent: 6px;
 }
 .dmmail-cnt a{
-  color: #366890;
+  color: #366890 !important;
 }
 .dmmail-header{
   background: #fff;
-  color: #366890;
+  color: #366890 !important;
 }
 .dmmail-footer{
   text-align: center;
   font-size: 0.7em;
   font-weight: lighter;
-  color: #a0b6df;
+  color: #a0b6df !important;
 }
 .dmmail-footer a:hover{
-  color: #366890;
+  color: #366890 !important;
 }
 .dmmail-left {
   text-align: left;
 }
 [dir="ltr"], .dmmail-header h6{
-  font-family: OpenSans, Geneva, sans-serif; 
+  font-family: OpenSans, Geneva, sans-serif  !important; 
 }
