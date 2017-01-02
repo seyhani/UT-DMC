@@ -38,9 +38,9 @@
                 t[i - 1] = (t[i] - t[i - 1]) > 0
             }
             console.log(t);
-//            post("/newpass",)
+//            post("<%=baseURL%>/newpass",)
 //            window.alert(tt);
-            post("/admin/newpass",t,"POST");
+            post("<%=baseURL%>/admin/newpass",t,"POST");
             t = [];
             c = 0;
         }

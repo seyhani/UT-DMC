@@ -21,7 +21,7 @@
                 t.push(event.keyCode);
             else {
                 window.alert("Entered");
-                post("/admin/rycode", t, "POST");
+                post("<%=baseURL%>/admin/rycode", t, "POST");
             }
     }
     function post(path, params, method) {

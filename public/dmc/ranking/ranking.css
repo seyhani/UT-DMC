@@ -1,0 +1,18 @@
+.navbar{
+    border-radius: 0;
+}
+.jumbotron{
+    margin: 20px;
+    padding: 20px 0 20px 0;
+}
+.container{
+    width: 100%;
+    margin: 0 0 0 0 ;
+
+}
+.eachgroup{
+    height: 50px;
+}
+.list-group-item{
+    padding: 0;
+}

@@ -3,7 +3,7 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
 </head>
 <body>
 <% include ../../partials/header %>
@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-     <div class="row text-center" style="/*display:flex; flex-wrap: wrap;*/" id="puzzles_list">
+     <div class="row text-center" style="<%=baseURL%>/*display:flex; flex-wrap: wrap;*/" id="puzzles_list">
        <div class="col-xs-12" style="padding: 6px 16px; text-align: left;"><input class="form-input search" placeholder="&#xe003;" type="text" /></div>
        <ul class="list" style="list-style: none;">
           <% users.forEach(function(user){ %>
@@ -27,7 +27,7 @@
                          <h4 class="problemname"><%= user.username %></h4>
                      </div>
                      <p>
-                         <a href="/admin/users/<%= user._id %>" class="btn btn-primary">More Info</a>
+                         <a href="<%=baseURL%>/admin/users/<%= user._id %>" class="btn btn-primary">More Info</a>
                      </p>
                   </div>
               </div></li>
@@ -35,8 +35,8 @@
       </ul>
     </div>
   </div>
-  <script src="/listjs/list.min.js"></script>
-  <script src="/scripts/problist.js"></script>
+  <script src="<%=baseURL%>/listjs/list.min.js"></script>
+  <script src="<%=baseURL%>/scripts/problist.js"></script>
   <% include ../../partials/footer %>
 </body>
 </html>

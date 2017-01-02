@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>DMC</title>
-
+    <% include partials/head %>
 </head>
 <body>
 <div id="hacker-list">
-    <form action="/admin/console/" method="post">
+    <form action="<%=baseURL%>/admin/console/" method="post">
         <input name="search1" type="text">
         <input type="submit">
     </form>
@@ -28,7 +28,7 @@
 </div>
 
 </body>
-<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.3.0/list.min.js"></script>
+<script src="<%=baseURL%>/listjs/list.min.js"></script>
 <script>
     var options = {
         valueNames: [ 'name', 'city' ]

@@ -8,7 +8,7 @@
 <% include ../partials/header %>
 <div class="row">
 <div class="col-xs-offset-1 col-xs-10"><h1>RYCODE</h1></div>
-<form  class="col-xs-offset-1 col-xs-10"  action="/admin/login" method="post">
+<form  class="col-xs-offset-1 col-xs-10"  action="<%=baseURL%>/admin/login" method="post">
     <div class="form-group">
         <input class="form-control" type="text" id="username" name="username" placeholder="username" required  autofocus>
         <!-- data-validation="email" -->

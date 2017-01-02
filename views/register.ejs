@@ -30,15 +30,15 @@
         <div class="col-md-4 col-md-0"></div>
         <div class="col-md-4 col-xs-12" style=" margin: 25px auto;">
             <h1 style="text-align: center">ثبت‌نام</h1>
-            <form  class=" row"  action="/register" method="post">
+            <form  class=" row"  action="<%=baseURL%>/register" method="post">
                 <div class="form-group col-xs-12">
                     <input class="form-control" type="text" name="username" placeholder="email" required  data-validation="email" autofocus>
                 </div>
                 <div class="form-group col-xs-12">
-                    <input class="form-control" type="text" name="firstname" placeholder="first name" required data-validation="custom" data-validation-regexp="^([a-zA-Z ]+)$">
+                    <input class="form-control" type="text" name="firstname" lang="fa-ir" placeholder="نام" required data-validation="custom" data-validation-regexp="^[\u0600-\u06FF\uFB8A\u067E\u0686\u06AF7\u200C\u200F ]+$">
                 </div>
                 <div class="form-group col-xs-12">
-                    <input class="form-control" type="text" name="lastname" placeholder="last name" required data-validation="custom" data-validation-regexp="^([a-zA-Z ]+)$">
+                    <input class="form-control" type="text" name="lastname" lang="fa-ir" placeholder="نام خانوادگی" required data-validation="custom" data-validation-regexp="^[\u0600-\u06FF\uFB8A\u067E\u0686\u06AF7\u200C\u200F ]+$">
                 </div>
                 <div class="form-group col-xs-12" style="position: relative;">
                     <input class="form-control" type="password" name="password" placeholder="password" required data-validation="strength" data-validation-strength="1">
@@ -50,7 +50,7 @@
                     <button class="btn btn-lg btn-success btn-block" >ثبت نام</button>
                 </div>
             </form>
-            <a class="btn btn-primary" href="/">بازگشت</a>
+            <a class="btn btn-primary" href="<%=baseURL%>/">بازگشت</a>
         </div>
     </div>
 </div>

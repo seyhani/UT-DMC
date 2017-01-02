@@ -2,23 +2,23 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="http://acm.ut.ac.ir/" target="_blank">
-                <img alt="ACM" src="/img/logo.png" width="30px" height="30px">
+                <img alt="ACM" src="<%=baseURL%>/img/logo.png" width="30px" height="30px">
             </a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <% if(!currentUser){ %>
-                    <li><a class="btn-group-sm btn-default navbar-btn" href="/register"><span class="glyphicon glyphicon-plus-sign"></span> ثبت‌نام</a></li>
-                    <li><a class="btn-group-sm btn-default navbar-btn" href="/login"><span class="glyphicon glyphicon-ok-sign"></span> ورود</a></li>
-                    <li><a class="btn-group-sm btn-default navbar-btn" href="/"><span class="glyphicon glyphicon-home"></span></a></li>
+                    <li><a class="btn-group-sm btn-default navbar-btn" href="<%=baseURL%>/register"><span class="glyphicon glyphicon-plus-sign"></span> ثبت‌نام</a></li>
+                    <li><a class="btn-group-sm btn-default navbar-btn" href="<%=baseURL%>/login"><span class="glyphicon glyphicon-ok-sign"></span> ورود</a></li>
+                    <li><a class="btn-group-sm btn-default navbar-btn" href="<%=baseURL%>/"><span class="glyphicon glyphicon-home"></span></a></li>
                 <% } else { %>
-                    <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> خروج</a></li>
+                    <li><a href="<%=baseURL%>/logout"><span class="glyphicon glyphicon-off"></span> خروج</a></li>
                     <%if(currentUser.group){%>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= currentUser.group.credit%></a></li>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-flash"></span> <%= currentUser.group.score%></a></li>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-th-large"></span> <%= currentUser.group.name%></a></li>
                     <%}%>
-                    <li><a href="/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><span class="glyphicon glyphicon-home"></span> <%=currentUser.username %></a></li>
+                    <li><a href="<%=baseURL%>/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><span class="glyphicon glyphicon-home"></span> <%=currentUser.username %></a></li>
                 <% } %>
             </ul>
         </div>

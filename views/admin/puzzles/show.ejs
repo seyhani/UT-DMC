@@ -3,7 +3,7 @@
 <head>
     <title>DMC</title>
     <% include ../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/dashboard/dashboard.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
 </head>
 <body>
 <% include ../partials/header %>
@@ -24,7 +24,7 @@
                         <%= user.group.name%>
                         <% } else { %><a>شما گروهی ندارید.</a> <% } %>
                     </button>
-                    <a style="text-decoration: none;" href="/dashboard/ranking"><button  type="button" class="btn btn-info btn-lg btn-block">امتیاز گروه ها</button></a>
+                    <a style="text-decoration: none;" href="<%=baseURL%>/dashboard/ranking"><button  type="button" class="btn btn-info btn-lg btn-block">امتیاز گروه ها</button></a>
                 </div>
             </div>
         </div>
@@ -56,9 +56,9 @@
                             </div>
                             <p>
                                 <%if(puzzle.rejected||puzzle.submitted){%>
-                                    <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success mainbtn">Accept</a>
+                                    <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success mainbtn">Accept</a>
                                 <%}else if(puzzle.accepted||puzzle.submitted){%>
-                                    <a href="/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger mainbtn">Reject</a>
+                                    <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger mainbtn">Reject</a>
                                 <%}%>
                             </p>
                         </div>
@@ -69,7 +69,7 @@
     </div>
 </div>
 <% include ../partials/footer %>
-<script src="/listjs/list.min.js"></script>
-<script src="/scripts/problist.js"></script>
+<script src="<%=baseURL%>/listjs/list.min.js"></script>
+<script src="<%=baseURL%>/scripts/problist.js"></script>
 </body>
 </html>

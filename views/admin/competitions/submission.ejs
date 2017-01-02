@@ -3,36 +3,36 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/admin/problemdetail.css" media="all" />
 </head>
 <body>
 <% include ../../partials/header %>
     <div class="container probbd">
         <div class="col-md-3 "><div class="tag">
-            <a href="/admin/competition/puzzles/<%=puzzle._id%>/accept" >
+            <a href="<%=baseURL%>/admin/competition/puzzles/<%=puzzle._id%>/accept" >
                 <button class="btn btn-lg btn-block btn-success btn-verify">Accept</button>
             </a>
-            <a href="/admin/competition/puzzles/<%=puzzle._id%>/reject" >
+            <a href="<%=baseURL%>/admin/competition/puzzles/<%=puzzle._id%>/reject" >
                 <button class="btn btn-lg btn-block btn-danger btn-verify">Reject</button>
             </a>
-            <a href="/admin/competition/" >
+            <a href="<%=baseURL%>/admin/competition/" >
                 <button class="btn btn-lg btn-block btn-primary">Back</button>
             </a>
         </div></div>
         <div class="col-md-9 "><div class="pbd">
-            <h1><%=puzzle.name%></h1>
-            <h4>Group: <%=puzzle.group.name%></h4>
+            <h2><%=puzzle.name%></h2>
+            <h3>Group</h3><h4>&nbsp;<%=puzzle.group.name%></h4>
             <hr>
             <%switch(puzzle.filePath.substr(puzzle.filePath.lastIndexOf("\.") + 1)){
                     case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
-            <img src="/<%=puzzle.filePath%>" class="upedpic">
+            <img src="<%=baseURL%>/<%=puzzle.filePath%>" class="upedpic">
             <%break;
             case "pdf": case "PDF":%>
-            <object data="/<%=puzzle.filePath%>" class="upedpic">
-                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="/<%=puzzle.filePath%>" target="_blank">این جا</a> بارگیری کنید.</p>
+            <object data="<%=baseURL%>/<%=puzzle.filePath%>" class="upedpic">
+                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="<%=baseURL%>/<%=puzzle.filePath%>" target="_blank">این جا</a> بارگیری کنید.</p>
             </object>
             <%}%>
-            <%if(false){%><a class="btn btn-default" href="/<%=puzzle.filePath%>" target="_blank"><%=puzzle.filePath.substr(puzzle.filePath.lastIndexOf("/") + 1)%></a><%}%>
+            <%if(false){%><a class="btn btn-default" href="<%=baseURL%>/<%=puzzle.filePath%>" target="_blank"><%=puzzle.filePath.substr(puzzle.filePath.lastIndexOf("<%=baseURL%>/") + 1)%></a><%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
@@ -62,6 +62,6 @@
             });
         });
     </script>
-    <script src="/scripts/setheight.js"></script>
+    <script src="<%=baseURL%>/scripts/setheight.js"></script>
 </body>
 </html>

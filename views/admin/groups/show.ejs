@@ -3,8 +3,8 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/chosen/chosen.min.css">
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/admin/problemdetail.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/chosen/chosen.min.css">
     <style type="text/css">
         .chosen-single div{
             padding: 8px 0 !important;
@@ -22,9 +22,9 @@
             <div class="list-group">
                 <h3>Members</h3>
                 <%group.members.forEach(function (member) {%>
-                <li class="list-group-item "><a link="white" href="/admin/users/<%=member._id%>"><%=member.username%></a></li>
+                <li class="list-group-item "><a link="white" href="<%=baseURL%>/admin/users/<%=member._id%>"><%=member.username%></a></li>
                 <%});%>
-                <form action="/admin/groups/<%=group._id%>/addUser" method="POST">
+                <form action="<%=baseURL%>/admin/groups/<%=group._id%>/addUser" method="POST">
                     <select class="form-control cselect" type="text" name="username" placeholder="User">
                         <%users.forEach(function (user) {%>
                         <%if(!user.isAdmin){%><option value="<%=user.username%>"><%=user.username%></option><%}%>
@@ -33,38 +33,41 @@
                     <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 10px;">Add Member</button>
                 </form>
             </div>
-            <a href="/admin/groups/<%=group._id%>/edit" >
+            <hr>
+            <a href="<%=baseURL%>/admin/groups/<%=group._id%>/edit" >
                 <button class="btn btn-lg btn-block btn-warning" >EDIT</button>
             </a>
-            <form  action="/admin/groups/<%=group._id%>?_method=DELETE" method="POST">
+            <form  action="<%=baseURL%>/admin/groups/<%=group._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-lg btn-danger btn-block">DELETE</button>
             </form>
-            <a href="/admin/groups/" >
+            <a href="<%=baseURL%>/admin/groups/" >
                 <button class="btn btn-lg btn-block btn-success">BACK</button>
             </a>
         </div></div>
         <div class="col-md-9"><div class="pbd">
-            <h3>Group Name:</h3>
-                <h4><%=group.name%></h4>
-            <p>Score: <%= group.score%></p>
-            <p>Index: <%= group.index%></p>
-            <p>Stage: <%= group.competition.stage%></p>
-            <p>Credit: <%= group.credit%></p>
-            Solved Problems:
-            <p style="width: 100%;">
+            <h2><%=group.name%></h2>
+            <hr>
+            <h3>Score</h3><h4>&nbsp;<%= group.score%></h4>
+            <h3>Index</h3><h4>&nbsp;<%= group.index%></h4>
+            <h3>Stage</h3><h4>&nbsp;<%= group.competition.stage%></h4>
+            <h3>Credit</h3><h4>&nbsp;<%= group.credit%></h4>
+            <%if(false){%>
+            <h3>Solved Problems</h3>
+            <h4>
                 <%group.competition.puzzles.forEach(function(puzzle){%>
                     <%if(puzzle&&puzzle.solved){%>
-
-                <%}%>
-            <%});%>
-            </p>
+                    &nbsp;
+                    <%}%>
+                <%});%>
+            </h4>
+            <%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
-    <script src="/chosen/chosen.jquery.min.js"></script>
+    <script src="<%=baseURL%>/chosen/chosen.jquery.min.js"></script>
     <script>
         $("select.cselect").chosen();
     </script>
-    <script src="/scripts/setheight.js"></script>
+    <script src="<%=baseURL%>/scripts/setheight.js"></script>
 </body>
 </html>

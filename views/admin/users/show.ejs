@@ -3,31 +3,41 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/admin/problemdetail.css" media="all" />
 </head>
 <body>
 <% include ../../partials/header %>
     <div class="container probbd">
         <div class="col-md-3 "><div class="tag">
+            <%if(user.isAdmin){%>
+            <button class="btn btn-lg btn-block btn-warning disabled" style="margin-bottom: 10px;">Administrator</button>
+            <%}%>
+            <%if(!user.isAdmin){%>
             <a href="<%if(user.group){%> /admin/groups/<%=user.group._id%> <%}else{%> javascript: void(); <%}%> " >
                 <button class="btn btn-lg btn-block btn-info <%if(!user.group){%> disabled <%}%>" style="margin-bottom: 10px;">GRUOP<%if(user.group){%>: <%= user.group.name%><%}%></button>
             </a>
-            <form action="/admin/users/<%=user._id%>?_method=DELETE" method="POST">
+            <%}%>
+            <hr>
+            <form action="<%=baseURL%>/admin/users/<%=user._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
             </form>
-            <a href="/admin/users" >
+            <a href="<%=baseURL%>/admin/users" >
                 <button class="btn btn-lg btn-block btn-success">BACK</button>
             </a>
         </div></div>
         <div class="col-md-9 "><div class="pbd">
             <img class="img-responsive" src="<%= user.image %>">
             <h2><%=user.username%></h2>
+            <%if(user.isAdmin){%><h4> &nbsp; &nbsp; &nbsp; &nbsp; <span class="glyphicon glyphicon-star"></span> Administrator</h4><%}%>
+            <hr>
+            <h3>Name</h3>
+            <h4>&nbsp;<%=user.firstname%> <%=user.lastname%></h4>
             <%if(user.group){%>
-            <h4>Group: <a href="/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
+            <h3>Group</h3><h4>&nbsp;<a href="<%=baseURL%>/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
             <%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
-    <script src="/scripts/setheight.js"></script>
+    <script src="<%=baseURL%>/scripts/setheight.js"></script>
 </body>
 </html>

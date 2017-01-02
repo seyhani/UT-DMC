@@ -22,7 +22,7 @@
         else {
             if(t.length == 0)
                     return;
-            post("/admin/login/<%=username%>", t, "POST");
+            post("<%=baseURL%>/admin/login/<%=username%>", t, "POST");
         }
     }
     function post(path, params, method) {

@@ -10,7 +10,7 @@
     <div class="row">
         <h1 style="text-align: center">ورود</h1>
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/login" method="post">
+            <form action="<%=baseURL%>/login" method="post">
                 <div class="form-group">
                     <input class="form-control" type="text" name="username" placeholder="email"  required  autofocus>
                     <!-- data-validation="email" -->
@@ -23,7 +23,7 @@
                     <button class="btn btn-lg btn-success btn-block">ورود</button>
                 </div>
             </form>
-            <a class="btn btn-primary" href="/">بازگشت</a>
+            <a class="btn btn-primary" href="<%=baseURL%>/">بازگشت</a>
         </div>
     </div>
 </div>

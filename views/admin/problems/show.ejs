@@ -3,8 +3,8 @@
 <head>
     <title>DMC</title>
     <% include ../../partials/head %>
-    <link rel="stylesheet" type="text/css" href="/admin/problemdetail.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/chosen/chosen.min.css">
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/admin/problemdetail.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/chosen/chosen.min.css">
     <style type="text/css">
         .chosen-single div{
             padding: 8px 0 !important;
@@ -17,11 +17,9 @@
 </head>
 <body>
 <% include ../../partials/header %>
-<!-- <div class="row"> -->
     <div class="container probbd">
         <div class="col-md-3"><div class="tag">
-            <form action="/admin/problems/<%=problem._id%>/tag" method="POST">
-                <!--<input class="form-control" type="text" name="tag" style="width: 100%;">-->
+            <form action="<%=baseURL%>/admin/problems/<%=problem._id%>/tag" method="POST">
                 <select class="form-control cselect" name="tag">
                     <%superTags.forEach(function (superTag) {%>
                         <optgroup label="<%=superTag.title%>">
@@ -33,59 +31,60 @@
                 </select>
                 <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
             </form>
-            <form action="/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
+            <form action="<%=baseURL%>/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
             </form>
-            <a href="/admin/problems/<%=problem._id%>/reset" >
+            <a href="<%=baseURL%>/admin/problems/<%=problem._id%>/reset" >
                 <button class="btn btn-lg btn-block btn-info" style="margin-bottom: 10px;">RESET</button>
             </a>
-            <a href="/admin/problems/<%=problem._id%>/edit" >
+            <a href="<%=baseURL%>/admin/problems/<%=problem._id%>/edit" >
                 <button class="btn btn-lg btn-block btn-warning" style="margin-bottom: 10px;">EDIT</button>
             </a>
-            <a href="/admin/problems" >
+            <a href="<%=baseURL%>/admin/problems" >
                 <button class="btn btn-lg btn-block btn-success">BACK</button>
             </a>
         </div></div>
         <div class="col-md-9"><div class="pbd">
             <h2><%=problem.name%></h2>
-            <h4>Answer :<%=problem.answer%></h4>
-            <h4>Score :<%=problem.score%></h4>
-            <h4>File Submit :<%=problem.type%></h4>
+            <hr>
+            <h3>Answer</h3><h4>&nbsp;<%=problem.answer%></h4>
+            <h3>Score</h3><h4>&nbsp;<%=problem.score%></h4>
+            <h3>File Submit</h3><h4>&nbsp;<%=problem.type%></h4>
             <%if(problem.submits){%>
-            <h4>Wrong Submits :<%=problem.submits.wrong%></h4>
-            <h4>Correct Submits :<%=problem.submits.correct%></h4>
+            <h3>Wrong Submits</h3><h4>&nbsp;<%=problem.submits.wrong%></h4>
+            <h3>Correct Submits</h3><h4>&nbsp;<%=problem.submits.correct%></h4>
             <%}%>
             <p><%= problem.description %></p>
             <%if(problem.tags){%>
-            <h4> TAGS:
+            <h3>TAGS</h3><h4>
                 <%problem.tags.forEach(function (tag) {%>
-                <%=tag%> ,
+                &nbsp;<%=tag%>, 
                 <%});%>
-            </h4>
+            </h3>
             <%}%>
             <%if(problem.files.length){%>
             <%problem.sources.forEach(function (source) {
                 switch(source.substr(source.lastIndexOf("\.") + 1)){
                     case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
-            <img src="/<%=source%>" class="upedpic">
+            <img src="<%=baseURL%>/<%=source%>" class="upedpic">
             <%break;
             case "pdf": case "PDF":%>
-            <object data="/<%=source%>" class="upedpic">
-                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="/<%=source%>" target="_blank">این جا</a> بارگیری کنید.</p>
+            <object data="<%=baseURL%>/<%=source%>" class="upedpic">
+                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="<%=baseURL%>/<%=source%>" target="_blank">این جا</a> بارگیری کنید.</p>
             </object>
             <%}})%>
-            <%if(false){%><h4>Files:</h4>
+            <%if(false){%><h3>Files</h3>
             <%problem.sources.forEach(function (file) {%>
-                <a class="btn btn-default" href="/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("/") + 1)%></a>
+                &nbsp;<a class="btn btn-default" href="<%=baseURL%>/<%=file%>" target="_blank"><%=file.substr(file.lastIndexOf("<%=baseURL%>/") + 1)%></a>
             <%});%><%}%>
             <%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>
-    <script src="/chosen/chosen.jquery.min.js"></script>
+    <script src="<%=baseURL%>/chosen/chosen.jquery.min.js"></script>
     <script>
         $("select.cselect").chosen();
     </script>
-    <script src="/scripts/setheight.js"></script>
+    <script src="<%=baseURL%>/scripts/setheight.js"></script>
 </body>
 </html>
