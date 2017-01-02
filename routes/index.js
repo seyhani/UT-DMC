@@ -19,7 +19,7 @@ var fs = require("fs");
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
-    res.render('landing', { messages: req.flash('info') });
+    res.render('landing');
 });
 
 router.get("/ranking", function(req, res){
@@ -78,7 +78,6 @@ router.get('/register/:verification_token',function(req, res,next) {
 });
 //show login form
 router.get("/login", function(req, res){
-    console.log("B");
    res.render("login"); 
 });
 
@@ -121,7 +120,7 @@ router.post('/forgot', function(req, res, next) {
                 user.tokenExpires = Date.now() + 3600*60;
                 user.save();
                 console.log("http://"+req.headers.host+"/reset/"+user.token);
-                res.redirect('/');
+                res.redirect('');
             } else {
                 req.flash("error","Username doesnt exist!")
                 res.redirect('/forgot');

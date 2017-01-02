@@ -49,13 +49,14 @@ var baseURL = "/dmc";
 app.use(function(req, res, next){
     app.locals.currentUser = req.user;
     res.locals.baseURL  = "/dmc";
-    req.url = baseURL+req.url;
+    if(req.url.indexOf("dmc")==-1)
+        req.url = baseURL+req.url;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 });
 
-app.use(baseURL+"/", indexRoutes);
+app.use("/dmc/", indexRoutes);
 app.use(baseURL +"/admin/", groupRoutes);
 app.use(baseURL +"/admin/", competitionRoutes);
 app.use(baseURL +"/dashboard", dashboardRoutes);
