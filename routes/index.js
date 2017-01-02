@@ -19,8 +19,16 @@ var fs = require("fs");
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
-    res.render('landing');
+    // res.redirect("/aaaa");
+    res.render("landing");
 });
+
+// router.get("/aaaa", function(req, res){
+//     res.redirect("/eee");
+// });
+// router.get("/eee", function(req, res){
+//     res.render('landing');
+// });
 
 router.get("/ranking", function(req, res){
     Group.find({}).populate(["competition"]).sort({"competition.score":-1}).exec(function (err,groups) {
