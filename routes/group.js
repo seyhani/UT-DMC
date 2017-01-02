@@ -44,13 +44,13 @@ router.post("/groups", function(req, res){
                             group.competition.puzzles = newPuzzles;
                             group.competition.save();
                             group.save(function (err) {
-                                res.redirect('groups/' + group._id);
+                                middleware.dmcRedirect(res,'groups/' + group._id);
                             });
                         });
 
                 } else {
                     req.flash("error","Group already exist!");
-                    res.redirect('groups/');
+                    middleware.dmcRedirect(res,'groups/');
                 }
             });
         });
@@ -85,10 +85,10 @@ router.put("/groups/:groupId", function(req, res){
     Group.findByIdAndUpdate(req.params.groupId, {$set: newData}, function(err, group){
         if(err){
             req.flash("error", err.message);
-            res.redirect("back");
+            middleware.dmcRedirect(res,"back");
         } else {
             req.flash("success","Successfully Updated!");
-            res.redirect("/admin/groups/"+group._id);
+            middleware.dmcRedirect(res,"/admin/groups/"+group._id);
         }
     });
 });
@@ -102,7 +102,7 @@ router.post("/groups/:groupId/addUser", function(req, res){
                 req.flash('error','User Not Found');
             }
         });
-        res.redirect('/admin/groups/'+group._id);
+        middleware.dmcRedirect(res,'/admin/groups/'+group._id);
     });
 });
 
@@ -117,7 +117,7 @@ router.get("/groups/:groupId/hint/:problem_id", function(req, res){
         Puzzle.findById(req.params.problem_id).populate("problem").exec(function (err,puzzle) {
             puzzle.status = "reviewd";
             puzzle.save();
-            res.redirect("/admin/groups/");
+            middleware.dmcRedirect(res,"/admin/groups/");
         });
     });
 });
@@ -125,7 +125,7 @@ router.get("/groups/:groupId/hint/:problem_id", function(req, res){
 router.delete("/groups/:groupId", function(req, res){
     Group.findById(req.params.groupId).exec(function (err,group) {
         group.remove();
-        res.redirect('/admin/groups');
+        middleware.dmcRedirect(res,'/admin/groups');
     });
 });
 

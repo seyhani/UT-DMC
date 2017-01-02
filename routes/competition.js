@@ -45,7 +45,7 @@ router.post("/competitions", function(req, res){
                             competition.save();
                         });
                 });
-                res.redirect('competitions/' + competition._id);
+                middleware.dmcRedirect(res,'competitions/' + competition._id);
             });
         });
     });
@@ -81,7 +81,7 @@ router.get("/competition/puzzles/:puzzle_id/:aorr", function(req, res){
                 puzzle.reject();
             middleware.removeSubmission(puzzle.name,puzzle.submisson.file);
         }
-        res.redirect("/admin/competition/problems/"+puzzle.problem._id);
+        middleware.dmcRedirect(res,"/admin/competition/problems/"+puzzle.problem._id);
     });
 });
 
@@ -106,7 +106,7 @@ router.get("/competitions/:competitionId/puzzles/:puzzle_id", function(req, res)
 router.delete("/competitions/:competitionId", function(req, res){
     Competition.findById(req.params.competitionId).exec(function (err,competition) {
         competition.remove();
-        res.redirect('/admin/competitions');
+        middleware.dmcRedirect(res,'/admin/competitions');
     });
 });
 

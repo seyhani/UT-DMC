@@ -64,7 +64,7 @@ router.get("/puzzles/:puzzle_id", function(req, res){
                 else
                 {
                     req.flash("error", "You do not have enough credits! problem cost is "+puzzle.cost);
-                    res.redirect("/dashboard");
+                    middleware.dmcRedirect(res,"/dashboard");
                 }
             }
         });
@@ -79,7 +79,7 @@ router.get("/puzzles/:puzzle_id/hint", function(req, res){
             } else {
                 if(!puzzle.requsetForHint())
                     console.log("You do not have enough hints :(")
-                res.redirect("/dashboard/puzzles/"+puzzle._id);
+                middleware.dmcRedirect(res,"/dashboard/puzzles/"+puzzle._id);
             }
         });
     });
@@ -114,7 +114,7 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                     }
                 }else
                     req.flash("error", "برای ثبت دوباره جواب باید منتظر بمانید");
-                res.redirect("/dashboard");
+                middleware.dmcRedirect(res,"/dashboard");
             }
         });
     });

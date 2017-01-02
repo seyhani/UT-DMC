@@ -107,7 +107,7 @@ router.post('/login', function(req, res, next){
 router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "LOGGED YOU OUT!");
-   middleware.dmcRedirect(res,"/");
+   middleware.dmcRedirect(res,"");
 });
 
 router.get("/test", function(req, res){

@@ -22,7 +22,7 @@ router.get("/new", function(req, res){
 router.post("/", function(req, res){
     User.create({name:req.body.userName},function (err,user) {
         console.log(user);
-        res.redirect('users/'+user._id);
+        middleware.dmcRedirect(res,'users/'+user._id);
     });
 });
 
@@ -35,7 +35,7 @@ router.post("/:userId/addUser", function(req, res){
                 req.flash('error','User Not Found');
             }
         });
-        res.redirect('/admin/users/'+user._id);
+        middleware.dmcRedirect(res,'/admin/users/'+user._id);
     });
 });
 
@@ -49,7 +49,7 @@ router.get("/:userId", function(req, res){
 router.delete("/:userId", function(req, res){
     User.findById(req.params.userId).exec(function (err,user) {
         user.remove();
-        res.redirect('/admin/users');
+        middleware.dmcRedirect(res,'/admin/users');
     });
 });
 

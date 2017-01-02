@@ -33,15 +33,15 @@ router.post("/",function(req, res){
         if(!foundtag) {
             if (err) {
                 req.flash("error", err.message);
-                res.redirect("back");
+                middleware.dmcRedirect(res,"back");
             } else {
                 tag.save();
                 req.flash("success", "Successfully Added!");
-                res.redirect("/admin/tags");
+                middleware.dmcRedirect(res,"/admin/tags");
             }
         }else{
             req.flash("error", "tag already exist!");
-            res.redirect("/admin/tags/");
+            middleware.dmcRedirect(res,"/admin/tags/");
         }
     });
 });
@@ -50,7 +50,7 @@ router.post('/:tag_id', function(req, res,next) {
     Tag.findById(req.params.tag_id,function (err,tag) {
         if(err) return next(err);
         tag.tag = req.body.tag;
-        res.redirect("/admin/tags/");
+        middleware.dmcRedirect(res,"/admin/tags/");
     });
 });
 
@@ -60,7 +60,7 @@ router.delete("/:tag_id",function(req, res,next){
         if(err) return next(err);
         tag.remove();
         req.flash("success"," Successfully deleted!");
-        res.redirect("/admin/tags");
+        middleware.dmcRedirect(res,"/admin/tags");
     });
 });
 

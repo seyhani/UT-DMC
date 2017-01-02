@@ -51,14 +51,14 @@ router.post("/",upload.any() ,function(req, res){
             }
             if (err) {
                 req.flash("error", err.message);
-                res.redirect("back");
+                middleware.dmcRedirect(res,"back");
             } else {
                 req.flash("success", "Successfully Added!");
-                res.redirect("/admin/problems/"+problem._id);
+                middleware.dmcRedirect(res,"/admin/problems/"+problem._id);
             }
         }else{
             req.flash("error", "Problem already exist!");
-            res.redirect("/admin/problems/");
+            middleware.dmcRedirect(res,"/admin/problems/");
         }
     });
 });
@@ -102,7 +102,7 @@ router.get("/:id/reset", function(req, res){
             console.log(err);
         } else {
             foundProblem.reset();
-            res.redirect("/admin/problems/"+foundProblem._id);
+            middleware.dmcRedirect(res,"/admin/problems/"+foundProblem._id);
         }
     });
 });
@@ -123,10 +123,10 @@ router.put("/:id/edit",upload.any() , function(req, res){
         }
         if(err){
             req.flash("error", err.message + req.body.score);
-            res.redirect("back");
+            middleware.dmcRedirect(res,"back");
         } else {
             req.flash("success","Successfully Updated!");
-            res.redirect("/admin/problems/"+problem._id);
+            middleware.dmcRedirect(res,"/admin/problems/"+problem._id);
         }
     });
 });
@@ -135,7 +135,7 @@ router.post('/:problem_id/tag', function(req, res,next) {
     Problem.findById(req.params.problem_id,function (err,problem) {
         if(err) return next(err);
         problem.tag = req.body.tag;
-        res.redirect("/admin/problems/"+problem._id);
+        middleware.dmcRedirect(res,"/admin/problems/"+problem._id);
     });
 });
 
@@ -145,7 +145,7 @@ router.delete("/:problem_id",function(req, res,next){
         if(err) return next(err);
         problem.remove();
         req.flash("success"," Successfully deleted!");
-        res.redirect("/admin/problems");
+        middleware.dmcRedirect(res,"/admin/problems");
     });
 });
 
