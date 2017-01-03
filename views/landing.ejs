@@ -10,20 +10,24 @@
 <body>
 <% include partials/header %>
 <div class="container-fluid">
-	<div class="main_countainer">
-		<div class="inner_row">
-			<div class="inner_countainer">
-				<h1>DM Contest</h1>
+	<div id="particles-js">
+		<div class="main_countainer">
+			<div class="inner_row">
+				<div class="inner_countainer">
+					<h1>DM Contest</h1>
+				</div>
 			</div>
-		</div>
-		<div class="inner_row">
-			<div class="inner_countainer">
-				<div class="clock"></div>
+			<div class="inner_row">
+				<div class="inner_countainer">
+					<div class="clock"></div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <% include partials/footer %>
+<script src="<%=baseURL%>/particles/particles.min.js"></script>
+<script src="<%=baseURL%>/particles/app.js"></script>
 <script src="<%=baseURL%>/flipclock/flipclock.js"></script>
 <script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
 <script type="text/javascript">
