@@ -25,6 +25,7 @@
 		</div>
 	</div>
 </div>
+<div id="ee">jhjhj</div>
 <% include partials/footer %>
 <script src="<%=baseURL%>/particles/particles.min.js"></script>
 <script src="<%=baseURL%>/particles/app.js"></script>
@@ -35,6 +36,16 @@
         clockFace: 'DailyCounter',
         countdown: true
     });
+
+    easteregg_flag = true;
+    function easteregg(){
+    	if(easteregg_flag && window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array && parseInt(window.pJSDom[0].pJS.particles.array.length) == 0){
+    		easteregg_flag = false;
+	      swal("Easter Egg!", "", "info");
+    	}
+	    requestAnimationFrame(easteregg);
+    }
+    requestAnimationFrame(easteregg);
 </script>
 </body>
 </html>
