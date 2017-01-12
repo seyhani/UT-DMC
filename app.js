@@ -13,6 +13,8 @@ var express     = require("express"),
 
 mongoose.Promise = global.Promise;
 
+// var config = require("./config/server");
+
 var groupRoutes    = require("./routes/group"),
     dashboardRoutes    = require("./routes/dashboard"),
     adminRoutes    = require("./routes/admin"),
@@ -44,13 +46,11 @@ app.use(flash());
 
 require('./config/passport')(passport);
 
-// var baseURL = "/dmc";
-var baseURL = "";
 
 app.use(function(req, res, next){
     app.locals.currentUser = req.user;
-    res.locals.baseURL  = "/dmc";
-    // res.locals.baseURL  = "";
+    // res.locals.baseURL  = "/dmc";
+    res.locals.baseURL  = "";
     //res.locals.baseURL  = baseURL;
     // console.log("PRE:" + req.url);
     res.locals.success = req.flash('success');

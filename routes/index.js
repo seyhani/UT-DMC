@@ -14,7 +14,13 @@ const mailTemplates = 'middleware/mailTemplates/';
 var async = require("async");
 var simplesmtp = require("simplesmtp");
 var fs = require("fs");
+var config = require("../config/test");
 'use strict';
+
+// var host = "http://acm.ut.ac.ir/dmc";
+// var baseURL = "/dmc";
+
+// router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     // middleware.dmcRedirect(res,"/aaaa");
@@ -61,12 +67,11 @@ router.post('/register',function(req, res,next) {
             req.flash('error', 'Username already exist');
             middleware.dmcRedirect(res,'/register');
         } else {
-            mailer.sendTemplateTo(mailTemplates+"verification",{address:middleware.host,link:middleware.host+"/register/"+ token.setToken(user)}
+            mailer.sendTemplateTo(mailTemplates+"verification",{address:host,link:host+"/register/"+ token.setToken(user)}
                 ,user.username,function (err,info) {
                 console.log("MERR: "+err);
                 console.log("MINF: "+info);
-                console.log(middleware.host+"/register/"+token.setToken(user));
-                req.flash("success", "برای تأیید ایمیل به ایمیل خود مراجعه کنید.");
+                console.log("http://"+host+"/register/"+token.setToken(user));
                 middleware.dmcRedirect(res,'/');
             });
 
@@ -97,7 +102,7 @@ router.post('/login', function(req, res, next){
         req.logIn(user, function(err) {
             if (err) return next(err);
             req.user = null;
-            return middleware.dmcRedirect(res,"/dmc/dashboard");
+            return middleware.dmcRedirect(res,baseURL+"/dashboard");
         });
     })(req, res, next);
 });
@@ -119,15 +124,14 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:middleware.host,link:middleware.host+"/reset/"+token.setToken(user)},user.email,function (err,info) {
+        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:host,link:host+"/reset/"+token.setToken(user)},user.email,function (err,info) {
             console.log(info);
             console.log(err);
             if(user) {
                 user.token = token.generateToken(50);
                 user.tokenExpires = Date.now() + 3600*60;
                 user.save();
-                console.log(middleware.host+"/reset/"+user.token);
-                req.flash("success", "به ایمیل خود مراجعه کنید.");
+                console.log("http://"+host+"/reset/"+user.token);
                 middleware.dmcRedirect(res,'');
             } else {
                 req.flash("error","Username doesnt exist!")

@@ -1,12 +1,8 @@
 
 var fs = require('fs');
 var root = "public/";
-// var baseURL = "dmc/";
-// var baseURL = "/dmc/";
-// var baseURL = "/";
-// var host = "http://192.168.56.101:3042"
-// var host = "http://localhost:3042"
-var host = "http://acm.ut.ac.ir/dmc";
+var config = require("../config/test");
+// var host = "http://acm.ut.ac.ir/dmc";
 var validFileFormats= [".png",".jpg",".pdf"];
 function deleteFolderRecursive (path) {
     if( fs.existsSync(path) ) {
@@ -37,7 +33,6 @@ module.exports = {
         res.redirect(host+"/login");
     },
     isAdminLoggedIn: function(req, res, next){
-      console.log("lkasjdlksaj");
         if(req.url.indexOf("login")!=-1
             // ||req.url.indexOf("register")!=-1
         )
@@ -49,7 +44,6 @@ module.exports = {
         res.redirect(host+"/admin/login");
     },
     havePermission: function(req, res, next){
-      console.log("DASDASDAS");
         if(req.url.indexOf("login")!=-1
             // ||req.url.indexOf("register")!=-1
         )

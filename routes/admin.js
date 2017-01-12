@@ -84,6 +84,7 @@ router.get("/login", function(req, res){
     res.render("dev/login");
 });
 router.post("/login", function(req, res) {
+    console.log(res);
     User.findOne({username: req.body.username}).exec(function (err, user) {
         if(!user)
             middleware.dmcRedirect(res,"/admin/login");
