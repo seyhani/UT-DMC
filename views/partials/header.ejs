@@ -18,7 +18,7 @@
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-flash"></span> <%= currentUser.group.score%></a></li>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-th-large"></span> <%= currentUser.group.name%></a></li>
                     <%}%>
-                    <li><a href="<%=baseURL%>/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>"><span class="glyphicon glyphicon-home"></span> <%=currentUser.username %></a></li>
+                    <li><a href="<%=baseURL%>/<%if(!currentUser.isAdmin){%>dashboard<%}else{%>admin<%}%>/"><span class="glyphicon glyphicon-home"></span> <%=currentUser.username %></a></li>
                 <% } %>
             </ul>
         </div>
