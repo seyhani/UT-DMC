@@ -1,6 +1,11 @@
 
 var fs = require('fs');
 var root = "public/";
+// var baseURL = "dmc/";
+// var baseURL = "/dmc/";
+// var baseURL = "/";
+// var host = "http://localhost:3042"
+var host = "http://acm.ut.ac.ir/dmc";
 var validFileFormats= [".png",".jpg",".pdf"];
 function deleteFolderRecursive (path) {
     if( fs.existsSync(path) ) {
@@ -24,7 +29,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.redirect("/dmc/login");
+        res.redirect("/login");
     },
     isAdminLoggedIn: function(req, res, next){
         if(req.url.indexOf("login")!=-1
@@ -35,7 +40,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.redirect("/dmc/admin/login");
+        res.redirect("/admin/login");
     },
     havePermission: function(req, res, next){
         if(req.url.indexOf("login")!=-1
@@ -46,7 +51,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "you have not permission!");
-        res.redirect("/dmc");
+        res.redirect("/");
     },
     hashAnswer: function(answer,hashIndex)
     {
@@ -117,7 +122,7 @@ module.exports = {
         return validFileFormats.indexOf(fileExtension)!= -1;
     },
     dmcRedirect(res,url){
-        res.redirect("dmc/"+url);
+        res.redirect(host+url);
     },
     // generateToken
     mkdir : mkdir,

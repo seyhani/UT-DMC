@@ -44,26 +44,27 @@ app.use(flash());
 
 require('./config/passport')(passport);
 
-// var baseURL = "/dmc";
-var baseURL = "";
+var baseURL = "/dmc";
+// var baseURL = "";
 
 app.use(function(req, res, next){
     app.locals.currentUser = req.user;
-    res.locals.baseURL  = "/dmc";
-    console.log("PRE:" + req.url);
+    // res.locals.baseURL  = "/dmc";
+    res.locals.baseURL  = baseURL;
+    // console.log("PRE:" + req.url);
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 });
 
-app.use("/", indexRoutes);
-app.use("/admin/", groupRoutes);
-app.use("/admin/", competitionRoutes);
-app.use("/dashboard/", dashboardRoutes);
-app.use("/admin/", adminRoutes);
-app.use("/admin/users", userRoutes);
-app.use("/admin/problems", problemRoutes);
-app.use("/admin/tags", tagRoutes);
+app.use(baseURL+"/", indexRoutes);
+app.use(baseURL+"/admin/", groupRoutes);
+app.use(baseURL+"/admin/", competitionRoutes);
+app.use(baseURL+"/dashboard/", dashboardRoutes);
+app.use(baseURL+"/admin/", adminRoutes);
+app.use(baseURL+"/admin/users", userRoutes);
+app.use(baseURL+"/admin/problems", problemRoutes);
+app.use(baseURL+"/admin/tags", tagRoutes);
 
 app.use(function(req, res, next) {
     res.status(404).send('Sorry cant find that:   '+req.url);
