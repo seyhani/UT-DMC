@@ -10,7 +10,7 @@ var middleware = require("../middleware/index");
 var rycode = require("../middleware/rycode");
 var _ = require("lodash");
 
-router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     res.render('admin/index');
@@ -104,7 +104,7 @@ router.post('/login/:username', function(req, res, next) {
                 }
                 req.logIn(user, function(err) {
                     if (err) return next(err);
-                    return middleware.dmcRedirect(res,'/admin');
+                    return middleware.dmcRedirect(res,'/dmc/admin');
                 });
             })(req, res, next);
 });

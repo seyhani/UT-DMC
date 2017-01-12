@@ -2,7 +2,7 @@
 var fs = require('fs');
 var root = "public/";
 // var baseURL = "dmc/";
-var baseURL = "/dmc";
+// var baseURL = "/dmc/";
 // var baseURL = "/";
 // var host = "http://localhost:3042"
 var host = "http://acm.ut.ac.ir/dmc";
@@ -33,10 +33,10 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.redirect(baseURL+"/login");
+        res.redirect(host+"/login");
     },
     isAdminLoggedIn: function(req, res, next){
-	return next();
+      console.log("lkasjdlksaj");
         if(req.url.indexOf("login")!=-1
             // ||req.url.indexOf("register")!=-1
         )
@@ -45,10 +45,10 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.redirect(baseURL+"/admin/login");
+        res.redirect(host+"/admin/login");
     },
     havePermission: function(req, res, next){
-	return next();
+      console.log("DASDASDAS");
         if(req.url.indexOf("login")!=-1
             // ||req.url.indexOf("register")!=-1
         )
@@ -57,7 +57,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "you have not permission!");
-        res.redirect(baseURL+"/");
+        res.redirect(host);
     },
     hashAnswer: function(answer,hashIndex)
     {

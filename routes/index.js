@@ -16,8 +16,6 @@ var simplesmtp = require("simplesmtp");
 var fs = require("fs");
 'use strict';
 
-// router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
-
 router.get("/", function(req, res){
     // middleware.dmcRedirect(res,"/aaaa");
     res.render("landing");
