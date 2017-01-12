@@ -119,7 +119,7 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:req.headers.host,link:req.headers.host+"/reset/"+token.setToken(user)},user.email,function (err,info) {
+        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:req.headers.host,link:"http://"req.headers.host+"/reset/"+token.setToken(user)},user.email,function (err,info) {
             console.log(info);
             console.log(err);
             if(user) {
@@ -127,6 +127,7 @@ router.post('/forgot', function(req, res, next) {
                 user.tokenExpires = Date.now() + 3600*60;
                 user.save();
                 console.log("http://"+req.headers.host+"/reset/"+user.token);
+                req.flash("success", "به ایمیل خود مراجعه کنید.");
                 middleware.dmcRedirect(res,'');
             } else {
                 req.flash("error","Username doesnt exist!")
