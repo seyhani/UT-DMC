@@ -82,7 +82,6 @@ router.post("/registerPass/:username", function(req, res){
 //show login form
 router.get("/login", function(req, res){
     res.render("dev/login");
-    res.
 });
 router.post("/login", function(req, res) {
     User.findOne({username: req.body.username}).exec(function (err, user) {
