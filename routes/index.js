@@ -61,11 +61,12 @@ router.post('/register',function(req, res,next) {
             req.flash('error', 'Username already exist');
             middleware.dmcRedirect(res,'/register');
         } else {
-            mailer.sendTemplateTo(mailTemplates+"verification",{address:req.headers.host,link:req.headers.host+"/register/"+ token.setToken(user)}
+            mailer.sendTemplateTo(mailTemplates+"verification",{address:req.headers.host,link:"http://"+req.headers.host+"/register/"+ token.setToken(user)}
                 ,user.username,function (err,info) {
                 console.log("MERR: "+err);
                 console.log("MINF: "+info);
                 console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
+                req.flash("success", "برای تأیید ایمیل به ایمیل خود مراجعه کنید.");
                 middleware.dmcRedirect(res,'/');
             });
 

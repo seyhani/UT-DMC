@@ -4,6 +4,7 @@ var root = "public/";
 // var baseURL = "dmc/";
 // var baseURL = "/dmc/";
 // var baseURL = "/";
+// var host = "http://192.168.56.101:3042"
 // var host = "http://localhost:3042"
 var host = "http://acm.ut.ac.ir/dmc";
 var validFileFormats= [".png",".jpg",".pdf"];
