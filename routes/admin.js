@@ -104,7 +104,7 @@ router.post('/login/:username', function(req, res, next) {
                 }
                 req.logIn(user, function(err) {
                     if (err) return next(err);
-                    return middleware.dmcRedirect(res,'/dmc/admin');
+                    return middleware.dmcRedirect(res,'/admin');
                 });
             })(req, res, next);
 });
