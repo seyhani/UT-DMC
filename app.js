@@ -49,8 +49,8 @@ var baseURL = "";
 
 app.use(function(req, res, next){
     app.locals.currentUser = req.user;
-    // res.locals.baseURL  = "/dmc";
-    res.locals.baseURL  = baseURL;
+     res.locals.baseURL  = "/dmc";
+    //res.locals.baseURL  = baseURL;
     // console.log("PRE:" + req.url);
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');

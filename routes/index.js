@@ -38,7 +38,7 @@ router.get("/ranking", function(req, res){
 
 // show register form
 router.get("/register", function(req, res){
-   res.render("register"); 
+   res.render("register");
 });
 
 router.post('/register',function(req, res,next) {
@@ -86,7 +86,7 @@ router.get('/register/:verification_token',function(req, res,next) {
 });
 //show login form
 router.get("/login", function(req, res){
-   res.render("login"); 
+   res.render("login");
 });
 
 router.post('/login', function(req, res, next){
@@ -98,7 +98,7 @@ router.post('/login', function(req, res, next){
         req.logIn(user, function(err) {
             if (err) return next(err);
             req.user = null;
-            return middleware.dmcRedirect(res,'/dashboard');
+            return middleware.dmcRedirect(res,"/dmc/dashboard");
         });
     })(req, res, next);
 });
