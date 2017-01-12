@@ -163,7 +163,7 @@ router.get("/mailTemplates", function(req, res){
 });
 router.get("/mailTemplates/:template", function(req, res){
     res.render('dev/mailTemplates/'+req.params.template+"/html",
-        {address:req.headers.host,link:"dsdasdsad",hoursLeft:"adsdas"});
+        {address:middleware.host,link:middleware.host + "/link",hoursLeft:"12"});
 });
 
 router.post("/console", function(req, res){

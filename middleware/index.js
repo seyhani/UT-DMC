@@ -130,4 +130,5 @@ module.exports = {
     },
     // generateToken
     mkdir : mkdir,
+    host: host
 };

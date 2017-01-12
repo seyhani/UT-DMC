@@ -61,11 +61,11 @@ router.post('/register',function(req, res,next) {
             req.flash('error', 'Username already exist');
             middleware.dmcRedirect(res,'/register');
         } else {
-            mailer.sendTemplateTo(mailTemplates+"verification",{address:req.headers.host,link:"http://"+req.headers.host+"/register/"+ token.setToken(user)}
+            mailer.sendTemplateTo(mailTemplates+"verification",{address:middleware.host,link:middleware.host+"/register/"+ token.setToken(user)}
                 ,user.username,function (err,info) {
                 console.log("MERR: "+err);
                 console.log("MINF: "+info);
-                console.log("http://"+req.headers.host+"/register/"+token.setToken(user));
+                console.log(middleware.host+"/register/"+token.setToken(user));
                 req.flash("success", "برای تأیید ایمیل به ایمیل خود مراجعه کنید.");
                 middleware.dmcRedirect(res,'/');
             });
@@ -119,14 +119,14 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:req.headers.host,link:"http://"req.headers.host+"/reset/"+token.setToken(user)},user.email,function (err,info) {
+        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:middleware.host,link:middleware.host+"/reset/"+token.setToken(user)},user.email,function (err,info) {
             console.log(info);
             console.log(err);
             if(user) {
                 user.token = token.generateToken(50);
                 user.tokenExpires = Date.now() + 3600*60;
                 user.save();
-                console.log("http://"+req.headers.host+"/reset/"+user.token);
+                console.log(middleware.host+"/reset/"+user.token);
                 req.flash("success", "به ایمیل خود مراجعه کنید.");
                 middleware.dmcRedirect(res,'');
             } else {
