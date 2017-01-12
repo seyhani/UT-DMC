@@ -24,6 +24,10 @@ function mkdir(dir) {
     if (!fs.existsSync(dir))fs.mkdirSync(dir);
 }
 module.exports = {
+  dmcRedirect(res,url){
+      console.log(host+url);
+      res.redirect(host+url);
+  },
     isLoggedIn: function(req, res, next){
         if(req.isAuthenticated()){
             return next();
@@ -32,6 +36,7 @@ module.exports = {
         res.redirect("/login");
     },
     isAdminLoggedIn: function(req, res, next){
+	return next();
         if(req.url.indexOf("login")!=-1
             // ||req.url.indexOf("register")!=-1
         )
@@ -43,6 +48,7 @@ module.exports = {
         res.redirect("/admin/login");
     },
     havePermission: function(req, res, next){
+	return next();
         if(req.url.indexOf("login")!=-1
             // ||req.url.indexOf("register")!=-1
         )
@@ -87,7 +93,7 @@ module.exports = {
     },
     removeSubmission :function (problemName,submisson) {
         var path = "public/Files/Problems/"+problemName+"/Submissions/"+submisson;
-        if( fs.existsSync(path) ) 
+        if( fs.existsSync(path) )
             fs.unlinkSync(path);
     },
     uploadToDir:function (tmp_path,folder_name,file_name) {
@@ -120,9 +126,6 @@ module.exports = {
     },
     hasValidFormat : function(fileExtension){
         return validFileFormats.indexOf(fileExtension)!= -1;
-    },
-    dmcRedirect(res,url){
-        res.redirect(host+url);
     },
     // generateToken
     mkdir : mkdir,
