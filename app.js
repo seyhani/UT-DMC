@@ -44,8 +44,8 @@ app.use(flash());
 
 require('./config/passport')(passport);
 
-var baseURL = "/dmc";
-// var baseURL = "";
+// var baseURL = "/dmc";
+var baseURL = "";
 
 app.use(function(req, res, next){
     app.locals.currentUser = req.user;
