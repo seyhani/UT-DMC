@@ -71,7 +71,8 @@ router.post('/register',function(req, res,next) {
                 ,user.username,function (err,info) {
                 console.log("MERR: "+err);
                 console.log("MINF: "+info);
-                console.log("http://"+host+"/register/"+token.setToken(user));
+                console.log(host+"/register/"+token.setToken(user));
+                req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
                 middleware.dmcRedirect(res,'/');
             });
 
@@ -131,7 +132,8 @@ router.post('/forgot', function(req, res, next) {
                 user.token = token.generateToken(50);
                 user.tokenExpires = Date.now() + 3600*60;
                 user.save();
-                console.log("http://"+host+"/reset/"+user.token);
+                console.log(host+"/reset/"+user.token);
+                req.flash("success", "به ایمیل خود مراجعه کنید.");
                 middleware.dmcRedirect(res,'');
             } else {
                 req.flash("error","Username doesnt exist!")
