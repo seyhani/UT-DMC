@@ -57,11 +57,12 @@
             <%}%>
             <p><%= problem.description %></p>
             <%if(problem.tags){%>
-            <h3>TAGS</h3><h4>
+            <h3>TAGS</h3>
+                <h3>
                 <%problem.tags.forEach(function (tag) {%>
-                &nbsp;<%=tag%>, 
+                &nbsp;<%=tag%>,
                 <%});%>
-            </h3>
+                </h3>
             <%}%>
             <%if(problem.files.length){%>
             <%problem.sources.forEach(function (source) {
