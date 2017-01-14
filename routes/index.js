@@ -89,7 +89,8 @@ router.get('/register/:verification_token',function(req, res,next) {
             middleware.dmcRedirect(res,'/login');
         });
     }catch(err) {
-        res.redirect("/");
+        req.flash("error", "لینک نامعتبر");
+        res.dmcRedirect("/");
     }
 });
 //show login form
