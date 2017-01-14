@@ -81,13 +81,16 @@ router.post('/register',function(req, res,next) {
 });
 
 router.get('/register/:verification_token',function(req, res,next) {
-    var user = token.decodeToken(req.params.verification_token);
-    console.log(user);
-    User.create(user,function (err, newUser) {
-        if (err) return next(err);
-
+    var user;
+    try {
+        user = token.decodeToken(req.params.verification_token);
+        User.create(user,function (err, newUser) {
+            if (err) return next(err);
             middleware.dmcRedirect(res,'/login');
         });
+    }catch(err) {
+        res.redirect("/");
+    }
 });
 //show login form
 router.get("/login", function(req, res){
