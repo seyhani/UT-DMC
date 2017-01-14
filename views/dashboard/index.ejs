@@ -8,6 +8,16 @@
 </head>
 <body>
 <% include ../partials/header %>
+<%
+    var statusTitle = {
+        accepted: "حل‌شده",
+        rejected: "ردشده",
+        submitted: "ثبت‌شده",
+        sold: "خریده‌شده",
+        buy: "آمادهٔ خرید",
+        head: "وضعیت"
+    };
+%>
 <div class="backch">
     <div class="jumbotron">
         <div class="container">
@@ -43,6 +53,14 @@
                 <%});%>
             </ul></li>
             <%});}%>
+            <li class="tagsearchgp"><ul>
+                <span class="supertagsearchgp"><%= statusTitle.head%></span>
+                <li><button class="btn btn-success btn-xs tagsearchbtn"><%= statusTitle.accepted%></button></li>
+                <li><button class="btn btn-danger btn-xs tagsearchbtn"><%= statusTitle.rejected%></button></li>
+                <li><button class="btn btn-warning btn-xs tagsearchbtn"><%= statusTitle.submitted%></button></li>
+                <li><button class="btn btn-info btn-xs tagsearchbtn"><%= statusTitle.sold%></button></li>
+                <li><button class="btn btn-primary btn-xs tagsearchbtn"><%= statusTitle.buy%></button></li>
+            </ul></li>
         </ul>
         <ul class="list row" style="list-style-type: none;">
         <% if(puzzles){puzzles.forEach(function(puzzle){ %>
@@ -58,14 +76,27 @@
                     <%puzzle.problem.tags.forEach(function (tag) {%>
                         <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>
                     <%})%>
+                        <div class="tag" style="display: none;"><i class="glyphicon glyphicon-dashboard" style="transform:rotateY(180deg); vertical-align: middle;"></i>
+                        <%if(puzzle.accepted){%>
+                        <%= statusTitle.accepted%>
+                        <%}else if(puzzle.rejected){%>
+                        <%= statusTitle.rejected%>
+                        <%}else if(puzzle.submitted){%>
+                        <%= statusTitle.submitted%>
+                        <%}else if(puzzle.sold) {%>
+                        <%= statusTitle.sold%>
+                        <%}else  {%>
+                        <%= statusTitle.buy%>
+                        <%}%>
+                        </div>
                     </div>
                 <p>
                     <%if(puzzle.accepted){%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success mainbtn">حل‌شده</a>
+                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success mainbtn"><%= statusTitle.accepted%></a>
                     <%}else if(puzzle.rejected){%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger mainbtn">ردشده</a>
+                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger mainbtn"><%= statusTitle.rejected%></a>
                     <%}else if(puzzle.submitted){%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning mainbtn">ثبت‌شده</a>
+                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning mainbtn"><%= statusTitle.submitted%></a>
                     <%}else if(puzzle.sold) {%>
                         <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-info mainbtn">مشاهده</a>
                     <%}else  {%>
