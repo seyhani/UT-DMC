@@ -4,6 +4,7 @@
     <title>DMC</title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
+    <link rel="stylesheet" href="<%=baseURL%>/flipclock/flipclock.css">
 </head>
 <body>
 <% include ../partials/header %>
@@ -11,14 +12,12 @@
     <div class="jumbotron">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 text-left">
+                <div class="col-md-4 text-left">
                     <h1><span class="glyphicon glyphicon-pencil"></span> معماها</h1>
                 </div>
 
-                <div class="col-md-3" >
-
-                </div>
-                <div class="col-md-3" style="text-align: right;padding-top: 10px;">
+                <div class="col-md-6" style="text-align: center;"><div style="display: inline-block;"><div class="clock"></div></div></div>
+                <div class="col-md-2" style="text-align: right;padding-top: 10px;">
                     <button type="button" class="btn btn-primary btn-lg btn-block btncolor <% if(!user.group){ %> disabled <%}%>" style="cursor: default;">
                         <% if(user.group){ %>
                             <%= user.group.name%>
@@ -85,5 +84,13 @@
 <% include ../partials/footer %>
 <script src="<%=baseURL%>/listjs/list.min.js"></script>
 <script src="<%=baseURL%>/scripts/problist.js"></script>
+<script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
+<script>
+    var clock = $('.clock').FlipClock((new Date(2017,0,19,8,0)-Date.now())/1000, {
+        clockFace: 'DailyCounter',
+        showSeconds: false,
+        countdown: true
+    });
+</script>
 </body>
 </html>
