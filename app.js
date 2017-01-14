@@ -56,14 +56,15 @@ app.use(function(req, res, next){
     next();
 });
 
-app.use(baseURL+"/", indexRoutes);
-app.use(baseURL+"/admin/", groupRoutes);
-app.use(baseURL+"/admin/", competitionRoutes);
-app.use(baseURL+"/dashboard/", dashboardRoutes);
-app.use(baseURL+"/admin/", adminRoutes);
-app.use(baseURL+"/admin/users", userRoutes);
-app.use(baseURL+"/admin/problems", problemRoutes);
-app.use(baseURL+"/admin/tags", tagRoutes);
+var baseURL2 = "";
+app.use(baseURL2+"/", indexRoutes);
+app.use(baseURL2+"/admin/", groupRoutes);
+app.use(baseURL2+"/admin/", competitionRoutes);
+app.use(baseURL2+"/dashboard/", dashboardRoutes);
+app.use(baseURL2+"/admin/", adminRoutes);
+app.use(baseURL2+"/admin/users", userRoutes);
+app.use(baseURL2+"/admin/problems", problemRoutes);
+app.use(baseURL2+"/admin/tags", tagRoutes);
 
 app.use(function(req, res, next) {
     res.status(404).send('Sorry cant find that:   '+req.url);
