@@ -67,7 +67,7 @@ router.post('/register',function(req, res,next) {
             req.flash('error', 'Username already exist');
             middleware.dmcRedirect(res,'/register');
         } else {
-            mailer.sendTemplateTo(mailTemplates+"verification",{address:host,link:host+"/register/"+ token.setToken(user)}
+            mailer.sendTemplateTo(mailTemplates+"verification",{address:host,link:host+"/register/"+ token.setToken(user), name: firstname}
                 ,user.username,function (err,info) {
                 console.log("MERR: "+err);
                 console.log("MINF: "+info);
@@ -129,7 +129,7 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:host,link:host+"/reset/"+token.setToken(user)},user.email,function (err,info) {
+        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:host,link:host+"/reset/"+token.setToken(user), name: user.firstname},user.email,function (err,info) {
             console.log(info);
             console.log(err);
             if(user) {

@@ -4,6 +4,11 @@
     <title>DMC</title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
+    <style type="text/css">
+    .jumbotron .container .row .col-md-12{
+        margin-bottom: 36px;
+    }
+    </style>
 </head>
 <body>
 <% include ../partials/header %>
@@ -13,7 +18,7 @@
         <div class="row">
             <div class="col-md-8"></div>
             <div class="col-md-6">
-                <h2><span class="glyphicon glyphicon-envelope"></span> Mail Templates</h2>
+                <h2><span class="glyphicon glyphicon-envelope"></span> Mail Center</h2>
             </div>
         </div>
         </div>
@@ -22,16 +27,24 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-6">
+                <h4>Control Panel</h4>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Mail Templates</h4>
+                <hr>
+                <div class="col-md-3">
                     <a class="btn btn-primary btn-lg btn-block" href="<%=baseURL%>/admin/mailTemplates/reminder">Reminder</a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <a class="btn btn-primary btn-lg btn-block" href="<%=baseURL%>/admin/mailTemplates/resetpass">Resetpass</a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <a class="btn btn-primary btn-lg btn-block" href="<%=baseURL%>/admin/mailTemplates/verification">Verification</a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <a class="btn btn-primary btn-lg btn-block" href="<%=baseURL%>/admin/mailTemplates/welcome">Welcome</a>
                 </div>
             </div>
