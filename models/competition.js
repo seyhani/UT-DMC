@@ -5,6 +5,10 @@ var CompetitionSchema = new mongoose.Schema({
     name:String,
     score:{type:Number,default:0},
     hints:{type:Number,default:5},
+    rule:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Rule"
+    },
     puzzles:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Puzzle"

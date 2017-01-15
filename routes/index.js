@@ -60,7 +60,6 @@ router.post('/register',function(req, res,next) {
         email: email,
         password: password,
     };
-
     User.findOne({username: user.username}).exec(function (err, existUser) {
         if (err) return next(err);
         if (existUser) {
