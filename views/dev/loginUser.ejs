@@ -4,7 +4,7 @@
     <title>DMC</title>
     <% include ../partials/head %>
 </head>
-<body onkeydown="down()" onkeyup="up()">
+<body onkeydown="down(event)" onkeyup="up(event)">
 <% include ../partials/header %>
 <div class="row">
     <div class="col-xs-offset-1 col-xs-10"><h1><%=username%></h1></div>
@@ -13,11 +13,11 @@
 <script>
     var a = 0;
     var t =[];
-    function down() {
-
+    function down(event) {
+        
     }
-    function up() {
-
+    function up(event) {
+        console.log(event.keyCode);
         if(event.keyCode!=13)
             t.push(event.keyCode);
         else {
