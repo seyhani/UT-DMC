@@ -129,21 +129,22 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        user.token = token.generateToken(50);
-        user.tokenExpires = Date.now() + 3600*60;
-        user.save();
-        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:host,link:host+"/reset/"+ user.token, name: user.firstname},user.username,function (err,info) {
-            console.log(info);
-            console.log(err);
-            if(user) {
+        if(!user){
+            req.flash("error","Username doesnt exist!")
+            middleware.dmcRedirect(res,'/forgot');
+        }
+        else{
+            user.token = token.generateToken(50);
+            user.tokenExpires = Date.now() + 3600*60;
+            user.save();
+            mailer.sendTemplateTo(mailTemplates+"resetpass",{address:host,link:host+"/reset/"+ user.token, name: user.firstname},user.username,function (err,info) {
+                console.log(info);
+                console.log(err);
                 console.log(host+"/reset/"+user.token);
                 req.flash("success", "به ایمیل خود مراجعه کنید.");
                 middleware.dmcRedirect(res,'');
-            } else {
-                req.flash("error","Username doesnt exist!")
-                middleware.dmcRedirect(res,'/forgot');
-            }
-        });
+            });
+        }
     });
 });
 
