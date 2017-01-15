@@ -50,6 +50,7 @@
                    <div class="caption">
                        <h4 class="problemname"><%= problem.name %></h4>
                    </div>
+                   <div><i class="glyphicon glyphicon-flash" style="vertical-align: middle;"></i> <%=problem.score%></div>
                    <div class="tags">
                    <%problem.tags.forEach(function (tag) {%>
                        <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>

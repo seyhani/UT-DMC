@@ -72,6 +72,7 @@
                     <div class="caption topproblem">
                         <h1 class="problemname"><%= puzzle.name %></h1>
                     </div>
+                    <div><i class="glyphicon glyphicon-usd" style="vertical-align: middle;"></i> <%=puzzle.cost%> &nbsp; &nbsp; <i class="glyphicon glyphicon-flash" style="vertical-align: middle;"></i> <%=puzzle.problem.score%></div>
                     <div class="tags">
                     <%puzzle.problem.tags.forEach(function (tag) {%>
                         <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>
