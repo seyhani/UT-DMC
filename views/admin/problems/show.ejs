@@ -48,7 +48,7 @@
         <div class="col-md-9"><div class="pbd">
             <h2><%=problem.name%></h2>
             <hr>
-            <h3>Answer</h3><h4>&nbsp;<%=problem.answer%></h4>
+            <%if(problem.type == "close"){%><h3>Answer</h3><h4>&nbsp;<%=problem.answer%></h4><%}%>
             <h3>Score</h3><h4>&nbsp;<%=problem.score%></h4>
             <h3>File Submit</h3><h4>&nbsp;<%=problem.type%></h4>
             <%if(problem.submits){%>
