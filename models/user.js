@@ -7,7 +7,7 @@ var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var UserSchema = new mongoose.Schema({
     firstname:String,
     lastname:String,
-    StudentId:Number,
+    studentId:Number,
     email:String,
     username: String,
     password: String,
