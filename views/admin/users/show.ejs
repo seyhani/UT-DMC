@@ -32,6 +32,8 @@
             <hr>
             <h3>Name</h3>
             <h4>&nbsp;<%=user.firstname%> <%=user.lastname%></h4>
+            <h3>Student ID</h3>
+            <h4>&nbsp;<%=user.studentId%></h4>
             <%if(user.group){%>
             <h3>Group</h3><h4>&nbsp;<a href="<%=baseURL%>/admin/groups/<%=user.group._id%>"> <%= user.group.name%></a></h4>
             <%}%>
