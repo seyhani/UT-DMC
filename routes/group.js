@@ -85,7 +85,7 @@ router.put("/groups/:groupId", function(req, res){
     Group.findByIdAndUpdate(req.params.groupId, {$set: newData}, function(err, group){
         if(err){
             req.flash("error", err.message);
-            middleware.dmcRedirect(res,"back");
+            middleware.dmcRedirect(res,"/admin/groups/");
         } else {
             req.flash("success","Successfully Updated!");
             middleware.dmcRedirect(res,"/admin/groups/"+group._id);
@@ -125,7 +125,7 @@ router.get("/groups/:groupId/hint/:problem_id", function(req, res){
 router.delete("/groups/:groupId", function(req, res){
     Group.findById(req.params.groupId).exec(function (err,group) {
         group.remove();
-        middleware.dmcRedirect(res,'admin/groups');
+        middleware.dmcRedirect(res,'/admin/groups');
     });
 });
 

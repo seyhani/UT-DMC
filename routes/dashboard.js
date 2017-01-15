@@ -63,8 +63,8 @@ router.get("/puzzles/:puzzle_id", function(req, res){
 
                 else
                 {
-                    req.flash("error", "You do not have enough credits! problem cost is "+puzzle.cost);
-                    middleware.dmcRedirect(res,"/dashboard");
+                    req.flash("error", "شما اعتبار کافی ندارید.\nاعتبار مورد نیاز:"+puzzle.cost);
+                    middleware.dmcRedirect(res,"dashboard");
                 }
             }
         });
