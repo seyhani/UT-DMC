@@ -129,7 +129,7 @@ router.get('/forgot', function(req, res,next) {
 
 router.post('/forgot', function(req, res, next) {
     User.findOne({ username: req.body.username}, function(err, user) {
-        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:host,link:host+"/reset/"+token.setToken(user), name: user.firstname},user.email,function (err,info) {
+        mailer.sendTemplateTo(mailTemplates+"resetpass",{address:host,link:host+"/reset/"+token.setToken(user), name: user.firstname},user.username,function (err,info) {
             console.log(info);
             console.log(err);
             if(user) {
