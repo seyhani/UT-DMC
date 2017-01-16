@@ -8,6 +8,7 @@ var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
 var middleware = require("../middleware/index");
 var rycode = require("../middleware/rycode");
+var Rule    = require("../models/rule");
 var _ = require("lodash");
 
 // router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
@@ -279,5 +280,30 @@ router.delete("/puzzles/:problem_id",function(req, res,next){
     });
 });
 
+router.get("/setStartTime", function(req, res){
+    var t = new Date(Date.now()),
+        dur = 1;
+    Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+        if(rule){
+            t = rule.startDate;
+            dur = rule.duration / (3600*1000);
+        }
+        var tstr = t.getFullYear() + "-" + ((t.getMonth()+1) < 10 ? "0" + (t.getMonth()+1) : (t.getMonth()+1)) + "-" + (t.getDate() < 10 ? "0" + t.getDate() : t.getDate()) + "T" + (t.getHours() < 10 ? "0" + t.getHours() : t.getHours()) + ":" + (t.getMinutes() < 10 ? "0" + t.getMinutes() : t.getMinutes());
+        res.render("dev/setStartTime", {startTime: tstr, dur: dur});
+    });
+});
+router.post("/setStartTime", function(req, res){
+    var d = new Date(req.body.startTime + "+03:30"),
+        dur = req.body.dur;
+    Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+        console.log(rule);
+        if(rule)
+            rule.remove();
+        Rule.create({name:"DMC",startDate: d,duration:dur*3600*1000});
+        //toLocaleDateString("fa-IR", {year: "2-digit", month: "long", day: "numeric", hour: "numeric", minute: "numeric"})
+        req.flash("success", "Start Time set to " + d.toString());
+        middleware.dmcRedirect(res,"/admin/setStartTime");
+    });
+});
 
 module.exports = router;

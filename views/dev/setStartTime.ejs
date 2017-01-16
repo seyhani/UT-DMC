@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <title>DMC</title>
+    <% include ../partials/head %>
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
+</head>
+<body>
+<% include ../partials/header %>
+<div class="backch">
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-6">
+                <h1><span class="glyphicon glyphicon-cog"></span> Admin</h1>
+            </div>
+        </div>
+        </div>
+</div>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1"><form action="<%=baseURL%>/admin/setStartTime" method="POST">
+                <div class="col-md-6"><input type="datetime-local" name="startTime" value="<%= startTime%>" class="form-control"></div>
+                <div class="col-md-3"><input type="number" name="dur" value="<%= dur%>" class="form-control"></div>
+                <div class="col-md-3"><button type="submit" class="btn btn-lg btn-success btn-block" >Set Start Time</button></div>
+            </form></div>
+        </div>
+    </div>
+</div>
+</div>
+<% include ../partials/footer %>
+</body>
+</html>

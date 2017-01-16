@@ -69,9 +69,9 @@ app.use(baseURL2+"/admin/tags", tagRoutes);
 
 Rule.findOne({name:"DMC"}).exec(function (err,rule) {
     console.log(rule);
-   if(rule)
-       rule.remove();
-    Rule.create({name:"DMC",startDate: new Date(2017,0,18,8),duration:3600*8000});
+    if(rule)
+        rule.remove();
+    Rule.create({name:"DMC",startDate: new Date(2017,0,19,10,0),duration:80*3600*1000});
 });
 
 app.use(function(req, res, next) {
