@@ -2,19 +2,21 @@
 const express = require("express");
 const router  = express.Router();
 const Clar = require(`../models/clarification`);
+var middleware = require("../middleware");
+router.all("/*",middleware.isLoggedIn);
 
 router.get(`/getClars`, (req, res) => {
     Clar.find({author: req.user.id}, (err, docs) => {
         if(err) {
             console.error(`routes -> forum: getClars`);
             console.error(err);
-            req.status(500).json({messages: []});
+            res.status(500).json({messages: []});
         }
         Clar.find({author: `Admin`}, (err, adminDocs) => {
             if(err) {
                 console.error(`routes -> forum: getClars of Admin`);
                 console.error(err);
-                req.status(500).json({messages: []});
+                res.status(500).json({messages: []});
             }
             let retVal = adminDocs.concat(docs);
             for(let i = 0;i < retVal.length; ++i) {
@@ -22,7 +24,7 @@ router.get(`/getClars`, (req, res) => {
                 delete retVal[i]._id;
                 delete retVal[i].__v;
             }
-            req.json({messages: retVal});
+            res.json({messages: retVal});
         });
     });
 });
@@ -48,11 +50,11 @@ router.get(`/messages`, (req, res) => { //responds only to admin
                 console.error(`routes -> forum:-get- messages`);
                 console.error(err);
             }
-            req.json({messages: docs});
+            res.json({messages: docs});
         });
     }
     else
-        req.json({messages: []});
+        res.json({messages: []});
 });
 
 router.post(`/messages`, (req, res) => { //responds only to admin
@@ -69,7 +71,7 @@ router.post(`/messages`, (req, res) => { //responds only to admin
             }
         });
     }
-    req.status(401);
+    res.status(401);
 });
 
 module.exports = router;
