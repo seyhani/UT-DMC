@@ -43,7 +43,7 @@ router.post(`/postClar`, (req, res) => {
 
 router.get(`/messages`, (req, res) => { //responds only to admin
     if(req.user.isAdmin) {
-        Clar.find(, (err, docs) => {
+        Clar.find({}, (err, docs) => {
             if(err) {
                 console.error(`routes -> forum:-get- messages`);
                 console.error(err);
@@ -68,3 +68,5 @@ router.post(`/messages`, (req, res) => { //responds only to admin
         });
     }
 });
+
+module.exports = router;
