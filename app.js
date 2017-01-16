@@ -14,6 +14,7 @@ var express     = require("express"),
 mongoose.Promise = global.Promise;
 
 // var config = require("./config/server");
+var Rule    = require("./models/rule");
 
 var groupRoutes    = require("./routes/group"),
     dashboardRoutes    = require("./routes/dashboard"),
@@ -65,6 +66,13 @@ app.use(baseURL2+"/admin/", adminRoutes);
 app.use(baseURL2+"/admin/users", userRoutes);
 app.use(baseURL2+"/admin/problems", problemRoutes);
 app.use(baseURL2+"/admin/tags", tagRoutes);
+
+Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+    console.log(rule);
+   if(rule)
+       rule.remove();
+    Rule.create({name:"DMC",startDate: new Date(2017,0,19,8),duration:3600*1000});
+});
 
 app.use(function(req, res, next) {
     res.status(404).send('Sorry cant find that:   '+req.url);

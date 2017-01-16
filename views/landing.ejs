@@ -30,11 +30,10 @@
 <script src="<%=baseURL%>/particles/app.js"></script>
 <script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
 <script type="text/javascript">
-    var clock = $('.clock').FlipClock((new Date(2017,0,19,8,0)-Date.now())/1000, {
+    var clock = $('.clock').FlipClock((new Date(2017,0,19,10,0)-Date.now())/1000, {
         clockFace: 'DailyCounter',
         countdown: true
     });
-	var a = window.Notify.default;
     easteregg_flag = true;
     function easteregg(){
     	if(easteregg_flag && window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array && parseInt(window.pJSDom[0].pJS.particles.array.length) == 0){

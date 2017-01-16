@@ -118,7 +118,8 @@
 <script src="<%=baseURL%>/scripts/problist.js"></script>
 <script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
 <script>
-    var clock = $('.clock').FlipClock((new Date(2017,0,19,8,0)-Date.now())/1000, {
+    var b = "<%=remainingTime%>";
+    var clock = $('.clock').FlipClock((1000)/1000, {
         clockFace: 'DailyCounter',
         showSeconds: false,
         countdown: true

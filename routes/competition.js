@@ -12,12 +12,23 @@ var middleware = require("../middleware/index");
 router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/competition", function(req, res){
-    Problem.find({}, function(err, allProblems) {
-        Tag.find({}).exec(function (err,superTags) {
-            if (err)
-                console.log(err);
-            else
-                res.render("admin/competitions/index", {problems: allProblems,superTags:superTags});
+    var submissionsCount = [];
+    Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
+        Problem.find({}, function (err, allProblems) {
+            Tag.find({}).exec(function (err, superTags) {
+                allProblems.forEach(function (problem) {
+                    var submissionCount = 0;
+                    puzzles.forEach(function (puzzle) {
+                        if(puzzle.problem._id == problem._id)
+                            submissionCount++;
+                    });
+                    submissionsCount.push(submissionCount);
+                });
+                if (err)
+                    console.log(err);
+                else
+                    res.render("admin/competitions/index", {problems: allProblems, superTags: superTags,submissionsCount:submissionsCount});
+            });
         });
     });
 });

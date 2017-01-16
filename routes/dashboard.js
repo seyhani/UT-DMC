@@ -1,6 +1,6 @@
 var express = require("express");
 var router  = express.Router();
-var Problem = require("../models/problem");
+var Rule = require("../models/rule");
 var Tag = require("../models/tag");
 var Group = require("../models/group");
 var Puzzle = require("../models/puzzle");
@@ -22,10 +22,26 @@ const submissionWait = 5*1000;
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
 router.all("/*",middleware.isLoggedIn);
-
+router.all("/*",function (req,res,next) {
+    Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+        if(Date.now() < rule.startDate) {
+            req.flash("error", "Contest has not been started!");
+            middleware.dmcRedirect(res, "/dmc");
+        }
+        else if(Date.now()-rule.startDate > rule.duration) {
+            req.flash("error", "Contest has been finished!");
+            middleware.dmcRedirect(res, "/dmc");
+        }else{
+            req.remainingTime = Date.now() - rule.startDate;
+            return next();
+        }
+    });
+});
 router.get("/", function(req, res){
+    console.log(req.a);
     User.findById(req.user.id)
-        .deepPopulate(["group","group.competition.puzzles", "group.competition.puzzles.problem","group.competition"])
+        .deepPopulate(["group","group.competition.puzzles","group.competition.rule",
+            "group.competition.puzzles.problem","group.competition"])
         .exec(function (err,user) {
             if(!user.group) {
                 res.render("dashboard/index", {user: user, puzzles: null, superTags: null});
@@ -37,8 +53,9 @@ router.get("/", function(req, res){
                         Tag.find({}).exec(function (err, superTags) {
                             if (err)
                                 console.log(err);
-                            else
-                                res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags});
+                            else {
+                                res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags,remainingTime:req.remainingTime});
+                            }
                         })
                     });
                 }
