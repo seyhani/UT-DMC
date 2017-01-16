@@ -152,7 +152,7 @@ router.get('/reset/:token', function(req, res,next) {
         , function(err, user) {
         if(err) return next(err);
         if (!user) {
-            req.flash('error', 'Password reset token is invalid or has expired.');
+            req.flash('error', 'لینک تغییر رمزعبور شما باطل شده یا نا متعبر است.');
             return middleware.dmcRedirect(res,'/forgot');
         } else{
             res.render('reset_password', {user:user,token:req.params.token});
@@ -167,7 +167,7 @@ router.post('/reset/:token', function(req, res,next) {
             User.findOne({ token:req.params.token},
                 function(err, user) {
                     if (!user) {
-                        req.flash('error', 'Password reset token is invalid or has expired.');
+                        req.flash('error', 'لینک تغییر رمزعبور شما باطل شده یا نا متعبر است.');
                         return middleware.dmcRedirect(res,'back');
                     }
                     user.password = req.body.password;
@@ -175,7 +175,7 @@ router.post('/reset/:token', function(req, res,next) {
                     user.tokenExpires = undefined;
                     user.save(function(err) {
                     req.logIn(user, function(err) {
-                        req.flash('success', 'Success! Your password has been changed.');
+                        req.flash('success', 'رمزعبور شما با موفقیت تغییر کرد.');
                         done(err, user);
                     });
                 });
