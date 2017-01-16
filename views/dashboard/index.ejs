@@ -31,7 +31,7 @@
                     <button type="button" class="btn btn-primary btn-lg btn-block btncolor <% if(!user.group){ %> disabled <%}%>" style="cursor: default;">
                         <% if(user.group){ %>
                             <%= user.group.name%>
-                        <% } else { %><a>شما گروهی ندارید.</a> <% } %>
+                        <% } else { %><small dir="rtl">شما گروهی ندارید.</small> <% } %>
                     </button>
                     <a style="text-decoration: none;" href="<%=baseURL%>/dashboard/ranking"><button  type="button" class="btn btn-info btn-lg btn-block">امتیاز گروه ها</button></a>
                 </div>
