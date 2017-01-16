@@ -71,7 +71,7 @@ Rule.findOne({name:"DMC"}).exec(function (err,rule) {
     console.log(rule);
    if(rule)
        rule.remove();
-    Rule.create({name:"DMC",startDate: new Date(2017,0,19,8),duration:3600*1000});
+    Rule.create({name:"DMC",startDate: new Date(2017,0,10,8),duration:3600*1000*1000});
 });
 
 app.use(function(req, res, next) {

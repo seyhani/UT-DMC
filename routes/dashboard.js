@@ -26,11 +26,11 @@ router.all("/*",function (req,res,next) {
     Rule.findOne({name:"DMC"}).exec(function (err,rule) {
         if(Date.now() < rule.startDate) {
             req.flash("error", "Contest has not been started!");
-            middleware.dmcRedirect(res, "/dmc");
+            middleware.dmcRedirect(res, baseURL);
         }
         else if(Date.now()-rule.startDate > rule.duration) {
             req.flash("error", "Contest has been finished!");
-            middleware.dmcRedirect(res, "/dmc");
+            middleware.dmcRedirect(res, baseURL);
         }else{
             req.remainingTime = Date.now() - rule.startDate;
             return next();
@@ -80,8 +80,8 @@ router.get("/puzzles/:puzzle_id", function(req, res){
 
                 else
                 {
-                    req.flash("error", "شما اعتبار کافی ندارید.\nاعتبار مورد نیاز:"+puzzle.cost);
-                    middleware.dmcRedirect(res,"/dmc/dashboard");
+                    req.flash("error", "شما اعتبار کافی ندارید");
+                    middleware.dmcRedirect(res,baseURL+"/dashboard");
                 }
             }
         });
@@ -131,7 +131,7 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                     }
                 }else
                     req.flash("error", "برای ثبت دوباره جواب باید منتظر بمانید");
-                middleware.dmcRedirect(res,"/dmc/dashboard");
+                middleware.dmcRedirect(res,baseURL+"/dashboard");
             }
         });
     });
