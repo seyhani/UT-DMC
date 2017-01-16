@@ -26,7 +26,7 @@
                     <h1><span class="glyphicon glyphicon-pencil"></span> معماها</h1>
                 </div>
 
-                <div class="col-md-6" style="text-align: center;"><div style="display: inline-block;"><div class="clock"></div></div></div>
+                <div class="col-md-6" style="text-align: center;"><%if(user.group){%><div style="display: inline-block;"><div class="clock"></div></div><%}%></div>
                 <div class="col-md-2" style="text-align: right;padding-top: 10px;">
                     <button type="button" class="btn btn-primary btn-lg btn-block btncolor <% if(!user.group){ %> disabled <%}%>" style="cursor: default;">
                         <% if(user.group){ %>
