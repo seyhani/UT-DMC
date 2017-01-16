@@ -44,13 +44,13 @@ router.post("/groups", function(req, res){
                             group.competition.puzzles = newPuzzles;
                             group.competition.save();
                             group.save(function (err) {
-                                middleware.dmcRedirect(res,'groups/' + group._id);
+                                middleware.dmcRedirect(res,'/admin/groups/' + group._id);
                             });
                         });
 
                 } else {
                     req.flash("error","Group already exist!");
-                    middleware.dmcRedirect(res,'groups/');
+                    middleware.dmcRedirect(res,'/admin/groups/');
                 }
             });
         });

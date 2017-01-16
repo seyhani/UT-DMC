@@ -30,11 +30,11 @@ router.all("/*",function (req,res,next) {
           return next();
         }
         else if(Date.now() < rule.startDate) {
-            req.flash("error", "Contest has not been started!");
+            req.flash("error", "مسابقه هنوز آغاز نشده است.");
             middleware.dmcRedirect(res, baseURL);
         }
         else if(Date.now()-rule.startDate > rule.duration) {
-            req.flash("error", "Contest has been finished!");
+            req.flash("error", "مسابقه به پایان رسیده است.");
             middleware.dmcRedirect(res, baseURL);
         }else{
             req.remainingTime = Date.now() - rule.startDate;
@@ -84,7 +84,7 @@ router.get("/puzzles/:puzzle_id", function(req, res){
 
                 else
                 {
-                    req.flash("error", "شما اعتبار کافی ندارید");
+                    req.flash("error", "شما اعتبار کافی ندارید. اعتبار مورد نیاز: " + puzzle.cost);
                     middleware.dmcRedirect(res,baseURL+"/dashboard");
                 }
             }
