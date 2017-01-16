@@ -24,7 +24,12 @@ const submissionWait = 5*1000;
 router.all("/*",middleware.isLoggedIn);
 router.all("/*",function (req,res,next) {
     Rule.findOne({name:"DMC"}).exec(function (err,rule) {
-        if(Date.now() < rule.startDate) {
+        if(req.user.isAdmin)
+        {
+          req.remainingTime = Date.now() - rule.startDate;
+          return next();
+        }
+        else if(Date.now() < rule.startDate) {
             req.flash("error", "Contest has not been started!");
             middleware.dmcRedirect(res, baseURL);
         }
@@ -38,13 +43,12 @@ router.all("/*",function (req,res,next) {
     });
 });
 router.get("/", function(req, res){
-    console.log(req.a);
     User.findById(req.user.id)
         .deepPopulate(["group","group.competition.puzzles","group.competition.rule",
             "group.competition.puzzles.problem","group.competition"])
         .exec(function (err,user) {
             if(!user.group) {
-                res.render("dashboard/index", {user: user, puzzles: null, superTags: null});
+                res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:req.remainingTime});
             } else {
                 if (err)
                     console.log(err);

@@ -119,7 +119,7 @@
 <script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
 <script>
     var b = "<%=remainingTime%>";
-    var clock = $('.clock').FlipClock((1000)/1000, {
+    var clock = $('.clock').FlipClock((b)/1000, {
         clockFace: 'DailyCounter',
         showSeconds: false,
         countdown: true
