@@ -1,15 +1,15 @@
-var express     = require("express"),
-    router  = express.Router(),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose"),
-    passport    = require("passport"),
-    cookieParser = require("cookie-parser"),
-    LocalStrategy = require("passport-local"),
-    flash        = require("connect-flash"),
-    session = require("express-session"),
-    middleware = require("./middleware/index"),
-    methodOverride = require("method-override");
+var express             = require("express"),
+    router              = express.Router(),
+    app                 = express(),
+    bodyParser          = require("body-parser"),
+    mongoose            = require("mongoose"),
+    passport            = require("passport"),
+    cookieParser        = require("cookie-parser"),
+    LocalStrategy       = require("passport-local"),
+    flash               = require("connect-flash"),
+    session             = require("express-session"),
+    middleware          = require("./middleware/index"),
+    methodOverride      = require("method-override");
 
 mongoose.Promise = global.Promise;
 
@@ -69,11 +69,16 @@ app.use(baseURL2+"/admin/users", userRoutes);
 app.use(baseURL2+"/admin/problems", problemRoutes);
 app.use(baseURL2+"/admin/tags", tagRoutes);
 
+// Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+//     console.log(rule);
+//     if(rule)
+//        rule.remove();
+//     Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:3600*8000});
+// });
+
 Rule.findOne({name:"DMC"}).exec(function (err,rule) {
-    console.log(rule);
-    if(rule)
-       rule.remove();
-    Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:3600*8000});
+    if(!rule)
+        Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:3600*8000});
 });
 
 app.use(function(req, res, next) {
