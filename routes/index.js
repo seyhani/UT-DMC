@@ -15,6 +15,7 @@ var async = require("async");
 var simplesmtp = require("simplesmtp");
 var fs = require("fs");
 var config = require("../config/test");
+var Rule = require("../models/rule");
 'use strict';
 
 // var host = "http://acm.ut.ac.ir/dmc";
@@ -24,7 +25,16 @@ var config = require("../config/test");
 
 router.get("/", function(req, res){
     // middleware.dmcRedirect(res,"/aaaa");
-    res.render("landing");
+    Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+        var time;
+        if(Date.now() < rule.startDate)
+            time = rule.startDate - Date.now();
+        else if(Date.now() - rule.startDate < rule.duration)
+            time = rule.startDate - Date.now() + rule.duration;
+        else
+            time = 0;
+        res.render("landing", {time: time});
+    });
 });
 
 // router.get("/aaaa", function(req, res){

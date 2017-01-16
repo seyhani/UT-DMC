@@ -296,12 +296,13 @@ router.post("/setStartTime", function(req, res){
     var d = new Date(req.body.startTime + "+03:30"),
         dur = req.body.dur;
     Rule.findOne({name:"DMC"}).exec(function (err,rule) {
-        console.log(rule);
+        // console.log(rule);
         if(rule)
             rule.remove();
         Rule.create({name:"DMC",startDate: d,duration:dur*3600*1000});
+        console.log("Start Time set to " + d.toString() + " and Duration to " + dur + ".");
         //toLocaleDateString("fa-IR", {year: "2-digit", month: "long", day: "numeric", hour: "numeric", minute: "numeric"})
-        req.flash("success", "Start Time set to " + d.toString());
+        req.flash("success", "Start Time set to " + d.toString() + " and Duration to " + dur + ".");
         middleware.dmcRedirect(res,"/admin/setStartTime");
     });
 });
