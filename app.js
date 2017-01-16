@@ -16,15 +16,16 @@ mongoose.Promise = global.Promise;
 // var config = require("./config/server");
 var Rule    = require("./models/rule");
 
-var groupRoutes    = require("./routes/group"),
-    dashboardRoutes    = require("./routes/dashboard"),
-    adminRoutes    = require("./routes/admin"),
-    problemRoutes = require("./routes/problems"),
-    tagRoutes = require("./routes/tag"),
-    indexRoutes      = require("./routes/index"),
-    User = require("./models/user"),
+var groupRoutes       = require("./routes/group"),
+    dashboardRoutes   = require("./routes/dashboard"),
+    adminRoutes       = require("./routes/admin"),
+    problemRoutes     = require("./routes/problems"),
+    tagRoutes         = require("./routes/tag"),
+    indexRoutes       = require("./routes/index"),
+    User              = require("./models/user"),
     competitionRoutes = require("./routes/competition"),
-    userRoutes      = require("./routes/user");
+    userRoutes        = require("./routes/user"),
+    forumRoutes       = require("./routes/forum");
 
 mongoose.connect("mongodb://localhost/DMC");
 
@@ -59,9 +60,10 @@ app.use(function(req, res, next){
 
 var baseURL2 = "";
 app.use(baseURL2+"/", indexRoutes);
+app.use(baseURL2+"/forum", forumRoutes);
+app.use(baseURL2+"/dashboard/", dashboardRoutes);
 app.use(baseURL2+"/admin/", groupRoutes);
 app.use(baseURL2+"/admin/", competitionRoutes);
-app.use(baseURL2+"/dashboard/", dashboardRoutes);
 app.use(baseURL2+"/admin/", adminRoutes);
 app.use(baseURL2+"/admin/users", userRoutes);
 app.use(baseURL2+"/admin/problems", problemRoutes);
@@ -70,8 +72,8 @@ app.use(baseURL2+"/admin/tags", tagRoutes);
 Rule.findOne({name:"DMC"}).exec(function (err,rule) {
     console.log(rule);
     if(rule)
-        rule.remove();
-    Rule.create({name:"DMC",startDate: new Date(2017,0,19,10,0),duration:80*3600*1000});
+       rule.remove();
+    Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:3600*8000});
 });
 
 app.use(function(req, res, next) {
