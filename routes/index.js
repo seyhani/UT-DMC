@@ -60,7 +60,7 @@ router.post('/register',function(req, res,next) {
         email: email,
         password: password,
     };
-    User.findOne({username: user.username}).exec(function (err, existUser) {
+    User.findOne({$or:[{username: user.username},{studentId:studentId}]}).exec(function (err, existUser) {
         if (err) return next(err);
         if (existUser) {
             req.flash('error', 'Username already exist');
