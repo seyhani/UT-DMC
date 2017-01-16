@@ -48,9 +48,11 @@ router.get(`/messages`, (req, res) => { //responds only to admin
                 console.error(`routes -> forum:-get- messages`);
                 console.error(err);
             }
-            req.json({messages: [docs]});
+            req.json({messages: docs});
         });
     }
+    else
+        req.json({messages: []});
 });
 
 router.post(`/messages`, (req, res) => { //responds only to admin
@@ -67,6 +69,7 @@ router.post(`/messages`, (req, res) => { //responds only to admin
             }
         });
     }
+    req.status(401);
 });
 
 module.exports = router;
