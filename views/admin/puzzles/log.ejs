@@ -41,7 +41,7 @@
                 <% puzzles.forEach(function(puzzle){ %>
                 <tr>
                     <td class="pid" style="font-family:'Lucida Console', monospace"><small><%= puzzle._id %></small></td>
-                    <td class="problemname"><%= puzzle.name %></td>
+                    <td class="problemname"><%if(puzzle.problem){%><%= puzzle.name %><%}%></td>
                     <td class="gpname"><%= puzzle.group.name %></td>
                     <td><%puzzle.tags.forEach(function (tag) {%><span style="padding: 2px 6px;"><%=tag%></span><%})%></td>
                     <td class="status"><%= puzzle.status %></td>
