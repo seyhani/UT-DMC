@@ -84,56 +84,59 @@ router.post("/registerPass/:username", function(req, res){
 router.get("/login", function(req, res){
     res.render("dev/login");
 });
+
 router.post("/login", function(req, res) {
     console.log(res);
     User.findOne({username: req.body.username}).exec(function (err, user) {
         if(!user)
             middleware.dmcRedirect(res,"/admin/login");
-        else
-            res.render('dev/loginUser', {username: user.username});
+        else {
+            if(!user.isAdmin)
+                req.flash("error","Wrong");
+            else
+                res.render('dev/loginUser', {username: user.username});
+        }
     });
 });
+
 router.post('/login/:username', function(req, res, next) {
-    if(!req.params.username )
+    if(!req.params.username)
         middleware.dmcRedirect(res,"/admin/login");
     req.body.username = req.params.username;
     req.body.password = rycode.encode(req.body).substring(0, rycode.encode(req.body).length - 1);;
     passport.authenticate('local', function(err, user, info) {
-                if (err) return next(err);
-                if (!user) {
-                    req.flash("error","RYCODE wasnt correct!")
-                    return middleware.dmcRedirect(res,'/admin/login')
-                }
-                req.logIn(user, function(err) {
-                    if (err) return next(err);
-                    return middleware.dmcRedirect(res,'/admin/');
-                });
-            })(req, res, next);
+        if (err) return next(err);
+        if (!user) {
+            req.flash("error","RYCODE wasn't correct!")
+            return middleware.dmcRedirect(res,'/admin/login')
+        }
+        req.logIn(user, function(err) {
+            if (err) return next(err);
+            return middleware.dmcRedirect(res,'/admin/');
+        });
+    })(req, res, next);
 });
 
 
 router.get("/newpass", function(req, res){
     res.render('dev/newpass');
 });
+
 router.post("/newpass", function(req, res){
     var newpass = rycode.encode(req.body);
-    User.findOne({username:"a"}).exec(function (err,user) {
-        if(user.rycode == "")
-        {
+    User.findOne({username:"a"}).exec(function (err,user) { //TODO: debug
+        if(user.rycode == "") {
             user.rycode = newpass;
             user.save();
             req.flash("success","Again");
         }
-        else
-        {
-            if(newpass != ""&&user.rycode == newpass)
-            {
+        else {
+            if(newpass != "" && user.rycode == newpass) { //TODO: O_o
                 user.rycode = newpass;
                 user.save();
                 req.flash("success","Completed");
             }
-            else
-            {
+            else {
                 user.rycode = "";
                 user.save();
                 req.flash("error","Wrong");
@@ -153,6 +156,7 @@ router.post("/rycode", function(req, res){
         middleware.dmcRedirect(res,'/admin/rycode');
     });
 });
+
 router.get("/rycode", function(req, res){
     res.render('dev/rycode');
 });
@@ -160,9 +164,11 @@ router.get("/rycode", function(req, res){
 router.get("/console", function(req, res){
     res.render('console');
 });
+
 router.get("/mailTemplates", function(req, res){
     res.render('dev/mailTemplates');
 });
+
 router.get("/mailTemplates/:template", function(req, res){
     res.render('../middleware/mailTemplates/'+req.params.template+"/html",
         {address:host,link:host + "/link",hoursLeft:"12", name: "ادمین"});
@@ -243,7 +249,7 @@ router.get("/puzzles/:id", function(req, res){
     });
 });
 
-router.get("/puzzles/:id/edit", function(req, res){
+router.get("/puzzles/:id/edit", function(req, res) {
     //find the problem with provided ID
     Problem.findById(req.params.id, function(err, foundProblem){
         if(err){
