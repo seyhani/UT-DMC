@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <title>DMC</title>
+    <% include ../partials/head %>
+</head>
+<body>
+    <% include ../partials/header %>
+    <div class="container"><div class="row">
+        <h1 style="text-align: center">Mail to All</h1>
+        <div class="col-md-4 col-md-offset-4" style="padding: 25px;">
+            <form action="<%=baseURL%>/admin/mailToAll" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="title" placeholder="Name" autofocus value="یادآوری" dir="rtl">
+                </div>
+                <div class="form-group" >
+                    <textarea class="form-control" id="comment" name="text" rows="10" style="resize: vertical;" dir="rtl">&lt;p&gt;فقط ۱۲ ساعت تا شروع مسابقه مانده است!&lt;/p&gt;</textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-success btn-block">Send</button>
+                </div>
+            </form>
+            <a class="btn btn-block btn-md btn-danger" href="<%=baseURL%>/admin/">Back</a>
+        </div>
+    </div></div>
+    <% include ../partials/footer %>
+</body>
+</html>

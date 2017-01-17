@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <title>DMC</title>
+    <% include partials/head %>
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
+    <style>
+        .problembod{
+            font-size: 1.3em;
+        }
+        .problembod img{
+            border-radius: 50%;
+            width: 60%;
+        }
+        .problembod img:hover{
+            filter: saturate(1.5);
+        }
+        .problembod ul{
+            list-style: none;
+            text-align: left;
+        }
+        .problembod ul, .problembod li{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<% include partials/header %>
+<div class="backch">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-left">
+                    <h1><span class="glyphicon glyphicon-info-sign"></span> دربارهٔ ما</h1>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+    <div class="problem-cont row" id="puzzles_list">
+        <div class="col-md-4 col-sm-6 col-md-12" >
+            <div class="eachproblem"><div class="problembod">
+                <div class="caption topproblem">
+                    <img src="<%=baseURL%>/img/about/pooya.jpg">
+                    <h3 class="problemname">پویا رضایی</h3>
+                </div>
+                <ul>
+                    <li><i class="glyphicon glyphicon-pushpin"></i> supervisor</li>
+                    <li><i class="glyphicon glyphicon-globe"></i> <a href="" target="_blank"></a></li>
+                    <li><i class="glyphicon glyphicon-send"></i> </li>
+                </ul>
+            </div></div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-md-12" >
+            <div class="eachproblem"><div class="problembod">
+                <div class="caption topproblem">
+                    <img src="<%=baseURL%>/img/about/amir.jpg">
+                    <h3 class="problemname">امیرحسین صیحانی</h3>
+                </div>
+                <ul>
+                    <li><i class="glyphicon glyphicon-pushpin"></i> back-end developer</li>
+                    <li><i class="glyphicon glyphicon-globe"></i> <a href="https://github.com/amirs7" target="_blank">github.com/amirs7</a></li>
+                    <li><i class="glyphicon glyphicon-send"></i> ahsprim[at]gmail.com</li>
+                </ul>
+            </div></div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-md-12" >
+            <div class="eachproblem"><div class="problembod">
+                <div class="caption topproblem">
+                    <img src="<%=baseURL%>/img/about/hadi.jpg">
+                    <h3 class="problemname">هادی صفری</h3>
+                </div>
+                <ul>
+                    <li><i class="glyphicon glyphicon-pushpin"></i> front-end developer</li>
+                    <li><i class="glyphicon glyphicon-globe"></i> <a href="http://hadisafari.ir/" target="_blank">hadisafari.ir</a></li>
+                    <li><i class="glyphicon glyphicon-send"></i> hadisafari[at]ut.ac.ir</li>
+                </ul>
+            </div></div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-md-12" >
+            <div class="eachproblem"><div class="problembod">
+                <div class="caption topproblem">
+                    <img src="<%=baseURL%>/img/about/abtin.jpg">
+                    <h3 class="problemname">آبتین باطنی</h3>
+                </div>
+                <ul>
+                    <li><i class="glyphicon glyphicon-pushpin"></i> back-end developer</li>
+                    <li><i class="glyphicon glyphicon-globe"></i> <a href="https://github.com/mr-bat" target="_blank">github.com/mr-bat</a></li>
+                    <li><i class="glyphicon glyphicon-send"></i> </li>
+                </ul>
+            </div></div>
+        </div>
+        <div class="col-md-4 col-sm-6 col-md-12" >
+            <div class="eachproblem"><div class="problembod">
+                <div class="caption topproblem">
+                    <img src="<%=baseURL%>/img/about/vahid.jpg">
+                    <h3 class="problemname">وحید محمدی</h3>
+                </div>
+                <ul>
+                    <li><i class="glyphicon glyphicon-pushpin"></i> front-end developer</li>
+                    <li><i class="glyphicon glyphicon-globe"></i> <a href="http://vahid-mohammadi.ir" target="_blank">vahid-mohammadi.ir</a></li>
+                    <li><i class="glyphicon glyphicon-send"></i> </li>
+                </ul>
+            </div></div>
+        </div>
+    </div>
+</div>
+<% include partials/footer %>
+<script src="<%=baseURL%>/listjs/list.min.js"></script>
+<script src="<%=baseURL%>/scripts/problist.js"></script>
+</body>
+</html>

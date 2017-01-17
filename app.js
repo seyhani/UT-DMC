@@ -60,7 +60,7 @@ app.use(function(req, res, next){
 
 var baseURL2 = "";
 app.use(baseURL2+"/", indexRoutes);
-app.use(baseURL2+"/forum", forumRoutes);
+// app.use(baseURL2+"/forum", forumRoutes);
 app.use(baseURL2+"/dashboard/", dashboardRoutes);
 app.use(baseURL2+"/admin/", groupRoutes);
 app.use(baseURL2+"/admin/", competitionRoutes);
@@ -79,6 +79,8 @@ app.use(baseURL2+"/admin/tags", tagRoutes);
 Rule.findOne({name:"DMC"}).exec(function (err,rule) {
     if(!rule)
         Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:3600*8000});
+    else
+        console.log(rule);
 });
 
 app.use(function(req, res, next) {

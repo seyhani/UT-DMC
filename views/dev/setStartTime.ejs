@@ -23,13 +23,32 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1"><form action="<%=baseURL%>/admin/setStartTime" method="POST">
                 <div class="col-md-6"><input type="datetime-local" name="startTime" value="<%= startTime%>" class="form-control"></div>
-                <div class="col-md-3"><input type="number" name="dur" value="<%= dur%>" class="form-control"></div>
-                <div class="col-md-3"><button type="submit" class="btn btn-lg btn-success btn-block" >Set Start Time</button></div>
+                <div class="col-md-3"><input type="number" name="dur" value="<%= dur%>" class="form-control" step="0.01"></div>
+                <div class="col-md-3"><button type="submit" class="btn btn-lg btn-success btn-block" >Set</button></div>
             </form></div>
         </div>
     </div>
 </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("button").click(function(event){
+            event.preventDefault();
+            var el = this;
+            swal({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, ' + $(el).text() + "!"
+            }).then(function () {
+                $("form").submit();
+            });
+        });
+    });
+</script>
 <% include ../partials/footer %>
 </body>
 </html>

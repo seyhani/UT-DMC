@@ -81,6 +81,12 @@ router.get("/competition/puzzles", function(req, res){
     });
 });
 
+router.get("/competition/puzzles/log", function(req, res){
+    Puzzle.find({}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
+        res.render("admin/puzzles/log",{puzzles:puzzles});
+    });
+});
+
 router.get("/competition/puzzles/:puzzle_id/:aorr", function(req, res){
     Puzzle.findById(req.params.puzzle_id).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzle) {
         if (err) {
