@@ -34,6 +34,7 @@
         clockFace: 'DailyCounter',
         countdown: true
     });
+    <%if(false){%>
     easteregg_flag = true;
     function easteregg(){
     	if(easteregg_flag && window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array && parseInt(window.pJSDom[0].pJS.particles.array.length) == 0){
@@ -43,6 +44,7 @@
 	    requestAnimationFrame(easteregg);
     }
     requestAnimationFrame(easteregg);
+    <%}%>
 </script>
 </body>
 </html>
