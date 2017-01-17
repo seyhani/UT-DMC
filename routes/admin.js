@@ -17,6 +17,10 @@ router.get("/", function(req, res){
     res.render('admin/index');
 });
 
+router.get("/root", function(req, res){
+    res.render('admin/index', {isroot: true});
+});
+
 router.get("/register", function(req, res){
     res.render('dev/register');
 });
