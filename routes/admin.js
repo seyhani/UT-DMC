@@ -303,7 +303,7 @@ router.post("/setStartTime", function(req, res){
         console.log("Start Time set to " + d.toString() + " and Duration to " + dur + ".");
         //toLocaleDateString("fa-IR", {year: "2-digit", month: "long", day: "numeric", hour: "numeric", minute: "numeric"})
         req.flash("success", "Start Time set to " + d.toString() + " and Duration to " + dur + ".");
-        middleware.dmcRedirect(res,"/admin/setStartTime");
+        middleware.dmcRedirect(res,"/admin/");
     });
 });
 
