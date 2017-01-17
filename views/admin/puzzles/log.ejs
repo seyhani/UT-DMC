@@ -47,7 +47,7 @@
                     <td class="gpname"><%= puzzle.group.name %></td>
                     <td><%puzzle.tags.forEach(function (tag) {%><span style="padding: 2px 6px;"><%=tag%></span><%})%></td>
                     <td class="status"><%= puzzle.status %></td>
-                    <td class="time"><%= puzzle.lastSubmit %></td>
+                    <td class="time" st><%= puzzle.lastSubmit %></td>
                 </tr>
                 <%});%>
             </tbody>
@@ -65,7 +65,7 @@
 
     $(document).ready(function(){
         $("td.time").each(function(index, el) {
-           $(el).text(new Date(Date.parse($(el).text())).toLocaleDateString("fa-IR", {year: "2-digit", month: "long", day: "numeric", hour: "numeric", minute: "numeric"}));
+           $(el).text(new Date(Date.parse($(el).text())).toLocaleDateString("fa-IR", {year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"}));
         });
     });
 </script>
