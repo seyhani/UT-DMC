@@ -73,7 +73,7 @@ router.post('/register',function(req, res,next) {
     User.findOne({$or:[{username: user.username},{studentId:studentId}]}).exec(function (err, existUser) {
         if (err) return next(err);
         if (existUser) {
-            req.flash('error', 'Username already exist');
+            req.flash('error', 'Username already exist!');
             middleware.dmcRedirect(res,'/register');
         } else {
             mailer.sendTemplateTo(mailTemplates+"verification",{address:host,link:host+"/register/"+ token.setToken(user), name: firstname}
@@ -93,13 +93,20 @@ router.get('/register/:verification_token',function(req, res,next) {
     var user;
     try {
         user = token.decodeToken(req.params.verification_token);
-        User.create(user,function (err, newUser) {
-            if (err) return next(err);
-            middleware.dmcRedirect(res,'/login');
+        User.findOne({username:user.username}).exec(function (err,foundUser) {
+           if(foundUser) {
+                req.flash("error", "Token has expired!");
+                middleware.dmcRedirect(res,'/login');
+           } else {
+               User.create(user,function (err, newUser) {
+                   if (err) return next(err);
+                   middleware.dmcRedirect(res,'/login');
+               });
+           }
         });
     }catch(err) {
         req.flash("error", "لینک نامعتبر");
-        res.dmcRedirect("/");
+        middleware.dmcRedirect(res,'/');
     }
 });
 //show login form

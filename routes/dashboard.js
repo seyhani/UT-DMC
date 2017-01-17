@@ -18,7 +18,7 @@ var upload = multer({
 });
 var sanitize = require('mongo-sanitize');
 var path = require('path');
-const submissionWait = 5*1000;
+const submissionWait = 20*1000;
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
 router.all("/*",middleware.isLoggedIn);
@@ -116,6 +116,7 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                 if(Date.now() - submissionWait > puzzle.lastSubmit ) {
                     if(req.file) {
                         puzzle.submisson.file = user.group.name + path.extname(req.file.originalname);
+                        puzzle.lastSubmit = Date.now();
                         var submission_dir = puzzle.problem.dir + "Submissions";
                         var submission_name = puzzle.submisson.file;
                         if (puzzle.submisson.file)

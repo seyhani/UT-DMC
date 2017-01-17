@@ -27,7 +27,7 @@
                 <form action="<%=baseURL%>/admin/groups/<%=group._id%>/addUser" method="POST">
                     <select class="form-control cselect" type="text" name="username" placeholder="User">
                         <%users.forEach(function (user) {%>
-                        <option value="<%=user.username%>"><%=user.username%></option>
+                        <option value="<%=user.username%>"><%=user.name%> - <%=user.studentId%></option>
                         <%});%>
                     </select>
                     <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 10px;">Add Member</button>
@@ -66,7 +66,7 @@
     <% include ../../partials/footer %>
     <script src="<%=baseURL%>/chosen/chosen.jquery.min.js"></script>
     <script>
-        $("select.cselect").chosen();
+        $("select.cselect").chosen({search_contains:true});
     </script>
     <script src="<%=baseURL%>/scripts/setheight.js"></script>
 </body>
