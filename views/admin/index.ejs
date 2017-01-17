@@ -42,6 +42,8 @@
                         <span class="glyphicon glyphicon-pencil"></span> Problems
                     </a>
                 </div>
+                <!-- <%= typeof(isroot) %> -->
+                <%if(locals.isroot){%>
                 <div class="col-md-12 advbtn">
                     <button class="btn btn-info btn-lg btn-block">
                         <span class="glyphicon glyphicon-cog"></span> Advanced
@@ -67,6 +69,7 @@
                         <span class="glyphicon glyphicon-time"></span> Set Start Time
                     </a>
                 </div>
+                <%}%>
             </div>
         </div>
     </div>

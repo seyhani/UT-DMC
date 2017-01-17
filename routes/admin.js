@@ -7,14 +7,20 @@ var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
 var middleware = require("../middleware/index");
+var mailer = require('../middleware/mailSender');
 var rycode = require("../middleware/rycode");
 var Rule    = require("../models/rule");
+const mailTemplates = 'middleware/mailTemplates/';
 var _ = require("lodash");
 
 // router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     res.render('admin/index');
+});
+
+router.get("/root", function(req, res){
+    res.render('admin/index', {isroot: true});
 });
 
 router.get("/register", function(req, res){
@@ -304,6 +310,19 @@ router.post("/setStartTime", function(req, res){
         //toLocaleDateString("fa-IR", {year: "2-digit", month: "long", day: "numeric", hour: "numeric", minute: "numeric"})
         req.flash("success", "Start Time set to " + d.toString() + " and Duration to " + dur + ".");
         middleware.dmcRedirect(res,"/admin/");
+    });
+});
+
+router.get("/mailToAll", function(req, res){
+    res.render("dev/mailToAll", {});
+});
+
+router.post("/mailToAll", function(req, res){
+    mailer.sendTemplateToAll(mailTemplates + "custom", {address: host, title: req.body.title, text: req.body.text}
+        ,function(err, info) {
+        console.log("Mail to All\t" + err + info);
+        req.flash("success", "Email has sent to all users.");
+        middleware.dmcRedirect(res,'/admin/');
     });
 });
 
