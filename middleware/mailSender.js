@@ -18,18 +18,20 @@ const transporter = nodemailer.createTransport({
 
 module.exports = {
     sendTemplateToAll: function (pathToTemplate, params, callback) {
-        User.find({}, 'email', function(err, docs) {
-            if(err)
+        User.find({}, 'username', function(err, docs) {
+            if(err) {
                 return callback(err);
-            if(!docs)
+            }
+            if(!docs) {
                 return callback(null);
+            }
             new EmailTemplate(pathToTemplate).render(params, function(err, res)  {
                 if(err)
                     return callback(err);
                 delete res.text;
                 if(!res.html)
                     return callback(new Error("no html file in template"));
-                let receivers = docs.map(function (x) {return x.email;}).join(', ');
+                let receivers = docs.map(function (x) {return x.username;}).join(', ');
                 let options = Object.assign({}, mailOptions, {to: receivers}, res);
                 return transporter.sendMail(options, callback);
             });
