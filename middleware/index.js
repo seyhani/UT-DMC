@@ -22,7 +22,7 @@ function mkdir(dir) {
 }
 module.exports = {
   dmcRedirect(res,url){
-      console.log(host+url);
+      console.log("dmcRedirect:\t" + host+url);
       res.redirect(host+url);
   },
     isLoggedIn: function(req, res, next){

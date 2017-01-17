@@ -92,7 +92,7 @@ router.get("/login", function(req, res){
 });
 
 router.post("/login", function(req, res) {
-    console.log(res);
+    // console.log(res);
     User.findOne({username: req.body.username}).exec(function (err, user) {
         if(!user)
             middleware.dmcRedirect(res,"/admin/login");
@@ -327,7 +327,10 @@ router.post("/mailToAll", function(req, res){
     mailer.sendTemplateToAll(mailTemplates + "custom", {address: host, title: req.body.title, text: req.body.text}
         ,function(err, info) {
         console.log("Mail to All\t" + err + info);
-        req.flash("success", "Email has sent to all users.");
+        if(err)
+            req.flash("errorr", err);
+        else
+            req.flash("success", "Email has sent to all users.");
         middleware.dmcRedirect(res,'/admin/');
     });
 });
