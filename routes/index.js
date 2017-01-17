@@ -95,7 +95,7 @@ router.get('/register/:verification_token',function(req, res,next) {
         user = token.decodeToken(req.params.verification_token);
         User.findOne({username:user.username}).exec(function (err,foundUser) {
            if(foundUser) {
-                req.flash("error", "Token has expired!");
+                req.flash("error", "لینک ثبت‌نام قبلاً استفاده شده است.");
                 middleware.dmcRedirect(res,'/login');
            } else {
                User.create(user,function (err, newUser) {
