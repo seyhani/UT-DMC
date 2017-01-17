@@ -42,17 +42,22 @@
                         <span class="glyphicon glyphicon-pencil"></span> Problems
                     </a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12 advbtn">
+                    <button class="btn btn-info btn-lg btn-block">
+                        <span class="glyphicon glyphicon-cog"></span> Advanced
+                    </button>
+                </div>
+                <div class="col-md-6 adv">
                     <a class="btn btn-primary btn-lg btn-block" href="<%=baseURL%>/ranking/">
                         <span class="glyphicon glyphicon-stats"></span> Ranking
                     </a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 adv">
                     <a class="btn btn-primary btn-lg btn-block" href="<%=baseURL%>/admin/mailTemplates/">
                         <span class="glyphicon glyphicon-envelope"></span> Mail Center
                     </a>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 adv">
                     <a class="btn btn-primary btn-lg btn-block" href="<%=baseURL%>/admin/setStartTime">
                         <span class="glyphicon glyphicon-time"></span> Set Start Time
                     </a>
@@ -63,5 +68,27 @@
 </div>
 </div>
 <% include ../partials/footer %>
+<script>
+    var d = 300;
+    $(document).ready(function(){
+        $(".adv").each(function(i, el){
+            $(el).addClass('hide');
+        });
+        $(".advbtn button").click(function() {
+            $(this).css("opacity", 1);
+            $(this).css("height", $(this).outerHeight());
+            $(".adv").removeClass('hide');
+            $(".adv").css("opacity", 0);
+            var h = $(".adv").outerHeight();
+            $(".adv").css("height", 0);
+            $(this).animate({opacity: 0, height: 0}, d, function(){
+                $(this).css("display", "none");
+            });
+            $(".adv").animate({opacity: 1, height: h}, d, function(){
+                $(this).css("height", "");
+            });
+        });
+    });
+</script>
 </body>
 </html>

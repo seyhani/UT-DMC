@@ -4,18 +4,20 @@
     <title>DMC</title>
     <% include ../partials/head %>
 </head>
-<body onkeydown="down()" onkeyup="up()">
+<body onkeydown="down(event)" onkeyup="up(event)">
 <% include ../partials/header %>
-    <h1>RYCODE</h1>
-    <h2>Username :<%=username%></h2>
+<div class="container"><div class="row">
+    <div class="col-xs-offset-4 col-xs-4"><h1>RYCODE</h1></div>
+    <div class="col-xs-offset-4 col-xs-4"><h2>Username :<%=username%></h2></div>
+</div></div>
 <% include ../partials/footer %>
 <script>
     var a = 0;
     var t =[];
-    function down() {
+    function down(event) {
 
     }
-    function up() {
+    function up(event) {
 
         if(event.keyCode!=13)
             t.push(event.keyCode);
