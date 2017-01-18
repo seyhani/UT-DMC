@@ -25,6 +25,7 @@
                   <div class="thumbnail">
                      <div class="caption">
                          <h4 class="problemname"><%= user.username %></h4>
+                         <%if(user.isAdmin){%><h6><span class="glyphicon glyphicon-star"></span> Administrator</h6><%}else{%><h6><%=user.name%></h6><h6><%=user.studentId%></h6><%}%>
                      </div>
                      <p>
                          <a href="<%=baseURL%>/admin/users/<%= user._id %>" class="btn btn-primary">More Info</a>

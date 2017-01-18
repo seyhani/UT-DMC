@@ -12,18 +12,19 @@ var middleware = require("../middleware/index");
 router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/competition", function(req, res){
-    var submissionsCount = [];
+    var submissionsCount = {};
     Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
         Problem.find({}, function (err, allProblems) {
             Tag.find({}).exec(function (err, superTags) {
                 allProblems.forEach(function (problem) {
                     var submissionCount = 0;
                     puzzles.forEach(function (puzzle) {
-                        if(puzzle.problem._id == problem._id)
+                        if(""+puzzle.problem._id == ""+problem._id)
                             submissionCount++;
                     });
-                    submissionsCount.push(submissionCount);
+                    submissionsCount[problem.name] = (submissionCount);
                 });
+                console.log(submissionsCount);
                 if (err)
                     console.log(err);
                 else

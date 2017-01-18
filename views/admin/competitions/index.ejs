@@ -36,10 +36,12 @@
                 <div class="thumbnail">
                    <div class="caption">
                        <h4 class="problemname"><%= problem.name %></h4>
+                       <!-- <h4>&nbsp;</h4> -->
+                       <!-- <h6><%= submissionsCount[problem.name] %> submits</h6> -->
                    </div>
                    <!-- <p>#</p> -->
                     <p>
-                        <a href="<%=baseURL%>/admin/competition/problems/<%= problem._id %>" class="btn btn-primary">More Info</a>
+                        <a href="<%=baseURL%>/admin/competition/problems/<%= problem._id %>" class="btn btn-primary <%if(!submissionsCount[problem.name]){%>disabled<%}%>">view (<%= submissionsCount[problem.name] %>)</a>
                     </p>
                 </div>
             </div>
