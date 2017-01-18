@@ -110,7 +110,7 @@ Rule.findOne({name:"DMC"}).exec(function (err,rule) {
 });
 
 app.use((req, res, next) => {
-    res.flash(`error`, `Sorry cant find that:   `+req.url);
+    req.flash(`error`, `Sorry cant find that:   `+req.url);
     return middleware.dmcRedirect(res, '/');
 });
 

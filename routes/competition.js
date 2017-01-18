@@ -84,6 +84,7 @@ router.get("/competition/puzzles", function(req, res){
 
 router.get("/competition/puzzles/log", function(req, res){
     Puzzle.find({}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
+        console.log(puzzles);
         res.render("admin/puzzles/log",{puzzles:puzzles});
     });
 });

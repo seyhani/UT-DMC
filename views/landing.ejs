@@ -6,12 +6,14 @@
 	<meta name="theme-color" content="#999999" />
     <link rel="stylesheet" href="<%=baseURL%>/stylesheets/landing.css">
     <link rel="stylesheet" href="<%=baseURL%>/flipclock/flipclock.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.4.0/introjs-rtl.min.css">
 </head>
 <body>
 <% include partials/header %>
-<div class="container-fluid">
+<a class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Show me how</a>
+<div class="container-fluid" data-step="1">
 	<div id="particles-js">
-		<div class="main_countainer">
+		<div class="main_countainer" data-step="2" data-intro="This is a tooltip!">
 			<div class="inner_row">
 				<div class="inner_countainer">
 					<img src="<%=baseURL%>/img/dmc.png" alt="DM Contest">
@@ -20,6 +22,7 @@
 			<div class="inner_row">
 				<div class="inner_countainer">
 					<div class="clock"></div>
+
 				</div>
 			</div>
 		</div>
@@ -29,22 +32,25 @@
 <script src="<%=baseURL%>/particles/particles.min.js"></script>
 <script src="<%=baseURL%>/particles/app.js"></script>
 <script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
+<script src="/scripts/jquery-cookie.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.4.0/intro.min.js"></script>
 <script type="text/javascript">
-    var clock = $('.clock').FlipClock((<%= time %>)/1000, {
+    var clock = $('.clock').FlipClock(( 1000000)/1000, {
         clockFace: 'DailyCounter',
         countdown: true
     });
-    <%if(false){%>
     easteregg_flag = true;
     function easteregg(){
+		javascript:introJs().start();
     	if(easteregg_flag && window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array && parseInt(window.pJSDom[0].pJS.particles.array.length) == 0){
     		easteregg_flag = false;
 	      swal("Easter Egg!", "Congratulations!", "info");
+			Cookies.set('easterEgg', 'found');
     	}
 	    requestAnimationFrame(easteregg);
     }
     requestAnimationFrame(easteregg);
-    <%}%>
+
 </script>
 </body>
 </html>
