@@ -18,14 +18,19 @@
     </div>
 </div>
      <div class="row text-center" style="<%=baseURL%>/*display:flex; flex-wrap: wrap;*/" id="puzzles_list">
-       <div class="col-xs-12" style="padding: 6px 16px; text-align: left;"><input class="form-input search" placeholder="&#xe003;" type="text" /></div>
+       <div class="col-xs-12" style="padding: 6px 16px; text-align: left;">
+         <input class="form-input search" placeholder="&#xe003;" type="text" />
+         <ul class="taglist">
+            <li><button class="btn btn-warning btn-md tagsearchbtn">Administrator</button></li>
+         </ul>
+       </div>
        <ul class="list" style="list-style: none;">
           <% users.forEach(function(user){ %>
               <li><div class="col-md-3 col-sm-6">
                   <div class="thumbnail">
                      <div class="caption">
                          <h4 class="problemname"><%= user.username %></h4>
-                         <%if(user.isAdmin){%><h6><span class="glyphicon glyphicon-star"></span> Administrator</h6><%}else{%><h6><%=user.name%></h6><h6><%=user.studentId%></h6><%}%>
+                         <div class="tags"><%if(user.isAdmin){%><h6><span class="glyphicon glyphicon-star"></span> Administrator</h6><%}else{%><h6><%=user.name%></h6><h6><%=user.studentId%></h6><%}%></div>
                      </div>
                      <p>
                          <a href="<%=baseURL%>/admin/users/<%= user._id %>" class="btn btn-primary">More Info</a>
