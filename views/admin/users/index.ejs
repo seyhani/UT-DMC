@@ -23,10 +23,10 @@
           <% users.forEach(function(user){ %>
               <li><div class="col-md-3 col-sm-6">
                   <div class="thumbnail">
-                     <div class="caption"><div class="problemname"></div>
-                         <h4><%= user.username %></h4>
+                     <div class="caption">
+                         <h4 class="problemname"><%= user.username %></h4>
                          <%if(user.isAdmin){%><h6><span class="glyphicon glyphicon-star"></span> Administrator</h6><%}else{%><h6><%=user.name%></h6><h6><%=user.studentId%></h6><%}%>
-                     </div></div>
+                     </div>
                      <p>
                          <a href="<%=baseURL%>/admin/users/<%= user._id %>" class="btn btn-primary">More Info</a>
                      </p>
