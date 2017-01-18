@@ -25,13 +25,13 @@
         </div>
     </div>
 </div>
-
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
     <% puzzles.forEach(function(puzzle){ %>
     <div class="col-md-3 col-xs-12">
         <div class="thumbnail">
             <div class="caption">
                 <h4><%= puzzle.group.name %></h4>
+                <h5><%= problem.name %></h5>
             </div>
             <p>
                 <a href="<%=baseURL%>/admin/competition/puzzles/<%= puzzle._id %>" class="btn btn-primary">More Info</a>
