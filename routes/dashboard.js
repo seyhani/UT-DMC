@@ -53,8 +53,8 @@ router.get("/", function(req, res){
             if(!user.group) {
                 res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:req.remainingTime});
             } else {
-                // if(cookie.getCookie(req,"easterEgg")=="found")
-                //     user.group.easterEgg = 1;
+                if(cookie.getCookie(req,"easterEgg")=="found")
+                    user.group.easterEgg = 1;
                 if (err)
                     console.log(err);
                 else {

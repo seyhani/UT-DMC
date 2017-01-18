@@ -16,7 +16,7 @@ var _ = require("lodash");
 // router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
-    req.flash("error","asdasdasd");
+    // req.flash("error","asdasdasd");
     res.render('admin/index');
 });
 
