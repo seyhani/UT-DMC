@@ -34,7 +34,7 @@
 <script src="/scripts/jquery-cookie.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.4.0/intro.min.js"></script>
 <script type="text/javascript">
-    var clock = $('.clock').FlipClock(( 1000000)/1000, {
+    var clock = $('.clock').FlipClock((<%= time %>)/1000, {
         clockFace: 'DailyCounter',
         countdown: true
     });

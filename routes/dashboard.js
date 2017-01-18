@@ -39,7 +39,7 @@ router.all("/*",function (req,res,next) {
             req.flash("error", "مسابقه به پایان رسیده است.");
             middleware.dmcRedirect(res, baseURL);
         }else{
-            req.remainingTime = Date.now() - rule.startDate;
+            req.remainingTime = rule.startDate - Date.now() + rule.duration;
             return next();
         }
     });

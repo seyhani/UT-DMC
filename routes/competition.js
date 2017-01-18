@@ -11,8 +11,16 @@ var middleware = require("../middleware/index");
 
 router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
+router.get("/competition/count", function(req, res){
+    Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
+        res.json({newAllSubmissionCount: puzzles.length});
+    });
+    console.log("JSON Req");
+});
+
 router.get("/competition", function(req, res){
     var submissionsCount = {};
+    var allSubmissionCount = 0;
     Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
         Problem.find({}, function (err, allProblems) {
             Tag.find({}).exec(function (err, superTags) {
@@ -24,11 +32,10 @@ router.get("/competition", function(req, res){
                     });
                     submissionsCount[problem.name] = (submissionCount);
                 });
-                console.log(submissionsCount);
                 if (err)
                     console.log(err);
                 else
-                    res.render("admin/competitions/index", {problems: allProblems, superTags: superTags,submissionsCount:submissionsCount});
+                    res.render("admin/competitions/index", {problems: allProblems, superTags: superTags,submissionsCount:submissionsCount, allSubmissionCount: allSubmissionCount});
             });
         });
     });
@@ -84,7 +91,6 @@ router.get("/competition/puzzles", function(req, res){
 
 router.get("/competition/puzzles/log", function(req, res){
     Puzzle.find({}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
-        console.log(puzzles);
         res.render("admin/puzzles/log",{puzzles:puzzles});
     });
 });

@@ -113,7 +113,7 @@ router.post('/login/:username', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
         if (err) return next(err);
         if (!user) {
-            req.flash("error","RYCODE wasn't correct!")
+            req.flash("error","RYCODE wasnt correct!")
             return middleware.dmcRedirect(res,'/admin/login')
         }
         req.logIn(user, function(err) {
