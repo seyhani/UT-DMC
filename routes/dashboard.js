@@ -33,11 +33,11 @@ router.all("/*",function (req,res,next) {
         }
         else if(Date.now() < rule.startDate) {
             req.flash("error", "مسابقه هنوز آغاز نشده است.");
-            middleware.dmcRedirect(res, baseURL);
+            middleware.dmcRedirect(res, "/");
         }
         else if(Date.now()-rule.startDate > rule.duration) {
             req.flash("error", "مسابقه به پایان رسیده است.");
-            middleware.dmcRedirect(res, baseURL);
+            middleware.dmcRedirect(res, "/ranking/");
         }else{
             req.remainingTime = rule.startDate - Date.now() + rule.duration;
             return next();
@@ -89,7 +89,7 @@ router.get("/puzzles/:puzzle_id", function(req, res){
                 else
                 {
                     req.flash("error", "شما اعتبار کافی ندارید. اعتبار مورد نیاز: " + puzzle.cost);
-                    middleware.dmcRedirect(res,baseURL+"/dashboard");
+                    middleware.dmcRedirect(res, "/dashboard/");
                 }
             }
         });
@@ -140,7 +140,7 @@ router.post("/puzzles/:puzzle_id/answer",upload.single("file"), function(req, re
                     }
                 }else
                     req.flash("error", "برای ثبت دوباره جواب باید منتظر بمانید");
-                middleware.dmcRedirect(res,baseURL+"/dashboard");
+                middleware.dmcRedirect(res, "/dashboard/");
             }
         });
     });

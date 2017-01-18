@@ -125,7 +125,7 @@ router.post('/login', function(req, res, next){
         req.logIn(user, function(err) {
             if (err) return next(err);
             req.user = null;
-            return middleware.dmcRedirect(res,baseURL+"/dashboard");
+            return middleware.dmcRedirect(res, "/dashboard/");
         });
     })(req, res, next);
 });

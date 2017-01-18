@@ -41,9 +41,9 @@ router.get("/competition", function(req, res){
     });
 });
 
-router.get("/competitions/new", function(req, res){
-    res.render("admin/competitions/new");
-});
+// router.get("/competitions/new", function(req, res){
+//     res.render("admin/competitions/new");
+// });
 
 router.post("/competitions", function(req, res){
     Problem.find({}).exec(function (err,problems) {

@@ -15,14 +15,14 @@ router.get("/", function(req, res){
     });
 });
 
-router.get("/new", function(req, res){
-    res.render("admin/users/new");
-});
+// router.get("/new", function(req, res){
+//     res.render("admin/users/new");
+// });
 
 router.post("/", function(req, res){
     User.create({name:req.body.userName},function (err,user) {
         console.log(user);
-        middleware.dmcRedirect(res,'users/'+user._id);
+        middleware.dmcRedirect(res,'/admin/users/'+user._id);
     });
 });
 

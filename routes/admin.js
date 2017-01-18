@@ -67,7 +67,7 @@ router.post("/registerPass/:username", function(req, res){
         }
         else
         {
-            if(newpass != ""&&user.rycode == newpass)
+            if(newpass != "" && user.rycode == newpass)
             {
                 user.rycode = newpass;
                 user.password = newpass;
