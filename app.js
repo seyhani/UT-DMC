@@ -88,7 +88,7 @@ app.use(express.static(__dirname + "/public"));
 ////
 var baseUrlLocal = "";
 app.use(baseUrlLocal+"/", indexRoutes);
-// app.use(baseURL2+"/forum", forumRoutes);
+// app.use(baseUrlLocal+"/forum", forumRoutes);
 app.use(baseUrlLocal+"/dashboard/", dashboardRoutes);
 app.use(baseUrlLocal+"/admin/", groupRoutes);
 app.use(baseUrlLocal+"/admin/", competitionRoutes);
