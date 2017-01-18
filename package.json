@@ -20,6 +20,7 @@
     "core-js": "npm:core-js@^1.1.4"
   },
   "dependencies": {
-    "intro.js": "^2.4.0"
+    "intro.js": "^2.4.0",
+    "normalizeurl": "^1.0.0"
   }
 }

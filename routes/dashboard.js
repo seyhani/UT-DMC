@@ -45,6 +45,7 @@ router.all("/*",function (req,res,next) {
     });
 });
 router.get("/", function(req, res){
+    req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
     User.findById(req.user.id)
         .deepPopulate(["group","group.competition.puzzles","group.competition.rule",
             "group.competition.puzzles.problem","group.competition"])
@@ -52,8 +53,8 @@ router.get("/", function(req, res){
             if(!user.group) {
                 res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:req.remainingTime});
             } else {
-                if(cookie.getCookie(req,"easterEgg")=="found")
-                    user.group.easterEgg = 1;
+                // if(cookie.getCookie(req,"easterEgg")=="found")
+                //     user.group.easterEgg = 1;
                 if (err)
                     console.log(err);
                 else {

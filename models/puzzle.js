@@ -4,6 +4,7 @@ var deepPopulate = require('mongoose-deep-populate')(mongoose);
 //Puzzle status
 //new -> sold -> submitted -> rejected
 //                         -> accepted
+const submissionWait = 20*1000;
 var PuzzleSchema = new mongoose.Schema({
     problem: {
         type: mongoose.Schema.Types.ObjectId,
@@ -14,7 +15,7 @@ var PuzzleSchema = new mongoose.Schema({
         ref: "Group"
     },
     tags:[String],
-    lastSubmit:{type:Date,default:Date.now()-60000},
+    lastSubmit:{type:Date,default:Date.now()-submissionWait},
     status: {type:String,default:"new"},
     submisson:{
         file:String,

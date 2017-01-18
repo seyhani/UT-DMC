@@ -68,6 +68,9 @@ app.use( (req, res, next) => {
         let probName = [].concat(req.url.replace(probsPath, ``).split(`/`));
         if(probName.length > 1 && !req.user.isAdmin && probName[1] != `Sources`)
             return middleware.dmcRedirect(res, '/');
+        console.log(probName[0]);
+        probName[0] = probName[0].split(`%20`).join(` `);
+        console.log(probName[0]);
         Problem.findOne({name: probName[0]}, (err, prob) => {
             if(err || !prob)
                 return middleware.dmcRedirect(res, '/');
@@ -83,7 +86,6 @@ app.use( (req, res, next) => {
 });
 app.use(express.static(__dirname + "/public"));
 ////
-
 var baseUrlLocal = "";
 app.use(baseUrlLocal+"/", indexRoutes);
 // app.use(baseURL2+"/forum", forumRoutes);

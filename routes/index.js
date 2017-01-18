@@ -119,6 +119,7 @@ router.post('/login', function(req, res, next){
     passport.authenticate('local', function(err, user, info) {
         if (err) return next(err);
         if (!user) {
+            req.flash("error","نام کاربری موجود نیست!");
             return middleware.dmcRedirect(res,'/login');
         }
         req.logIn(user, function(err) {
