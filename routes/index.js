@@ -6,6 +6,7 @@ var sanitize = require('mongo-sanitize');
 var nodemailer = require('nodemailer');
 var request = require('request');
 var middleware = require('../middleware/index');
+var cookie = require('../middleware/cookie');
 var mailer = require('../middleware/mailSender');
 var Group = require("../models/group");
 var token = require('../middleware/token');
@@ -24,7 +25,7 @@ var Rule = require("../models/rule");
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
-    // middleware.dmcRedirect(res,"/aaaa");
+    
     Rule.findOne({name:"DMC"}).exec(function (err,rule) {
         var time;
         if(Date.now() < rule.startDate)

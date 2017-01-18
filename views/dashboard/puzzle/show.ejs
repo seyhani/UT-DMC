@@ -37,7 +37,8 @@
             <%if(puzzle.solved){%>
                 <p><%= puzzle.type%></p>
             <%}else{%>
-                <p><%= puzzle.problem.description %></p>
+                <p><%=
+                    puzzle.problem.description %></p>
             <%}%>
             <%if(puzzle.sources.length){%>
             <div>

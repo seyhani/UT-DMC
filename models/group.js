@@ -41,7 +41,8 @@ GroupSchema.methods.addPuzzle = function (puzzle) {
 };
 
 GroupSchema.methods.view= function (puzzle) {
-
+    if(!puzzle)
+        return false;
     if(!puzzle.new)
         return true;
     if(this.credit  >= puzzle.cost) {

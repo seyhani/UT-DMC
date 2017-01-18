@@ -5,7 +5,8 @@ var Tag = require("../models/tag");
 var Group = require("../models/group");
 var Puzzle = require("../models/puzzle");
 var User = require("../models/user");
-var middleware = require("../middleware");
+var middleware = require("../middleware/index");
+var cookie = require("../middleware/cookie");
 var request = require("request");
 var multer = require('multer');
 var rimraf = require('rimraf');
@@ -22,6 +23,7 @@ const submissionWait = 20*1000;
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
 router.all("/*",middleware.isLoggedIn);
+
 router.all("/*",function (req,res,next) {
     Rule.findOne({name:"DMC"}).exec(function (err,rule) {
         if(req.user.isAdmin)
@@ -50,6 +52,8 @@ router.get("/", function(req, res){
             if(!user.group) {
                 res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:req.remainingTime});
             } else {
+                if(cookie.getCookie(req,"easterEgg")=="found")
+                    user.group.easterEgg = 1;
                 if (err)
                     console.log(err);
                 else {
@@ -81,7 +85,6 @@ router.get("/puzzles/:puzzle_id", function(req, res){
             } else {
                 if(user.group.view(puzzle))
                     res.render("dashboard/puzzle/show", {puzzle: puzzle});
-
                 else
                 {
                     req.flash("error", "شما اعتبار کافی ندارید. اعتبار مورد نیاز: " + puzzle.cost);

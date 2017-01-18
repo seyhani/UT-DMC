@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-module.exports = {
+let lib = {
     sendTemplateToAll: function (pathToTemplate, params, callback) {
         User.find({}, 'username', function(err, docs) {
             if(err) {
@@ -67,3 +67,5 @@ module.exports = {
         return transporter.sendMail(options, callback);
     }
 };
+
+module.exports = lib;
