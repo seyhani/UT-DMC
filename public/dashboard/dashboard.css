@@ -91,7 +91,7 @@
   transform: rotate(45deg);
 }
 .thumbnail{
-  min-height: 180px;
+  min-height: 200px;
   position: relative;
   padding-bottom: 60px;
 }
