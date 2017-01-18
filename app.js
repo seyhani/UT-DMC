@@ -1,6 +1,8 @@
-var express             = require("express"),
+'use strict';
+const express           = require("express"),
     router              = express.Router(),
     app                 = express(),
+    path                = require('path'),
     bodyParser          = require("body-parser"),
     mongoose            = require("mongoose"),
     passport            = require("passport"),
@@ -8,30 +10,29 @@ var express             = require("express"),
     LocalStrategy       = require("passport-local"),
     flash               = require("connect-flash"),
     session             = require("express-session"),
+    methodOverride      = require("method-override"),
     middleware          = require("./middleware/index"),
-    methodOverride      = require("method-override");
+    User                = require("./models/user"),
+    Rule                = require("./models/rule"),
+    Problem             = require('./models/problem'),
+    Puzzle              = require('./models/puzzle'),
+    groupRoutes         = require("./routes/group"),
+    dashboardRoutes     = require("./routes/dashboard"),
+    adminRoutes         = require("./routes/admin"),
+    problemRoutes       = require("./routes/problems"),
+    tagRoutes           = require("./routes/tag"),
+    indexRoutes         = require("./routes/index"),
+    competitionRoutes   = require("./routes/competition"),
+    userRoutes          = require("./routes/user"),
+    forumRoutes         = require("./routes/forum");
 
 mongoose.Promise = global.Promise;
-
-// var config = require("./config/server");
-var Rule    = require("./models/rule");
-
-var groupRoutes       = require("./routes/group"),
-    dashboardRoutes   = require("./routes/dashboard"),
-    adminRoutes       = require("./routes/admin"),
-    problemRoutes     = require("./routes/problems"),
-    tagRoutes         = require("./routes/tag"),
-    indexRoutes       = require("./routes/index"),
-    User              = require("./models/user"),
-    competitionRoutes = require("./routes/competition"),
-    userRoutes        = require("./routes/user"),
-    forumRoutes       = require("./routes/forum");
-
 mongoose.connect("mongodb://localhost/DMC");
 
+//public/Files/Problems/
+///Files/Problems/sadegh/Sources/Homework 15 F95.pdf
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
 app.use(methodOverride('_method'));
 app.use(cookieParser('secret'));
 
@@ -41,13 +42,10 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-
 require('./config/passport')(passport);
-
 
 app.use(function(req, res, next){
     app.locals.currentUser = req.user;
@@ -57,17 +55,45 @@ app.use(function(req, res, next){
     res.locals.error = req.flash('error');
     next();
 });
+app.use( (req, res, next) => {
+    let probsPath = `${baseURL}/Files/Problems/`;
+    if(new RegExp(`^` + probsPath).test(req.url)) {
+        if(!req.user)
+            return middleware.dmcRedirect(res, '/');
+        if(req.user.isAdmin)
+            return next();
+        if(!req.user.group)
+            return middleware.dmcRedirect(res, '/');
 
-var baseURL2 = "";
-app.use(baseURL2+"/", indexRoutes);
+        let probName = [].concat(req.url.replace(probsPath, ``).split(`/`));
+        if(probName.length > 1 && !req.user.isAdmin && probName[1] != `Sources`)
+            return middleware.dmcRedirect(res, '/');
+        Problem.findOne({name: probName[0]}, (err, prob) => {
+            if(err || !prob)
+                return middleware.dmcRedirect(res, '/');
+            Puzzle.findOne({problem: prob, group: req.user.group}, (err, puzzle) => {
+                if(err || !puzzle || puzzle.new)
+                    return middleware.dmcRedirect(res, '/');
+                next();
+            })
+        });
+    }
+    else
+        next();
+});
+app.use(express.static(__dirname + "/public"));
+////
+
+var baseUrlLocal = "";
+app.use(baseUrlLocal+"/", indexRoutes);
 // app.use(baseURL2+"/forum", forumRoutes);
-app.use(baseURL2+"/dashboard/", dashboardRoutes);
-app.use(baseURL2+"/admin/", groupRoutes);
-app.use(baseURL2+"/admin/", competitionRoutes);
-app.use(baseURL2+"/admin/", adminRoutes);
-app.use(baseURL2+"/admin/users", userRoutes);
-app.use(baseURL2+"/admin/problems", problemRoutes);
-app.use(baseURL2+"/admin/tags", tagRoutes);
+app.use(baseUrlLocal+"/dashboard/", dashboardRoutes);
+app.use(baseUrlLocal+"/admin/", groupRoutes);
+app.use(baseUrlLocal+"/admin/", competitionRoutes);
+app.use(baseUrlLocal+"/admin/", adminRoutes);
+app.use(baseUrlLocal+"/admin/users", userRoutes);
+app.use(baseUrlLocal+"/admin/problems", problemRoutes);
+app.use(baseUrlLocal+"/admin/tags", tagRoutes);
 
 // Rule.findOne({name:"DMC"}).exec(function (err,rule) {
 //     console.log(rule);
@@ -83,13 +109,13 @@ Rule.findOne({name:"DMC"}).exec(function (err,rule) {
         console.log(rule);
 });
 
-app.use(function(req, res, next) {
-    res.status(404).send('Sorry cant find that:   '+req.url);
+app.use((req, res, next) => {
+    res.flash(`error`, `Sorry cant find that:   `+req.url);
+    return middleware.dmcRedirect(res, '/');
 });
 
-
-var server = app.listen(3042, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('Survey listening at http://%s:%s', host, port);
+let server = app.listen(3042, function () {
+    let host = server.address().address;
+    let port = server.address().port;
+    console.log(`Survey listening at http://${host}:${port}`);
 });
