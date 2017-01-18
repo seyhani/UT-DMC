@@ -1,4 +1,21 @@
 $(document).ready(function(){
+	if($("input[type='file']").length){
+		$("button[type='submit']").click(function(event) {
+			event.preventDefault();
+			if($("input[type='file']").val())
+				$(this).parent("form").submit();
+			else
+				swal({text: "ابتدا فایل پاسخ را انتخاب کنید.", type: "error", customClass: "rtl"});
+		});
+	} else{
+		$("button[type='submit']").click(function(event) {
+			event.preventDefault();
+			if($("input[type='text']").val())
+				$(this).parent("form").submit();
+			else
+				swal({text: "ابتدا پاسخ را وارد کنید.", type: "error", customClass: "rtl"});
+		});
+	}
 	$("input[type='file']").change(function(e){
 		var name = $("input[type='file']").val();
 		var ext = name.substr(name.lastIndexOf("\.") + 1);
