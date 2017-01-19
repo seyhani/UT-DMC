@@ -23,8 +23,7 @@ router.get("/", function(req, res){
             console.log(err);
         } else {
             Tag.find({}).exec(function (err,superTags) {
-                app.locals.currentUser = req.user;
-                res.render("admin/problems/index", {problems: allProblems,superTags:superTags});
+                res.render("admin/problems/index", {problems: allProblems,superTags:superTags, currentUser: req.user});
             });
         }
     });
@@ -66,8 +65,7 @@ router.post("/",upload.any() ,function(req, res){
 
 //NEW - show form to create new problem
 router.get("/new", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render("admin/problems/new");
+    res.render("admin/problems/new", {currentUser: req.user});
 });
 
 // SHOW - shows more info about one problem
@@ -79,8 +77,7 @@ router.get("/:id", function(req, res){
                 if(err)
                     console.log(err);
                 else {
-                    app.locals.currentUser = req.user;
-                    res.render("admin/problems/show", {problem: foundProblem,submissions:submissons,superTags:superTags});
+                    res.render("admin/problems/show", {problem: foundProblem,submissions:submissons,superTags:superTags, currentUser: req.user});
                 }
             });
         });
@@ -94,8 +91,7 @@ router.get("/:id/edit", function(req, res){
             console.log(err);
         } else {
             //render show template with that problem
-            app.locals.currentUser = req.user;
-            res.render("admin/problems/edit", {problem: foundProblem});
+            res.render("admin/problems/edit", {problem: foundProblem, currentUser: req.user});
         }
     });
 });

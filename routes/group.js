@@ -15,14 +15,12 @@ router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/groups", function(req, res){
     Group.find({}).deepPopulate(['members','competition.puzzles','competition.puzzles.problem']).exec(function (err,groups) {
-        app.locals.currentUser = req.user;
-        res.render("admin/groups/index",{groups:groups});
+        res.render("admin/groups/index",{groups:groups, currentUser: req.user});
     });
 });
 
 router.get("/groups/new", function(req, res) {
-    app.locals.currentUser = req.user;
-    res.render("admin/groups/new");
+    res.render("admin/groups/new", {currentUser: req.user});
 });
 
 
@@ -65,8 +63,7 @@ router.get("/groups/:groupId", function(req, res){
             Puzzle.find({_id:{$in:group.competition.puzzles},status:"submitted"}).exec(function (err,puzzles) {
                 User.find({_id:{$nin:group.members}}).exec(function (err,users) {
                     console.log(puzzles);
-                    app.locals.currentUser = req.user;
-                    res.render("admin/groups/show",{group:group,users:users,submissions:puzzles});
+                    res.render("admin/groups/show",{group:group,users:users,submissions:puzzles, currentUser: req.user});
                 });
             });
         });
@@ -76,8 +73,7 @@ router.get("/groups/:groupId/edit", function(req, res){
     Group.findById(req.params.groupId).deepPopulate(['members','competition.puzzles','competition.puzzles.problem'])
         .exec(function (err,group) {
             User.find({_id:{$nin:group.members}}).exec(function (err,users) {
-                app.locals.currentUser = req.user;
-                res.render("admin/groups/edit",{group:group});
+                res.render("admin/groups/edit",{group:group, currentUser: req.user});
             });
         });
 });
@@ -112,8 +108,7 @@ router.post("/groups/:groupId/addUser", function(req, res){
 
 router.get("/groups/:groupId/puzzles/:puzzle_id", function(req, res){
     Puzzle.findById(req.params.puzzle_id).exec(function (err,puzzle) {
-        app.locals.currentUser = req.user;
-        res.render("admin/puzzle/show",{puzzle:puzzle});
+        res.render("admin/puzzle/show",{puzzle:puzzle, currentUser: req.user});
     });
 });
 

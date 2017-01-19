@@ -35,8 +35,7 @@ router.get("/competition", function(req, res){
                 if (err)
                     console.log(err);
                 else {
-                    app.locals.currentUser = req.user;
-                    res.render("admin/competitions/index", {problems: allProblems, superTags: superTags,submissionsCount:submissionsCount, allSubmissionCount: allSubmissionCount});
+                    res.render("admin/competitions/index", {problems: allProblems, superTags: superTags,submissionsCount:submissionsCount, allSubmissionCount: allSubmissionCount, currentUser: req.user});
                 }
             });
         });
@@ -44,8 +43,7 @@ router.get("/competition", function(req, res){
 });
 
 // router.get("/competitions/new", function(req, res){
-//     app.locals.currentUser = req.user;
-//     res.render("admin/competitions/new");
+//     res.render("admin/competitions/new", {currentUser: req.user});
 // });
 
 router.post("/competitions", function(req, res){
@@ -80,8 +78,7 @@ router.get("/competition/problems/:problem_id", function(req, res){
             if (err) {
                 console.log(err);
             } else {
-                app.locals.currentUser = req.user;
-                res.render("admin/competitions/submissonsIndex", {puzzles: puzzles,problem:problem});
+                res.render("admin/competitions/submissonsIndex", {puzzles: puzzles,problem:problem, currentUser: req.user});
             }
         });
     });
@@ -89,15 +86,13 @@ router.get("/competition/problems/:problem_id", function(req, res){
 
 router.get("/competition/puzzles", function(req, res){
     Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
-        app.locals.currentUser = req.user;
-        res.render("admin/puzzles/index",{puzzles:puzzles});
+        res.render("admin/puzzles/index",{puzzles:puzzles, currentUser: req.user});
     });
 });
 
 router.get("/competition/puzzles/log", function(req, res){
     Puzzle.find({}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
-        app.locals.currentUser = req.user;
-        res.render("admin/puzzles/log",{puzzles:puzzles});
+        res.render("admin/puzzles/log",{puzzles:puzzles, currentUser: req.user});
     });
 });
 
@@ -121,8 +116,7 @@ router.get("/competition/puzzles/:puzzle_id", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            app.locals.currentUser = req.user;
-            res.render("admin/competitions/submission", {puzzle: puzzle});
+            res.render("admin/competitions/submission", {puzzle: puzzle, currentUser: req.user});
         }
     });
 });
@@ -130,8 +124,7 @@ router.get("/competition/puzzles/:puzzle_id", function(req, res){
 
 router.get("/competitions/:competitionId/puzzles/:puzzle_id", function(req, res){
     Puzzle.findById(req.params.puzzle_id).exec(function (err,puzzle) {
-        app.locals.currentUser = req.user;
-        res.render("admin/puzzle/show",{puzzle:puzzle});
+        res.render("admin/puzzle/show",{puzzle:puzzle, currentUser: req.user});
     });
 });
 

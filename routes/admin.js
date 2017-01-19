@@ -17,18 +17,15 @@ var _ = require("lodash");
 
 router.get("/", function(req, res){
     // req.flash("error","asdasdasd");
-    app.locals.currentUser = req.user;
-    res.render('admin/index');
+    res.render('admin/index', {currentUser: req.user});
 });
 
 router.get("/root", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render('admin/index', {isroot: true});
+    res.render('admin/index', {isroot: true, currentUser: req.user});
 });
 
 router.get("/register", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render('dev/register');
+    res.render('dev/register', {currentUser: req.user});
 });
 
 router.post("/register", function(req, res){
@@ -48,8 +45,7 @@ router.post("/register", function(req, res){
 
 router.get("/registerPass/:username", function(req, res){
     User.findOne({username:req.params.username}).exec(function (err,user) {
-        app.locals.currentUser = req.user;
-        res.render('dev/registerpass',{username:user.username});
+        res.render('dev/registerpass',{username:user.username, currentUser: req.user});
     });
 });
 router.post("/registerPass/:username", function(req, res){
@@ -93,8 +89,7 @@ router.post("/registerPass/:username", function(req, res){
 
 //show login form
 router.get("/login", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render("dev/login");
+    res.render("dev/login", {currentUser: req.user});
 });
 
 router.post("/login", function(req, res) {
@@ -106,8 +101,7 @@ router.post("/login", function(req, res) {
             if(!user.isAdmin)
                 req.flash("error","Wrong");
             else {
-                app.locals.currentUser = req.user;
-                res.render('dev/loginUser', {username: user.username});
+                res.render('dev/loginUser', {username: user.username, currentUser: req.user});
             }
         }
     });
@@ -133,8 +127,7 @@ router.post('/login/:username', function(req, res, next) {
 
 
 router.get("/newpass", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render('dev/newpass');
+    res.render('dev/newpass', {currentUser: req.user});
 });
 
 router.post("/newpass", function(req, res){
@@ -173,24 +166,20 @@ router.post("/rycode", function(req, res){
 });
 
 router.get("/rycode", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render('dev/rycode');
+    res.render('dev/rycode', {currentUser: req.user});
 });
 
 router.get("/console", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render('console');
+    res.render('console', {currentUser: req.user});
 });
 
 router.get("/mailTemplates", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render('dev/mailTemplates');
+    res.render('dev/mailTemplates', {currentUser: req.user});
 });
 
 router.get("/mailTemplates/:template", function(req, res){
-    app.locals.currentUser = req.user;
     res.render('../middleware/mailTemplates/'+req.params.template+"/html",
-        {address:host,link:host + "/link",hoursLeft:"12", name: "ادمین"});
+        {address:host,link:host + "/link",hoursLeft:"12", name: "ادمین", currentUser: req.user});
 });
 
 router.post("/console", function(req, res){
@@ -245,16 +234,14 @@ router.get("/puzzles", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            app.locals.currentUser = req.user;
-            res.render("problems/index", {problems: allProblems});
+            res.render("problems/index", {problems: allProblems, currentUser: req.user});
         }
     });
 });
 
 //NEW - show form to create new problem
 router.get("/puzzles/new", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render("problems/new");
+    res.render("problems/new", {currentUser: req.user});
 });
 
 // SHOW - shows more info about one problem
@@ -265,8 +252,7 @@ router.get("/puzzles/:id", function(req, res){
             console.log(err);
         } else {
             //render show template with that problem
-            app.locals.currentUser = req.user;
-            res.render("problems/show", {problem: foundProblem});
+            res.render("problems/show", {problem: foundProblem, currentUser: req.user});
         }
     });
 });
@@ -278,8 +264,7 @@ router.get("/puzzles/:id/edit", function(req, res) {
             console.log(err);
         } else {
             //render show template with that problem
-            app.locals.currentUser = req.user;
-            res.render("problems/edit", {problem: foundProblem});
+            res.render("problems/edit", {problem: foundProblem, currentUser: req.user});
         }
     });
 });
@@ -318,8 +303,7 @@ router.get("/setStartTime", function(req, res){
             dur = rule.duration / (3600*1000);
         }
         var tstr = t.getFullYear() + "-" + ((t.getMonth()+1) < 10 ? "0" + (t.getMonth()+1) : (t.getMonth()+1)) + "-" + (t.getDate() < 10 ? "0" + t.getDate() : t.getDate()) + "T" + (t.getHours() < 10 ? "0" + t.getHours() : t.getHours()) + ":" + (t.getMinutes() < 10 ? "0" + t.getMinutes() : t.getMinutes());
-        app.locals.currentUser = req.user;
-        res.render("dev/setStartTime", {startTime: tstr, dur: dur});
+        res.render("dev/setStartTime", {startTime: tstr, dur: dur, currentUser: req.user});
     });
 });
 router.post("/setStartTime", function(req, res){
@@ -338,8 +322,7 @@ router.post("/setStartTime", function(req, res){
 });
 
 router.get("/mailToAll", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render("dev/mailToAll", {});
+    res.render("dev/mailToAll", {currentUser: req.user});
 });
 
 router.post("/mailToAll", function(req, res){

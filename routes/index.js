@@ -34,8 +34,7 @@ router.get("/", function(req, res){
             time = rule.startDate - Date.now() + rule.duration;
         else
             time = 0;
-        app.locals.currentUser = req.user;
-        res.render("landing", {time: time});
+        res.render("landing", {time: time, currentUser: req.user});
     });
 });
 
@@ -48,15 +47,13 @@ router.get("/", function(req, res){
 
 router.get("/ranking", function(req, res){
     Group.find({}).populate(["competition"]).sort({"competition.score":-1}).exec(function (err,groups) {
-        app.locals.currentUser = req.user;
-        res.render("dashboard/ranking",{groups:groups});
+        res.render("dashboard/ranking",{groups:groups, currentUser: req.user});
     });
 });
 
 // show register form
 router.get("/register", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render("register");
+    res.render("register", {currentUser: req.user});
 });
 
 router.post('/register',function(req, res,next) {
@@ -115,8 +112,7 @@ router.get('/register/:verification_token',function(req, res,next) {
 });
 //show login form
 router.get("/login", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render("login");
+    res.render("login", {currentUser: req.user});
 });
 
 router.post('/login', function(req, res, next){
@@ -142,13 +138,11 @@ router.get("/logout", function(req, res){
 });
 
 router.get("/test", function(req, res){
-    app.locals.currentUser = req.user;
-    res.render("dev/test");
+    res.render("dev/test", {currentUser: req.user});
 });
 
 router.get('/forgot', function(req, res,next) {
-    app.locals.currentUser = req.user;
-    res.render('forgot_password', {user: req.user});
+    res.render('forgot_password', {user: req.user, currentUser: req.user});
 });
 
 router.post('/forgot', function(req, res, next) {
@@ -180,8 +174,7 @@ router.get('/reset/:token', function(req, res,next) {
             req.flash('error', 'لینک تغییر رمزعبور شما باطل شده یا نا متعبر است.');
             return middleware.dmcRedirect(res,'/forgot');
         } else{
-            app.locals.currentUser = req.user;
-            res.render('reset_password', {user:user,token:req.params.token});
+            res.render('reset_password', {user:user,token:req.params.token, currentUser: req.user});
         }
     });
 });
@@ -213,8 +206,7 @@ router.post('/reset/:token', function(req, res,next) {
 });
 
 router.get("/about", function(req, res) {
-    app.locals.currentUser = req.user;
-    res.render('about');
+    res.render('about', {currentUser: req.user});
 });
 
 module.exports = router;

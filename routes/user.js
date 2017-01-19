@@ -11,14 +11,12 @@ router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     User.find({}).exec(function (err,users) {
-        app.locals.currentUser = req.user;
-        res.render("admin/users/index",{users:users});
+        res.render("admin/users/index",{users:users, currentUser: req.user});
     });
 });
 
 // router.get("/new", function(req, res){
-//     app.locals.currentUser = req.user;
-//     res.render("admin/users/new");
+//     res.render("admin/users/new", {currentUser: req.user});
 // });
 
 router.post("/", function(req, res){
@@ -44,8 +42,7 @@ router.post("/:userId/addUser", function(req, res){
 router.get("/:userId", function(req, res){
     User.findById(req.params.userId).populate('group').exec(function (err,user) {
         console.log(user.id);
-        app.locals.currentUser = req.user;
-        res.render("admin/users/show",{user:user});
+        res.render("admin/users/show",{user:user, currentUser: req.user});
     });
 });
 

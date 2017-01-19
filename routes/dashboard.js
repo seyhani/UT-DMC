@@ -52,8 +52,7 @@ router.get("/", function(req, res){
             "group.competition.puzzles.problem","group.competition"])
         .exec(function (err,user) {
             if(!user.group) {
-                app.locals.currentUser = req.user;
-                res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:req.remainingTime});
+                res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:req.remainingTime, currentUser: req.user});
             } else {
                 if(cookie.getCookie(req,"easterEgg")=="found")
                     user.group.easterEgg = 1;
@@ -65,8 +64,7 @@ router.get("/", function(req, res){
                             if (err)
                                 console.log(err);
                             else {
-                                app.locals.currentUser = req.user;
-                                res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags,remainingTime:req.remainingTime});
+                                res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags,remainingTime:req.remainingTime, currentUser: req.user});
                             }
                         })
                     });
@@ -77,7 +75,6 @@ router.get("/", function(req, res){
 
 router.get("/ranking", function(req, res){
     Group.find({}).populate("competition").sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
-        app.locals.currentUser = req.user;
         res.render("dashboard/ranking",{groups:groups});
     });
 });
@@ -89,8 +86,7 @@ router.get("/puzzles/:puzzle_id", function(req, res){
                 console.log(err);
             } else {
                 if(user.group.view(puzzle)) {
-                    app.locals.currentUser = req.user;
-                    res.render("dashboard/puzzle/show", {puzzle: puzzle});
+                    res.render("dashboard/puzzle/show", {puzzle: puzzle, currentUser: req.user});
                 }
                 else
                 {

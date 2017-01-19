@@ -14,14 +14,12 @@ router.get("/", function(req, res){
 	if(req.user && req.user.group){
 		Clar.find({$or:[{from: req.user.group.name}, {to: req.user.group.name}, {toAll: true}]}, function(err, clars){
 			if(err) console.log("Err @ clar:" + err);
-			app.locals.currentUser = req.user;
-			res.render("clar", {clars: clars});
+			res.render("clar", {clars: clars, currentUser: req.user});
 		});
 	}else{
 		Clar.find({toAll: true}, function(err, clars){
 			if(err) console.log("Err @ clar:" + err);
-			app.locals.currentUser = req.user;
-			res.render("clar", {clars: clars});
+			res.render("clar", {clars: clars, currentUser: req.user});
 		});
 	}
 });
@@ -30,8 +28,7 @@ router.get("/admin", function(req, res){
 	if(req.user && req.user.isAdmin){
 		Clar.find({}, function(err, clars){
 			if(err) console.log("Err @ clar:" + err);
-			app.locals.currentUser = req.user;
-			res.render("clar", {clars: clars});
+			res.render("clar", {clars: clars, currentUser: req.user});
 		});
 	}else{
 		req.flash("error", "err");
@@ -43,8 +40,7 @@ router.get("/admin/all", function(req, res){
 	if(req.user && req.user.isAdmin){
 		Clar.find({toAll: true}, function(err, clars){
 			if(err) console.log("Err @ clar:" + err);
-			app.locals.currentUser = req.user;
-			res.render("clarAll", {clars: clars});
+			res.render("clarAll", {clars: clars, currentUser: req.user});
 		});
 	}else{
 		req.flash("error", "err");

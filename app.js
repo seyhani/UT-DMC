@@ -49,7 +49,7 @@ app.use(flash());
 require('./config/passport')(passport);
 
 app.use(function(req, res, next){
-    app.locals.currentUser = req.user;
+    //app.locals.currentUser = req.user;
     res.locals.baseURL  = baseURL;
     // console.log("PRE:" + req.url);
     res.locals.success = req.flash('success');
