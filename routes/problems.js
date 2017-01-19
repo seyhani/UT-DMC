@@ -66,7 +66,7 @@ router.post("/",upload.any() ,function(req, res){
 
 //NEW - show form to create new problem
 router.get("/new", function(req, res){
-   res.render("admin/problems/new");
+   res.render("admin/problems/new",{currentUser:req.user});
 });
 
 // SHOW - shows more info about one problem
@@ -93,7 +93,7 @@ router.get("/:id/edit", function(req, res){
             console.log(err);
         } else {
             //render show template with that problem
-            res.render("admin/problems/edit", {problem: foundProblem});
+            res.render("admin/problems/edit", {problem: foundProblem,currentUser:req.user});
         }
     });
 });
