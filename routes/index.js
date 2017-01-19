@@ -2,6 +2,7 @@ var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var Puzzle = require("../models/puzzle");
 var sanitize = require('mongo-sanitize');
 var nodemailer = require('nodemailer');
 var request = require('request');
@@ -46,9 +47,21 @@ router.get("/", function(req, res){
 // });
 
 router.get("/ranking", function(req, res){
-    Group.find({}).populate(["competition"]).sort({"competition.score":-1}).exec(function (err,groups) {
-        res.render("dashboard/ranking",{groups:groups, currentUser: req.user});
-    });
+  Group.find({}).populate("competition").sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
+      Puzzle.find().populate("problem").exec(function (err,puzzles) {
+          groups.forEach(function (group) {
+              group.competition.score  = 0;
+              puzzles.forEach(function (puzzle) {
+                  if((group.competition.puzzles.indexOf(puzzle._id)!=-1)&&puzzle.accepted)
+                      group.competition.score += puzzle.score;
+
+              });
+              group.competition.save();
+              group.save();
+          });
+          res.render("dashboard/ranking",{groups:groups,currentUser:req.user});
+      });
+  });
 });
 
 // show register form
