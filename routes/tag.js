@@ -21,6 +21,7 @@ router.get("/", function(req, res){
         if (err) {
             console.log(err);
         } else {
+            app.locals.currentUser = req.user;
             res.render("admin/tag", {tags: alltags});
         }
     });

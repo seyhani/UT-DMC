@@ -14,11 +14,13 @@ router.get("/", function(req, res){
 	if(req.user && req.user.group){
 		Clar.find({$or:[{from: req.user.group.name}, {to: req.user.group.name}, {toAll: true}]}, function(err, clars){
 			if(err) console.log("Err @ clar:" + err);
+			app.locals.currentUser = req.user;
 			res.render("clar", {clars: clars});
 		});
 	}else{
 		Clar.find({toAll: true}, function(err, clars){
 			if(err) console.log("Err @ clar:" + err);
+			app.locals.currentUser = req.user;
 			res.render("clar", {clars: clars});
 		});
 	}
@@ -28,6 +30,7 @@ router.get("/admin", function(req, res){
 	if(req.user && req.user.isAdmin){
 		Clar.find({}, function(err, clars){
 			if(err) console.log("Err @ clar:" + err);
+			app.locals.currentUser = req.user;
 			res.render("clar", {clars: clars});
 		});
 	}else{
@@ -40,6 +43,7 @@ router.get("/admin/all", function(req, res){
 	if(req.user && req.user.isAdmin){
 		Clar.find({toAll: true}, function(err, clars){
 			if(err) console.log("Err @ clar:" + err);
+			app.locals.currentUser = req.user;
 			res.render("clarAll", {clars: clars});
 		});
 	}else{

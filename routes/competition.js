@@ -34,14 +34,17 @@ router.get("/competition", function(req, res){
                 });
                 if (err)
                     console.log(err);
-                else
+                else {
+                    app.locals.currentUser = req.user;
                     res.render("admin/competitions/index", {problems: allProblems, superTags: superTags,submissionsCount:submissionsCount, allSubmissionCount: allSubmissionCount});
+                }
             });
         });
     });
 });
 
 // router.get("/competitions/new", function(req, res){
+//     app.locals.currentUser = req.user;
 //     res.render("admin/competitions/new");
 // });
 
@@ -77,6 +80,7 @@ router.get("/competition/problems/:problem_id", function(req, res){
             if (err) {
                 console.log(err);
             } else {
+                app.locals.currentUser = req.user;
                 res.render("admin/competitions/submissonsIndex", {puzzles: puzzles,problem:problem});
             }
         });
@@ -85,12 +89,14 @@ router.get("/competition/problems/:problem_id", function(req, res){
 
 router.get("/competition/puzzles", function(req, res){
     Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
+        app.locals.currentUser = req.user;
         res.render("admin/puzzles/index",{puzzles:puzzles});
     });
 });
 
 router.get("/competition/puzzles/log", function(req, res){
     Puzzle.find({}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
+        app.locals.currentUser = req.user;
         res.render("admin/puzzles/log",{puzzles:puzzles});
     });
 });
@@ -115,6 +121,7 @@ router.get("/competition/puzzles/:puzzle_id", function(req, res){
         if (err) {
             console.log(err);
         } else {
+            app.locals.currentUser = req.user;
             res.render("admin/competitions/submission", {puzzle: puzzle});
         }
     });
@@ -123,6 +130,7 @@ router.get("/competition/puzzles/:puzzle_id", function(req, res){
 
 router.get("/competitions/:competitionId/puzzles/:puzzle_id", function(req, res){
     Puzzle.findById(req.params.puzzle_id).exec(function (err,puzzle) {
+        app.locals.currentUser = req.user;
         res.render("admin/puzzle/show",{puzzle:puzzle});
     });
 });
