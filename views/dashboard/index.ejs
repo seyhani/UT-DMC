@@ -101,7 +101,7 @@
                     <%}else if(puzzle.sold) {%>
                         <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-info mainbtn">مشاهده</a>
                     <%}else  {%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-primary mainbtn">خرید</a>
+                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-primary mainbtn btn-verify">خرید</a>
                     <%}%>
                 </p>
                 </div>
@@ -123,6 +123,34 @@
         clockFace: 'DailyCounter',
         showSeconds: false,
         countdown: true
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $(".btn-verify").click(function(event){
+            event.preventDefault();
+            var el = this;
+            swal({
+              text: 'می‌خواهید سؤال را بخرید؟',
+              type: 'info',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              cancelButtonText: 'خیر',
+              confirmButtonText: 'بله',
+              customClass: "rtl"
+            })
+            // .then(function () {
+            //   swal({
+            //     text: 'سؤال را خریدید.',
+            //     type: 'success',
+            //     customClass: "rtl"
+            //   })
+              .then(function(){
+                window.location.href = $(el).attr('href');
+              });
+            // });
+        });
     });
 </script>
 </body>
