@@ -15,7 +15,7 @@ router.get("/competition/count", function(req, res){
     Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
         res.json({newAllSubmissionCount: puzzles.length});
     });
-    console.log("JSON Req");
+    // console.log("JSON Req");
 });
 
 router.get("/competition", function(req, res){

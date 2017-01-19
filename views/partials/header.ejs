@@ -21,6 +21,7 @@
                 <% } else { %>
                     <li><a href="<%=baseURL%>/logout"><span class="glyphicon glyphicon-off"></span> خروج</a></li>
                     <%if(currentUser.group){%>
+                        <li><a href="<%=baseURL%>/clar/<%if(currentUser.isAdmin){%>admin<%}%>" style="cursor: default;"><span class="glyphicon glyphicon-envelope"></span> ارتباطات</a></li>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-usd"></span> <%= currentUser.group.credit%></a></li>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-flash"></span> <%= currentUser.group.score%></a></li>
                         <li><a href="javascript: void();" style="cursor: default;"><span class="glyphicon glyphicon-th-large"></span> <%= currentUser.group.name%></a></li>

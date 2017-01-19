@@ -19,6 +19,7 @@ var upload = multer({
 });
 var sanitize = require('mongo-sanitize');
 var path = require('path');
+const clar = require("../models/clar");
 const submissionWait = 20*1000;
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems

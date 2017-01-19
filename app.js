@@ -16,6 +16,7 @@ const express           = require("express"),
     Rule                = require("./models/rule"),
     Problem             = require('./models/problem'),
     Puzzle              = require('./models/puzzle'),
+    Clar                = require('./models/clar'),
     groupRoutes         = require("./routes/group"),
     dashboardRoutes     = require("./routes/dashboard"),
     adminRoutes         = require("./routes/admin"),
@@ -24,7 +25,8 @@ const express           = require("express"),
     indexRoutes         = require("./routes/index"),
     competitionRoutes   = require("./routes/competition"),
     userRoutes          = require("./routes/user"),
-    forumRoutes         = require("./routes/forum");
+    forumRoutes         = require("./routes/forum"),
+    clarRoutes          = require("./routes/clar");
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/DMC");
@@ -89,6 +91,7 @@ app.use(express.static(__dirname + "/public"));
 var baseUrlLocal = "";
 app.use(baseUrlLocal+"/", indexRoutes);
 // app.use(baseUrlLocal+"/forum", forumRoutes);
+app.use(baseUrlLocal+"/clar/", clarRoutes);
 app.use(baseUrlLocal+"/dashboard/", dashboardRoutes);
 app.use(baseUrlLocal+"/admin/", groupRoutes);
 app.use(baseUrlLocal+"/admin/", competitionRoutes);

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fa-ir">
+<head>
+    <title>DMC</title>
+    <% include partials/head %>
+    <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
+    <link rel="stylesheet" href="<%=baseURL%>/flipclock/flipclock.css">
+</head>
+<style>
+    @media screen and (min-width: 992px){
+        .backch{
+            max-width: 992px;
+            margin: auto;
+        }
+    }
+    .detdet{
+        font-size: 0.7em;
+        color: #999;
+    }
+</style>
+<body>
+<% include partials/header %>
+<div class="backch">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    <h1><span class="glyphicon glyphicon-pencil"></span> <%if(!currentUser.isAdmin){%>Clars<%}else{%>اطلاعیه‌ها<%}%></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <% clars.forEach(function(clar){ %>
+        <div class="col-md-12">
+            <div class="eachproblem" style="min-height: 100px;">
+                <div class="problembod" dir="rtl">
+                    <p style="text-align: justify;"><%= clar.text %></p>
+                    <p style="text-align: left;" class="detdet time"  dir="rtl"><%= clar.date %></p>
+                </div>
+            </div>
+        </div>
+        <%});%>
+        <div class="col-md-12" >
+            <div class="eachproblem" style="min-height: 100px;">
+                <div class="problembod" dir="rtl">
+                    <form action="<%=baseURL%>/clar/admin/all" method="POST">
+                        <div class="form-group"><textarea name="text" class="form-control" style="resize: vertical;" placeholder="<%if(!currentUser.isAdmin){%>Text<%}else{%>متن پیام<%}%>"></textarea></div>
+                        <div class="form-group"><button type="submit" class="btn btn-md btn-success btn-block"><%if(!currentUser.isAdmin){%>Send<%}else{%>ارسال<%}%></button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include partials/footer %>
+<script src="<%=baseURL%>/scripts/problist.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".time").each(function(index, el) {
+           $(el).text((new Date(Date.parse($(el).text())).toLocaleDateString("fa-IR", {year: "2-digit", month: "2-digit", day: "2-digit"})) + "    " + (new Date(Date.parse($(el).text())).toLocaleTimeString("fa-IR", {hour: "2-digit", minute: "2-digit"})));
+        });
+    });
+</script>
+</body>
+</html>
