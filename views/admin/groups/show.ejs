@@ -22,7 +22,7 @@
             <div class="list-group">
                 <h3>Members</h3>
                 <%group.members.forEach(function (member) {%>
-                <li class="list-group-item "><a link="white" href="<%=baseURL%>/admin/users/<%=member._id%>"><%=member.username%></a></li>
+                <li class="list-group-item "><a link="white" href="<%=baseURL%>/admin/users/<%=member._id%>"><%if(user.isAdmin){%><%=user.username%> &#x2605;<%}else{%><%=user.name%> - <%=user.studentId%><%}%></a></li>
                 <%});%>
                 <form action="<%=baseURL%>/admin/groups/<%=group._id%>/addUser" method="POST">
                     <select class="form-control cselect" type="text" name="username" placeholder="User">
