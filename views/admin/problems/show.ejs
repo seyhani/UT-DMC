@@ -32,6 +32,15 @@
                 <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">TAG</button>
             </form>
             <hr>
+            <form action="<%=baseURL%>/admin/problems/<%=problem._id%>/add" method="POST">
+                <select class="form-control cselect" name="group">
+                    <%groups.forEach(function (group) {%>
+                        <option value="<%=group._id%>"><%=group.name%></option>
+                    <%})%>
+                </select>
+                <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">Add to Group</button>
+            </form>
+            <hr>
             <form action="<%=baseURL%>/admin/problems/<%=problem._id%>?_method=DELETE" method="POST">
                 <button class="btn btn-lg btn-block btn-danger" style="margin-bottom: 10px;">DELETE</button>
             </form>

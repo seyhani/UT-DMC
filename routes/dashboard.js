@@ -75,6 +75,15 @@ router.get("/", function(req, res){
 
 router.get("/ranking", function(req, res){
     Group.find({}).populate("competition").sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
+        Puzzle.find().exec(function (err,puzzles) {
+            groups.forEach(function (group) {
+                group.competition.socre  = 0;
+                puzzles.forEach(function (puzzle) {
+                    if((group.competition.puzzles.indexOf(puzzle._id)!=-1)&&puzzle.accepted)
+                        group.competition.socre += puzzle.score;
+                });
+            });
+        });
         res.render("dashboard/ranking",{groups:groups});
     });
 });

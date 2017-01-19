@@ -69,7 +69,6 @@ PuzzleSchema.methods.accept = function () {
 };
 
 PuzzleSchema.methods.reject= function () {
-    this.group.competition.score += this.score;
     this.status = "rejected";
     this.problem.submits.wrong++;
     this.problem.save();

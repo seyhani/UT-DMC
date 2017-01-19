@@ -2,6 +2,7 @@ var express = require("express");
 var router  = express.Router();
 var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
+var Group = require("../models/group");
 var Tag = require("../models/tag");
 var middleware = require("../middleware");
 var request = require("request");
@@ -23,7 +24,7 @@ router.get("/", function(req, res){
             console.log(err);
         } else {
             Tag.find({}).exec(function (err,superTags) {
-                res.render("admin/problems/index", {problems: allProblems,superTags:superTags, currentUser: req.user});
+                res.render("admin/problems/index", {problems: allProblems,superTags:superTags,currentUser:req.user});
             });
         }
     });
@@ -65,20 +66,21 @@ router.post("/",upload.any() ,function(req, res){
 
 //NEW - show form to create new problem
 router.get("/new", function(req, res){
-    res.render("admin/problems/new", {currentUser: req.user});
+   res.render("admin/problems/new",{currentUser:req.user});
 });
 
 // SHOW - shows more info about one problem
 router.get("/:id", function(req, res){
     //find the problem with provided ID
-    Problem.findById(req.params.id).exec(function(err, foundProblem){
-        Puzzle.find({problem:foundProblem,status:"submitted"}).exec(function (err,submissons) {
-            Tag.find({}).exec(function (err,superTags) {
-                if(err)
-                    console.log(err);
-                else {
-                    res.render("admin/problems/show", {problem: foundProblem,submissions:submissons,superTags:superTags, currentUser: req.user});
-                }
+    Group.find().exec(function (err,groups) {
+        Problem.findById(req.params.id).exec(function(err, foundProblem){
+            Puzzle.find({problem:foundProblem,status:"submitted"}).exec(function (err,submissons) {
+                Tag.find({}).exec(function (err,superTags) {
+                    if(err)
+                        console.log(err);
+                    else
+                        res.render("admin/problems/show", {groups:groups,problem: foundProblem,submissions:submissons,superTags:superTags,currentUser:req.user});
+                });
             });
         });
     });
@@ -91,7 +93,7 @@ router.get("/:id/edit", function(req, res){
             console.log(err);
         } else {
             //render show template with that problem
-            res.render("admin/problems/edit", {problem: foundProblem, currentUser: req.user});
+            res.render("admin/problems/edit", {problem: foundProblem,currentUser:req.user});
         }
     });
 });
@@ -137,6 +139,22 @@ router.post('/:problem_id/tag', function(req, res,next) {
         if(err) return next(err);
         problem.tag = req.body.tag;
         middleware.dmcRedirect(res,"/admin/problems/"+problem._id);
+    });
+});
+
+router.post('/:problem_id/add', function(req, res,next) {
+    Problem.findById(req.params.problem_id,function (err,problem) {
+        Group.findById(req.body.group).populate("competition").exec(function (err,group) {
+            Puzzle.create({problem: problem, group: group, tags: problem.tags},
+                function (err, newPuzzle) {
+                    group.competition.puzzles.push(newPuzzle);
+                    group.competition.save();
+                    group.save(function (err) {
+                        middleware.dmcRedirect(res,"/admin/problems/"+problem._id);
+                    });
+
+                });
+        });
     });
 });
 
