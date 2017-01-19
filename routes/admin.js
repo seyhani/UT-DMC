@@ -17,14 +17,17 @@ var _ = require("lodash");
 
 router.get("/", function(req, res){
     // req.flash("error","asdasdasd");
+    app.locals.currentUser = req.user;
     res.render('admin/index');
 });
 
 router.get("/root", function(req, res){
+    app.locals.currentUser = req.user;
     res.render('admin/index', {isroot: true});
 });
 
 router.get("/register", function(req, res){
+    app.locals.currentUser = req.user;
     res.render('dev/register');
 });
 
@@ -45,6 +48,7 @@ router.post("/register", function(req, res){
 
 router.get("/registerPass/:username", function(req, res){
     User.findOne({username:req.params.username}).exec(function (err,user) {
+        app.locals.currentUser = req.user;
         res.render('dev/registerpass',{username:user.username});
     });
 });
@@ -89,6 +93,7 @@ router.post("/registerPass/:username", function(req, res){
 
 //show login form
 router.get("/login", function(req, res){
+    app.locals.currentUser = req.user;
     res.render("dev/login");
 });
 
@@ -100,8 +105,10 @@ router.post("/login", function(req, res) {
         else {
             if(!user.isAdmin)
                 req.flash("error","Wrong");
-            else
+            else {
+                app.locals.currentUser = req.user;
                 res.render('dev/loginUser', {username: user.username});
+            }
         }
     });
 });
@@ -126,6 +133,7 @@ router.post('/login/:username', function(req, res, next) {
 
 
 router.get("/newpass", function(req, res){
+    app.locals.currentUser = req.user;
     res.render('dev/newpass');
 });
 
@@ -165,18 +173,22 @@ router.post("/rycode", function(req, res){
 });
 
 router.get("/rycode", function(req, res){
+    app.locals.currentUser = req.user;
     res.render('dev/rycode');
 });
 
 router.get("/console", function(req, res){
+    app.locals.currentUser = req.user;
     res.render('console');
 });
 
 router.get("/mailTemplates", function(req, res){
+    app.locals.currentUser = req.user;
     res.render('dev/mailTemplates');
 });
 
 router.get("/mailTemplates/:template", function(req, res){
+    app.locals.currentUser = req.user;
     res.render('../middleware/mailTemplates/'+req.params.template+"/html",
         {address:host,link:host + "/link",hoursLeft:"12", name: "ادمین"});
 });
@@ -233,6 +245,7 @@ router.get("/puzzles", function(req, res){
         if (err) {
             console.log(err);
         } else {
+            app.locals.currentUser = req.user;
             res.render("problems/index", {problems: allProblems});
         }
     });
@@ -240,6 +253,7 @@ router.get("/puzzles", function(req, res){
 
 //NEW - show form to create new problem
 router.get("/puzzles/new", function(req, res){
+    app.locals.currentUser = req.user;
     res.render("problems/new");
 });
 
@@ -251,6 +265,7 @@ router.get("/puzzles/:id", function(req, res){
             console.log(err);
         } else {
             //render show template with that problem
+            app.locals.currentUser = req.user;
             res.render("problems/show", {problem: foundProblem});
         }
     });
@@ -263,6 +278,7 @@ router.get("/puzzles/:id/edit", function(req, res) {
             console.log(err);
         } else {
             //render show template with that problem
+            app.locals.currentUser = req.user;
             res.render("problems/edit", {problem: foundProblem});
         }
     });
@@ -302,6 +318,7 @@ router.get("/setStartTime", function(req, res){
             dur = rule.duration / (3600*1000);
         }
         var tstr = t.getFullYear() + "-" + ((t.getMonth()+1) < 10 ? "0" + (t.getMonth()+1) : (t.getMonth()+1)) + "-" + (t.getDate() < 10 ? "0" + t.getDate() : t.getDate()) + "T" + (t.getHours() < 10 ? "0" + t.getHours() : t.getHours()) + ":" + (t.getMinutes() < 10 ? "0" + t.getMinutes() : t.getMinutes());
+        app.locals.currentUser = req.user;
         res.render("dev/setStartTime", {startTime: tstr, dur: dur});
     });
 });
@@ -321,6 +338,7 @@ router.post("/setStartTime", function(req, res){
 });
 
 router.get("/mailToAll", function(req, res){
+    app.locals.currentUser = req.user;
     res.render("dev/mailToAll", {});
 });
 

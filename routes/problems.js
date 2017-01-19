@@ -23,6 +23,7 @@ router.get("/", function(req, res){
             console.log(err);
         } else {
             Tag.find({}).exec(function (err,superTags) {
+                app.locals.currentUser = req.user;
                 res.render("admin/problems/index", {problems: allProblems,superTags:superTags});
             });
         }
@@ -65,7 +66,8 @@ router.post("/",upload.any() ,function(req, res){
 
 //NEW - show form to create new problem
 router.get("/new", function(req, res){
-   res.render("admin/problems/new");
+    app.locals.currentUser = req.user;
+    res.render("admin/problems/new");
 });
 
 // SHOW - shows more info about one problem
@@ -76,8 +78,10 @@ router.get("/:id", function(req, res){
             Tag.find({}).exec(function (err,superTags) {
                 if(err)
                     console.log(err);
-                else
+                else {
+                    app.locals.currentUser = req.user;
                     res.render("admin/problems/show", {problem: foundProblem,submissions:submissons,superTags:superTags});
+                }
             });
         });
     });
@@ -90,6 +94,7 @@ router.get("/:id/edit", function(req, res){
             console.log(err);
         } else {
             //render show template with that problem
+            app.locals.currentUser = req.user;
             res.render("admin/problems/edit", {problem: foundProblem});
         }
     });
