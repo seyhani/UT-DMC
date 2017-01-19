@@ -33,7 +33,7 @@
             </form>
             <hr>
             <form action="<%=baseURL%>/admin/problems/<%=problem._id%>/add" method="POST">
-                <select class="form-control cselect" name="tag">
+                <select class="form-control cselect" name="group">
                     <%groups.forEach(function (group) {%>
                         <option value="<%=group._id%>"><%=group.name%></option>
                     <%})%>
