@@ -25,7 +25,6 @@ const express           = require("express"),
     indexRoutes         = require("./routes/index"),
     competitionRoutes   = require("./routes/competition"),
     userRoutes          = require("./routes/user"),
-    forumRoutes         = require("./routes/forum"),
     clarRoutes          = require("./routes/clar");
 
 mongoose.Promise = global.Promise;
