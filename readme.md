@@ -1,2 +1,2 @@
-DMC
-Discrete Mathematics Contest Site
+#DMC
+[Discrete Mathematics Contest](http://acm.ut.ac.ir/dmc "Contest Site")
