@@ -9,6 +9,7 @@ var request = require('request');
 var middleware = require('../middleware/index');
 var cookie = require('../middleware/cookie');
 var mailer = require('../middleware/mailSender');
+var normalizeEmail = require('../middleware/emailNormalizer');
 var Group = require("../models/group");
 var token = require('../middleware/token');
 var crypto = require("crypto");
@@ -75,7 +76,7 @@ router.post('/register',function(req, res,next) {
     var firstname = sanitize(req.body.firstname);
     var lastname = sanitize(req.body.lastname);
     var studentId = sanitize(req.body.studentId);
-    var email = sanitize(req.body.email);
+    var email = normalizeEmail(sanitize(req.body.email));
     var user = {
         firstname: firstname,
         lastname: lastname,
