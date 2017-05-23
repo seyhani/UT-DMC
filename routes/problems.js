@@ -16,7 +16,7 @@ var upload = multer({
     }
 });
 
-router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     Problem.find({}, function(err, allProblems) {

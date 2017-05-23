@@ -25,8 +25,10 @@ const express           = require("express"),
     indexRoutes         = require("./routes/index"),
     competitionRoutes   = require("./routes/competition"),
     userRoutes          = require("./routes/user"),
-    clarRoutes          = require("./routes/clar");
+    clarRoutes          = require("./routes/clar"),
+    globalConfig        = require("./config/global");
 
+globalConfig.init();
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/DMC");
 
@@ -89,7 +91,6 @@ app.use(express.static(__dirname + "/public"));
 ////
 var baseUrlLocal = "";
 app.use(baseUrlLocal+"/", indexRoutes);
-// app.use(baseUrlLocal+"/forum", forumRoutes);
 app.use(baseUrlLocal+"/clar/", clarRoutes);
 app.use(baseUrlLocal+"/dashboard/", dashboardRoutes);
 app.use(baseUrlLocal+"/admin/", groupRoutes);
@@ -99,12 +100,7 @@ app.use(baseUrlLocal+"/admin/users", userRoutes);
 app.use(baseUrlLocal+"/admin/problems", problemRoutes);
 app.use(baseUrlLocal+"/admin/tags", tagRoutes);
 
-// Rule.findOne({name:"DMC"}).exec(function (err,rule) {
-//     console.log(rule);
-//     if(rule)
-//        rule.remove();
-//     Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:3600*8000});
-// });
+
 
 Rule.findOne({name:"DMC"}).exec(function (err,rule) {
     if(!rule)

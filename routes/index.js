@@ -17,8 +17,8 @@ const mailTemplates = 'middleware/mailTemplates/';
 var async = require("async");
 var simplesmtp = require("simplesmtp");
 var fs = require("fs");
-var config = require("../config/test");
 var Rule = require("../models/rule");
+var winston = require("winston");
 'use strict';
 
 // var host = "http://acm.ut.ac.ir/dmc";
@@ -71,16 +71,16 @@ router.get("/register", function(req, res){
 });
 
 router.post('/register',function(req, res,next) {
-    var username = sanitize(req.body.username);
+    // var username = sanitize(req.body.username);
     var password = sanitize(req.body.password);
     var firstname = sanitize(req.body.firstname);
     var lastname = sanitize(req.body.lastname);
     var studentId = sanitize(req.body.studentId);
-    var email = normalizeEmail(sanitize(req.body.email));
+    var email = sanitize(req.body.email);
     var user = {
         firstname: firstname,
         lastname: lastname,
-        username: username,
+        username: email,
         studentId: studentId,
         email: email,
         password: password,
@@ -93,8 +93,7 @@ router.post('/register',function(req, res,next) {
         } else {
             mailer.sendTemplateTo(mailTemplates+"verification",{address:host,link:host+"/register/"+ token.setToken(user), name: firstname}
                 ,user.username,function (err,info) {
-                console.log("MERR: "+err);
-                console.log("MINF: "+info);
+                //TODO: MAIL SERVER
                 console.log(host+"/register/"+token.setToken(user));
                 req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
                 middleware.dmcRedirect(res,'/');
@@ -132,6 +131,7 @@ router.get("/login", function(req, res){
 router.post('/login', function(req, res, next){
     passport.authenticate('local', function(err, user, info) {
         if (err) return next(err);
+        console.log(info);
         if (!user) {
             req.flash("error","نام کاربری موجود نیست!");
             return middleware.dmcRedirect(res,'/login');

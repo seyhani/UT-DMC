@@ -7,8 +7,8 @@ const middleware = require("../middleware/index");
 const User = require("../models/user");
 const Group = require("../models/group");
 
-router.all("/clar/*",middleware.isLoggedIn);
-router.all("/clar/admin/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/clar/*",middleware.isLoggedIn);
+// router.all("/clar/admin/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
 	if(req.user && req.user.group){

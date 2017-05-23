@@ -13,7 +13,7 @@ module.exports = {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return text;
-    } ,
+    },
     setToken: function(user){
         user.resetPasswordExpires = Date.now() + expireLenght;
         return jwt.encode(user, secret);

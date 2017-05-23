@@ -1,8 +1,8 @@
 
 var fs = require('fs');
 var root = "public/";
-var config = require("../config/test");
 // var host = "http://acm.ut.ac.ir/dmc";
+var host = "";
 var validFileFormats= [".png",".jpg",".pdf"];
 function deleteFolderRecursive (path) {
     if( fs.existsSync(path) ) {
