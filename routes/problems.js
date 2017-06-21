@@ -140,11 +140,12 @@ router.post('/:problem_id/tag', function(req, res,next) {
 
 router.post('/:problem_id/add', function(req, res,next) {
     Problem.findById(req.params.problem_id,function (err,problem) {
-        Group.findById(req.body.group).populate("competition").exec(function (err,group) {
+        Group.findOne({_id:req.body.group}).populate("competition").exec(function (err,group) {
             Puzzle.create({problem: problem, group: group, tags: problem.tags},
                 function (err, newPuzzle) {
                     group.competition.puzzles.push(newPuzzle);
                     group.competition.save();
+                    console.log(group);
                     group.save(function (err) {
                         middleware.dmcRedirect(res,"/admin/problems/"+problem._id);
                     });

@@ -6,6 +6,7 @@
 module.exports = {
   init: function () {
       global.baseURL = "";
+      global.baseUrlLocal = "";
       global.host    = "http://localhost:3042";
       global.env     = "dev";
       global.problemFilesRootDirectory = "./Files/Problems";

@@ -90,7 +90,6 @@ app.use( (req, res, next) => {
 });
 app.use(express.static(__dirname + "/public"));
 ////
-var baseUrlLocal = "";
 
 
 app.use(baseUrlLocal+"/", indexRoutes);
