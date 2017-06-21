@@ -17,7 +17,6 @@ const mailTemplates = 'middleware/mailTemplates/';
 var async = require("async");
 var simplesmtp = require("simplesmtp");
 var fs = require("fs");
-var config = require("../config/test");
 var Rule = require("../models/rule");
 'use strict';
 
@@ -25,7 +24,19 @@ var Rule = require("../models/rule");
 // var baseURL = "/dmc";
 
 // router.all("/admin/*",middleware.isLoggedIn,middleware.havePermission);
-
+router.all("*",function (req, res, next) {
+    res.cookie("path",req.path);
+    res.cookie("lastPath",req.cookies.path);
+    next();
+});
+router.get("/back", function(req, res){
+    var redirect;
+    if(!req.cookies.lastPath)
+        redirect = req.path.substring(0,req.path.lastIndexOf("/"));
+    else
+        redirect = req.cookies.lastPath;
+    res.redirect(redirect);
+});
 router.get("/", function(req, res){
 
     Rule.findOne({name:"DMC"}).exec(function (err,rule) {
@@ -40,29 +51,21 @@ router.get("/", function(req, res){
     });
 });
 
-// router.get("/aaaa", function(req, res){
-//     middleware.dmcRedirect(res,"/eee");
-// });
-// router.get("/eee", function(req, res){
-//     res.render('landing');
-// });
-
 router.get("/ranking", function(req, res){
-  Group.find({}).populate("competition").sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
-      Puzzle.find().populate("problem").exec(function (err,puzzles) {
-          groups.forEach(function (group) {
-              group.competition.score  = 0;
-              puzzles.forEach(function (puzzle) {
-                  if((group.competition.puzzles.indexOf(puzzle._id)!=-1)&&puzzle.accepted)
-                      group.competition.score += puzzle.score;
+    Group.find({}).populate("competition").sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
+        Puzzle.find().populate("problem").exec(function (err,puzzles) {
+            groups.forEach(function (group) {
+                puzzles.forEach(function (puzzle) {
+                    if((group.competition.puzzles.indexOf(puzzle._id)!=-1)&&puzzle.accepted)
+                        group.competition.score += puzzle.score;
 
-              });
-              group.competition.save();
-              group.save();
-          });
-          res.render("dashboard/ranking",{groups:groups,currentUser:req.user});
-      });
-  });
+                });
+                group.competition.save();
+                group.save();
+            });
+            res.render("dashboard/ranking",{groups:groups,currentUser:req.user});
+        });
+    });
 });
 
 // show register form
@@ -76,7 +79,7 @@ router.post('/register',function(req, res,next) {
     var firstname = sanitize(req.body.firstname);
     var lastname = sanitize(req.body.lastname);
     var studentId = sanitize(req.body.studentId);
-    var email = normalizeEmail(sanitize(req.body.email));
+    var email = sanitize(req.body.email);
     var user = {
         firstname: firstname,
         lastname: lastname,
@@ -86,20 +89,19 @@ router.post('/register',function(req, res,next) {
         password: password,
     };
     User.findOne({$or:[{username: user.username},{studentId:studentId}]}).exec(function (err, existUser) {
+        console.log(existUser);
         if (err) return next(err);
         if (existUser) {
             req.flash('error', 'Username already exist!');
             middleware.dmcRedirect(res,'/register');
         } else {
-            mailer.sendTemplateTo(mailTemplates+"verification",{address:host,link:host+"/register/"+ token.setToken(user), name: firstname}
-                ,user.username,function (err,info) {
-                console.log("MERR: "+err);
-                console.log("MINF: "+info);
-                console.log(host+"/register/"+token.setToken(user));
-                req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
-                middleware.dmcRedirect(res,'/');
-            });
-
+            // mailer.sendTemplateTo(mailTemplates+"verification",{address:host,link:host+"/register/"+ token.setToken(user), name: firstname}
+            //     ,user.username,function (err,info)
+            console.log(user);
+            console.log(host+"/register/"+token.setToken(user));
+            req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
+            middleware.dmcRedirect(res,'/');
+            // });
         }
     });
 });
@@ -108,16 +110,18 @@ router.get('/register/:verification_token',function(req, res,next) {
     var user;
     try {
         user = token.decodeToken(req.params.verification_token);
+        console.log(user);
         User.findOne({username:user.username}).exec(function (err,foundUser) {
-           if(foundUser) {
+            if(foundUser) {
                 req.flash("error", "لینک ثبت‌نام قبلاً استفاده شده است.");
                 middleware.dmcRedirect(res,'/login');
-           } else {
-               User.create(user,function (err, newUser) {
-                   if (err) return next(err);
-                   middleware.dmcRedirect(res,'/login');
-               });
-           }
+            } else {
+                User.create(user,function (err, newUser) {
+                    console.log(err);
+                    if (err) return next(err);
+                    middleware.dmcRedirect(res,'/login');
+                });
+            }
         });
     }catch(err) {
         req.flash("error", "لینک نامعتبر");
@@ -144,15 +148,11 @@ router.post('/login', function(req, res, next){
     })(req, res, next);
 });
 
-// logout route
-router.get("/logout", function(req, res){
-   req.logout();
-   req.flash("success", "شما از سایت خارج شدید!");
-   middleware.dmcRedirect(res,"");
-});
 
-router.get("/test", function(req, res){
-    res.render("dev/test", {currentUser: req.user});
+router.get("/logout", function(req, res){
+    req.logout();
+    req.flash("success", "شما از سایت خارج شدید!");
+    middleware.dmcRedirect(res,"");
 });
 
 router.get('/forgot', function(req, res,next) {
@@ -183,14 +183,14 @@ router.post('/forgot', function(req, res, next) {
 router.get('/reset/:token', function(req, res,next) {
     User.findOne({ token:req.params.token}
         , function(err, user) {
-        if(err) return next(err);
-        if (!user) {
-            req.flash('error', 'لینک تغییر رمزعبور شما باطل شده یا نا متعبر است.');
-            return middleware.dmcRedirect(res,'/forgot');
-        } else{
-            res.render('reset_password', {user:user,token:req.params.token, currentUser: req.user});
-        }
-    });
+            if(err) return next(err);
+            if (!user) {
+                req.flash('error', 'لینک تغییر رمزعبور شما باطل شده یا نا متعبر است.');
+                return middleware.dmcRedirect(res,'/forgot');
+            } else{
+                res.render('reset_password', {user:user,token:req.params.token, currentUser: req.user});
+            }
+        });
 });
 
 router.post('/reset/:token', function(req, res,next) {
@@ -207,12 +207,12 @@ router.post('/reset/:token', function(req, res,next) {
                     user.token = undefined;
                     user.tokenExpires = undefined;
                     user.save(function(err) {
-                    req.logIn(user, function(err) {
-                        req.flash('success', 'رمزعبور شما با موفقیت تغییر کرد.');
-                        done(err, user);
+                        req.logIn(user, function(err) {
+                            req.flash('success', 'رمزعبور شما با موفقیت تغییر کرد.');
+                            done(err, user);
+                        });
                     });
                 });
-            });
         },
     ], function(err) {
         middleware.dmcRedirect(res,'/login');
@@ -221,6 +221,16 @@ router.post('/reset/:token', function(req, res,next) {
 
 router.get("/about", function(req, res) {
     res.render('about', {currentUser: req.user});
+});
+
+router.get("/puzzles/:puzzle_id/status", function(req, res){
+    console.log(req.params.puzzle_id);
+    Puzzle.findById(req.params.puzzle_id).exec( function (err, puzzle) {
+        if(puzzle)
+            return res.json({status:puzzle.status});
+        else
+            return res.json({status:null});
+    });
 });
 
 module.exports = router;

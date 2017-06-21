@@ -9,7 +9,7 @@ var Puzzle = require("../models/puzzle");
 var Competition = require("../models/competition");
 var middleware = require("../middleware/index");
 
-router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/competition/count", function(req, res){
     Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {
@@ -26,10 +26,6 @@ router.get("/competition", function(req, res){
             Tag.find({}).exec(function (err, superTags) {
                 allProblems.forEach(function (problem) {
                     var submissionCount = 0;
-                    puzzles.forEach(function (puzzle) {
-                        if(""+puzzle.problem._id == ""+problem._id)
-                            submissionCount++;
-                    });
                     submissionsCount[problem.name] = (submissionCount);
                 });
                 if (err)
@@ -116,7 +112,9 @@ router.get("/competition/puzzles/:puzzle_id", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            res.render("admin/competitions/submission", {puzzle: puzzle, currentUser: req.user});
+            puzzle.cacheSubmission().then(function () {
+                res.render("admin/competitions/submission", {puzzle: puzzle, currentUser: req.user});
+            });
         }
     });
 });

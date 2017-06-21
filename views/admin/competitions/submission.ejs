@@ -23,16 +23,16 @@
             <h2><%=puzzle.name%></h2>
             <h3>Group</h3><h4>&nbsp;<%=puzzle.group.name%></h4>
             <hr>
-            <%switch(puzzle.filePath.substr(puzzle.filePath.lastIndexOf("\.") + 1)){
+            <%switch(puzzle.submissionFile.substr(puzzle.submissionFile.lastIndexOf("\.") + 1)){
                     case "jpg": case "JPG": case "jpeg": case "JPEG": case "png": case "PNG": case "tiff": case "TIFF":%>
-            <img src="<%=baseURL%>/<%=puzzle.filePath%>" class="upedpic">
+            <img src="<%=baseURL%>/<%=puzzle.submissionFile%>" class="upedpic">
             <%break;
             case "pdf": case "PDF":%>
-            <object data="<%=baseURL%>/<%=puzzle.filePath%>" class="upedpic">
-                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="<%=baseURL%>/<%=puzzle.filePath%>" target="_blank">این جا</a> بارگیری کنید.</p>
+            <object data="<%=baseURL%>/<%=puzzle.submissionFile%>" class="upedpic">
+                <p dir="rtl">اه! مروروگر شما نمی‌تواند فایل‌های pdf نهفته را باز کند. فایل را از <a href="<%=baseURL%>/<%=puzzle.submissionFile%>" target="_blank">این جا</a> بارگیری کنید.</p>
             </object>
             <%}%>
-            <%if(puzzle.filePath.substr(puzzle.filePath.lastIndexOf("/") + 1) != 'undefined'){%><a class="btn btn-default" href="<%=baseURL%>/<%=puzzle.filePath%>" target="_blank"><%=puzzle.filePath.substr(puzzle.filePath.lastIndexOf("/") + 1)%></a><%}%>
+            <%if(puzzle.submissionFile.substr(puzzle.submissionFile.lastIndexOf("/") + 1) != 'undefined'){%><a class="btn btn-default" href="<%=baseURL%>/<%=puzzle.submissionFile%>" target="_blank"><%=puzzle.submissionFile.substr(puzzle.submissionFile.lastIndexOf("/") + 1)%></a><%}%>
         </div></div>
     </div>
     <% include ../../partials/footer %>

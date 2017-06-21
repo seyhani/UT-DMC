@@ -1,0 +1,101 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "push.js",
+        "scope": null,
+        "escapedName": "push.js",
+        "name": "push.js",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/amir/DMC/DevilMayCry"
+    ]
+  ],
+  "_from": "push.js@latest",
+  "_id": "push.js@0.0.13",
+  "_inCache": true,
+  "_location": "/push.js",
+  "_nodeVersion": "7.7.2",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/push.js-0.0.13.tgz_1491007873042_0.15892949234694242"
+  },
+  "_npmUser": {
+    "name": "nickersoft",
+    "email": "nickersoft@gmail.com"
+  },
+  "_npmVersion": "4.4.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "push.js",
+    "scope": null,
+    "escapedName": "push.js",
+    "name": "push.js",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/push.js/-/push.js-0.0.13.tgz",
+  "_shasum": "05f3bf5c414e386b45f9f61a98f9e3ecc7a5f4b4",
+  "_shrinkwrap": null,
+  "_spec": "push.js",
+  "_where": "/Users/amir/DMC/DevilMayCry",
+  "author": {
+    "name": "Tyler Nickerson"
+  },
+  "bugs": {
+    "url": "https://github.com/Nickersoft/push.js/issues"
+  },
+  "dependencies": {},
+  "description": "A compact, cross-browser solution for the Javascript Notifications API",
+  "devDependencies": {
+    "coveralls": "^2.11.15",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-coverage": "^1.0.0",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.8",
+    "karma-mocha-reporter": "^1.3.0",
+    "uglify-js": "^2.6.2"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "05f3bf5c414e386b45f9f61a98f9e3ecc7a5f4b4",
+    "tarball": "https://registry.npmjs.org/push.js/-/push.js-0.0.13.tgz"
+  },
+  "files": [
+    "test",
+    "*.js",
+    "*.html",
+    "*.md"
+  ],
+  "gitHead": "cd7ce07fec031494a0db21b4fb2911863e251c82",
+  "homepage": "https://github.com/Nickersoft/push.js",
+  "license": "MIT",
+  "main": "push.js",
+  "maintainers": [
+    {
+      "name": "nickersoft",
+      "email": "nickersoft@gmail.com"
+    }
+  ],
+  "name": "push.js",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nickersoft/push.js.git"
+  },
+  "scripts": {
+    "build": "uglifyjs push.js -o push.min.js --comments",
+    "prepublish": "npm run build",
+    "test": "karma start"
+  },
+  "version": "0.0.13"
+}

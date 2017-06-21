@@ -4,7 +4,9 @@ var Problem = require("../models/problem");
 var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
 var Tag = require("../models/tag");
-var middleware = require("../middleware");
+let middleware = require("../middleware"),
+    async      = require("async"),
+    fileManager = require("../middleware/fileManager");
 var request = require("request");
 var multer = require('multer');
 var rimraf = require('rimraf');
@@ -16,7 +18,7 @@ var upload = multer({
     }
 });
 
-router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     Problem.find({}, function(err, allProblems) {
@@ -31,6 +33,15 @@ router.get("/", function(req, res){
 });
 
 //CREATE - add new problem to DB
+function uploadFilesToProblemDirectory(files, problem) {
+    files.forEach(function (file) {
+        problem.files.push(file.originalname);
+    });
+    async.each(files, function (file) {
+        fileManager.moveFile(file.path,problemFilesRootDirectory+"/"+problem._id+"/Sources/"+file.originalname);
+    });
+    problem.save();
+}
 router.post("/",upload.any() ,function(req, res){
     // get data from form and add to problems array
     var name = req.body.name;
@@ -42,21 +53,14 @@ router.post("/",upload.any() ,function(req, res){
     // Create a new problem and save to DB
     Problem.findOne({name:problem.name}).exec(function (err,foundProblem) {
         if(!foundProblem) {
-            middleware.initialProblemDirectories(problem.name);
-            if (req.files) {
-                req.files.forEach(function (file) {
-                    problem.files.push(file.originalname);
-                    middleware.uploadToDir(file.path, problem.dir + "Sources", file.originalname);
+            Problem.create(problem,function (err,newProblem) {
+                newProblem.initialDirectories().then(function () {
+                    if (req.files)
+                        uploadFilesToProblemDirectory(req.files,newProblem);
                 });
-                problem.save();
-            }
-            if (err) {
-                req.flash("error", err.message);
-                middleware.dmcRedirect(res,"back");
-            } else {
                 req.flash("success", "Successfully Added!");
-                middleware.dmcRedirect(res,"/admin/problems/"+problem._id);
-            }
+                middleware.dmcRedirect(res,"/admin/problems/"+newProblem._id);
+            });
         }else{
             req.flash("error", "Problem already exist!");
             middleware.dmcRedirect(res,"/admin/problems/");
@@ -76,10 +80,9 @@ router.get("/:id", function(req, res){
         Problem.findById(req.params.id).exec(function(err, foundProblem){
             Puzzle.find({problem:foundProblem,status:"submitted"}).exec(function (err,submissons) {
                 Tag.find({}).exec(function (err,superTags) {
-                    if(err)
-                        console.log(err);
-                    else
+                    foundProblem.cacheSources().then(function () {
                         res.render("admin/problems/show", {groups:groups,problem: foundProblem,submissions:submissons,superTags:superTags,currentUser:req.user});
+                    });
                 });
             });
         });
@@ -115,15 +118,8 @@ router.put("/:id/edit",upload.any() , function(req, res){
         description: req.body.description,score:req.body.score,type:req.body.type
     };
     Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem){
-        middleware.initialProblemDirectories(problem.name);
         if(req.files)
-        {
-            req.files.forEach(function (file) {
-                problem.files.push(file.originalname);
-                middleware.uploadToDir(file.path,problem.dir+"Sources",file.originalname);
-            });
-            problem.save();
-        }
+            uploadFilesToProblemDirectory(req.files, problem);
         if(err){
             req.flash("error", err.message + req.body.score);
             middleware.dmcRedirect(res,"back");

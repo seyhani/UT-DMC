@@ -45,6 +45,26 @@ UserSchema.virtual('name').get(function () {
     return this.firstname+" "+this.lastname;
 });
 
+UserSchema.statics.findById = function (id) {
+  return new Promise((resolve,reject) => {
+      mongoose.model("User").findOne({_id:id}).exec(function (err,user) {
+          if(user.group)
+          {
+              mongoose.model("Group").findById(user.group).then(function (group) {
+                  user.group = group;
+                  resolve(user);
+              }).catch(function () {
+                  user.group = null;
+                  resolve(user);
+              });
+          }else{
+              user.group = null;
+              resolve(user);
+          }
+      })
+  });
+};
+
 
 UserSchema.plugin(passportLocalMongoose)
 UserSchema.plugin(deepPopulate);

@@ -29,6 +29,7 @@
      <div class="row text-center" style="<%=baseURL%>/*display:flex; flex-wrap: wrap;*/" id="puzzles_list">
         <div class="col-xs-12" style="padding: 6px 16px; text-align: left;"><input class="form-input search" placeholder="&#xe003;" type="text" /></div>
         <ul class="list" style="list-style: none;">
+            <%var x = groups.length%>
             <% groups.forEach(function(group){ %>
                 <li><div class="col-md-3 col-xs-12">
                     <div class="thumbnail">
@@ -55,4 +56,13 @@
     <script src="<%=baseURL%>/scripts/problist.js"></script>
     <% include ../../partials/footer %>
 </body>
+<script src="/push.js/push.js"></script>
+<script>
+    $(document).ready(function(){
+        Push.create("<%=x%>", {
+            body: 'This is some body content!',
+        });
+//
+    });
+</script>
 </html>

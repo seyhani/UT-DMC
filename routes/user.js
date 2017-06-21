@@ -7,17 +7,13 @@ var Puzzle = require("../models/puzzle");
 var Group = require("../models/group");
 var middleware = require("../middleware/index");
 
-router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/", function(req, res){
     User.find({}).exec(function (err,users) {
         res.render("admin/users/index",{users:users, currentUser: req.user});
     });
 });
-
-// router.get("/new", function(req, res){
-//     res.render("admin/users/new", {currentUser: req.user});
-// });
 
 router.post("/", function(req, res){
     User.create({name:req.body.userName},function (err,user) {

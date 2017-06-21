@@ -4,15 +4,18 @@
     <title>DMC</title>
     <% include partials/head %>
 	<meta name="theme-color" content="#999999" />
-    <link rel="stylesheet" href="<%=baseURL%>/stylesheets/landing.css">
+	<link rel="stylesheet" href="<%=baseURL%>/intro.js/introjs.css">
+	<!--<link rel="stylesheet" href="<%=baseURL%>/intro.js/introjs-rtl.css">-->
+    <link rel="stylesheet" href="<%=baseURL%>/intro.js/themes/introjs-modern.css">
+	<link rel="stylesheet" href="<%=baseURL%>/stylesheets/landing.css">
     <link rel="stylesheet" href="<%=baseURL%>/flipclock/flipclock.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.4.0/introjs-rtl.min.css">
 </head>
 <body>
 <% include partials/header %>
-<div class="container-fluid" data-step="1">
+<div class="container-fluid">
 	<div id="particles-js">
-		<div class="main_countainer" data-step="2" data-intro="This is a tooltip!">
+		<div class="main_countainer">
 			<div class="inner_row">
 				<div class="inner_countainer">
 					<img src="<%=baseURL%>/img/dmc.png" alt="DM Contest">
@@ -28,12 +31,15 @@
 	</div>
 </div>
 <% include partials/footer %>
+<script src="/scripts/jquery-cookie.js"></script>
 <script src="<%=baseURL%>/particles/particles.min.js"></script>
 <script src="<%=baseURL%>/particles/app.js"></script>
 <script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
 <script src="/scripts/jquery-cookie.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.4.0/intro.min.js"></script>
+<script src="/intro.js/intro.js"></script>
 <script type="text/javascript">
+	introJs().start();
     var clock = $('.clock').FlipClock((<%= time %>)/1000, {
         clockFace: 'DailyCounter',
         countdown: true

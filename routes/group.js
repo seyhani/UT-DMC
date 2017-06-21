@@ -1,6 +1,7 @@
 var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
+var mongoose = require("mongoose");
 var User = require("../models/user");
 var middleware = require("../middleware/index");
 var Problem = require("../models/problem");
@@ -11,9 +12,10 @@ var middleware = require("../middleware/index");
 var async = require('async');
 
 
-router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/groups", function(req, res){
+
     Group.find({}).deepPopulate(['members','competition.puzzles','competition.puzzles.problem']).exec(function (err,groups) {
         res.render("admin/groups/index",{groups:groups, currentUser: req.user});
     });
@@ -22,7 +24,6 @@ router.get("/groups", function(req, res){
 router.get("/groups/new", function(req, res) {
     res.render("admin/groups/new", {currentUser: req.user});
 });
-
 
 router.post("/groups", function(req, res){
     Problem.find({}).exec(function (err,problems) {
@@ -57,21 +58,18 @@ router.post("/groups", function(req, res){
     });
 });
 
-router.get("/groups/:groupId", function(req, res){
-    Group.findById(req.params.groupId).deepPopulate(['members','competition.puzzles','competition.puzzles.problem'])
-        .exec(function (err,group) {
-            Puzzle.find({_id:{$in:group.competition.puzzles},status:"submitted"}).exec(function (err,puzzles) {
-                User.find({_id:{$nin:group.members}}).exec(function (err,users) {
-                    console.log(puzzles);
-                    res.render("admin/groups/show",{group:group,users:users,submissions:puzzles, currentUser: req.user});
-                });
+router.get("/groups/:groupId", function(req, res) {
+    Group.findById(req.params.groupId).then(function (group) {
+        Puzzle.find({_id:{$in:group.competition.puzzles},status:"submitted"}).exec(function (err,puzzles) {
+            User.find({_id:{$nin:group.members}}).exec(function (err,users) {
+                 res.render("admin/groups/show", {group: group, users: users, submissions: puzzles, currentUser: req.user});
             });
         });
+    });
 });
 
 router.get("/groups/:groupId/edit", function(req, res){
-    Group.findById(req.params.groupId).deepPopulate(['members','competition.puzzles','competition.puzzles.problem'])
-        .exec(function (err,group) {
+    Group.findOne({_id:req.params.groupId}).then(function (group) {
             User.find({_id:{$nin:group.members}}).exec(function (err,users) {
                 res.render("admin/groups/edit",{group:group, currentUser: req.user});
             });
@@ -80,7 +78,7 @@ router.get("/groups/:groupId/edit", function(req, res){
 
 router.put("/groups/:groupId", function(req, res){
     var newData = {name: req.body.groupName, index: req.body.index,
-        credit: req.body.credit
+        initalCredit: req.body.credit
     };
     Group.findByIdAndUpdate(req.params.groupId, {$set: newData}, function(err, group){
         if(err){
@@ -94,7 +92,7 @@ router.put("/groups/:groupId", function(req, res){
 });
 
 router.post("/groups/:groupId/addUser", function(req, res){
-    Group.findById(req.params.groupId,function (err,group) {
+    Group.findOne({_id:req.params.groupId},function (err,group) {
         User.findOne({username:req.body.username}).exec(function (err,user) {
             if(user) {
                 group.addMember(user);
@@ -123,7 +121,7 @@ router.get("/groups/:groupId/hint/:problem_id", function(req, res){
 });
 
 router.delete("/groups/:groupId", function(req, res){
-    Group.findById(req.params.groupId).exec(function (err,group) {
+    Group.findOne({_id:req.params.groupId}).exec(function (err,group) {
         group.remove();
         middleware.dmcRedirect(res,'/admin/groups');
     });

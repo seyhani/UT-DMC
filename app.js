@@ -25,10 +25,13 @@ const express           = require("express"),
     indexRoutes         = require("./routes/index"),
     competitionRoutes   = require("./routes/competition"),
     userRoutes          = require("./routes/user"),
+    globalConfig        = require("./config/global"),
     clarRoutes          = require("./routes/clar");
 
+globalConfig.init();
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/DMC");
+
 
 //public/Files/Problems/
 ///Files/Problems/sadegh/Sources/Homework 15 F95.pdf
@@ -58,43 +61,45 @@ app.use(function(req, res, next){
 });
 app.use( (req, res, next) => {
     let probsPath = `${baseURL}/Files/Problems/`;
-    if(new RegExp(`^` + probsPath).test(req.url)) {
-        if(!req.user)
-            return middleware.dmcRedirect(res, '/');
-        if(req.user.isAdmin)
-            return next();
-        if(!req.user.group)
-            return middleware.dmcRedirect(res, '/');
-
-        let probName = [].concat(req.url.replace(probsPath, ``).split(`/`));
-        if(probName.length > 1 && !req.user.isAdmin && probName[1] != `Sources`)
-            return middleware.dmcRedirect(res, '/');
-        console.log(probName[0]);
-        probName[0] = probName[0].split(`%20`).join(` `);
-        console.log(probName[0]);
-        Problem.findOne({name: probName[0]}, (err, prob) => {
-            if(err || !prob)
-                return middleware.dmcRedirect(res, '/');
-            Puzzle.findOne({problem: prob, group: req.user.group}, (err, puzzle) => {
-                if(err || !puzzle || puzzle.new)
-                    return middleware.dmcRedirect(res, '/');
-                next();
-            })
-        });
-    }
-    else
+    // if(new RegExp(`^` + probsPath).test(req.url)) {
+    //     if(!req.user)
+    //         return middleware.dmcRedirect(res, '/');
+    //     if(req.user.isAdmin)
+    //         return next();
+    //     if(!req.user.group)
+    //         return middleware.dmcRedirect(res, '/');
+    //
+    //     let probName = [].concat(req.url.replace(probsPath, ``).split(`/`));
+    //     if(probName.length > 1 && !req.user.isAdmin && probName[1] != `Sources`)
+    //         return middleware.dmcRedirect(res, '/');
+    //     console.log(probName[0]);
+    //     probName[0] = probName[0].split(`%20`).join(` `);
+    //     console.log(probName[0]);
+    //     Problem.findOne({name: probName[0]}, (err, prob) => {
+    //         if(err || !prob)
+    //             return middleware.dmcRedirect(res, '/');
+    //         Puzzle.findOne({problem: prob, group: req.user.group}, (err, puzzle) => {
+    //             if(err || !puzzle || puzzle.new)
+    //                 return middleware.dmcRedirect(res, '/');
+    //             next();
+    //         })
+    //     });
+    // }
+    // else
         next();
 });
 app.use(express.static(__dirname + "/public"));
 ////
 var baseUrlLocal = "";
+
+
 app.use(baseUrlLocal+"/", indexRoutes);
 // app.use(baseUrlLocal+"/forum", forumRoutes);
+app.use(baseUrlLocal+"/admin/", adminRoutes);
 app.use(baseUrlLocal+"/clar/", clarRoutes);
 app.use(baseUrlLocal+"/dashboard/", dashboardRoutes);
 app.use(baseUrlLocal+"/admin/", groupRoutes);
 app.use(baseUrlLocal+"/admin/", competitionRoutes);
-app.use(baseUrlLocal+"/admin/", adminRoutes);
 app.use(baseUrlLocal+"/admin/users", userRoutes);
 app.use(baseUrlLocal+"/admin/problems", problemRoutes);
 app.use(baseUrlLocal+"/admin/tags", tagRoutes);
@@ -108,7 +113,7 @@ app.use(baseUrlLocal+"/admin/tags", tagRoutes);
 
 Rule.findOne({name:"DMC"}).exec(function (err,rule) {
     if(!rule)
-        Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:3600*8000});
+        Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:360000*8000});
     else
         console.log(rule);
 });

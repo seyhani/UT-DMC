@@ -7,21 +7,8 @@ const middleware = require("../middleware/index");
 const User = require("../models/user");
 const Group = require("../models/group");
 
-router.all("/clar/*",middleware.isLoggedIn);
-router.all("/clar/admin/*",middleware.isAdminLoggedIn,middleware.havePermission);
-
 router.get("/", function(req, res){
-	if(req.user && req.user.group){
-		Clar.find({$or:[{from: req.user.group.name}, {to: req.user.group.name}, {toAll: true}]}, function(err, clars){
-			if(err) console.log("Err @ clar:" + err);
-			res.render("clar", {clars: clars, currentUser: req.user});
-		});
-	}else{
-		Clar.find({toAll: true}, function(err, clars){
-			if(err) console.log("Err @ clar:" + err);
-			res.render("clar", {clars: clars, currentUser: req.user});
-		});
-	}
+	res.render("admin/clar/index");
 });
 
 router.get("/admin", function(req, res){

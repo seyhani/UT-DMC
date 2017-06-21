@@ -1,5 +1,7 @@
-var mongoose = require("mongoose");
-var middleware = require("../middleware/index");
+var mongoose    = require("mongoose");
+let middleware  = require("../middleware/index"),
+    fileManager = require("../middleware/fileManager"),
+    async       = require("async");
 
 var ProblemSchema = new mongoose.Schema({
     name: String,
@@ -34,6 +36,37 @@ ProblemSchema.methods.submitAnswer = function (answer) {
     }
 };
 
+ProblemSchema.methods.cacheSources = function () {
+    return new Promise((resolve,reject) => {
+        var problem = this;
+        var problemCacheDir = problemCacheRootDirectory + "/" + problem._id;
+        fileManager.makeDirectory(problemCacheDir).then(function () {
+            var problemSourcesDirectory = problem.sourceDir;
+            async.each(problem.files, function (sourceFile) {
+                fileManager.copyFileToDir(problemSourcesDirectory + "/" + sourceFile, problemCacheDir, sourceFile).then(function () {
+                });
+            });
+            problem.cached = true;
+            problem.save;
+            resolve();
+        });
+    });
+};
+
+ProblemSchema.methods.initialDirectories = function () {
+    return new Promise((resolve,reject) => {
+        var problem = this;
+        fileManager.makeDirectory("./Files/Problems/"+problem._id).then(function () {
+            fileManager.makeDirectory("./Files/Problems/"+problem._id+"/Sources").then(function () {
+                fileManager.makeDirectory("./Files/Problems/"+problem._id+"/Submissions").then(function () {
+                    resolve();
+                });
+            });
+        });
+    });
+};
+
+
 ProblemSchema.virtual('tag').set(function (tag) {
     var problem = this;
     var foundtag = problem.tags.find(function (t) {
@@ -49,15 +82,23 @@ ProblemSchema.virtual('tag').set(function (tag) {
 });
 
 ProblemSchema.virtual('dir').get(function () {
-    return "Files/Problems/"+this.name+"/";
+    return problemFilesRootDirectory + "/"+this._id;
+});
+
+ProblemSchema.virtual('sourceDir').get(function () {
+    return this.dir+"/" + "Sources";
+});
+
+ProblemSchema.virtual('cacheDir').get(function () {
+    return problemCacheRootDirectory+"/"+this._id;
 });
 
 ProblemSchema.virtual('sources').get(function () {
-    return middleware.getAllFilesFromFolder(this.dir+"Sources") ;
+    return fileManager.readAllFilesFromDir(this.cacheDir) ;
 });
 
 ProblemSchema.post("remove",function (problem) {
-    middleware.removeProblemDirectories(problem.name);
+    fileManager.removeDirectory(this.dir);
 });
 
 module.exports = mongoose.model("Problem", ProblemSchema);
