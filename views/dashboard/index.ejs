@@ -123,7 +123,7 @@
 <script src="<%=baseURL%>/listjs/list.min.js"></script>
 <script src="<%=baseURL%>/scripts/problist.js"></script>
 <script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
-<script src="/intro.js/intro.js"></script>
+<script src="<%=baseURL%>/intro.js/intro.js"></script>
 <script>
 
     var b = "<%=remainingTime%>";
@@ -133,7 +133,7 @@
         countdown: true
     });
 </script>
-<script src="/push.js/push.js"></script>
+<script src="<%=baseURL%>/push.js/push.js"></script>
 <script>
     var puzzleList = new List('puzzles_list', {
         valueNames: ['problemname','puzzlestatus','puzzleid'],
