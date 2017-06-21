@@ -21,7 +21,7 @@ function mkdir(dir) {
 }
 module.exports = {
     dmcRedirect(res,url){
-        res.redirect(host+url);
+        res.redirect(baseURL+url);
     },
     isLoggedIn: function(req, res, next){
         if(env == 'dev')
