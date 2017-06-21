@@ -150,7 +150,7 @@
     $(document).ready(function(){
         function doPoll(puzzle){
                     if(puzzle.status == "submitted") {
-                        $.get('/puzzles/' + puzzle.id + '/status', function (data) {
+                        $.get('<%=baseURL%>/puzzles/' + puzzle.id + '/status', function (data) {
                             if(data.status == "accepted")
                             {
                                 if(!puzzle.seen) {
