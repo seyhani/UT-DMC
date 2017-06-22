@@ -31,8 +31,8 @@ router.all("*",function (req, res, next) {
 });
 router.get("/back", function(req, res){
     var redirect;
-    // console.log(req.cookies.lastPath);
-    if(!req.cookies.lastPath)
+    console.log(req.path);
+    if(!req.cookies || !req.cookies.lastPath)
         redirect = req.path.substring(0,req.path.lastIndexOf("/"));
     else
         redirect = req.cookies.lastPath;
