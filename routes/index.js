@@ -153,7 +153,7 @@ router.post('/login', function(req, res, next){
 router.get("/logout", function(req, res){
     req.logout();
     req.flash("success", "شما از سایت خارج شدید!");
-    middleware.dmcRedirect(res,"");
+    middleware.dmcRedirect(res,"/");
 });
 
 router.get('/forgot', function(req, res,next) {
