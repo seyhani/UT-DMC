@@ -31,11 +31,12 @@ router.all("*",function (req, res, next) {
 });
 router.get("/back", function(req, res){
     var redirect;
+    // console.log(req.cookies.lastPath);
     if(!req.cookies.lastPath)
         redirect = req.path.substring(0,req.path.lastIndexOf("/"));
     else
         redirect = req.cookies.lastPath;
-    res.redirect(redirect);
+    middleware.dmcRedirect(res, redirect);
 });
 router.get("/", function(req, res){
 
