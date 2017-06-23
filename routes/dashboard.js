@@ -49,8 +49,17 @@ const submissionWait = 20*1000;
 
 router.get("/", function(req, res){
     User.findById(req.user._id).then(function (user) {
+        var time;
+        Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+            if(Date.now() < rule.startDate)
+                time = rule.startDate - Date.now();
+            else if(Date.now() - rule.startDate < rule.duration)
+                time = rule.startDate - Date.now() + rule.duration;
+            else
+                time = 0;
+        });
         if(!user.group) {
-            res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:req.remainingTime, currentUser: req.user});
+            res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:time, currentUser: req.user});
         } else {
             if(cookie.getCookie(req,"easterEgg")=="found")
                 user.group.easterEgg = 1;
@@ -59,7 +68,7 @@ router.get("/", function(req, res){
                     if (err)
                         console.log(err);
                     else {
-                        res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags,remainingTime:req.remainingTime, currentUser: req.user});
+                        res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags,remainingTime:time, currentUser: req.user});
                     }
                 })
             });
