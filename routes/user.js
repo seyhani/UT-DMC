@@ -22,18 +22,18 @@ router.post("/", function(req, res){
     });
 });
 
-router.post("/:userId/addUser", function(req, res){
-    User.findById(req.params.userId,function (err,user) {
-        User.findOne({username:req.body.username}).exec(function (err,user) {
-            if(user) {
-                user.addMember(user);
-            } else {
-                req.flash('error','User Not Found');
-            }
-        });
-        middleware.dmcRedirect(res,'/admin/users/'+user._id);
-    });
-});
+// router.post("/:userId/addUser", function(req, res){
+//     User.findById(req.params.userId,function (err,user) {
+//         User.findOne({username:req.body.username}).exec(function (err,user) {
+//             if(user) {
+//                 user.addMember(user);
+//             } else {
+//                 req.flash('error','User Not Found');
+//             }
+//         });
+//         middleware.dmcRedirect(res,'/admin/users/'+user._id);
+//     });
+// });
 
 router.get("/:userId", function(req, res){
     User.findOne({_id : req.params.userId}).populate('group').exec(function (err,user) {
@@ -43,7 +43,7 @@ router.get("/:userId", function(req, res){
 });
 
 router.delete("/:userId", function(req, res){
-    User.findById(req.params.userId).exec(function (err,user) {
+    User.findOne({_id: req.params.userId}).exec(function (err,user) {
         user.remove();
         middleware.dmcRedirect(res,'/admin/users');
     });
