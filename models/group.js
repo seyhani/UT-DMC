@@ -144,7 +144,7 @@ GroupSchema.methods.calculateCredit = function () {
                         cr: {
                             $sum: {
                                 $cond: {
-                                    if: {$eq: ["$status", "accepted"]}, then:{$multiply:["$payback",1]},
+                                    if: {$eq: ["$status", "accepted"]}, then:{$multiply:[{$divide:["$payback",3]},2]},
                                     else: {
                                         $cond: {
                                             if: {$ne: ["$status", "new"]}, then:{$multiply:["$payback",-1]},
