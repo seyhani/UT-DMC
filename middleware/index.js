@@ -31,7 +31,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.redirect(host+"/login");
+        dmcRedirect(res,"/login");
     },
     isAdminLoggedIn: function(req, res, next){
         if(env == 'dev')
@@ -44,7 +44,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "You must be signed in to do that!");
-        res.redirect(host+"/admin/login");
+        dmcRedirect(res,"/admin/login");
     },
     havePermission: function(req, res, next){
         if(env == 'dev')
@@ -57,7 +57,7 @@ module.exports = {
             return next();
         }
         req.flash("error", "you have not permission!");
-        res.redirect(host);
+        dmcRedirect(res,"/");
     },
     hashAnswer: function(answer,hashIndex)
     {
