@@ -174,6 +174,7 @@ GroupSchema.statics.findById = function (id) {
                         group.calculateScore().then(function (score) {
                             group.score = score;
                             group.credit = credit;
+                            group.save();
                             resolve(group);
                         })
                     });
