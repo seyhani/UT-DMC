@@ -13,13 +13,8 @@ var Rule    = require("../models/rule");
 const mailTemplates = 'middleware/mailTemplates/';
 var _ = require("lodash");
 
-// if(router.env != 'dev')
-//     console.log(router.env);
-// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
-// router.all("/*",function (req, res, next) {
-//
-//     next();
-// });
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+
 router.get("/", function(req, res){
     res.render('admin/index', {currentUser: req.user});
 });

@@ -8,7 +8,10 @@ const User = require("../models/user");
 const Group = require("../models/group");
 
 router.get("/", function(req, res){
-	res.render("admin/clar/index");
+    Clar.find({toAll: true}, function(err, clars){
+        if(err) console.log("Err @ clar:" + err);
+        res.render("clar", {clars: clars, currentUser: req.user});
+    });
 });
 
 router.get("/admin", function(req, res){
@@ -67,7 +70,7 @@ router.post("/admin", function(req, res){
 
 router.post("/admin/all", function(req, res){
 	if(req.user && req.user.isAdmin){
-		User.findById(req.user._id).populate("group").exec(function(err,user){
+		User.findOne({_id:req.user._id}).populate("group").exec(function(err,user){
 			var clar = new Clar({text: req.body.text, from: "Admin", to: "All", date: new Date(Date.now()), toAll: true});
 			clar.save(function(err){
 				if(err) console.log("Err @ clar:" + err);
