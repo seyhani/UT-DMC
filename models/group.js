@@ -99,8 +99,10 @@ GroupSchema.methods.calculateScore = function () {
 
             ],function (err,result) {
                 var s = 0;
-                if(result.length > 0)
-                    s = result[0].score;
+                if(result) {
+                    if (result.length > 0)
+                        s = result[0].score;
+                }
                 resolve(s);
             });
     });
@@ -157,8 +159,10 @@ GroupSchema.methods.calculateCredit = function () {
 
             ],function (err,result) {
                 var payment = 0;
-                if(result.length > 0)
-                    payment = result[0].cr;
+                if(result) {
+                    if (result.length > 0)
+                        payment = result[0].cr;
+                }
                 resolve(payment + group.initalCredit);
             });
     });
