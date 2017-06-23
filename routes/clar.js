@@ -9,7 +9,7 @@ const Group = require("../models/group");
 
 router.get("/", function(req, res){
     User.findOne({_id:req.user._id}).populate("group").exec(function(err,user){
-	    Clar.find({$or:[{toAll: true},{to:user.group.name}]}, function(err, clars){
+	    Clar.find({$or:[{toAll: true},{to:user.group.name},{from:user.group.name}]}, function(err, clars){
 	        if(err) console.log("Err @ clar:" + err);
 	        res.render("clar", {clars: clars, currentUser: req.user});
 	    });
