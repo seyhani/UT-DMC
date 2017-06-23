@@ -8,10 +8,12 @@ const User = require("../models/user");
 const Group = require("../models/group");
 
 router.get("/", function(req, res){
-    Clar.find({toAll: true}, function(err, clars){
-        if(err) console.log("Err @ clar:" + err);
-        res.render("clar", {clars: clars, currentUser: req.user});
-    });
+    User.findOne({_id:req.user._id}).populate("group").exec(function(err,user){
+	    Clar.find({$or:[{toAll: true},{to:user.group.name}]}, function(err, clars){
+	        if(err) console.log("Err @ clar:" + err);
+	        res.render("clar", {clars: clars, currentUser: req.user});
+	    });
+	});
 });
 
 router.get("/admin", function(req, res){
