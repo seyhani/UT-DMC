@@ -34,7 +34,7 @@
                 <%groups.forEach(function (group) {%>
                 <tr class="<% if(currentUser && currentUser.group && group.name == currentUser.group.name){%>info<%}%>">
                     <td class="gpname"><%=group.name%></td>
-                    <td class="gpscore"><%=group.competition.score%></td>
+                    <td class="gpscore"><%=group.score%></td>
                 </tr>
                 <%});%>
             </tbody>
