@@ -100,8 +100,9 @@ router.post('/register',function(req, res,next) {
             //     ,user.username,function (err,info)
             console.log(user);
             console.log(host+"/register/"+token.setToken(user));
-            req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
-            middleware.dmcRedirect(res,'/');
+            // req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
+            // middleware.dmcRedirect(res,'/');
+            middleware.dmcRedirect(res, "/register/"+token.setToken(user));
             // });
         }
     });
