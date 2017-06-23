@@ -22,12 +22,12 @@
             <div class="list-group">
                 <h3>Members</h3>
                 <%group.members.forEach(function (member) {%>
-                <li class="list-group-item "><a link="white" href="<%=baseURL%>/admin/users/<%=member._id%>"><%if(member.isAdmin){%><%=member.username%> &#x2605;<%}else{%><%=member.name%> - <%=member.studentId%><%}%></a></li>
+                <li class="list-group-item "><a link="white" href="<%=baseURL%>/admin/users/<%=member._id%>"><%=member.username%><%if(member.isAdmin){%> &#x2605;<%}%></a></li>
                 <%});%>
                 <form action="<%=baseURL%>/admin/groups/<%=group._id%>/addUser" method="POST">
                     <select class="form-control cselect" type="text" name="username" placeholder="User">
                         <%users.forEach(function (user) {%>
-                        <option value="<%=user.username%>"><%if(user.isAdmin){%><%=user.username%> &#x2605;<%}else{%><%=user.name%> - <%=user.studentId%><%}%></option>
+                        <option value="<%=user.username%>"><%=user.username%><%if(user.isAdmin){%> &#x2605;<%}%></option>
                         <%});%>
                     </select>
                     <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top: 10px;">Add Member</button>
