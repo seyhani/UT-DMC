@@ -55,7 +55,6 @@ router.get("/", function(req, res){
 router.get("/ranking", function(req, res){
     Group.find({}).exec(function (err,groups) {
             groups.forEach(function (group) {
-                console.log(group);
             });
             res.render("dashboard/ranking",{groups:groups,currentUser:req.user});
     });
