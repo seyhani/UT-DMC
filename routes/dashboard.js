@@ -48,25 +48,23 @@ const submissionWait = 20*1000;
 // });
 
 router.get("/", function(req, res){
-    // req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
-    User.findById(req.user.id).then(function (user) {
-    // User.findById(mongoose.Types.ObjectId("59243210a79b4631ecb3bcba")).then(function (user) {
+    User.findById(req.user._id).then(function (user) {
         if(!user.group) {
             res.render("dashboard/index", {user: user, puzzles: null, superTags: null,remainingTime:req.remainingTime, currentUser: req.user});
         } else {
             if(cookie.getCookie(req,"easterEgg")=="found")
                 user.group.easterEgg = 1;
-                Puzzle.find({_id: {$in: user.group.competition.puzzles}}).populate("problem").exec(function (err, puzzles) {
-                    Tag.find({}).exec(function (err, superTags) {
-                        if (err)
-                            console.log(err);
-                        else {
-                            res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags,remainingTime:req.remainingTime, currentUser: req.user});
-                        }
-                    })
-                });
+            Puzzle.find({_id: {$in: user.group.competition.puzzles}}).populate("problem").exec(function (err, puzzles) {
+                Tag.find({}).exec(function (err, superTags) {
+                    if (err)
+                        console.log(err);
+                    else {
+                        res.render("dashboard/index", {user: user, puzzles: puzzles, superTags: superTags,remainingTime:req.remainingTime, currentUser: req.user});
+                    }
+                })
+            });
         }
-    })
+    });
 });
 
 router.get("/puzzles", function(req, res){

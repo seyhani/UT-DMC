@@ -9,7 +9,7 @@ var Puzzle = require("../models/puzzle");
 var Competition = require("../models/competition");
 var middleware = require("../middleware/index");
 
-// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/competition/count", function(req, res){
     Puzzle.find({status:"submitted"}).deepPopulate(["group","group.competition","problem"]).exec(function (err,puzzles) {

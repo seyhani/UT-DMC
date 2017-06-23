@@ -12,7 +12,7 @@ var middleware = require("../middleware/index");
 var async = require('async');
 
 
-// router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
+router.all("/*",middleware.isAdminLoggedIn,middleware.havePermission);
 
 router.get("/groups", function(req, res){
 
