@@ -170,7 +170,7 @@ PuzzleSchema.virtual('cost').get(function () {
 });
 
 PuzzleSchema.virtual('payback').get(function () {
-    return (this.problem.score/2)*3 ;
+    return (this.problem.score/2) ;
 });
 
 PuzzleSchema.virtual('sources').get(function () {
