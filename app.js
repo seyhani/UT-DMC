@@ -109,12 +109,12 @@ app.use(baseUrlLocal+"/admin/tags", tagRoutes);
 //     Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:3600*8000});
 // });
 
-Rule.findOne({name:"DMC"}).exec(function (err,rule) {
-    if(!rule)
-        Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:360000*8000});
-    else
-        console.log(rule);
-});
+// Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+//     if(!rule)
+//         Rule.create({name:"DMC",startDate: new Date(2017,0,18,14),duration:360000*8000});
+//     else
+//         console.log(rule);
+// });
 
 app.use((req, res, next) => {
     req.flash(`error`, `Sorry cant find that:   `+req.url);
