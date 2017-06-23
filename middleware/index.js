@@ -19,10 +19,11 @@ function deleteFolderRecursive (path) {
 function mkdir(dir) {
     if (!fs.existsSync(dir))fs.mkdirSync(dir);
 }
+function dmcRedirect(res,url){
+    res.redirect(baseURL+url);
+}
 module.exports = {
-    dmcRedirect(res,url){
-        res.redirect(baseURL+url);
-    },
+    dmcRedirect:dmcRedirect,
     isLoggedIn: function(req, res, next){
         if(env == 'dev')
             return next();
