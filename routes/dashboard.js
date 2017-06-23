@@ -89,11 +89,12 @@ router.get("/puzzles", function(req, res){
 
 router.get("/ranking", function(req, res){
     Group.find({}).populate("competition").exec(function (err,groups) {
-            // groups.forEach(function (group) {
-            //     group.calculateScore().then(function (score) {
-            //         group.score = score;
-            //     })
-            // });
+            groups.forEach(function (group) {
+                console.log(group.score);
+                // group.calculateScore().then(function (score) {
+                //     group.score = score;
+                // })
+            });
         res.render("dashboard/ranking",{groups:groups});
     });
 });

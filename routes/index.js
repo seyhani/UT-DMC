@@ -53,19 +53,11 @@ router.get("/", function(req, res){
 });
 
 router.get("/ranking", function(req, res){
-    Group.find({}).populate("competition").sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
-        Puzzle.find().populate("problem").exec(function (err,puzzles) {
+    Group.find({}).exec(function (err,groups) {
             groups.forEach(function (group) {
-                puzzles.forEach(function (puzzle) {
-                    if((group.competition.puzzles.indexOf(puzzle._id)!=-1)&&puzzle.accepted)
-                        group.competition.score += puzzle.score;
-
-                });
-                group.competition.save();
-                group.save();
+                console.log(group);
             });
             res.render("dashboard/ranking",{groups:groups,currentUser:req.user});
-        });
     });
 });
 
