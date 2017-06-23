@@ -40,7 +40,7 @@ router.get("/admin/all", function(req, res){
 
 router.post("/", function(req, res){
 	if(req.user && req.user.group){
-		User.findById(req.user._id).populate("group").exec(function(err,user){
+		User.findOne({_id:req.user._id}).populate("group").exec(function(err,user){
 			var clar = new Clar({text: req.body.text, from: user.group.name, to: "Admin", date: new Date(Date.now()), toAll: false});
 			clar.save(function(err){
 				if(err) console.log("Err @ clar:" + err);
@@ -55,7 +55,7 @@ router.post("/", function(req, res){
 
 router.post("/admin", function(req, res){
 	if(req.user && req.user.isAdmin){
-		User.findById(req.user._id).populate("group").exec(function(err,user){
+		User.findOne({_id:req.user._id}).populate("group").exec(function(err,user){
 			var clar = new Clar({text: req.body.text, from: "Admin", to: req.body.to, date: new Date(Date.now())});
 			clar.save(function(err){
 				if(err) console.log("Err @ clar:" + err);
