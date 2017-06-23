@@ -3,6 +3,8 @@ var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var GroupSchema = new mongoose.Schema({
     name:String,
     index:Number,
+    credit:{type:Number,default:0},
+    socre:{type:Number,default:0},
     initalCredit:{type:Number,default:0},
     members:[{
         type: mongoose.Schema.Types.ObjectId,
