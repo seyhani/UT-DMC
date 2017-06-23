@@ -30,7 +30,7 @@
                   <div class="thumbnail">
                      <div class="caption">
                          <h<%if(user.isAdmin){%>3<%}else{%>5<%}%> class="problemname"><%= user.username %></h<%if(user.isAdmin){%>4<%}else{%>3<%}%>>
-                         <div class="tags"><%if(user.isAdmin){%><p><span class="glyphicon glyphicon-star"></span> Administrator</p><%}else{%><p><%=user.name%></p><p><%=user.studentId%></p><%}%></div>
+                         <div class="tags"><%if(user.isAdmin){%><p><span class="glyphicon glyphicon-star"></span> Administrator</p><%}%></div>
                      </div>
                      <p>
                          <a href="<%=baseURL%>/admin/users/<%= user._id %>" class="btn btn-primary">More Info</a>
