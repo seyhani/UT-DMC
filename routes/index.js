@@ -89,7 +89,7 @@ router.post('/register',function(req, res,next) {
         email: email,
         password: password,
     };
-    User.findOne({/*$or:[{username: user.username},{studentId:studentId}]*/{username: user.username}}).exec(function (err, existUser) {
+    User.findOne({/*$or:[{username: user.username},{studentId:studentId}]*/username: user.username}).exec(function (err, existUser) {
         console.log(existUser);
         if (err) return next(err);
         if (existUser) {
