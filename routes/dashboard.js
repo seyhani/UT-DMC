@@ -24,28 +24,28 @@ const clar = require("../models/clar");
 const submissionWait = 20*1000;
 // router.all("/*",middleware.isLoggedIn,middleware.havePermission);
 //INDEX - show all problems
-// router.all("/*",middleware.isLoggedIn);
+router.all("/*",middleware.isLoggedIn);
 
-// router.all("/*",function (req,res,next) {
-//     Rule.findOne({name:"DMC"}).exec(function (err,rule) {
-//         if(req.user.isAdmin || env == "dev")
-//         {
-//           req.remainingTime = Date.now() - rule.startDate;
-//           return next();
-//         }
-//         else if(Date.now() < rule.startDate) {
-//             req.flash("error", "مسابقه هنوز آغاز نشده است.");
-//             middleware.dmcRedirect(res, "/");
-//         }
-//         else if(Date.now()-rule.startDate > rule.duration) {
-//             req.flash("error", "مسابقه به پایان رسیده است.");
-//             middleware.dmcRedirect(res, "/ranking/");
-//         }else{
-//             req.remainingTime = rule.startDate - Date.now() + rule.duration;
-//             return next();
-//         }
-//     });
-// });
+router.all("/*",function (req,res,next) {
+    Rule.findOne({name:"DMC"}).exec(function (err,rule) {
+        if(req.user.isAdmin || env == "dev")
+        {
+          req.remainingTime = Date.now() - rule.startDate;
+          return next();
+        }
+        else if(Date.now() < rule.startDate) {
+            req.flash("error", "مسابقه هنوز آغاز نشده است.");
+            middleware.dmcRedirect(res, "/");
+        }
+        else if(Date.now()-rule.startDate > rule.duration) {
+            req.flash("error", "مسابقه به پایان رسیده است.");
+            middleware.dmcRedirect(res, "/ranking/");
+        }else{
+            req.remainingTime = rule.startDate - Date.now() + rule.duration;
+            return next();
+        }
+    });
+});
 
 router.get("/", function(req, res){
     User.findById(req.user._id).then(function (user) {
