@@ -22,18 +22,13 @@ var sanitize = require('mongo-sanitize');
 var path = require('path');
 const clar = require("../models/clar");
 const submissionWait = 20*1000;
-// router.all("/*",middleware.isLoggedIn,middleware.havePermission);
+
 //INDEX - show all problems
 router.all("/*",middleware.isLoggedIn);
 
 router.all("/*",function (req,res,next) {
     Rule.findOne({name:"DMC"}).exec(function (err,rule) {
-        if(req.user.isAdmin || env == "dev")
-        {
-          req.remainingTime = Date.now() - rule.startDate;
-          return next();
-        }
-        else if(Date.now() < rule.startDate) {
+        if(Date.now() < rule.startDate) {
             req.flash("error", "مسابقه هنوز آغاز نشده است.");
             middleware.dmcRedirect(res, "/");
         }
