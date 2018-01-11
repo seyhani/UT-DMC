@@ -17,7 +17,7 @@ const mailTemplates = 'middleware/mailTemplates/';
 var async = require("async");
 var simplesmtp = require("simplesmtp");
 var fs = require("fs");
-var config = require("../config/test");
+var config = require("../config/global");
 var Rule = require("../models/rule");
 'use strict';
 
@@ -76,14 +76,14 @@ router.post('/register',function(req, res,next) {
     var firstname = sanitize(req.body.firstname);
     var lastname = sanitize(req.body.lastname);
     var studentId = sanitize(req.body.studentId);
-    var email = normalizeEmail(sanitize(req.body.email));
+    var email = sanitize(req.body.email);
     var user = {
         firstname: firstname,
         lastname: lastname,
         username: username,
         studentId: studentId,
         email: email,
-        password: password,
+        password: password
     };
     User.findOne({$or:[{username: user.username},{studentId:studentId}]}).exec(function (err, existUser) {
         if (err) return next(err);
@@ -149,74 +149,6 @@ router.get("/logout", function(req, res){
    req.logout();
    req.flash("success", "شما از سایت خارج شدید!");
    middleware.dmcRedirect(res,"");
-});
-
-router.get("/test", function(req, res){
-    res.render("dev/test", {currentUser: req.user});
-});
-
-router.get('/forgot', function(req, res,next) {
-    res.render('forgot_password', {user: req.user, currentUser: req.user});
-});
-
-router.post('/forgot', function(req, res, next) {
-    User.findOne({ username: req.body.username}, function(err, user) {
-        if(!user){
-            req.flash("error","Username doesnt exist!")
-            middleware.dmcRedirect(res,'/forgot');
-        }
-        else{
-            user.token = token.generateToken(50);
-            user.tokenExpires = Date.now() + 3600*60;
-            user.save();
-            mailer.sendTemplateTo(mailTemplates+"resetpass",{address:host,link:host+"/reset/"+ user.token, name: user.firstname},user.username,function (err,info) {
-                console.log(info);
-                console.log(err);
-                console.log(host+"/reset/"+user.token);
-                req.flash("success", "به ایمیل خود مراجعه کنید.");
-                middleware.dmcRedirect(res,'');
-            });
-        }
-    });
-});
-
-router.get('/reset/:token', function(req, res,next) {
-    User.findOne({ token:req.params.token}
-        , function(err, user) {
-        if(err) return next(err);
-        if (!user) {
-            req.flash('error', 'لینک تغییر رمزعبور شما باطل شده یا نا متعبر است.');
-            return middleware.dmcRedirect(res,'/forgot');
-        } else{
-            res.render('reset_password', {user:user,token:req.params.token, currentUser: req.user});
-        }
-    });
-});
-
-router.post('/reset/:token', function(req, res,next) {
-    // ,{resetPasswordExpires: { $gt: Date.now() }} ]
-    async.waterfall([
-        function(done) {
-            User.findOne({ token:req.params.token},
-                function(err, user) {
-                    if (!user) {
-                        req.flash('error', 'لینک تغییر رمزعبور شما باطل شده یا نا متعبر است.');
-                        return middleware.dmcRedirect(res,'back');
-                    }
-                    user.password = req.body.password;
-                    user.token = undefined;
-                    user.tokenExpires = undefined;
-                    user.save(function(err) {
-                    req.logIn(user, function(err) {
-                        req.flash('success', 'رمزعبور شما با موفقیت تغییر کرد.');
-                        done(err, user);
-                    });
-                });
-            });
-        },
-    ], function(err) {
-        middleware.dmcRedirect(res,'/login');
-    });
 });
 
 router.get("/about", function(req, res) {

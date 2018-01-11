@@ -461,9 +461,10 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+.idea/
 .idea/markdown-navigator/
 .idea/misc.xml
 Files/Problems/
 Files/Uploads/
 Uploads/
-config/test.js
+config/global.js

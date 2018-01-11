@@ -72,18 +72,22 @@ router.get("/new", function(req, res){
 // SHOW - shows more info about one problem
 router.get("/:id", function(req, res){
     //find the problem with provided ID
-    Group.find().exec(function (err,groups) {
+    //Group.find().exec(function (err,groups) {
         Problem.findById(req.params.id).exec(function(err, foundProblem){
             Puzzle.find({problem:foundProblem,status:"submitted"}).exec(function (err,submissons) {
-                Tag.find({}).exec(function (err,superTags) {
+                Group.getByProblemId(foundProblem._id).then(function(groups) {
+                  Tag.find({}).exec(function (err,superTags) {
                     if(err)
-                        console.log(err);
+                      console.log(err);
                     else
-                        res.render("admin/problems/show", {groups:groups,problem: foundProblem,submissions:submissons,superTags:superTags,currentUser:req.user});
+                      res.render("admin/problems/show", {groups:groups,problem: foundProblem,submissions:submissons,superTags:superTags,currentUser:req.user});
+                  }).catch(function(err) {
+                    console.log(err);
+                  });
                 });
             });
         });
-    });
+    //});
 });
 
 router.get("/:id/edit", function(req, res){

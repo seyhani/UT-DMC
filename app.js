@@ -28,10 +28,11 @@ const express           = require("express"),
     clarRoutes          = require("./routes/clar");
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/DMC");
+mongoose.connect("mongodb://localhost/DMC",{
+  useMongoClient: true
+});
+const MongoStore = require('connect-mongo')(session);
 
-//public/Files/Problems/
-///Files/Problems/sadegh/Sources/Homework 15 F95.pdf
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(methodOverride('_method'));
@@ -40,9 +41,13 @@ app.use(cookieParser('secret'));
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Devil May Cry",
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true,
+  store: new MongoStore({
+    mongooseConnection : mongoose.connection
+  })
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -54,6 +59,7 @@ app.use(function(req, res, next){
     // console.log("PRE:" + req.url);
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    console.log(req.method+"\t"+req.url);
     next();
 });
 app.use( (req, res, next) => {
@@ -89,7 +95,6 @@ app.use(express.static(__dirname + "/public"));
 ////
 var baseUrlLocal = "";
 app.use(baseUrlLocal+"/", indexRoutes);
-// app.use(baseUrlLocal+"/forum", forumRoutes);
 app.use(baseUrlLocal+"/clar/", clarRoutes);
 app.use(baseUrlLocal+"/dashboard/", dashboardRoutes);
 app.use(baseUrlLocal+"/admin/", groupRoutes);
@@ -121,5 +126,5 @@ app.use((req, res, next) => {
 let server = app.listen(3042, function () {
     let host = server.address().address;
     let port = server.address().port;
-    console.log(`Survey listening at http://${host}:${port}`);
+    console.log(`DMC listening at http://${host}:${port}`);
 });

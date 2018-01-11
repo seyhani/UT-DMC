@@ -1,13 +1,13 @@
 
-var fs = require('fs');
-var root = "public/";
-var config = require("../config/test");
+const fs = require('fs');
+const root = "public/";
+const config = require("../config/global");
 // var host = "http://acm.ut.ac.ir/dmc";
-var validFileFormats= [".png",".jpg",".pdf"];
+const validFileFormats = [".png", ".jpg", ".pdf"];
 function deleteFolderRecursive (path) {
     if( fs.existsSync(path) ) {
         fs.readdirSync(path).forEach(function(file,index){
-            var curPath = path + "/" + file;
+            const curPath = path + "/" + file;
             if(fs.lstatSync(curPath).isDirectory()) { // recurse
                 deleteFolderRecursive(curPath);
             } else { // delete file
@@ -21,8 +21,8 @@ function mkdir(dir) {
     if (!fs.existsSync(dir))fs.mkdirSync(dir);
 }
 module.exports = {
-  dmcRedirect(res,url){
-      console.log("dmcRedirect:\t" + host+url);
+    dmcRedirect(res,url){
+      console.log(":\t" + host+url);
       res.redirect(host+url);
   },
     isLoggedIn: function(req, res, next){
@@ -56,26 +56,26 @@ module.exports = {
     },
     hashAnswer: function(answer,hashIndex)
     {
-        var text = "";
-        var possible = "CMuUfNXYko7fIzHLOwQQWOcoifsBFkSlS4L6sEDxRIVMt9aptrnHEtIuK8drVnGOJUpiZeBTJCvX42m29WTg4PJForglANgiVD72";
+        let text = "";
+        const possible = "CMuUfNXYko7fIzHLOwQQWOcoifsBFkSlS4L6sEDxRIVMt9aptrnHEtIuK8drVnGOJUpiZeBTJCvX42m29WTg4PJForglANgiVD72";
 
-        for( var i=0; i < lenght; i++ )
+        for(let i=0; i < lenght; i++ )
             text += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return text;
     },
     makeSecret: function(lenght)
     {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let text = "";
+        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        for( var i=0; i < lenght; i++ )
+        for(let i=0; i < lenght; i++ )
             text += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return text;
     },
     initialProblemDirectories : function (problemName) {
-        var dir = "public/Files/Problems/";
+        let dir = "public/Files/Problems/";
         dir += problemName;
         mkdir(dir);
         dir += "/";
@@ -87,12 +87,12 @@ module.exports = {
         deleteFolderRecursive("public/Files/Problems/"+problemName);
     },
     removeSubmission :function (problemName,submisson) {
-        var path = "public/Files/Problems/"+problemName+"/Submissions/"+submisson;
+        const path = "public/Files/Problems/" + problemName + "/Submissions/" + submisson;
         if( fs.existsSync(path) )
             fs.unlinkSync(path);
     },
     uploadToDir:function (tmp_path,folder_name,file_name) {
-        var target_path = root + folder_name + '/' + file_name;
+        const target_path = root + folder_name + '/' + file_name;
         fs.rename(tmp_path, target_path, function (err) {
             if (err) throw err;
             fs.unlink(tmp_path, function () {
@@ -102,13 +102,13 @@ module.exports = {
     },
     getAllFilesFromFolder : function(dir) {
 
-        var filesystem = require("fs");
-        var results = [];
-        var temp = dir;
+        const filesystem = require("fs");
+        let results = [];
+        const temp = dir;
         dir = root+dir;
         filesystem.readdirSync(dir).forEach(function(file){
             file = dir+'/'+file;
-            var stat = filesystem.statSync(file);
+            const stat = filesystem.statSync(file);
 
             if (stat && stat.isDirectory()) {
                 results = results.concat(_getAllFilesFromFolder(file))
@@ -122,7 +122,7 @@ module.exports = {
     hasValidFormat : function(fileExtension){
         return validFileFormats.indexOf(fileExtension)!= -1;
     },
-    // generateToken
+
     mkdir : mkdir,
     host: host
 };

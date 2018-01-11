@@ -14,19 +14,20 @@
   "directories": {
     "baseURL": "public"
   },
-  "devDependencies": {
-    "babel": "babel-core@^5.8.24",
-    "babel-runtime": "babel-runtime@^5.8.24",
-    "core-js": "core-js@^1.1.4"
-  },
+  "devDependencies": {},
   "dependencies": {
     "async": "^2.1.4",
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-runtime": "^6.26.0",
     "bcrypt": "^0.8.7",
     "bcrypt-pbkdf": "^1.0.0",
     "bindings": "^1.2.1",
-    "body-parser": "^1.14.1",
+    "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.4.3",
+    "core-js": "^2.5.3",
     "crypto": "0.0.3",
     "ejs": "^2.3.4",
     "email-templates": "^2.5.4",
@@ -47,7 +48,7 @@
     "nodemailer-direct-transport": "^3.3.2",
     "nodemailer-smtp-transport": "^2.7.2",
     "normalizeurl": "^1.0.0",
-    "passport": "^0.3.0",
+    "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^3.1.0",

@@ -61,9 +61,99 @@ GroupSchema.virtual('score').get(function () {
 });
 
 GroupSchema.pre("remove",function (next) {
-    var group = this;
+    let group = this;
     mongoose.model("Puzzle").remove({group:group},function (err) {next();});
 });
+
+GroupSchema.statics.findByPuzzles = function() {
+  mongoose.model("Group").aggregate([
+    {
+      $lookup:{
+        from:'competition',
+        localField:'competition',
+        foreignField:'_id',
+        as:'competition'
+      }
+    }
+  ],function(err, groups) {
+    console.log(groups);
+  });
+};
+
+GroupSchema.statics.getByProblemId = function(problemId){
+  return new Promise((resolve,reject) => {
+    mongoose.model('Competition').aggregate([
+      {
+        $unwind: '$puzzles'
+      },
+      {
+        $lookup:{
+          from:'puzzles',
+          localField:'puzzles',
+          foreignField:'_id',
+          as:'puzzles'
+        }
+      },
+      {
+        $project:{
+          '_id':1,
+          'puzzles.problem':1
+        }
+      },
+      {
+        $unwind:'$puzzles'
+      },
+      {
+        $group:{
+          _id:'$_id',
+          problems:{
+            $addToSet:'$puzzles.problem'
+          }
+        }
+      },
+      {
+        $unwind:'$problems'
+      },
+      {
+        $match:{
+          problems:problemId
+        }
+      },
+      {
+        $group:{
+          _id:'$_id',
+        }
+      },
+      //{
+      //  $lookup:{
+      //    from:'groups',
+      //    localField:'_id',
+      //    foreignField:'competition',
+      //    as:'group'
+      //  }
+      //},
+      //{
+      //  $unwind:'$group'
+      //},
+      //{
+      //  $project:{
+      //    _id:'$group._id',
+      //    name:'$group.name'
+      //  }
+      //},
+      //{
+      //
+      //}
+    ],function(err, competitions) {
+      mongoose.model('Group').find({competition:{$nin:competitions}}).exec(function(err, groups) {
+        if(err)
+          reject(err);
+        else
+          resolve(groups);
+      });
+    });
+  });
+};
 
 GroupSchema.plugin(deepPopulate);
 
