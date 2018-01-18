@@ -91,9 +91,9 @@ app.use( (req, res, next) => {
     else
         next();
 });
-app.use(express.static(__dirname + "/public"));
+app.use('/dmc', express.static(__dirname + "/public"));
 ////
-var baseUrlLocal = "";
+var baseUrlLocal = baseURL;
 app.use(baseUrlLocal+"/", indexRoutes);
 app.use(baseUrlLocal+"/clar/", clarRoutes);
 app.use(baseUrlLocal+"/dashboard/", dashboardRoutes);
