@@ -1,18 +1,19 @@
-<nav class="navbar navbar-default  navbar-fixed-top" style="margin-bottom: 0;" dir="rtl">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+<nav class="navbar navbar-default  navbar-fixed-top" style="margin-top: 0;" dir="rtl">
+    <div  class="container-fluid">
+        <div  class="navbar-header">
+            <button  type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://acm.ut.ac.ir/" target="_blank">
-                <img alt="ACM" src="<%=baseURL%>/img/logo.png" width="30px" height="30px">
+            <a id="acmlogo" class="navbar-brand" href="http://acm.ut.ac.ir/" target="_blank" >
+                <img  alt="ACM" src="<%=baseURL%>/img/logo.png" width="40px" >
             </a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                    <li><a class="btn-group-sm btn-default navbar-btn" href="<%=baseURL%>/about/"><span class="glyphicon glyphicon-info-sign"></span> درباره</a></li>
+
+                    <li><a id="aboutus" style="color: white;" class="btn-group-sm btn-default navbar-btn"   href="<%=baseURL%>/about/"><span   class="glyphicon glyphicon-info-sign"></span> درباره</a></li>
                     <li><a class="btn-group-sm btn-default navbar-btn" href="<%=baseURL%>/ranking/"><span class="glyphicon glyphicon-stats"></span> رده‌بندی</a></li>
                 <% if(!currentUser){ %>
                     <li><a class="btn-group-sm btn-default navbar-btn" href="<%=baseURL%>/register"><span class="glyphicon glyphicon-plus-sign"></span> ثبت‌نام</a></li>
@@ -35,4 +36,28 @@
 <script>
     <% if(error && error.length > 0) { %> swal({text: "<%= error %>", type: "error", customClass: "<%if(!currentUser || !currentUser.isAdmin){%>rtl<%}%>"});<% } %>
     <% if(success && success.length > 0) { %> swal({text: "<%= success %>", type: "success", customClass: "<%if(!currentUser || !currentUser.isAdmin){%>rtl<%}%>"});<% } %>
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
+<script>
+  $(function () {
+
+    $('#acmlogo').hover(function() {
+      $('#aboutus').css('color','black')
+    })
+    $('#aboutus').hover(function() {
+      $('#aboutus').css('color','balck')
+    })
+//    $('#aboutus').hover(function() {
+//      $('#aboutus').css('color','red')
+//    })
+//    var socketId = Cookies.get('socketId');
+//    var socket = io();
+//    socket.on('connect', function() {
+//        if(socketId)
+//            socket.emit('prev', socketId);
+//        Cookies.set('socketId', socket.id);
+//    });
+  });
 </script>
