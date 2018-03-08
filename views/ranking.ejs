@@ -31,13 +31,11 @@
                 <th>امتیاز گروه</th>
             </tr></thead>
             <tbody class="list">
-                
-                <%groups.forEach(function (group) {%>
-                <tr class="<% if(currentUser && currentUser.group && group.name == currentUser.group.name){%>info<%}%>">
-                    <td class="gpname"><%=group.name%></td>
-                    <td class="gpscore"><%=group.competition.score%></td>
+                <tr class="info">
+                    <td class="gpname"></td>
+                    <td class="gpscore"></td>
                 </tr>
-                <%});%>
+
             </tbody>
         </table>
     </div></div></div>

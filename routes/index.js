@@ -47,7 +47,7 @@ router.get("/", function(req, res){
 //     res.render('landing');
 // });
 
-router.get("/ranking", function(req, res){
+router.get("/ranking",function(req, res){
   Group.find({}).populate("competition").sort({"competition.stage": -1}).limit(20).exec(function (err,groups) {
       Puzzle.find().populate("problem").exec(function (err,puzzles) {
           groups.forEach(function (group) {
@@ -60,7 +60,13 @@ router.get("/ranking", function(req, res){
               group.competition.save();
               group.save();
           });
-          res.render("dashboard/ranking",{groups:groups,currentUser:req.user});
+          if(true)
+            res.render("dashboard/ranking",{groups:groups,currentUser:req.user});
+          else
+          {
+            res.render("dashboard/rank2",{currentUser:req.user});
+          }
+
       });
   });
 });
@@ -70,36 +76,25 @@ router.get("/register", function(req, res){
     res.render("register", {currentUser: req.user});
 });
 
-router.post('/register',function(req, res,next) {
+router.post('/register',middleware.isLoggedIn, middleware.isAdminLoggedIn,function(req, res,next) {
     var username = sanitize(req.body.username);
     var password = sanitize(req.body.password);
     var firstname = sanitize(req.body.firstname);
-    var lastname = sanitize(req.body.lastname);
-    var studentId = sanitize(req.body.studentId);
-    var email = sanitize(req.body.email);
     var user = {
         firstname: firstname,
-        lastname: lastname,
         username: username,
-        studentId: studentId,
-        email: email,
         password: password
     };
-    User.findOne({$or:[{username: user.username},{studentId:studentId}]}).exec(function (err, existUser) {
+    user = new User(user);
+    User.findOne({$or:[{username: user.username}]}).exec(function (err, existUser) {
         if (err) return next(err);
         if (existUser) {
             req.flash('error', 'Username already exist!');
             middleware.dmcRedirect(res,'/register');
         } else {
-            mailer.sendTemplateTo(mailTemplates+"verification",{address:host,link:host+"/register/"+ token.setToken(user), name: firstname}
-                ,user.username,function (err,info) {
-                console.log("MERR: "+err);
-                console.log("MINF: "+info);
-                console.log(host+"/register/"+token.setToken(user));
-                req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
-                middleware.dmcRedirect(res,'/');
+            user.save(function(err){
+              middleware.dmcRedirect(res,'/register');
             });
-
         }
     });
 });

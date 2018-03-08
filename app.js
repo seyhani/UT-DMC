@@ -1,5 +1,6 @@
 'use strict';
 const express           = require("express"),
+
     router              = express.Router(),
     app                 = express(),
     path                = require('path'),
@@ -64,31 +65,31 @@ app.use(function(req, res, next){
 });
 app.use( (req, res, next) => {
     let probsPath = `${baseURL}/Files/Problems/`;
-    if(new RegExp(`^` + probsPath).test(req.url)) {
-        if(!req.user)
-            return middleware.dmcRedirect(res, '/');
-        if(req.user.isAdmin)
-            return next();
-        if(!req.user.group)
-            return middleware.dmcRedirect(res, '/');
-
-        let probName = [].concat(req.url.replace(probsPath, ``).split(`/`));
-        if(probName.length > 1 && !req.user.isAdmin && probName[1] != `Sources`)
-            return middleware.dmcRedirect(res, '/');
-        console.log(probName[0]);
-        probName[0] = probName[0].split(`%20`).join(` `);
-        console.log(probName[0]);
-        Problem.findOne({name: probName[0]}, (err, prob) => {
-            if(err || !prob)
-                return middleware.dmcRedirect(res, '/');
-            Puzzle.findOne({problem: prob, group: req.user.group}, (err, puzzle) => {
-                if(err || !puzzle || puzzle.new)
-                    return middleware.dmcRedirect(res, '/');
-                next();
-            })
-        });
-    }
-    else
+    // if(new RegExp(`^` + probsPath).test(req.url)) {
+    //     if(!req.user)
+    //         return middleware.dmcRedirect(res, '/');
+    //     if(req.user.isAdmin)
+    //         return next();
+    //     if(!req.user.group)
+    //         return middleware.dmcRedirect(res, '/');
+    //
+    //     let probName = [].concat(req.url.replace(probsPath, ``).split(`/`));
+    //     // if(probName.length > 1 && !req.user.isAdmin && probName[1] != `Sources`)
+    //         // return middleware.dmcRedirect(res, '/');
+    //     console.log(probName[0]);
+    //     probName[0] = probName[0].split(`%20`).join(` `);
+    //     console.log(probName[0]);
+    //     Problem.findOne({name: probName[0]}, (err, prob) => {
+    //         if(err || !prob)
+    //             return middleware.dmcRedirect(res, '/');
+    //         Puzzle.findOne({problem: prob, group: req.user.group}, (err, puzzle) => {
+    //             if(err || !puzzle || puzzle.new)
+    //                 return middleware.dmcRedirect(res, '/');
+    //             next();
+    //         })
+    //     });
+    // }
+    // else
         next();
 });
 app.use('/dmc', express.static(__dirname + "/public"));
