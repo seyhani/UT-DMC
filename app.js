@@ -60,7 +60,7 @@ app.use(function(req, res, next){
     // console.log("PRE:" + req.url);
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
-    console.log(req.method+"\t"+req.url);
+    //console.log(req.method+"\t"+req.url);
     next();
 });
 app.use( (req, res, next) => {
@@ -127,5 +127,5 @@ app.use((req, res, next) => {
 let server = app.listen(3042, function () {
     let host = server.address().address;
     let port = server.address().port;
-    console.log(`DMC listening at http://${host}:${port}`);
+    //console.log(`DMC listening at http://${host}:${port}`);
 });

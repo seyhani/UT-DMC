@@ -10,11 +10,11 @@
 <% include ../partials/header %>
 <%
     var statusTitle = {
-        accepted: "حل‌شده",
+        accepted: "قبول‌شده",
         rejected: "ردشده",
-        submitted: "ثبت‌شده",
-        sold: "خریده‌شده",
-        buy: "آمادهٔ خرید",
+        submitted: "منتظر بررسی",
+        sold: "قابل‌اتجام",
+        buy: "عدم‌رعایت‌ پیش‌ نیاز",
         head: "وضعیت"
     };
 %>
@@ -23,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 text-left">
-                    <h1><span class="glyphicon glyphicon-pencil"></span> معماها</h1>
+                    <h1><span class="glyphicon glyphicon-check"></span> Tasks</h1>
                 </div>
 
                 <div class="col-md-8" style="text-align: center;"><%if(user.group){%><div style="display: inline-block;"><div class="clock"></div></div><%}%></div>
@@ -55,11 +55,11 @@
             <%});}%>
             <li class="tagsearchgp"><ul>
                 <span class="supertagsearchgp"><%= statusTitle.head%></span>
-                <li><button class="btn btn-success btn-xs tagsearchbtn"><%= statusTitle.accepted%></button></li>
-                <li><button class="btn btn-danger btn-xs tagsearchbtn"><%= statusTitle.rejected%></button></li>
+                <li><button class="btn btn-success  btn-xs tagsearchbtn" style="border-bottom-color: green"><%= statusTitle.accepted%></button></li>
+                <li><button class="btn btn-danger btn-xs tagsearchbtn" style="border-bottom-color: darkred"><%= statusTitle.rejected%></button></li>
                 <li><button class="btn btn-warning btn-xs tagsearchbtn"><%= statusTitle.submitted%></button></li>
                 <li><button class="btn btn-info btn-xs tagsearchbtn"><%= statusTitle.sold%></button></li>
-                <li><button class="btn btn-primary btn-xs tagsearchbtn"><%= statusTitle.buy%></button></li>
+                <li><button class="btn btn-primary  btn-xs tagsearchbtn" style="background-color: gray; border-bottom-color: gray"><%= statusTitle.buy%></button></li>
             </ul></li>
         </ul>
         <ul class="list row" style="list-style-type: none;">
@@ -72,7 +72,7 @@
                     <div class="caption topproblem">
                         <h1 class="problemname"><%= puzzle.name %></h1>
                     </div>
-                    <div><i class="glyphicon glyphicon-usd" style="vertical-align: middle;"></i> <%=puzzle.cost%> &nbsp; &nbsp; <i class="glyphicon glyphicon-flash" style="vertical-align: middle;"></i> <%=puzzle.problem.score%></div>
+                    <div>&nbsp; &nbsp; <i class="glyphicon glyphicon-flash" style="vertical-align: middle;"></i> <%=puzzle.problem.score%></div>
                     <div class="tags">
                     <%puzzle.problem.tags.forEach(function (tag) {%>
                         <div class="tag"><i class="glyphicon glyphicon-tag" style="transform:rotateY(180deg); vertical-align: middle;"></i> <%=tag%></div>
@@ -91,6 +91,18 @@
                         <%}%>
                         </div>
                     </div>
+                    <br/>
+                    <p>
+                        <%=puzzle.problem.description%>
+                        <br/>
+                        <br/>
+                        <% if(puzzle.new){%>
+                        پیش‌نیازها:
+                        <%puzzle.problem.prerequisites.forEach(function(prerequisite, index){%>
+                          <a><%=index!=0?',':''%><%=prerequisite.name%></a>
+                        <%})%>
+                        <%}%>
+                    </p>
                 <p>
                     <%if(puzzle.accepted){%>
                         <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success mainbtn"><%= statusTitle.accepted%></a>
@@ -101,7 +113,7 @@
                     <%}else if(puzzle.sold) {%>
                         <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-info mainbtn">مشاهده</a>
                     <%}else  {%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-primary mainbtn btn-verify">خرید</a>
+                        <a disabled="true" href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" style="background-color: gray; border-bottom-color: gray" class="btn btn-primary mainbtn btn-verify" >پیش‌نیاز</a>
                     <%}%>
                 </p>
                 </div>

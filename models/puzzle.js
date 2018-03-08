@@ -17,6 +17,10 @@ var PuzzleSchema = new mongoose.Schema({
     tags:[String],
     lastSubmit:{type:Date,default:Date.now()-submissionWait},
     status: {type:String,default:"new"},
+    judge: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     submisson:{
         file:String,
         answer:String,
@@ -43,6 +47,7 @@ PuzzleSchema.methods.submitAnswer = function (answer) {
     if(answer == correctAnswer) {
         this.status = 'accepted';
         this.problem.submits.correct++;
+        this.group.solvedProblems.addToSet(this.problem);
         this.group.competition.score += this.problem.score;
         this.group.competition.save();
         this.group.credit += this.payback;
@@ -63,6 +68,7 @@ PuzzleSchema.methods.accept = function () {
     this.status = "accepted";
     this.problem.submits.correct++;
     this.problem.save();
+    this.group.solvedProblems.addToSet(this.problem);
     this.group.competition.save();
     this.group.save();
     this.save();

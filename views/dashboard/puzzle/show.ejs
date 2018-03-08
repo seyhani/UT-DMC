@@ -9,8 +9,8 @@
 <% include ../../partials/header %>
 <div class="row problemname">
     <div class="container">
-        <div class="col-md-6"></div>
-        <div class="col-md-3"></div>
+        <div class="col-md-5"></div>
+        <!--<div class="col-md-3"></div>-->
         <div class="col-md-3 pname">
             <h1><%=puzzle.name%></h1>
         </div>
@@ -22,11 +22,11 @@
             <%if(!puzzle.accepted){%>
             <form action="<%=baseURL%>/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST" enctype="multipart/form-data">
                 <%if(puzzle.type == "close"){%><input class="answer-input form-control" type="text" name="answer" placeholder="پاسخ" style="text-align: center;"><%}%>
-                <%if(puzzle.type == "open"){%><label class="btn btn-info btn-lg btn-block" >
-                    آپلود فایل پاسخ<input name='file' type="file" accept="image/* | application/pdf" style="display: none;" >
-                </label><%}%>
-                <button class="btn btn-success btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت جواب</button>
+                <%if(puzzle.type == "open"){%><%}%>
+                <button class="btn btn-success btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت درخواست بررسی</button>
             </form>
+            <%}else{%>
+                <!--Judge: <%=puzzle.judge.username%>-->
             <%}%>
             <%if(!(puzzle.accepted) && false){%>
             <a style="text-decoration: none;" href="<%=baseURL%>/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-warning" style="margin-bottom:25px; ">درخواست کمک</button></a>
@@ -61,7 +61,7 @@
         </div>
     </div>
 </div>
-<script src="<%=baseURL%>/scripts/checkfileformat.js"></script>
+<!--<script src="<%=baseURL%>/scripts/checkfileformat.js"></script>-->
 <% include ../../partials/footer %>
 </body>
 </html>

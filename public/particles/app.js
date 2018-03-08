@@ -51,7 +51,7 @@ particlesJS('particles-js',
         }
       },
       "size": {
-        "value": 5,
+        "value": 3,
         "random": true,
         "anim": {
           "enable": false,
@@ -74,6 +74,7 @@ particlesJS('particles-js',
         "random": false,
         "straight": false,
         "out_mode": "out",
+        "bounce": false,
         "attract": {
           "enable": false,
           "rotateX": 600,
@@ -85,12 +86,12 @@ particlesJS('particles-js',
       "detect_on": "canvas",
       "events": {
         "onhover": {
-          "enable": true,
-          "mode": "grab"
+          "enable": false,
+          "mode": "repulse"
         },
         "onclick": {
-          "enable": true,
-          "mode": "remove"
+          "enable": false,
+          "mode": "push"
         },
         "resize": true
       },
@@ -109,7 +110,8 @@ particlesJS('particles-js',
           "speed": 3
         },
         "repulse": {
-          "distance": 200
+          "distance": 200,
+          "duration": 0.4
         },
         "push": {
           "particles_nb": 4
@@ -119,14 +121,6 @@ particlesJS('particles-js',
         }
       }
     },
-    "retina_detect": true,
-    "config_demo": {
-      "hide_card": false,
-      "background_color": "#b61924",
-      "background_image": "",
-      "background_position": "50% 50%",
-      "background_repeat": "no-repeat",
-      "background_size": "cover"
-    }
+    "retina_detect": true
   }
 );
