@@ -26,7 +26,7 @@
                 <button class="btn btn-success btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت درخواست بررسی</button>
             </form>
             <%}else{%>
-                <!--Judge: <%=puzzle.judge.username%>-->
+
             <%}%>
             <%if(!(puzzle.accepted) && false){%>
             <a style="text-decoration: none;" href="<%=baseURL%>/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-warning" style="margin-bottom:25px; ">درخواست کمک</button></a>

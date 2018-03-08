@@ -22,7 +22,7 @@ function mkdir(dir) {
 }
 module.exports = {
     dmcRedirect(res,url){
-      console.log(":\t" + host+url);
+      //console.log(":\t" + host+url);
       res.redirect(host+url);
   },
     isLoggedIn: function(req, res, next){
@@ -99,6 +99,10 @@ module.exports = {
                 if (err) throw err;
             });
         });
+    },
+    removFile:function (filePath) {
+      const target_path = root + filePath;
+      fs.unlinkSync(target_path);
     },
     getAllFilesFromFolder : function(dir) {
 

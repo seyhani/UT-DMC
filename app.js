@@ -92,7 +92,7 @@ app.use( (req, res, next) => {
     // else
         next();
 });
-app.use('/dmc', express.static(__dirname + "/public"));
+app.use(baseURL, express.static(__dirname + "/public"));
 ////
 var baseUrlLocal = baseURL;
 app.use(baseUrlLocal+"/", indexRoutes);

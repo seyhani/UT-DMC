@@ -93,6 +93,7 @@ router.post('/register',middleware.isLoggedIn, middleware.isAdminLoggedIn,functi
             middleware.dmcRedirect(res,'/register');
         } else {
             user.save(function(err){
+                console.log(err);
               middleware.dmcRedirect(res,'/register');
             });
         }
