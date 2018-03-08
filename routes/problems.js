@@ -137,15 +137,13 @@ router.put("/:id/edit", upload.any(), function(req, res) {
     description: req.body.description, score: req.body.score, type: req.body.type
   };
   Problem.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, problem) {
-    middleware.initialProblemDirectories(problem.name);
     let fileNames = [];
     if(req.files) {
+      middleware.removeProblemDirectories(problem.name);
+      middleware.initialProblemDirectories(problem.name);
       req.files.forEach(function(file) {
         fileNames.push(file.originalname);
         middleware.uploadToDir(file.path, problem.dir + "Sources", file.originalname);
-      });
-      problem.files.forEach(function(file) {
-        middleware.removFile(problem.dir + "Sources/"+file);
       });
       problem.files = fileNames;
       problem.save();
