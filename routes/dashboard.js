@@ -109,7 +109,7 @@ router.get("/ranking", function(req, res){
     });
 });
 
-router.get("/puzzles/:puzzle_id", function(req, res){
+router.get("/tasks/:puzzle_id", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
         Puzzle.findById(req.params.puzzle_id).populate(["judge","problem","group"]).exec( function (err, puzzle) {
             if (err) {
@@ -128,7 +128,7 @@ router.get("/puzzles/:puzzle_id", function(req, res){
     });
 });
 
-router.get("/puzzles/:puzzle_id/hint", function(req, res){
+router.get("/tasks/:puzzle_id/hint", function(req, res){
     User.findById(req.user._id).populate("group").exec(function (err,user) {
         Puzzle.findById(req.params.puzzle_id).populate(["group","problem"]).exec(function (err, puzzle) {
             if (err) {
@@ -136,13 +136,13 @@ router.get("/puzzles/:puzzle_id/hint", function(req, res){
             } else {
                 if(!puzzle.requsetForHint())
                     console.log("You do not have enough hints :(")
-                middleware.dmcRedirect(res,"/dashboard/puzzles/"+puzzle._id);
+                middleware.dmcRedirect(res,"/dashboard/tasks/"+puzzle._id);
             }
         });
     });
 });
 
-router.post("/puzzles/:puzzle_id/answer", function(req, res){
+router.post("/tasks/:puzzle_id/answer", function(req, res){
     //var answer = sanitize(req.body.answer);
     User.findById(req.user._id).populate("group").exec(function (err,user) {
         Puzzle.findById(req.params.puzzle_id).deepPopulate(["problem","group","group.competition"]).exec(function (err, puzzle) {

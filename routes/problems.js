@@ -15,6 +15,7 @@ const upload = multer({
     console.log(file.fieldname + ' uploaded to  ' + file.path);
   }
 });
+const async = require('async');
 const _ = require('lodash');
 
 router.all("/*", middleware.isAdminLoggedIn, middleware.havePermission);
@@ -169,6 +170,9 @@ router.post('/:problem_id/tag', function(req, res, next) {
 router.post('/:problem_id/add', function(req, res, next) {
   Problem.findById(req.params.problem_id, function(err, problem) {
     Group.findById(req.body.group).populate("competition").exec(function(err, group) {
+      Puzzle.findOne({_id:{$in:group.competition.puzzles},problem:problem}).exec(function(p) {
+        console.log(p);
+      });
       Puzzle.create({problem: problem, group: group, tags: problem.tags},
         function(err, newPuzzle) {
           group.competition.puzzles.push(newPuzzle);
@@ -176,8 +180,32 @@ router.post('/:problem_id/add', function(req, res, next) {
           group.save(function(err) {
             middleware.dmcRedirect(res, "/admin/problems/" + problem._id);
           });
-
         });
+    });
+  });
+});
+
+router.post('/:problem_id/addToAll', function(req, res, next) {
+  Problem.findById(req.params.problem_id, function(err, problem) {
+    Group.find({}).populate("competition").exec(function(err, groups) {
+      async.each(groups, function(group, cb) {
+        Puzzle.findOne({_id:{$in:group.competition.puzzles},problem:problem}).exec(function(err, p) {
+          if(!p){
+            Puzzle.create({problem: problem, group: group, tags: problem.tags},
+              function(err, newPuzzle) {
+                group.competition.puzzles.push(newPuzzle);
+                group.competition.save();
+                group.save(function(err) {
+                  cb();
+                });
+              });
+          }else{
+            cb();
+          }
+        });
+      },function() {
+        middleware.dmcRedirect(res, "/admin/problems/" + problem._id);
+      })
     });
   });
 });

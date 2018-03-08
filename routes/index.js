@@ -92,8 +92,9 @@ router.post('/register',middleware.isLoggedIn, middleware.isAdminLoggedIn,functi
             req.flash('error', 'Username already exist!');
             middleware.dmcRedirect(res,'/register');
         } else {
-            user.save(function(err){
-                console.log(err);
+            user.save(function(err,su){
+              console.log(err);
+              console.log(su);
               middleware.dmcRedirect(res,'/register');
             });
         }

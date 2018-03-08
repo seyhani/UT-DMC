@@ -105,15 +105,15 @@
                     </p>
                 <p>
                     <%if(puzzle.accepted){%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-success mainbtn"><%= statusTitle.accepted%></a>
+                        <a href="<%=baseURL%>/dashboard/tasks/<%= puzzle._id %>" class="btn btn-success mainbtn"><%= statusTitle.accepted%></a>
                     <%}else if(puzzle.rejected){%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-danger mainbtn"><%= statusTitle.rejected%></a>
+                        <a href="<%=baseURL%>/dashboard/tasks/<%= puzzle._id %>" class="btn btn-danger mainbtn"><%= statusTitle.rejected%></a>
                     <%}else if(puzzle.submitted){%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-warning mainbtn"><%= statusTitle.submitted%></a>
+                        <a href="<%=baseURL%>/dashboard/tasks/<%= puzzle._id %>" class="btn btn-warning mainbtn"><%= statusTitle.submitted%></a>
                     <%}else if(puzzle.sold) {%>
-                        <a href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" class="btn btn-info mainbtn">مشاهده</a>
+                        <a href="<%=baseURL%>/dashboard/tasks/<%= puzzle._id %>" class="btn btn-info mainbtn">مشاهده</a>
                     <%}else  {%>
-                        <a disabled="true" href="<%=baseURL%>/dashboard/puzzles/<%= puzzle._id %>" style="background-color: gray; border-bottom-color: gray" class="btn btn-primary mainbtn btn-verify" >پیش‌نیاز</a>
+                        <a disabled="true" href="<%=baseURL%>/dashboard/tasks/<%= puzzle._id %>" style="background-color: gray; border-bottom-color: gray" class="btn btn-primary mainbtn btn-verify" >پیش‌نیاز</a>
                     <%}%>
                 </p>
                 </div>

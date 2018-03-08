@@ -40,6 +40,9 @@
                 </select>
                 <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">Add to Group</button>
             </form>
+                <form action="<%=baseURL%>/admin/problems/<%=problem._id%>/addToAll" method="POST">
+                    <button class="btn btn-lg btn-block btn-primary" type="submit" style="margin: 20px 0 20px 0;">Add to All Groups</button>
+                </form>
             <hr>
             <form action="<%=baseURL%>/admin/problems/<%=problem._id%>/prerequisites" method="POST">
                 <select class="form-control cselect" name="problem">

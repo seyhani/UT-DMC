@@ -20,7 +20,7 @@
     <div class="container">
         <div class="col-md-3 submitpart">
             <%if(!puzzle.accepted){%>
-            <form action="<%=baseURL%>/dashboard/puzzles/<%=puzzle._id%>/answer" method="POST" enctype="multipart/form-data">
+            <form action="<%=baseURL%>/dashboard/tasks/<%=puzzle._id%>/answer" method="POST" enctype="multipart/form-data">
                 <%if(puzzle.type == "close"){%><input class="answer-input form-control" type="text" name="answer" placeholder="پاسخ" style="text-align: center;"><%}%>
                 <%if(puzzle.type == "open"){%><%}%>
                 <button class="btn btn-success btn-lg btn-block" style="margin-bottom: 25px;" type="submit">ثبت درخواست بررسی</button>
@@ -29,7 +29,7 @@
 
             <%}%>
             <%if(!(puzzle.accepted) && false){%>
-            <a style="text-decoration: none;" href="<%=baseURL%>/dashboard/puzzles/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-warning" style="margin-bottom:25px; ">درخواست کمک</button></a>
+            <a style="text-decoration: none;" href="<%=baseURL%>/dashboard/tasks/<%=puzzle._id%>/hint" ><button class="btn btn-default btn-lg btn-block btn-warning" style="margin-bottom:25px; ">درخواست کمک</button></a>
             <%}%>
             <a href="<%=baseURL%>/dashboard/" style="text-decoration: none;"><button class="btn btn-danger btn-lg btn-block" >بازگشت</button></a>
         </div>
