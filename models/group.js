@@ -8,10 +8,14 @@ var GroupSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     }],
+    solvedProblems:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Problem"
+    }],
     competition:{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Competition"
-        },
+      },
 });
 
 GroupSchema.methods.findCurrentStagePuzzles = function (callback) {

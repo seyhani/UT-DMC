@@ -9,6 +9,10 @@ var ProblemSchema = new mongoose.Schema({
     tags:[String],
     score:Number,
     type:String,
+    prerequisites:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Problem"
+    }],
     submits:{
         wrong:{type:Number,default:0},
         correct:{type:Number,default:0}

@@ -105,9 +105,13 @@ router.get("/competition/puzzles/:puzzle_id/:aorr", function(req, res){
                 puzzle.accept();
             if(req.params.aorr == "reject")
                 puzzle.reject();
-            middleware.removeSubmission(puzzle.name,puzzle.submisson.file);
+            puzzle.judge = req.user;
+            puzzle.save(function() {
+              middleware.dmcRedirect(res,"/admin/competition/problems/"+puzzle.problem._id);
+
+            })
+            //middleware.removeSubmission(puzzle.name,puzzle.submisson.file);
         }
-        middleware.dmcRedirect(res,"/admin/competition/problems/"+puzzle.problem._id);
     });
 });
 

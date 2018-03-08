@@ -14,7 +14,6 @@
   "directories": {
     "baseURL": "public"
   },
-  "devDependencies": {},
   "dependencies": {
     "async": "^2.1.4",
     "babel": "^6.23.0",
@@ -37,7 +36,7 @@
     "jsonwebtoken": "^7.2.1",
     "jwt-simple": "^0.5.1",
     "list.js": "^1.3.0",
-    "lodash": "^4.17.2",
+    "lodash": "^4.17.5",
     "method-override": "^2.3.5",
     "mongo-sanitize": "^1.0.0",
     "mongoose": "^4.1.12",
@@ -57,5 +56,10 @@
     "simplesmtp": "^0.3.35",
     "smtp-server": "^1.14.2",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "core-js": "^2.5.3"
   }
 }
