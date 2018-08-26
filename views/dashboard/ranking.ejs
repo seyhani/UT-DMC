@@ -4,7 +4,7 @@
     <title>DMC</title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="<%=baseURL%>/dashboard/dashboard.css" media="all" />
-    <style type="text/css">.btn{margin-bottom: 0;</style>
+    <link rel="stylesheet" href="<%=baseURL%>/flipclock/flipclock.css">
 </head>
 <body>
 <% include ../partials/header %>
@@ -12,49 +12,55 @@
     <div class="jumbotron">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 text-left">
-                    <h1><span class="glyphicon glyphicon-stats"></span> Scoreboard</h1>
+                <div class="col-md-4 text-left">
                 </div>
+
+                <div class="col-md-8" style="text-align: center;"><div style="display: inline-block;"><div class="clock"></div></div></div>
             </div>
         </div>
     </div>
-    <div class="jumbotron"><div class="container"><div class="row" id="puzzles_list">
-        <div style="padding: 6px;">
-            <input class="search" placeholder="&#xe003;" type="text" />
+    <h1> Scoreboard is not available in last hour :)</h1>
 
-            Sort By:
-            <button class="sort btn btn-primary btn-sm" data-sort="gpname">نام گروه</button>
-            <button class="sort btn btn-info btn-sm" data-sort="gpscore" id="defaultsortbtn">امتیاز</button>
-        </div>
-        <table class="table table-striped table-hover">
-            <thead><tr>
-                <th>نام گروه</th>
-                <th>امتیاز گروه</th>
-            </tr></thead>
-            <tbody class="list">
-                
-                <%groups.forEach(function (group) {%>
-                <tr class="<% if(currentUser && currentUser.group && group.name == currentUser.group.name){%>info<%}%>">
-                    <td class="gpname"><%=group.name%></td>
-                    <td class="gpscore"><%=group.competition.score%></td>
-                </tr>
-                <%});%>
-            </tbody>
-        </table>
-    </div></div></div>
 </div>
 <% include ../partials/footer %>
 <script src="<%=baseURL%>/listjs/list.min.js"></script>
+<script src="<%=baseURL%>/scripts/problist.js"></script>
+<script src="<%=baseURL%>/flipclock/flipclock.min.js"></script>
 <script>
-    var options = {
-        valueNames: ['gpname', 'gpscore']
-    };
-
-    var hackerList = new List('puzzles_list', options);
-
-    jQuery(document).ready(function($) {
-        $("#defaultsortbtn").trigger("click");
-        $("#defaultsortbtn").trigger("click");
+    var d1 = Date.now();
+    var d2 = new Date('2018-03-09T15:30');
+    var clock = $('.clock').FlipClock((d2-d1)/1000, {
+        clockFace: 'MinuteCounter',
+        showSeconds: false,
+        countdown: true
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $(".btn-verify").click(function(event){
+            event.preventDefault();
+            var el = this;
+            swal({
+              text: 'می‌خواهید سؤال را بخرید؟',
+              type: 'info',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              cancelButtonText: 'خیر',
+              confirmButtonText: 'بله',
+              customClass: "rtl"
+            })
+            // .then(function () {
+            //   swal({
+            //     text: 'سؤال را خریدید.',
+            //     type: 'success',
+            //     customClass: "rtl"
+            //   })
+              .then(function(){
+                window.location.href = $(el).attr('href');
+              });
+            // });
+        });
     });
 </script>
 </body>

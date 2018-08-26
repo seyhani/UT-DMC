@@ -105,7 +105,7 @@ router.get("/ranking", function(req, res){
                 });
             });
         });
-        res.render("dashboard/ranking",{groups:groups});
+        res.render("dashboard/rank2",{groups:groups});
     });
 });
 

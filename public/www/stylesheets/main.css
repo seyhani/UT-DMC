@@ -1,0 +1,314 @@
+@font-face {
+  font-family: IRANSansWeb;
+  src: url("../font/IRANSansWeb(NoEn)_Light.ttf");
+}
+@font-face {
+  font-family: IRANSansWeb;
+  font-weight: bold;
+  src: url("../font/IRANSansWeb(NoEn)_Medium.ttf");
+}
+@font-face {
+  font-family: IRANSansWeb;
+  font-weight: light;
+  src: url("../font/IRANSansWeb(NoEn)_UltraLight.ttf");
+}
+@font-face {
+  font-family: 'BRoya';
+  src: url('../font/BRoya/BRoya.ttf');
+}
+body {
+  font-family: IRANSansWeb, Geneva, sans-serif;
+}
+h1, h2, h3, h4, h5, h6{
+  font-weight: bold;
+}
+.count {
+  font-family: BRoya, tahoma, sans-serif, inherit;
+}
+body {
+  background-color: #f6f8fb;
+  padding-top: 60px;
+}
+.jumbotron,
+.row.problemname,
+.problembody {
+  padding: 30px 20px;
+  background: #fff;
+  box-shadow: 0 0 50px #dae3f1;
+  border-top: 2px solid #c0d6e8;
+  border-radius: 3px;
+}
+.navbar-default {
+  background-color: #fff;
+  box-shadow: 0 -1px 15px rgba(0, 0, 0, 0.3);
+  border: none;
+  border-bottom: 3px solid #eee;
+}
+.navbar-default .navbar-brand {
+  color: #9d9d9d;
+}
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:hover {
+  color: #fff;
+  background-color: transparent;
+}
+.navbar-default .navbar-text {
+  color: #9d9d9d;
+}
+.nav>li>a {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+}
+@media (min-width:768px) {
+  .navbar-nav>li>a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+.navbar-default .navbar-nav>li:last-child>a {
+  border-left-style: solid;
+}
+.navbar-default .navbar-nav>li>a {
+  color: #555;
+  border-right: solid;
+  border-color: #eee;
+  border-width: 1px;
+  font-weight: bold;
+  margin: 0;
+  background: #fff;
+}
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+  color: #444;
+}
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+  background-color: #f9f9f9;
+}
+.btn {
+  /*border-radius: 3px;*/
+  border: none;
+  border-bottom: 2px solid #bbb;
+  margin-bottom: 10px;
+}
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn:active:focus,
+.btn:focus {
+  outline: none;
+}
+.btn.active,
+.btn:active {
+  outline: 0;
+  -webkit-box-shadow: inset 0 2px 0px rgba(0, 0, 0, .125);
+  box-shadow: inset 0 2px 0px rgba(0, 0, 0, .125);
+  /*border-bottom: none;*/
+  border-bottom-color: transparent;
+  outline: none;
+}
+.btn-default {
+  background-color: #eee;
+  border-color: #bbb;
+}
+.btn-default.focus,
+.btn-default:focus {
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+  outline: none;
+}
+.btn-default:hover {
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.btn-default.active,
+.btn-default:active,
+.open>.dropdown-toggle.btn-default {
+  background-color: #e6e6e6;
+  border-color: transparent;
+  outline: none;
+}
+.btn-default.active.focus,
+.btn-default.active:focus,
+.btn-default.active:hover,
+.btn-default:active.focus,
+.btn-default:active:focus,
+.btn-default:active:hover,
+.open>.dropdown-toggle.btn-default.focus,
+.open>.dropdown-toggle.btn-default:focus,
+.open>.dropdown-toggle.btn-default:hover {
+  background-color: #d4d4d4;
+  border-color: transparent;
+  outline: none;
+}
+.btn-default.disabled.focus,
+.btn-default.disabled:focus,
+.btn-default.disabled:hover,
+.btn-default[disabled].focus,
+.btn-default[disabled]:focus,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default.focus,
+fieldset[disabled] .btn-default:focus,
+fieldset[disabled] .btn-default:hover {
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn-info {
+  background-color: #51afff;
+  border-color: #3378b3;
+}
+.btn-info.focus,
+.btn-info:focus {
+  background-color: #70bdff;
+  border-color: #4788bf;
+  outline: none;
+}
+.btn-info:hover {
+  background-color: #70bdff;
+  border-color: #4788bf;
+}
+.btn-info.active,
+.btn-info:active,
+.open>.dropdown-toggle.btn-info {
+  background-color: #4ca7f5;
+  border-color: transparent;
+}
+.btn-info.active.focus,
+.btn-info.active:focus,
+.btn-info.active:hover,
+.btn-info:active.focus,
+.btn-info:active:focus,
+.btn-info:active:hover,
+.open>.dropdown-toggle.btn-info.focus,
+.open>.dropdown-toggle.btn-info:focus,
+.open>.dropdown-toggle.btn-info:hover {
+  background-color: #4ca7f5;
+  border-color: transparent;
+  outline: none;
+}
+.btn-info.disabled.focus,
+.btn-info.disabled:focus,
+.btn-info.disabled:hover,
+.btn-info[disabled].focus,
+.btn-info[disabled]:focus,
+.btn-info[disabled]:hover,
+fieldset[disabled] .btn-info.focus,
+fieldset[disabled] .btn-info:focus,
+fieldset[disabled] .btn-info:hover {
+  background-color: #4ca7f5;
+  border-color: #4788bf;
+}
+.btn-warning {
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #b58b4f;
+}
+.btn-warning:active,
+.btn-warning:focus,
+.btn-warning:hover,
+.open>.dropdown-toggle.btn-warning {
+  color: #fff;
+  background-color: #ffbc5e;
+  border-color: #cb9d5d;
+}
+.btn-warning:active:hover,
+.btn-warning:active:focus,
+.btn-warning:active,
+.btn-warning:focus {
+  color: #fff;
+  background-color: #dd9d42;
+  border-color: #cb9d5d;
+}
+.btn-primary {
+    background-color: #337ab7;
+    border-bottom: 2px solid #195181;
+}
+.btn-primary:hover {
+    background-color: #286090;
+    border-color: #103352;
+}
+/*.btn-success{
+  background-color: #00ab66;
+  color: #E0E0E0;
+}*/
+.alert {
+  margin: 35px;
+  margin-bottom: 10px;
+}
+.thumbnail img {
+  width: 100%;
+}
+.thumbnail {
+  padding: 0;
+}
+.thumbnail .caption-full {
+  padding: 9px;
+}
+
+
+input.form-control {
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    border: 2px solid #ddd;
+    background: #fff;
+    padding: 5px 15px;
+    height: 44px;
+}
+a.forgot-pass-link {
+    margin: 20px 0;
+    display: block;
+}
+.nav{
+  padding-right: 0;
+}
+.eachproblem{
+  position: relative;
+  padding-bottom: 50px;
+}
+.eachproblem .mainbtn{
+  position: absolute;
+  bottom: 20px;
+  left: 35%;
+  right: 35%;
+}
+.nav .glyphicon{
+  vertical-align: -1px;
+}
+table.table{
+  text-align: center;
+}
+table.table th{
+  text-align: center;
+}
+.upedpic{
+    border-radius: 26px;
+    margin: 26px auto;
+    display: block;
+    max-width: 100%;
+    min-width: 60%;
+    transition: 0.3s;
+}
+object.upedpic{
+  width: 90%;
+  min-height: 600px;
+  border-radius: 5px;
+}
+img.upedpic:hover{
+    filter: contrast(120%)
+}
+fieldset{
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 6px 16px;
+  background: rgba(0, 0, 0, 0.01);
+}
+.hide{
+  display: none !important;
+}
+.swal2-modal.rtl {
+  font-family: IRANSansWeb, Geneva, sans-serif;
+  direction: rtl;
+}

@@ -1,0 +1,150 @@
+.backch {
+  padding: 50px;
+}
+.navbar {
+  border-radius: 0;
+}
+.container {
+  width: 100%;
+  margin: 0 0 0 0;
+}
+.problem-cont {
+  min-height: 350px;
+}
+.eachproblem {
+  margin: 20px 0.6%;
+  min-height: 330px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 50px #dae3f1;
+  border-bottom: 2px solid #c0d6e8;
+}
+.problembod {
+  text-align: center;
+}
+.topproblem {
+  margin-bottom: 50px;
+  border-bottom: 2px dashed;
+  padding: 1px;
+}
+.prb-accepted .topproblem{
+  background: #f5faf5;
+  color: #449d44;
+  border-color: #5cb85c;;
+}
+.prb-rejected .topproblem{
+  background: #faf5f5;
+  color: #c9302c;
+  border-color: #d9534f;
+}
+.prb-submitted .topproblem{
+  background: #faf8f5;
+  color: #eca72f;
+  border-color: #f0ad4e;
+}
+.prb-sold .topproblem{
+  background: #f5f8fa;
+  color: #51afff;
+  border-color: #70bdff;
+}
+.prb-buy .topproblem{
+  background: #f5f8fa;
+  color: #286090;
+  border-color: #337ab7;
+}
+.problembod:hover span {
+  display: block;
+}
+.nextstage {
+  width: 100%;
+  padding-left: 10px;
+}
+.problembod span {
+  background: #F8F8F8;
+  border: 5px solid #DFDFDF;
+  color: #717171;
+  font-size: 15px;
+  height: 100px;
+  letter-spacing: 1px;
+  line-height: 30px;
+  position: absolute;
+  text-align: justify;
+  text-transform: uppercase;
+  top: -100px;
+  display: none;
+  padding: 0 20px;
+}
+.problembod span:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  width: 10px;
+  height: 10px;
+  border-bottom: 5px solid #dfdfdf;
+  border-right: 5px solid #dfdfdf;
+  background: #f8f8f8;
+  left: 50%;
+  margin-left: -10px;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.thumbnail{
+  min-height: 150px;
+  position: relative;
+  padding-bottom: 60px;
+}
+.thumbnail .btn-primary{
+  position: absolute;
+  bottom: 20px;
+  left: 30%;
+  right: 30%;
+}
+.list{
+  padding: 0;
+}
+ul.taglist, ul.taglist ul{
+  list-style: none;
+  display: inline-block;
+  /*vertical-align: text-top;*/
+}
+ul.taglist li{
+  display: inline-block;
+}
+.taglist .btn{
+  margin: 0;
+}
+.tagsearchgp{
+  padding: 6px 6px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: #fff 0 0 5px inset;
+}
+.tagsearchgp:nth-child(2){
+  border: none;
+}
+.tagsearchgp ul{
+  padding: 0;
+}
+.supertagsearchgp{
+  font-weight: lighter;
+  margin-right: 6px;
+  padding: 0 3px;
+  padding-right: 6px;
+  border-right: solid 1px #ddd;
+}
+#puzzles_list .search{
+  border: solid 2px #ddd;
+  border-radius: 6px;
+  padding: 6px 24px;
+}
+#puzzles_list .search::-moz-placeholder{
+  font-family: 'Glyphicons Halflings';
+  font-weight: lighter;
+}
+#puzzles_list .search::placeholder{
+  font-family: 'Glyphicons Halflings';
+  font-weight: lighter;
+}

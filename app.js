@@ -29,7 +29,7 @@ const express           = require("express"),
     clarRoutes          = require("./routes/clar");
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/DMC",{
+mongoose.connect("mongodb://localhost/WWW",{
   useMongoClient: true
 });
 const MongoStore = require('connect-mongo')(session);

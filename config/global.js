@@ -1,2 +1,2 @@
- global.baseURL = "/dmc";
- global.host = "http://acm.ut.ac.ir/dmc";
+ global.baseURL = "/www";
+ global.host = "http://acm.ut.ac.ir/www";
