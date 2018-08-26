@@ -27,8 +27,10 @@ const express           = require("express"),
     userRoutes          = require("./routes/user"),
     clarRoutes          = require("./routes/clar");
 
+const baseURL = process.env.BASE_URL;
+
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/DMC",{
+mongoose.connect("mongodb://admin:password@localhost/DMC?authSource=admin",{
   useMongoClient: true
 });
 const MongoStore = require('connect-mongo')(session);
@@ -52,7 +54,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 require('./config/passport')(passport);
-
 app.use(function(req, res, next){
     //app.locals.currentUser = req.user;
     res.locals.baseURL  = baseURL;
@@ -91,9 +92,9 @@ app.use( (req, res, next) => {
     else
         next();
 });
-app.use(express.static(__dirname + "/public"));
+app.use(baseURL,express.static(__dirname + "/public"));
 ////
-var baseUrlLocal = "";
+var baseUrlLocal = baseURL;
 app.use(baseUrlLocal+"/", indexRoutes);
 app.use(baseUrlLocal+"/clar/", clarRoutes);
 app.use(baseUrlLocal+"/dashboard/", dashboardRoutes);
@@ -117,7 +118,6 @@ Rule.findOne({name:"DMC"}).exec(function (err,rule) {
     else
         console.log(rule);
 });
-
 app.use((req, res, next) => {
     req.flash(`error`, `Sorry cant find that:   `+req.url);
     return middleware.dmcRedirect(res, '/');

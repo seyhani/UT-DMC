@@ -2,7 +2,7 @@
 const fs = require('fs');
 const root = "public/";
 const config = require("../config/global");
-// var host = "http://acm.ut.ac.ir/dmc";
+const host = process.env.HOST;
 const validFileFormats = [".png", ".jpg", ".pdf"];
 function deleteFolderRecursive (path) {
     if( fs.existsSync(path) ) {
