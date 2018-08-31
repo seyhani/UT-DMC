@@ -17,7 +17,7 @@ A cooperation with [University of Tehran ACM student barnch][ACM]
 ## Contributers
 
 * Abtin Bateni
-* AmirHoseyn Seyhani
+* Amir Hossein Seyhani
 * Hadi Safari
 * Pooya Rezaee --supervisor
 * Vahid Mohammadi
