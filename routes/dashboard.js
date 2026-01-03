@@ -48,7 +48,7 @@ router.all("/*",function (req,res,next) {
 router.get("/", function(req, res){
     req.flash("success", "برای تأیید ایمیل، به ایمیل خود مراجعه کنید.");
     User.findById(req.user.id)
-        .deepPopulate(["group","group.competition.puzzles","group.competition.rule",
+        .deepPopulate(["group","group.competition.puzzles",
             "group.competition.puzzles.problem","group.competition"])
         .exec(function (err,user) {
             if(!user.group) {
